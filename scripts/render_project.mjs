@@ -1,4 +1,5 @@
-import { existsSync } from "node:fs";
+import { copyFileSync, existsSync } from "node:fs";
+import { homedir } from "node:os";
 import { join } from "node:path";
 import {
   ensureDir,
@@ -20,6 +21,8 @@ if (!projectArg) {
 const { project, projectPath } = await loadProject(projectArg);
 const composition = join(projectPath, "composition");
 const output = join(projectPath, "renders/final.mp4");
+const downloadsDir = join(homedir(), "Downloads");
+const downloadsOutput = join(downloadsDir, `${project.id}-${project.slug}-final.mp4`);
 
 if (project.approved?.render !== true && !args.force) {
   console.error("Render blocked: pre-render QA must set project.json.approved.render=true. Use --force only as an explicit override.");
@@ -66,6 +69,7 @@ const probe = run("ffprobe", ["-v", "error", "-show_entries", "format=duration:s
 manifest.push({ step: "ffprobe", status: probe.status, stdout: probe.stdout, stderr: probe.stderr });
 await writeJson(join(projectPath, "renders/render_manifest.json"), {
   output: rel(output),
+  downloadsOutput,
   generatedAt: new Date().toISOString(),
   steps: manifest,
 });
@@ -75,8 +79,12 @@ if (!existsSync(output) || probe.status !== 0) {
   process.exit(1);
 }
 
+await ensureDir(downloadsDir);
+copyFileSync(output, downloadsOutput);
+
 project.artifacts.render = true;
 project.status = "render";
 project.currentGate = "final_qa";
 await saveProject(projectPath, project);
 console.log(`Rendered: ${rel(output)}`);
+console.log(`Copied to Downloads: ${downloadsOutput}`);
