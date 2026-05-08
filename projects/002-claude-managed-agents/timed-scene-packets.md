@@ -30,12 +30,16 @@ Optional references:
 | 01 | pending | pending | capture + hyperframes | pending | Wikidocs/Anthropic screenshot candidate | pending | pending | pending |
 | 02 | pending | pending | hyperframes | pending | model-to-system reframe diagram | pending | pending | pending |
 | 03 | pending | pending | capture + hyperframes | pending | dreaming section screenshot + memory diagram | pending | pending | pending |
-| 04 | pending | pending | hyperframes | pending | outcomes quality gate diagram | pending | pending | pending |
-| 05 | pending | pending | hyperframes | pending | multiagent routing graph | pending | pending | pending |
-| 06 | pending | pending | hyperframes | pending | webhook callback diagram | pending | pending | pending |
-| 07 | pending | pending | hyperframes | pending | 4-axis system diagram | pending | pending | pending |
-| 08 | pending | pending | capture + hyperframes | pending | team case cards | pending | pending | pending |
-| 09 | pending | pending | hyperframes | pending | kinetic typography | pending | pending | pending |
+| 04 | pending | pending | hyperframes | pending | dreaming use-case pattern cards | pending | pending | pending |
+| 05 | pending | pending | hyperframes | pending | outcomes quality gate diagram | pending | pending | pending |
+| 06 | pending | pending | hyperframes | pending | outcomes use-case checklist | pending | pending | pending |
+| 07 | pending | pending | hyperframes | pending | multiagent routing graph | pending | pending | pending |
+| 08 | pending | pending | hyperframes | pending | multiagent use-case parallel panels | pending | pending | pending |
+| 09 | pending | pending | hyperframes | pending | webhook callback diagram | pending | pending | pending |
+| 10 | pending | pending | hyperframes | pending | webhook use-case event chain | pending | pending | pending |
+| 11 | pending | pending | hyperframes | pending | 4-axis system diagram | pending | pending | pending |
+| 12 | pending | pending | capture + hyperframes | pending | team case cards | pending | pending | pending |
+| 13 | pending | pending | hyperframes | pending | kinetic typography | pending | pending | pending |
 
 ## Current Routing Note
 

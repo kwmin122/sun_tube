@@ -5,9 +5,9 @@ Owner: `hype-showrunner` and `hype-creative-director`
 ## Decision Summary
 
 - Chosen angle: Claude Managed Agents 업데이트의 본질은 "더 똑똑한 모델"이 아니라 "에이전트를 회사처럼 운영하는 시스템"이다.
-- Viewer promise: 드리밍, 아웃컴, 멀티에이전트 오케스트레이션, 웹훅이 각각 어떤 병목을 없애는지 3분 안에 이해한다.
+- Viewer promise: 드리밍, 아웃컴, 멀티에이전트 오케스트레이션, 웹훅이 각각 무엇이고 언제 좋은지 이해한다.
 - Target viewer: AI 코딩/자동화/콘텐츠 제작에 에이전트를 쓰는 개발자와 빌더
-- Length decision: 3min, information-delivery explainer
+- Length decision: about 6min, information-delivery explainer
 - Format: 1920x1080 horizontal
 - Tone: clear information delivery + technical explainer
 - Primary content pattern: Problem -> Cause -> Fix
@@ -24,7 +24,7 @@ Owner: `hype-showrunner` and `hype-creative-director`
 ```text
 open: 앤스로픽이 네 가지 업데이트를 발표했다
 -> setup: 더 똑똑한 모델이 아니라 더 일 잘하는 구조다
--> development: 드리밍, 아웃컴, 멀티에이전트, 웹훅이 각각 해결하는 축
+-> development: 드리밍, 아웃컴, 멀티에이전트, 웹훅을 각각 "무엇인가 / 언제 좋은가"로 설명
 -> visual turn: 하나의 에이전트가 작은 회사형 시스템으로 바뀌는 다이어그램
 -> payoff: 모델 경쟁에서 시스템 설계 경쟁으로 이동
 -> close: 이제 질문은 "무슨 모델?"이 아니라 "어떤 시스템?"이다
@@ -33,9 +33,9 @@ open: 앤스로픽이 네 가지 업데이트를 발표했다
 ## Pacing
 
 - Hook target: 0-10초 안에 "네 가지 업데이트"를 바로 말한다.
-- Scene count target: 9 scenes
-- Density: 중간 이상. 기능명은 4개지만 각 기능을 한 문장과 하나의 장면으로 압축한다.
-- Where the biggest turn happens: Scene 07, 네 기능을 학습축/검증축/분업축/연결축으로 합치는 순간.
+- Scene count target: 13 scenes
+- Density: 중간. 기능별로 "무엇을 하는 기능인지"와 "어떤 작업에 좋은지"를 분리해 설명한다.
+- Where the biggest turn happens: Scene 11, 네 기능을 학습축/검증축/분업축/연결축으로 합치는 순간.
 
 ## Visual Direction Seed
 

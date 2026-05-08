@@ -10,7 +10,7 @@ This is a material-development file. It is not a citation audit, rights review, 
 - Working title: Claude Managed Agents 업데이트
 - Topic type: AI agent product update / system-design explainer
 - Target viewer: AI 코딩 도구와 에이전트 워크플로를 쓰는 개발자, 기획자, 자동화 빌더
-- Likely length band: 3min
+- Likely length band: 6min
 - Initial content pattern candidates: Claim -> Proof -> Explanation, Problem -> Cause -> Fix, Comparison / Versus
 
 ## Material Summary
@@ -23,7 +23,7 @@ Anthropic 원문은 2026년 5월 6일 발표된 제품 공지다. Dreaming은 re
 
 - User-provided topic source: Wikidocs article published 2026년 5월 7일 6:11 오전.
 - Official source: Anthropic Claude blog product announcement dated May 6, 2026.
-- Working production mode: 정보 전달형 3분 기술 해설. 핵심 기능을 뉴스처럼 나열하지 않고, 왜 이 업데이트가 "에이전트 운영 시스템" 변화인지 설명한다.
+- Working production mode: 정보 전달형 약 6분 기술 해설. 핵심 기능을 뉴스처럼 나열하지 않고, 각 기능이 무엇을 하고 언제 좋은지까지 설명한다.
 
 ## Angle Leads
 
@@ -60,7 +60,7 @@ Anthropic 원문은 2026년 5월 6일 발표된 제품 공지다. Dreaming은 re
 ## Open Questions For Creative Roles
 
 - 이 영상은 Anthropic 기능 소개보다 "에이전트 설계의 방향 변화"에 초점을 둔다.
-- 길이는 정보 전달형 3분으로 고정한다. 사례는 Harvey, Netflix, Spiral, Wisedocs를 짧은 카드로만 사용한다.
+- 길이는 정보 전달형 약 6분으로 잡는다. 네 기능은 각각 "무엇인가 / 언제 좋은가"로 설명하고, 사례는 Harvey, Netflix, Spiral, Wisedocs를 짧은 카드로 사용한다.
 - Claude 제품명 노출은 정보 중심 카드로 갈지, 추상적인 시스템 다이어그램 중심으로 갈지?
 
 ## Not In MVP Scope

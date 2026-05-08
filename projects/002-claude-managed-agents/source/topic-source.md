@@ -14,7 +14,7 @@
 
 ## Production Focus
 
-정보 전달형 3분 해설로 제작한다.
+정보 전달형 약 6분 해설로 제작한다.
 
 Core message:
 

@@ -34,15 +34,19 @@ This MVP asset plan is not a rights, privacy, citation, or quote-accuracy review
 
 | Scene | Time | Pattern Role | Tool Route | Narration Beat | Asset Type | Link / File / Candidate | Speaker / Role | Timestamp | Processing Needed | Status |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 01 | 0:00-0:10 | direct hook | capture + hyperframes | Four updates | webpage screenshot + HTML motion | https://wikidocs.net/blog/@jaehong/12977/, https://claude.com/blog/new-in-claude-managed-agents | | | capture/crop headline, build 4 feature cards | todo |
-| 02 | 0:10-0:24 | reframe | hyperframes | Smarter model -> better operating system | HTML/SVG diagram | generated | | | model card replaced by system card | todo |
-| 03 | 0:24-0:48 | feature/explanation | capture + hyperframes | Dreaming | official screenshot + generated visual | https://claude.com/blog/new-in-claude-managed-agents | | | capture dreaming section, memory-card sorting animation | todo |
-| 04 | 0:48-1:10 | feature/explanation | hyperframes | Outcomes | diagram/data | generated from official blog facts | | | rubric gate + benchmark counters | todo |
-| 05 | 1:10-1:34 | feature/explanation | hyperframes | Multiagent orchestration | network diagram | generated from official blog examples | | | lead/subagent routing graph | todo |
-| 06 | 1:34-1:52 | feature/explanation | hyperframes | Webhooks | callback diagram | generated from official blog/webhook docs | | | completed task -> webhook -> next workflow pulse | todo |
-| 07 | 1:52-2:18 | synthesis/diagram | hyperframes | Four-axis system | HTML/SVG diagram | generated | | | 4-axis lock-in animation | todo |
-| 08 | 2:18-2:46 | case/data | capture + hyperframes | Team examples | case cards | Harvey, Netflix, Spiral, Wisedocs sections from Anthropic blog | | | card stack + counters | todo |
-| 09 | 2:46-3:00 | takeaway | hyperframes | Model -> system | kinetic typography | generated | | | text replacement animation | todo |
+| 01 | 0:00-0:16 | direct hook | capture + hyperframes | Four updates | webpage screenshot + HTML motion | https://wikidocs.net/blog/@jaehong/12977/, https://claude.com/blog/new-in-claude-managed-agents | | | capture/crop headline, build 4 feature cards | todo |
+| 02 | 0:16-0:35 | reframe | hyperframes | Smarter model -> better operating system | HTML/SVG diagram | generated | | | model card replaced by system card | todo |
+| 03 | 0:35-1:12 | feature/what | capture + hyperframes | Dreaming: what it does | official screenshot + generated visual | https://claude.com/blog/new-in-claude-managed-agents | | | capture dreaming section, memory-card sorting animation | todo |
+| 04 | 1:12-1:42 | feature/when useful | hyperframes | Dreaming: when useful | diagram/data | Harvey section from Anthropic blog | | | repeat-work pattern cards + long-running timeline | todo |
+| 05 | 1:42-2:18 | feature/what | hyperframes | Outcomes: what it does | diagram/data | generated from official blog facts | | | rubric gate + revision loop | todo |
+| 06 | 2:18-2:49 | feature/when useful | hyperframes | Outcomes: when useful | checklist diagram | generated from official blog facts | | | requirements/brand/design checklist scan | todo |
+| 07 | 2:49-3:27 | feature/what | hyperframes | Multiagent orchestration: what it does | network diagram | generated from official blog examples | | | lead/subagent routing graph | todo |
+| 08 | 3:27-3:56 | feature/when useful | hyperframes | Multiagent orchestration: when useful | parallel work diagram | Netflix section from Anthropic blog | | | logs/metrics/docs/support parallel panels | todo |
+| 09 | 3:56-4:30 | feature/what | hyperframes | Webhooks: what it does | callback diagram | https://platform.claude.com/docs/en/managed-agents/webhooks | | | completed task -> webhook -> next workflow pulse | todo |
+| 10 | 4:30-4:58 | feature/when useful | hyperframes | Webhooks: when useful | event-chain diagram | generated from webhook docs | | | review queue / notification / QA chain | todo |
+| 11 | 4:58-5:22 | synthesis/diagram | hyperframes | Four-axis system | HTML/SVG diagram | generated | | | 4-axis lock-in animation | todo |
+| 12 | 5:22-5:48 | case/data | capture + hyperframes | Team examples | case cards | Harvey, Netflix, Spiral, Wisedocs sections from Anthropic blog | | | card stack + counters | todo |
+| 13 | 5:48-6:05 | takeaway | hyperframes | Model -> system | kinetic typography | generated | | | text replacement animation | todo |
 
 ## Material Rules
 
