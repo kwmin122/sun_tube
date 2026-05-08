@@ -2,9 +2,9 @@
 
 ## Overview
 
-- **Goal**: Claude Managed Agents 업데이트를 "모델보다 시스템"이라는 각도로 설명하는 약 6분 한국어 정보 전달 영상
+- **Goal**: Claude Managed Agents 업데이트를 "모델보다 시스템"이라는 각도로 설명하는 약 5분 34초 한국어 정보 전달 영상
 - **Target viewer**: AI 코딩/자동화/콘텐츠 제작에 에이전트를 쓰는 개발자와 빌더
-- **Duration**: 약 6분
+- **Duration**: 약 5분 34초
 - **Format**: 1920x1080 horizontal
 - **Tone**: clear information delivery + technical explainer
 - **Visual style**: `../../shared/DESIGN.md`
@@ -33,7 +33,7 @@
 ## Creative Brief Summary
 
 - Chosen angle: Claude Managed Agents 업데이트의 본질은 "더 좋은 모델"이 아니라 "더 나은 에이전트 운영 시스템"이다.
-- Length decision: about 6min
+- Length decision: about 5min 34s
 - Structure: 바로 발표 내용 진입 -> 네 가지 업데이트 각각 설명 -> 언제 좋은지 -> 사례 -> 시스템 설계 결론
 - Tone: 빠르고 선명한 기술 해설
 
@@ -237,25 +237,25 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 
 | # | Time | Pattern Role | Tool Route | Core Message | Visual Concept | Motion Notes | Assets |
 |---|---|---|---|---|---|---|---|
-| 01 | 0:00-0:16 | direct hook | capture + hyperframes | 네 가지 업데이트 발표 | Wikidocs/Anthropic 발표 화면 + 4개 기능 카드 | title slam + 4-card pop | Wikidocs/Anthropic 발표 화면 후보 |
-| 02 | 0:16-0:35 | reframe | hyperframes | 더 똑똑한 모델이 아니라 더 일 잘하는 구조 | 모델 카드 -> 운영 시스템 카드 | replace + lock | HTML/SVG 다이어그램 |
-| 03 | 0:35-1:12 | feature/what | capture + hyperframes | 드리밍은 작업 기록을 다시 보는 기능 | 메모리 조각 정리 장면 | noise -> signal 정리 | 공식 블로그 소재 |
-| 04 | 1:12-1:42 | feature/when useful | hyperframes | 드리밍은 반복 작업과 장기 프로젝트에 좋다 | 반복 업무 패턴과 팀 선호 카드 | pattern highlight | Harvey 소재 |
-| 05 | 1:42-2:18 | feature/what | hyperframes | 아웃컴은 좋은 결과의 기준과 별도 채점기 | 산출물 -> grader -> pass/fail | loop animation | 루브릭/품질 게이트 그래픽 |
-| 06 | 2:18-2:49 | feature/when useful | hyperframes | 아웃컴은 기준이 분명한 문서/디자인 작업에 좋다 | 요구사항/브랜드/가이드 체크리스트 | checklist scan | benchmark 소재 |
-| 07 | 2:49-3:27 | feature/what | hyperframes | 멀티에이전트는 리드가 일을 쪼개 전문가에게 나눈다 | 리드 노드가 서브 노드에 라우팅 | fan-out/fan-in | Netflix/Spiral 소재 |
-| 08 | 3:27-3:56 | feature/when useful | hyperframes | 멀티에이전트는 넓고 복잡한 병렬 작업에 좋다 | 로그/메트릭/문서/고객문의 병렬 패널 | parallel sweep | Netflix 소재 |
-| 09 | 3:56-4:30 | feature/what | hyperframes | 웹훅은 작업 완료를 외부 시스템에 알린다 | 에이전트 완료 -> webhook -> next system | pulse line + callback | webhook diagram |
-| 10 | 4:30-4:58 | feature/when useful | hyperframes | 웹훅은 긴 작업과 운영 자동화에 좋다 | 문서 검수 큐, 슬랙 알림, QA 자동 실행 | event chain | webhook docs |
-| 11 | 4:58-5:22 | synthesis/diagram | hyperframes | 학습/검증/분업/연결 시스템 | 4축 시스템 다이어그램 | four-axis lock-in | HTML/SVG |
-| 12 | 5:22-5:48 | case/data | capture + hyperframes | 실제 팀 사례 | Harvey/Netflix/Spiral/Wisedocs 카드 | card stack + counters | 공식 사례 소재 |
-| 13 | 5:48-6:05 | takeaway | hyperframes | 모델 경쟁에서 시스템 설계 경쟁으로 | "어떤 모델?" -> "어떤 시스템?" | text replace + hold | 타이포그래피 |
+| 01 | 0:00-0:13.4 | direct hook | capture + hyperframes | 네 가지 업데이트 발표 | Wikidocs/Anthropic 발표 화면 + 4개 기능 카드 | title slam + 4-card pop | Wikidocs/Anthropic 발표 화면 후보 |
+| 02 | 0:13.4-0:22.4 | reframe | hyperframes | 더 똑똑한 모델이 아니라 더 일 잘하는 구조 | 모델 카드 -> 운영 시스템 카드 | replace + lock | HTML/SVG 다이어그램 |
+| 03 | 0:22.4-0:50.9 | feature/what | capture + hyperframes | 드리밍은 작업 기록을 다시 보는 기능 | 메모리 조각 정리 장면 | noise -> signal 정리 | 공식 블로그 소재 |
+| 04 | 0:50.9-1:19.4 | feature/when useful | hyperframes | 드리밍은 반복 작업과 장기 프로젝트에 좋다 | 반복 업무 패턴과 팀 선호 카드 | pattern highlight | Harvey 소재 |
+| 05 | 1:19.4-1:55.9 | feature/what | hyperframes | 아웃컴은 좋은 결과의 기준과 별도 채점기 | 산출물 -> grader -> pass/fail | loop animation | 루브릭/품질 게이트 그래픽 |
+| 06 | 1:55.9-2:15.9 | feature/when useful | hyperframes | 아웃컴은 기준이 분명한 문서/디자인 작업에 좋다 | 요구사항/브랜드/가이드 체크리스트 | checklist scan | benchmark 소재 |
+| 07 | 2:15.9-2:55.9 | feature/what | hyperframes | 멀티에이전트는 리드가 일을 쪼개 전문가에게 나눈다 | 리드 노드가 서브 노드에 라우팅 | fan-out/fan-in | Netflix/Spiral 소재 |
+| 08 | 2:55.9-3:17.4 | feature/when useful | hyperframes | 멀티에이전트는 넓고 복잡한 병렬 작업에 좋다 | 로그/메트릭/문서/고객문의 병렬 패널 | parallel sweep | Netflix 소재 |
+| 09 | 3:17.4-3:45.4 | feature/what | hyperframes | 웹훅은 작업 완료를 외부 시스템에 알린다 | 에이전트 완료 -> webhook -> next system | pulse line + callback | webhook diagram |
+| 10 | 3:45.4-4:08.0 | feature/when useful | hyperframes | 웹훅은 긴 작업과 운영 자동화에 좋다 | 문서 검수 큐, 슬랙 알림, QA 자동 실행 | event chain | webhook docs |
+| 11 | 4:08.0-4:34.9 | synthesis/diagram | hyperframes | 학습/검증/분업/연결 시스템 | 4축 시스템 다이어그램 | four-axis lock-in | HTML/SVG |
+| 12 | 4:34.9-5:11.4 | case/data | capture + hyperframes | 실제 팀 사례 | Harvey/Netflix/Spiral/Wisedocs 카드 | card stack + counters | 공식 사례 소재 |
+| 13 | 5:11.4-5:33.9 | takeaway | hyperframes | 모델 경쟁에서 시스템 설계 경쟁으로 | "어떤 모델?" -> "어떤 시스템?" | text replace + hold | 타이포그래피 |
 
 ## Detailed Scene Plan
 
 ### Scene 01
 
-- Time: 0:00-0:16
+- Time: 0:00-0:13.4
 - Pattern role: direct hook
 - Narration: "앤스로픽이 따끈따끈한 기능 네 가지를 발표했습니다."
 - On-screen phrase: 따끈따끈한 네 가지 업데이트
@@ -269,7 +269,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 
 ### Scene 02
 
-- Time: 0:16-0:35
+- Time: 0:13.4-0:22.4
 - Pattern role: reframe
 - Narration: "에이아이 에이전트를 그냥 더 똑똑하게 만드는 게 아니라..."
 - On-screen phrase: 더 똑똑하게? 아니, 더 일 잘하게
@@ -283,7 +283,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 
 ### Scene 03
 
-- Time: 0:35-1:12
+- Time: 0:22.4-0:50.9
 - Pattern role: feature/what
 - Narration: "첫 번째, 드리밍."
 - On-screen phrase: 쉬는 시간에 작업 기록을 다시 본다
@@ -297,7 +297,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 
 ### Scene 04
 
-- Time: 1:12-1:42
+- Time: 0:50.9-1:19.4
 - Pattern role: feature/when useful
 - Narration: "그래서 이 기능이 좋은 때는..."
 - On-screen phrase: 반복 작업 / 장기 프로젝트 / 팀 취향
@@ -311,7 +311,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 
 ### Scene 05
 
-- Time: 1:42-2:18
+- Time: 1:19.4-1:55.9
 - Pattern role: feature/what
 - Narration: "두 번째, 아웃컴."
 - On-screen phrase: 작업자와 검수자를 분리한다
@@ -325,7 +325,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 
 ### Scene 06
 
-- Time: 2:18-2:49
+- Time: 1:55.9-2:15.9
 - Pattern role: feature/when useful
 - Narration: "이 기능은 기준이 분명한 작업에 좋습니다."
 - On-screen phrase: 기준이 말로 정의될수록 강하다
@@ -339,7 +339,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 
 ### Scene 07
 
-- Time: 2:49-3:27
+- Time: 2:15.9-2:55.9
 - Pattern role: feature/what
 - Narration: "세 번째, 멀티에이전트 오케스트레이션."
 - On-screen phrase: 혼자 하는 AI에서 팀으로 움직이는 AI로
@@ -353,7 +353,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 
 ### Scene 08
 
-- Time: 3:27-3:56
+- Time: 2:55.9-3:17.4
 - Pattern role: feature/when useful
 - Narration: "이 기능은 일이 넓고 복잡할 때 좋습니다."
 - On-screen phrase: 로그 / 자료 / 메트릭 / 고객문의
@@ -367,7 +367,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 
 ### Scene 09
 
-- Time: 3:56-4:30
+- Time: 3:17.4-3:45.4
 - Pattern role: feature/what
 - Narration: "네 번째, 웹훅."
 - On-screen phrase: 완료되면 다음으로 연결
@@ -381,7 +381,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 
 ### Scene 10
 
-- Time: 4:30-4:58
+- Time: 3:45.4-4:08.0
 - Pattern role: feature/when useful
 - Narration: "이건 긴 작업에 특히 좋습니다."
 - On-screen phrase: 기다리지 않고 이어붙인다
@@ -395,7 +395,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 
 ### Scene 11
 
-- Time: 4:58-5:22
+- Time: 4:08.0-4:34.9
 - Pattern role: synthesis/diagram
 - Narration: "드리밍은 시간 축에서..."
 - On-screen phrase: 학습 x 검증 x 분업 x 연결
@@ -409,7 +409,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 
 ### Scene 12
 
-- Time: 5:22-5:48
+- Time: 4:34.9-5:11.4
 - Pattern role: case/data
 - Narration: "실제 사례도 이 방향을 보여줍니다."
 - On-screen phrase: 하비 / 넷플릭스 / 스파이럴 / 와이즈닥스
@@ -423,7 +423,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 
 ### Scene 13
 
-- Time: 5:48-6:05
+- Time: 5:11.4-5:33.9
 - Pattern role: takeaway
 - Narration: "에이전트 경쟁은 이제..."
 - On-screen phrase: 어떤 모델? -> 어떤 시스템?

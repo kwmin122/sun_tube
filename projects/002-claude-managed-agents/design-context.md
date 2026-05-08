@@ -4,7 +4,7 @@
 
 - Project name: Claude Managed Agents 업데이트
 - Collection date: 2026-05-08
-- Output purpose: 약 6분 한국어 기술 해설 영상
+- Output purpose: 약 5분 34초 한국어 기술 해설 영상
 - Format: 1920x1080
 - Target viewer: AI 에이전트 워크플로를 쓰는 개발자와 빌더
 - Viewing situation: YouTube desktop/mobile horizontal playback

@@ -10,24 +10,24 @@
 - [x] `asset-plan.md` created
 - [x] Content pattern selected
 - [x] Material research complete
-- [ ] Evidence/screenshots/interview asset pass complete
+- [x] Evidence/screenshots/interview asset pass complete
 - [x] Script drafted
 - [x] Scene table drafted
-- [ ] User approved script and scene table
-- [ ] ElevenLabs TTS generated
-- [ ] ElevenLabs SRT generated
-- [ ] `timed-scene-packets.md` created
+- [x] User approved script and scene table
+- [x] ElevenLabs TTS generated
+- [x] ElevenLabs SRT generated
+- [x] `timed-scene-packets.md` created
 - [x] Scene tool routes assigned from `TOOL_ROUTING_PIPELINE.md`
-- [ ] Final audio mix generated
+- [x] Final audio mix generated
 - [x] `video-use` processing complete if raw/interview/demo video is routed
-- [ ] Composition implemented
-- [ ] Hyperframes lint passed
-- [ ] Hyperframes inspect passed
-- [ ] Snapshot/pre-render QA passed
-- [ ] MP4 rendered
-- [ ] ffprobe checked
-- [ ] Final QA passed
-- [ ] Packaging directions drafted
+- [x] Composition implemented
+- [x] Hyperframes lint passed
+- [x] Hyperframes inspect passed
+- [x] Snapshot/pre-render QA passed
+- [x] MP4 rendered
+- [x] ffprobe checked
+- [x] Final QA passed
+- [x] Packaging directions drafted
 
 ## Optional Compatibility
 
@@ -35,12 +35,12 @@
 
 ## Current Gate
 
-`review`
+`done`
 
 ## Open Questions
 
-- Approve the about-6min, four-update information-delivery script and 13-scene table?
-- TTS is blocked until `project.json.approved.plan` is true.
+- Final render completed at about 5min34s.
+- Packaging directions generated.
 
 ## Commands
 

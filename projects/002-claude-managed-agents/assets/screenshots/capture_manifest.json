@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-05-08T14:06:08.163Z",
+  "tasks": [
+    {
+      "scene": "01",
+      "input": "https://wikidocs.net/blog/@jaehong/12977/",
+      "output": "projects/002-claude-managed-agents/assets/screenshots/scene-01-capture-1.png",
+      "evidence": "projects/002-claude-managed-agents/assets/evidence/scene-01-capture-1.png",
+      "ok": true,
+      "stderr": ""
+    },
+    {
+      "scene": "01",
+      "input": "https://claude.com/blog/new-in-claude-managed-agents",
+      "output": "projects/002-claude-managed-agents/assets/screenshots/scene-01-capture-2.png",
+      "evidence": "projects/002-claude-managed-agents/assets/evidence/scene-01-capture-2.png",
+      "ok": true,
+      "stderr": ""
+    },
+    {
+      "scene": "03",
+      "input": "https://claude.com/blog/new-in-claude-managed-agents",
+      "output": "projects/002-claude-managed-agents/assets/screenshots/scene-03-capture-3.png",
+      "evidence": "projects/002-claude-managed-agents/assets/evidence/scene-03-capture-3.png",
+      "ok": true,
+      "stderr": ""
+    },
+    {
+      "scene": "12",
+      "input": "https://claude.com/blog/new-in-claude-managed-agents",
+      "output": "projects/002-claude-managed-agents/assets/screenshots/scene-12-capture-4.png",
+      "evidence": "projects/002-claude-managed-agents/assets/evidence/scene-12-capture-4.png",
+      "ok": true,
+      "stderr": ""
+    }
+  ]
+}

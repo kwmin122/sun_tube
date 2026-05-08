@@ -1,496 +1,641 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1920, height=1080" />
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
-    <style>
-      * {
-        box-sizing: border-box;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Managed Agents</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #08090b;
+      color: #f7f3ea;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow: hidden;
+    }
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(135deg, #090a0d 0%, #14100d 46%, #090a0d 100%);
+      background-size: 80px 80px, 80px 80px, 100% 100%;
+    }
+    .clip { position: absolute; }
+    .scene {
+      inset: 0;
+      padding: 84px 100px 170px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 38px;
+    }
+    .scene-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 48px;
+      min-height: 126px;
+    }
+    .eyebrow {
+      color: #f4a261;
+      font-size: 28px;
+      font-weight: 780;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin: 0; letter-spacing: 0; }
+    h1 {
+      max-width: 1260px;
+      font-size: 86px;
+      line-height: 0.98;
+      font-weight: 820;
+    }
+    h2 {
+      max-width: 1180px;
+      font-size: 70px;
+      line-height: 1.02;
+      font-weight: 820;
+    }
+    h3 {
+      font-size: 32px;
+      line-height: 1.15;
+      font-weight: 800;
+    }
+    .scene-no {
+      min-width: 150px;
+      text-align: right;
+      color: rgba(247,243,234,0.42);
+      font-size: 30px;
+      font-weight: 760;
+    }
+    .stage {
+      position: relative;
+      display: grid;
+      gap: 28px;
+      min-height: 0;
+    }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .card, .panel, .metric, .case-card {
+      border: 1px solid rgba(247,243,234,0.16);
+      background: rgba(18,18,18,0.74);
+      border-radius: 8px;
+      box-shadow: 0 26px 70px rgba(0,0,0,0.34);
+    }
+    .card {
+      padding: 34px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .panel {
+      padding: 34px;
+      min-height: 260px;
+    }
+    .card p, .panel p, .case-card p {
+      color: rgba(247,243,234,0.76);
+      font-size: 28px;
+      line-height: 1.28;
+      font-weight: 610;
+    }
+    .tag {
+      width: max-content;
+      padding: 8px 14px;
+      border: 1px solid rgba(244,162,97,0.4);
+      border-radius: 999px;
+      color: #f4a261;
+      font-size: 20px;
+      font-weight: 800;
+    }
+    .source-wall {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+    .screenshot {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.18);
+      background: #111;
+    }
+    .screenshot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.92) contrast(1.02);
+    }
+    .screenshot .label {
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background: rgba(8,9,11,0.82);
+      color: #f7f3ea;
+      font-size: 18px;
+      font-weight: 780;
+    }
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .big-number {
+      font-size: 98px;
+      line-height: 0.9;
+      font-weight: 850;
+      color: #f4a261;
+    }
+    .connector-row {
+      display: grid;
+      grid-template-columns: 1fr 90px 1fr 90px 1fr;
+      align-items: center;
+      gap: 18px;
+    }
+    .node {
+      min-height: 250px;
+      padding: 34px;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.18);
+      background: rgba(247,243,234,0.07);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+    .arrow {
+      height: 3px;
+      background: #f4a261;
+      position: relative;
+      opacity: 0.9;
+    }
+    .arrow:after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: -7px;
+      border-left: 16px solid #f4a261;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+    }
+    .memory-board {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 30px;
+      align-items: stretch;
+    }
+    .dream-panel {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 28px;
+    }
+    .cycle {
+      display: grid;
+      grid-template-columns: 1fr 70px 1fr 70px 1fr;
+      align-items: center;
+      gap: 16px;
+    }
+    .cycle-step {
+      min-height: 150px;
+      padding: 24px;
+      border-radius: 8px;
+      background: rgba(42,157,143,0.12);
+      border: 1px solid rgba(42,157,143,0.28);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: #f7f3ea;
+      font-size: 26px;
+      font-weight: 780;
+      line-height: 1.18;
+    }
+    .list {
+      display: grid;
+      gap: 18px;
+    }
+    .item {
+      min-height: 82px;
+      padding: 20px 24px;
+      border-left: 5px solid #2a9d8f;
+      border-radius: 7px;
+      background: rgba(247,243,234,0.08);
+      color: rgba(247,243,234,0.9);
+      font-size: 27px;
+      line-height: 1.2;
+      font-weight: 680;
+    }
+    .rubric {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .score-box {
+      padding: 28px;
+      border-radius: 8px;
+      background: rgba(42,157,143,0.12);
+      border: 1px solid rgba(42,157,143,0.35);
+    }
+    .score-box.fail {
+      background: rgba(231,111,81,0.13);
+      border-color: rgba(231,111,81,0.4);
+    }
+    .network {
+      position: relative;
+      width: 100%;
+      height: 600px;
+    }
+    .agent-node {
+      position: absolute;
+      width: 270px;
+      height: 150px;
+      padding: 26px;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.2);
+      background: rgba(247,243,234,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+    .agent-node.lead {
+      left: 50%;
+      top: 44px;
+      transform: translateX(-50%);
+      background: rgba(244,162,97,0.16);
+      border-color: rgba(244,162,97,0.45);
+    }
+    .agent-node.a { left: 90px; top: 330px; }
+    .agent-node.b { left: 520px; top: 330px; }
+    .agent-node.c { right: 520px; top: 330px; }
+    .agent-node.d { right: 90px; top: 330px; }
+    .line {
+      position: absolute;
+      height: 2px;
+      background: rgba(244,162,97,0.7);
+      transform-origin: left center;
+    }
+    .l1 { width: 425px; left: 742px; top: 250px; transform: rotate(145deg); }
+    .l2 { width: 330px; left: 836px; top: 250px; transform: rotate(128deg); }
+    .l3 { width: 330px; left: 1084px; top: 250px; transform: rotate(52deg); }
+    .l4 { width: 425px; left: 1180px; top: 250px; transform: rotate(35deg); }
+    .event-flow {
+      display: grid;
+      grid-template-columns: 1fr 70px 1fr 70px 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .event-box {
+      padding: 30px;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.18);
+      background: rgba(247,243,234,0.075);
+      min-height: 270px;
+    }
+    .event-box small {
+      display: block;
+      margin-bottom: 18px;
+      color: #2a9d8f;
+      font-size: 22px;
+      font-weight: 820;
+    }
+    .axis {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      align-items: center;
+      gap: 28px;
+      padding: 22px 28px;
+      border-radius: 8px;
+      background: rgba(247,243,234,0.075);
+      border: 1px solid rgba(247,243,234,0.14);
+    }
+    .axis strong {
+      color: #f4a261;
+      font-size: 30px;
+      font-weight: 820;
+    }
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .case-card {
+      padding: 28px;
+      min-height: 270px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .final-statement {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding-bottom: 60px;
+    }
+    .final-statement h2 {
+      max-width: 1420px;
+      font-size: 86px;
+      line-height: 1.05;
+    }
+    .highlight { color: #f4a261; }
+    .cyan { color: #2a9d8f; }
+    .yellow { color: #e9c46a; }
+    #caption {
+      left: 210px;
+      right: 210px;
+      bottom: 66px;
+      min-height: 82px;
+      padding: 18px 32px;
+      border-radius: 8px;
+      background: rgba(8,9,11,0.86);
+      border: 1px solid rgba(247,243,234,0.16);
+      color: #fffaf0;
+      text-align: center;
+      font-size: 42px;
+      line-height: 1.18;
+      font-weight: 760;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.64);
+      z-index: 50;
+    }
+  </style>
+</head>
+<body>
+  <main id="root" class="clip" data-composition-id="main" data-width="1920" data-height="1080" data-start="0" data-duration="333.903" data-track-index="0">
+    <audio id="narration" data-start="0" data-duration="333.903" data-track-index="90" src="assets/audio/voiceover-solo-final-mix.m4a"></audio>
 
-      html,
-      body {
-        margin: 0;
-        width: 1920px;
-        height: 1080px;
-        overflow: hidden;
-        background: #071018;
-        font-family: Pretendard, SUIT, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
-      }
-
-      :root {
-        --bg: #071018;
-        --panel: rgba(19, 30, 49, 0.76);
-        --panel-strong: rgba(25, 38, 63, 0.92);
-        --border: rgba(140, 211, 255, 0.18);
-        --text: #f3f7fb;
-        --muted: #8b98a8;
-        --cyan: #68e1f5;
-        --yellow: #ffd935;
-        --green: #66f095;
-        --purple: #b46cff;
-        --danger: #ff4e8a;
-      }
-
-      #root {
-        position: relative;
-        width: 1920px;
-        height: 1080px;
-        overflow: hidden;
-        color: var(--text);
-        background:
-          radial-gradient(circle at 18% 72%, rgba(104, 225, 245, 0.18), transparent 22%),
-          radial-gradient(circle at 74% 24%, rgba(180, 108, 255, 0.16), transparent 24%),
-          linear-gradient(135deg, #071018 0%, #0a111d 52%, #101827 100%);
-      }
-
-      .clip {
-        position: absolute;
-      }
-
-      .background {
-        inset: 0;
-      }
-
-      .grain {
-        position: absolute;
-        inset: 0;
-        opacity: 0.22;
-        background-image:
-          linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-        background-size: 64px 64px;
-        mask-image: radial-gradient(circle at center, black, transparent 78%);
-      }
-
-      .star {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        border-radius: 999px;
-        background: rgba(243, 247, 251, 0.88);
-        box-shadow: 0 0 16px rgba(104, 225, 245, 0.5);
-      }
-
-      .star.s1 { left: 140px; top: 155px; opacity: 0.55; }
-      .star.s2 { left: 380px; top: 760px; opacity: 0.4; }
-      .star.s3 { left: 615px; top: 268px; opacity: 0.65; background: var(--cyan); }
-      .star.s4 { left: 880px; top: 840px; opacity: 0.45; }
-      .star.s5 { left: 1180px; top: 180px; opacity: 0.52; background: var(--purple); }
-      .star.s6 { left: 1520px; top: 640px; opacity: 0.5; background: var(--yellow); }
-      .star.s7 { left: 1740px; top: 310px; opacity: 0.42; }
-      .star.s8 { left: 1660px; top: 900px; opacity: 0.38; background: var(--green); }
-
-      .stage {
-        position: absolute;
-        width: 2500px;
-        height: 1220px;
-        left: 0;
-        top: 0;
-        transform-origin: center center;
-      }
-
-      .eyebrow {
-        font-size: 22px;
-        line-height: 1.2;
-        color: var(--cyan);
-        letter-spacing: 0;
-        font-weight: 800;
-        text-transform: uppercase;
-      }
-
-      .hero-title {
-        left: 330px;
-        top: 275px;
-        width: 1260px;
-        font-size: 92px;
-        line-height: 1.08;
-        font-weight: 900;
-        letter-spacing: 0;
-        text-align: center;
-        text-shadow: 0 16px 54px rgba(0, 0, 0, 0.42);
-      }
-
-      .hero-title .accent,
-      .headline .accent,
-      .metric .accent {
-        color: var(--cyan);
-        text-shadow: 0 0 28px rgba(104, 225, 245, 0.48);
-      }
-
-      .subline {
-        left: 570px;
-        top: 520px;
-        width: 780px;
-        text-align: center;
-        font-size: 30px;
-        line-height: 1.4;
-        color: rgba(243, 247, 251, 0.72);
-        font-weight: 650;
-      }
-
-      .compare {
-        left: 260px;
-        top: 332px;
-        width: 1400px;
-        height: 360px;
-      }
-
-      .compare-line {
-        left: 690px;
-        top: 14px;
-        width: 2px;
-        height: 330px;
-        background: linear-gradient(transparent, rgba(104, 225, 245, 0.35), transparent);
-      }
-
-      .mini-card {
-        width: 132px;
-        height: 90px;
-        border-radius: 14px;
-        border: 1px solid var(--border);
-        background: var(--panel);
-        box-shadow: 0 0 40px rgba(104, 225, 245, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-        display: grid;
-        place-items: center;
-        font-size: 22px;
-        font-weight: 800;
-        color: var(--muted);
-      }
-
-      .mini-card.active {
-        color: var(--text);
-        border-color: rgba(104, 225, 245, 0.56);
-        box-shadow: 0 0 34px rgba(104, 225, 245, 0.28);
-      }
-
-      .diagram-label {
-        top: -48px;
-        width: 560px;
-        text-align: center;
-        font-size: 21px;
-        color: rgba(243, 247, 251, 0.56);
-        font-weight: 800;
-      }
-
-      .diagram-label.left { left: 30px; }
-      .diagram-label.right { left: 815px; color: rgba(104, 225, 245, 0.78); }
-
-      .grid-title {
-        left: 545px;
-        top: 140px;
-        width: 830px;
-        text-align: center;
-        font-size: 42px;
-        font-weight: 900;
-      }
-
-      .cards {
-        left: 310px;
-        top: 280px;
-        width: 1300px;
-        height: 500px;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 18px;
-      }
-
-      .feature-card {
-        position: relative;
-        border-radius: 22px;
-        border: 1px solid rgba(140, 211, 255, 0.16);
-        background: linear-gradient(135deg, rgba(25, 38, 63, 0.94), rgba(14, 23, 40, 0.92));
-        padding: 42px 46px;
-        box-shadow: 0 20px 70px rgba(0, 0, 0, 0.28);
-      }
-
-      .feature-card .num {
-        color: var(--cyan);
-        font-size: 42px;
-        font-weight: 900;
-        margin-bottom: 28px;
-      }
-
-      .feature-card .title {
-        font-size: 34px;
-        font-weight: 900;
-        margin-bottom: 16px;
-      }
-
-      .feature-card .desc {
-        font-size: 22px;
-        color: var(--muted);
-        font-weight: 650;
-      }
-
-      .metric {
-        left: 210px;
-        top: 300px;
-        width: 650px;
-      }
-
-      .metric .label {
-        color: var(--cyan);
-        font-size: 22px;
-        font-weight: 800;
-        margin-bottom: 28px;
-      }
-
-      .metric .number {
-        font-size: 150px;
-        line-height: 0.9;
-        color: var(--cyan);
-        font-weight: 950;
-        text-shadow: 0 0 50px rgba(104, 225, 245, 0.4);
-      }
-
-      .chart {
-        left: 1040px;
-        top: 560px;
-        width: 560px;
-        height: 230px;
-        display: flex;
-        align-items: flex-end;
-        gap: 28px;
-        padding: 0 20px 18px;
-        border-bottom: 2px solid rgba(140, 211, 255, 0.12);
-      }
-
-      .bar {
-        width: 76px;
-        border-radius: 14px 14px 4px 4px;
-        background: linear-gradient(180deg, var(--purple), var(--cyan));
-        box-shadow: 0 0 32px rgba(104, 225, 245, 0.18);
-        transform-origin: bottom;
-      }
-
-      .bar.b1 { height: 62px; }
-      .bar.b2 { height: 92px; }
-      .bar.b3 { height: 130px; }
-      .bar.b4 { height: 176px; }
-      .bar.b5 { height: 108px; }
-
-      .process {
-        left: 250px;
-        top: 250px;
-        width: 1420px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-      }
-
-      .process-card {
-        min-height: 360px;
-        border-radius: 24px;
-        background: var(--panel-strong);
-        border: 1px solid var(--border);
-        padding: 54px 44px;
-        box-shadow: 0 28px 90px rgba(0, 0, 0, 0.28);
-      }
-
-      .process-card .tag {
-        color: var(--cyan);
-        font-size: 24px;
-        font-weight: 900;
-        margin-bottom: 45px;
-      }
-
-      .process-card .main {
-        font-size: 42px;
-        line-height: 1.2;
-        font-weight: 900;
-      }
-
-      .headline {
-        left: 360px;
-        top: 430px;
-        width: 1200px;
-        text-align: center;
-        font-size: 68px;
-        line-height: 1.18;
-        font-weight: 900;
-      }
-
-      .caption {
-        left: 360px;
-        bottom: 82px;
-        width: 1200px;
-        padding: 28px 46px;
-        border-radius: 18px;
-        background: rgba(0, 0, 0, 0.72);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        text-align: center;
-        font-size: 42px;
-        line-height: 1.2;
-        font-weight: 800;
-        box-shadow: 0 22px 80px rgba(0, 0, 0, 0.44);
-      }
-
-      .safe-frame {
-        position: absolute;
-        inset: 54px;
-        border: 1px solid rgba(140, 211, 255, 0.04);
-        border-radius: 28px;
-      }
-    </style>
-  </head>
-  <body>
-    <div
-      id="root"
-      data-composition-id="main"
-      data-start="0"
-      data-duration="18"
-      data-width="1920"
-      data-height="1080"
-    >
-      <div id="background" class="clip background" data-start="0" data-duration="18" data-track-index="0">
-        <div class="grain"></div>
-        <span class="star s1"></span>
-        <span class="star s2"></span>
-        <span class="star s3"></span>
-        <span class="star s4"></span>
-        <span class="star s5"></span>
-        <span class="star s6"></span>
-        <span class="star s7"></span>
-        <span class="star s8"></span>
-        <div class="safe-frame"></div>
+    <section id="scene-01" class="clip scene" data-start="0" data-duration="13.4" data-track-index="1">
+      <div class="scene-head">
+        <div>
+          <div class="eyebrow">Claude Managed Agents</div>
+          <h1>앤스로픽이 에이전트 기능 <span class="highlight">네 가지</span>를 공개했습니다.</h1>
+        </div>
+        <div class="scene-no">01</div>
       </div>
+      <div class="grid-4 stage">
+        <div class="card"><span class="big-number">01</span><h3>드리밍</h3><p>비활성 시간에 경험과 메모리를 다시 정리합니다.</p></div>
+        <div class="card"><span class="big-number">02</span><h3>아웃컴</h3><p>좋은 결과의 기준을 주고 결과물을 평가합니다.</p></div>
+        <div class="card"><span class="big-number">03</span><h3>멀티에이전트</h3><p>리드가 일을 쪼개고 전문 에이전트가 병렬 처리합니다.</p></div>
+        <div class="card"><span class="big-number">04</span><h3>이벤트</h3><p>조건이 발생하면 에이전트 작업이 자동으로 시작됩니다.</p></div>
+      </div>
+    </section>
 
-      <div id="stage" class="clip stage" data-start="0" data-duration="18" data-track-index="1">
-        <div id="heroTitle" class="clip hero-title" data-start="0" data-duration="4.5" data-track-index="2">
-          AI한테 시키면<br />
-          <span class="accent">알아서 끝까지</span> 해주는 시대
-        </div>
-        <div id="heroSub" class="clip subline" data-start="0.8" data-duration="3.5" data-track-index="3">
-          Agentic AI는 답변이 아니라 작업 흐름을 완성합니다
-        </div>
+    <section id="scene-02" class="clip scene" data-start="13.4" data-duration="9.0" data-track-index="2">
+      <div class="scene-head">
+        <div><div class="eyebrow">Reframe</div><h2>이번 핵심은 더 똑똑한 챗봇이 아닙니다.</h2></div>
+        <div class="scene-no">02</div>
+      </div>
+      <div class="connector-row">
+        <div class="node"><span class="tag">Before</span><h3>하나의 모델</h3><p>입력하면 답하고, 세션이 끝나면 흐름도 끊깁니다.</p></div>
+        <div class="arrow"></div>
+        <div class="node"><span class="tag">Now</span><h3>운영 시스템</h3><p>기억하고, 평가하고, 나눠서 처리합니다.</p></div>
+        <div class="arrow"></div>
+        <div class="node"><span class="tag">Point</span><h3>작은 제작팀</h3><p>에이전트가 혼자 일하는 도구에서 팀 구조로 이동합니다.</p></div>
+      </div>
+    </section>
 
-        <div id="compare" class="clip compare" data-start="4.1" data-duration="4.2" data-track-index="4">
-          <div id="compare-label-generative" class="clip diagram-label left" data-start="4.1" data-duration="4.2" data-track-index="5">GENERATIVE AI</div>
-          <div id="compare-label-agentic" class="clip diagram-label right" data-start="4.1" data-duration="4.2" data-track-index="6">AGENTIC AI</div>
-          <div id="compare-divider" class="clip compare-line" data-start="4.1" data-duration="4.2" data-track-index="7"></div>
-          <div id="compare-old-question" class="clip mini-card old1" data-start="4.2" data-duration="4" data-track-index="8" style="left: 100px; top: 130px">질문</div>
-          <div id="compare-old-answer" class="clip mini-card old2" data-start="4.3" data-duration="3.9" data-track-index="9" style="left: 290px; top: 130px">답변</div>
-          <div id="compare-old-end" class="clip mini-card old3" data-start="4.4" data-duration="3.8" data-track-index="10" style="left: 480px; top: 130px">끝</div>
-          <div id="compare-new-plan" class="clip mini-card active new1" data-start="4.2" data-duration="4" data-track-index="11" style="left: 980px; top: 28px">계획</div>
-          <div id="compare-new-execute" class="clip mini-card active new2" data-start="4.5" data-duration="3.7" data-track-index="12" style="left: 1180px; top: 128px">실행</div>
-          <div id="compare-new-verify" class="clip mini-card active new3" data-start="4.8" data-duration="3.4" data-track-index="13" style="left: 980px; top: 230px">검증</div>
-          <div id="compare-new-revise" class="clip mini-card active new4" data-start="5.1" data-duration="3.1" data-track-index="14" style="left: 780px; top: 128px">수정</div>
+    <section id="scene-03" class="clip scene" data-start="22.4" data-duration="28.5" data-track-index="3">
+      <div class="scene-head">
+        <div><div class="eyebrow">1. Dreaming</div><h2>드리밍은 쉬는 시간에 경험을 다시 정리하는 기능입니다.</h2></div>
+        <div class="scene-no">03</div>
+      </div>
+      <div class="memory-board">
+        <div class="panel dream-panel">
+          <span class="tag">세션 사이의 학습</span>
+          <div class="cycle">
+            <div class="cycle-step">작업 기록</div>
+            <div class="arrow"></div>
+            <div class="cycle-step">패턴 정리</div>
+            <div class="arrow"></div>
+            <div class="cycle-step">다음 세션 메모리</div>
+          </div>
+          <p>작업 중에 배우는 게 메모리라면, 드리밍은 세션 사이에 배우는 구조입니다.</p>
         </div>
-
-        <div id="gridTitle" class="clip grid-title" data-start="8.1" data-duration="4.5" data-track-index="30">
-          에이전틱 AI의 네 가지 핵심
-        </div>
-        <div id="cards" class="clip cards" data-start="8.3" data-duration="4.4" data-track-index="31">
-          <div class="feature-card c1">
-            <div class="num">01</div>
-            <div class="title">목표 분해</div>
-            <div class="desc">큰 요청을 실행 가능한 단계로 나눕니다</div>
-          </div>
-          <div class="feature-card c2">
-            <div class="num">02</div>
-            <div class="title">도구 사용</div>
-            <div class="desc">검색, 코드, 파일 작업을 직접 호출합니다</div>
-          </div>
-          <div class="feature-card c3">
-            <div class="num">03</div>
-            <div class="title">자기 검증</div>
-            <div class="desc">결과가 맞는지 다시 확인합니다</div>
-          </div>
-          <div class="feature-card c4">
-            <div class="num">04</div>
-            <div class="title">장기 기억</div>
-            <div class="desc">이전 맥락을 다음 작업에 반영합니다</div>
-          </div>
-        </div>
-
-        <div id="metric" class="clip metric" data-start="12.4" data-duration="3" data-track-index="32">
-          <div class="label">GARTNER / 시장 전망</div>
-          <div class="number"><span id="count">0</span><span class="accent">%</span></div>
-        </div>
-        <div id="chart" class="clip chart" data-start="12.7" data-duration="3.2" data-track-index="33">
-          <div class="bar b1"></div>
-          <div class="bar b2"></div>
-          <div class="bar b3"></div>
-          <div class="bar b4"></div>
-          <div class="bar b5"></div>
-        </div>
-
-        <div id="process" class="clip process" data-start="15.1" data-duration="2.9" data-track-index="34">
-          <div class="process-card p1">
-            <div class="tag">01</div>
-            <div class="main">고객 응대<br /><span class="accent">30초</span></div>
-          </div>
-          <div class="process-card p2">
-            <div class="tag">02</div>
-            <div class="main">코드 작성<br /><span class="accent">12분</span></div>
-          </div>
-          <div class="process-card p3">
-            <div class="tag">03</div>
-            <div class="main">사용 조사<br /><span class="accent">20분</span></div>
-          </div>
-        </div>
-
-        <div id="finalLine" class="clip headline" data-start="16.2" data-duration="1.8" data-track-index="35">
-          이제 AI는 답하는 도구가 아니라,<br />
-          <span class="accent">일하는 시스템</span>입니다.
+        <div class="stack">
+          <div class="item">반복해서 막힌 지점</div>
+          <div class="item">자주 성공한 작업 방식</div>
+          <div class="item">팀이 선호한 표현과 구조</div>
+          <div class="item">다음 세션에 쓸 만한 메모리</div>
         </div>
       </div>
+    </section>
 
-      <div id="caption" class="clip caption" data-start="0" data-duration="18" data-track-index="20">
-        AI한테 일을 시키는 방식이 바뀌고 있습니다.
+    <section id="scene-04" class="clip scene" data-start="50.9" data-duration="28.5" data-track-index="4">
+      <div class="scene-head">
+        <div><div class="eyebrow">Where It Helps</div><h2>드리밍이 좋은 순간은 작업이 하루 안에 끝나지 않을 때입니다.</h2></div>
+        <div class="scene-no">04</div>
       </div>
-    </div>
+      <div class="grid-3 stage">
+        <div class="card"><span class="big-number">01</span><h3>장기 프로젝트</h3><p>어제의 판단과 오늘의 요청이 이어질 때 컨텍스트 손실을 줄입니다.</p></div>
+        <div class="card"><span class="big-number">02</span><h3>반복 업무</h3><p>매번 같은 실수를 다시 설명하지 않아도 됩니다.</p></div>
+        <div class="card"><span class="big-number">03</span><h3>팀 단위 규칙</h3><p>개인의 취향이 아니라 팀의 작업 패턴을 메모리로 정리합니다.</p></div>
+      </div>
+    </section>
 
-    <script>
-      window.__timelines = window.__timelines || {};
+    <section id="scene-05" class="clip scene" data-start="79.4" data-duration="36.5" data-track-index="5">
+      <div class="scene-head">
+        <div><div class="eyebrow">2. Outcome</div><h2>아웃컴은 에이전트에게 좋은 결과의 기준을 주는 기능입니다.</h2></div>
+        <div class="scene-no">05</div>
+      </div>
+      <div class="connector-row">
+        <div class="node"><span class="tag">작업자</span><h3>에이전트가 결과물을 만듭니다.</h3><p>코드, 문서, 리포트, 답변이 여기서 나옵니다.</p></div>
+        <div class="arrow"></div>
+        <div class="node"><span class="tag">기준</span><h3>루브릭이 점검 기준을 정합니다.</h3><p>정확성, 형식, 완성도 같은 기준을 명시합니다.</p></div>
+        <div class="arrow"></div>
+        <div class="node"><span class="tag">검수자</span><h3>별도 평가 모델이 채점합니다.</h3><p>부족하면 다시 고치는 루프가 생깁니다.</p></div>
+      </div>
+    </section>
 
-      const tl = gsap.timeline({ paused: true });
-      const count = { value: 0 };
+    <section id="scene-06" class="clip scene" data-start="115.9" data-duration="19.9" data-track-index="6">
+      <div class="scene-head">
+        <div><div class="eyebrow">When To Use Outcome</div><h2>정답보다 기준이 중요한 작업에서 강합니다.</h2></div>
+        <div class="scene-no">06</div>
+      </div>
+      <div class="rubric">
+        <div class="score-box">
+          <h3>좋은 사용처</h3>
+          <div class="list">
+            <div class="item">문서 품질 검수</div>
+            <div class="item">지원 답변 톤 검사</div>
+            <div class="item">코드 리뷰 체크리스트</div>
+          </div>
+        </div>
+        <div class="score-box fail">
+          <h3>핵심 변화</h3>
+          <p>에이전트가 "대충 했습니다"에서 끝나는 게 아니라, 정해진 기준을 통과할 때까지 돌아옵니다.</p>
+        </div>
+      </div>
+    </section>
 
-      tl.from("#heroTitle", { opacity: 0, y: 42, scale: 0.96, filter: "blur(8px)", duration: 0.7, ease: "power3.out" }, 0)
-        .from("#heroSub", { opacity: 0, y: 24, duration: 0.55, ease: "power3.out" }, 0.55)
-        .to("#caption", { textContent: "AI한테 시키면 알아서 끝까지 해주는 시대입니다.", duration: 0.01 }, 0)
-        .to("#heroTitle .accent", { scale: 1.045, transformOrigin: "center center", yoyo: true, repeat: 1, duration: 0.22 }, 1.35)
-        .to("#stage", { x: -70, y: -20, scale: 1.035, duration: 2.3, ease: "sine.inOut" }, 1.1)
-        .to(["#heroTitle", "#heroSub"], { opacity: 0.12, filter: "blur(2px)", duration: 0.5 }, 3.55)
+    <section id="scene-07" class="clip scene" data-start="135.9" data-duration="40.0" data-track-index="7">
+      <div class="scene-head">
+        <div><div class="eyebrow">3. Multi-Agent</div><h2>멀티에이전트 오케스트레이션은 일을 쪼개서 병렬로 맡기는 구조입니다.</h2></div>
+        <div class="scene-no">07</div>
+      </div>
+      <div class="network">
+        <div class="line l1"></div><div class="line l2"></div><div class="line l3"></div><div class="line l4"></div>
+        <div class="agent-node lead"><h3>리드 에이전트</h3><p>계획, 분배, 통합</p></div>
+        <div class="agent-node a"><h3>로그 담당</h3><p>오류 원인 분석</p></div>
+        <div class="agent-node b"><h3>문서 담당</h3><p>변경점 정리</p></div>
+        <div class="agent-node c"><h3>메트릭 담당</h3><p>수치와 추세 확인</p></div>
+        <div class="agent-node d"><h3>지원 담당</h3><p>고객 맥락 정리</p></div>
+      </div>
+    </section>
 
-        .from("#compare", { opacity: 0, y: 36, duration: 0.55, ease: "power3.out" }, 4.05)
-        .from(".old1, .old2, .old3", { opacity: 0, y: 22, stagger: 0.12, duration: 0.42, ease: "power3.out" }, 4.25)
-        .from(".new1, .new2, .new3, .new4", { opacity: 0, scale: 0.86, stagger: 0.16, duration: 0.42, ease: "back.out(1.7)" }, 4.75)
-        .to("#caption", { textContent: "기존 AI는 답하고 끝났지만, 에이전틱 AI는 단계별로 실행합니다.", duration: 0.01 }, 4.25)
-        .to("#stage", { x: -210, y: -35, scale: 1.04, duration: 2.4, ease: "sine.inOut" }, 5.1)
-        .to("#compare", { opacity: 0.12, filter: "blur(2px)", duration: 0.45 }, 7.65)
+    <section id="scene-08" class="clip scene" data-start="175.9" data-duration="21.5" data-track-index="8">
+      <div class="scene-head">
+        <div><div class="eyebrow">Parallel Work</div><h2>복잡한 작업일수록 한 명이 끝까지 붙잡는 방식이 느려집니다.</h2></div>
+        <div class="scene-no">08</div>
+      </div>
+      <div class="grid-4 stage">
+        <div class="card"><h3>빌드 로그</h3><p>수백 개 로그를 나눠 읽고 실패 패턴을 합칩니다.</p></div>
+        <div class="card"><h3>문서 변경</h3><p>문서 담당은 릴리즈 노트와 사용자 안내를 정리합니다.</p></div>
+        <div class="card"><h3>코드 경로</h3><p>구현 담당은 실제 코드 위치와 수정 범위를 봅니다.</p></div>
+        <div class="card"><h3>통합 판단</h3><p>리드가 결과를 합쳐 다음 액션을 결정합니다.</p></div>
+      </div>
+    </section>
 
-        .from("#gridTitle", { opacity: 0, y: 28, duration: 0.45, ease: "power3.out" }, 8.0)
-        .from(".feature-card", { opacity: 0, y: 34, scale: 0.96, stagger: 0.14, duration: 0.48, ease: "power3.out" }, 8.35)
-        .to("#caption", { textContent: "핵심은 목표 분해, 도구 사용, 자기 검증, 장기 기억입니다.", duration: 0.01 }, 8.25)
-        .to("#stage", { x: -20, y: -90, scale: 1.0, duration: 2.6, ease: "sine.inOut" }, 8.8)
-        .to(["#gridTitle", "#cards"], { opacity: 0.1, filter: "blur(2px)", duration: 0.45 }, 12.1)
+    <section id="scene-09" class="clip scene" data-start="197.4" data-duration="28.0" data-track-index="9">
+      <div class="scene-head">
+        <div><div class="eyebrow">4. Event Triggers</div><h2>이벤트 트리거는 에이전트를 호출하지 않아도 일이 시작되게 합니다.</h2></div>
+        <div class="scene-no">09</div>
+      </div>
+      <div class="event-flow">
+        <div class="event-box"><small>Event</small><h3>문서 업로드</h3><p>새 파일이나 요청이 들어옵니다.</p></div>
+        <div class="arrow"></div>
+        <div class="event-box"><small>Trigger</small><h3>조건 감지</h3><p>시스템이 자동으로 담당 에이전트를 깨웁니다.</p></div>
+        <div class="arrow"></div>
+        <div class="event-box"><small>Action</small><h3>후속 작업</h3><p>분석, 요약, 검토, 알림이 이어집니다.</p></div>
+      </div>
+    </section>
 
-        .from("#metric", { opacity: 0, x: -55, duration: 0.55, ease: "power3.out" }, 12.35)
-        .to(count, {
-          value: 15,
-          duration: 1.1,
-          ease: "power2.out",
-          onUpdate: function () {
-            document.getElementById("count").textContent = String(Math.round(count.value));
-          }
-        }, 12.55)
-        .from(".bar", { scaleY: 0, stagger: 0.12, duration: 0.55, ease: "power3.out" }, 12.85)
-        .to("#caption", { textContent: "숫자와 그래프는 주장의 무게를 바로 보여줍니다.", duration: 0.01 }, 12.45)
-        .to("#stage", { x: -120, y: -80, scale: 1.025, duration: 2.1, ease: "sine.inOut" }, 13.0)
-        .to(["#metric", "#chart"], { opacity: 0.12, filter: "blur(2px)", duration: 0.45 }, 15.15)
+    <section id="scene-10" class="clip scene" data-start="225.4" data-duration="22.6" data-track-index="10">
+      <div class="scene-head">
+        <div><div class="eyebrow">Automation Surface</div><h2>이벤트는 에이전트를 제품 안의 자동 워크플로로 바꿉니다.</h2></div>
+        <div class="scene-no">10</div>
+      </div>
+      <div class="grid-3 stage">
+        <div class="card"><span class="tag">문서</span><h3>업로드 후 검토</h3><p>계약서나 리포트가 들어오면 검토 흐름을 시작합니다.</p></div>
+        <div class="card"><span class="tag">운영</span><h3>로그 후 알림</h3><p>장애 신호가 오면 분석하고 슬랙으로 요약합니다.</p></div>
+        <div class="card"><span class="tag">콘텐츠</span><h3>렌더 후 QA</h3><p>새 영상이 나오면 스냅샷과 자막 상태를 확인합니다.</p></div>
+      </div>
+    </section>
 
-        .from(".process-card", { opacity: 0, y: 42, scale: 0.96, stagger: 0.16, duration: 0.45, ease: "power3.out" }, 15.25)
-        .to("#caption", { textContent: "좋은 모션은 말의 순서대로 화면을 설계하는 것입니다.", duration: 0.01 }, 15.35)
-        .to("#process", { opacity: 0, y: -26, duration: 0.45 }, 16.2)
-        .from("#finalLine", { opacity: 0, y: 36, scale: 0.98, duration: 0.55, ease: "power3.out" }, 16.35)
-        .to("#caption", { textContent: "이제 AI는 답하는 도구가 아니라, 일하는 시스템입니다.", duration: 0.01 }, 16.35)
-        .to("#finalLine .accent", { scale: 1.045, transformOrigin: "center center", yoyo: true, repeat: 1, duration: 0.2 }, 17.2);
+    <section id="scene-11" class="clip scene" data-start="248.0" data-duration="26.9" data-track-index="11">
+      <div class="scene-head">
+        <div><div class="eyebrow">System Shift</div><h2>네 기능은 서로 다른 축에서 에이전트를 바꿉니다.</h2></div>
+        <div class="scene-no">11</div>
+      </div>
+      <div class="stack">
+        <div class="axis"><strong>드리밍</strong><p>시간 축에서 이전 경험을 다음 작업으로 연결합니다.</p></div>
+        <div class="axis"><strong>아웃컴</strong><p>품질 축에서 결과물이 기준을 통과하게 만듭니다.</p></div>
+        <div class="axis"><strong>멀티에이전트</strong><p>복잡도 축에서 일을 분산하고 통합합니다.</p></div>
+        <div class="axis"><strong>이벤트</strong><p>자동화 축에서 조건이 맞으면 작업을 시작합니다.</p></div>
+      </div>
+    </section>
 
-      window.__timelines["main"] = tl;
-    </script>
-  </body>
+    <section id="scene-12" class="clip scene" data-start="274.9" data-duration="36.5" data-track-index="12">
+      <div class="scene-head">
+        <div><div class="eyebrow">Use Cases</div><h2>실제 사례는 같은 방향을 보여줍니다.</h2></div>
+        <div class="scene-no">12</div>
+      </div>
+      <div class="case-grid">
+        <div class="case-card"><span class="tag">Harvey</span><h3>장기 법률 작업</h3><p>드리밍처럼 반복 맥락을 정리해야 가치가 커집니다.</p></div>
+        <div class="case-card"><span class="tag">Netflix</span><h3>빌드 로그 분석</h3><p>수많은 로그를 병렬로 나눠 보는 구조가 맞습니다.</p></div>
+        <div class="case-card"><span class="tag">Spiral</span><h3>요청 라우팅</h3><p>가벼운 모델과 강한 모델을 역할별로 배치합니다.</p></div>
+        <div class="case-card"><span class="tag">Wisedocs</span><h3>문서 검수</h3><p>결과 기준이 분명한 작업에서 아웃컴이 어울립니다.</p></div>
+      </div>
+    </section>
+
+    <section id="scene-13" class="clip scene final-statement" data-start="311.4" data-duration="22.5" data-track-index="13">
+      <div>
+        <div class="eyebrow">Final Question</div>
+        <h2>에이전트 경쟁은 <span class="highlight">어떤 모델</span>에서<br />어떤 시스템으로 운영하느냐로 넘어가고 있습니다.</h2>
+      </div>
+    </section>
+
+    <div id="caption" class="clip" data-start="0" data-duration="333.903" data-track-index="80"></div>
+  </main>
+
+  <script>
+    const DURATION = 333.903;
+    const SCENES = [
+      ["#scene-01", 0, 13.4],
+      ["#scene-02", 13.4, 9.0],
+      ["#scene-03", 22.4, 28.5],
+      ["#scene-04", 50.9, 28.5],
+      ["#scene-05", 79.4, 36.5],
+      ["#scene-06", 115.9, 19.9],
+      ["#scene-07", 135.9, 40.0],
+      ["#scene-08", 175.9, 21.5],
+      ["#scene-09", 197.4, 28.0],
+      ["#scene-10", 225.4, 22.6],
+      ["#scene-11", 248.0, 26.9],
+      ["#scene-12", 274.9, 36.5],
+      ["#scene-13", 311.4, 22.5]
+    ];
+
+    function loadJson(path) {
+      const request = new XMLHttpRequest();
+      request.open("GET", path, false);
+      request.send(null);
+      return JSON.parse(request.responseText);
+    }
+
+    window.__hyperframes = window.__hyperframes || {};
+    window.__hyperframes.duration = DURATION;
+    window.__timelines = window.__timelines || {};
+
+    const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
+    gsap.set(".scene", { autoAlpha: 0 });
+    gsap.set("#caption", { textContent: "" });
+
+    SCENES.forEach(([selector, start, duration]) => {
+      const end = start + duration;
+      tl.set(selector, { autoAlpha: 1 }, start);
+      tl.fromTo(`${selector} .scene-head`, { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7 }, start + 0.12);
+      tl.fromTo(`${selector} .card, ${selector} .node, ${selector} .item, ${selector} .event-box, ${selector} .axis, ${selector} .case-card, ${selector} .screenshot, ${selector} .agent-node`,
+        { y: 38, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.8, stagger: 0.08 },
+        start + 0.35
+      );
+      tl.fromTo(`${selector} .arrow, ${selector} .line`, { scaleX: 0, autoAlpha: 0 }, { scaleX: 1, autoAlpha: 1, duration: 0.7, stagger: 0.07 }, start + 0.9);
+      if (end < DURATION - 0.4) {
+        tl.to(selector, { autoAlpha: 0, duration: 0.25 }, end - 0.25);
+      }
+    });
+
+    window.__timelines["main"] = tl;
+
+    let captions = [];
+    try {
+      captions = loadJson("src/captions.json");
+    } catch (error) {
+      captions = [
+        { start: 0, text: "앤스로픽이 에이전트 기능 네 가지를 공개했습니다." },
+        { start: 13.4, text: "이번 핵심은 더 똑똑한 챗봇이 아니라 운영 구조입니다." },
+        { start: 22.4, text: "첫 번째, 드리밍은 쉬는 시간에 경험을 다시 정리합니다." },
+        { start: 79.4, text: "두 번째, 아웃컴은 좋은 결과의 기준을 주는 기능입니다." },
+        { start: 135.9, text: "세 번째, 멀티에이전트는 일을 쪼개서 병렬로 맡깁니다." },
+        { start: 197.4, text: "네 번째, 이벤트 트리거는 조건이 맞으면 작업을 자동으로 시작합니다." },
+        { start: 248.0, text: "네 기능은 에이전트를 모델이 아니라 시스템으로 바꿉니다." },
+        { start: 311.4, text: "이제 경쟁은 어떤 모델을 쓰느냐에서 어떤 시스템으로 운영하느냐로 넘어갑니다." }
+      ];
+    }
+    captions.forEach((cue) => {
+      tl.set("#caption", { textContent: cue.text }, cue.start);
+    });
+    tl.set("#caption", { textContent: "" }, DURATION - 0.12);
+
+    window.__timelines["main"] = tl;
+  </script>
+</body>
 </html>

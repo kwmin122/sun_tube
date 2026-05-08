@@ -9,6 +9,7 @@ import {
   readElevenLabsKeyFromEnv,
   readText,
   rel,
+  run,
   saveProject,
   secondsToSrtTime,
   writeBinary,
@@ -20,11 +21,31 @@ const VOICE_ID = "WzMnDIgiICcj1oXbUBO0";
 const MODEL = "eleven_flash_v2_5";
 const OUTPUT_FORMAT = "mp3_44100_128";
 
-function alignmentToSrt(alignment, fallbackText) {
+function audioDurationSeconds(audioPath) {
+  const result = run("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", audioPath], { timeout: 30_000 });
+  if (result.status !== 0) return null;
+  const value = Number(result.stdout.trim());
+  return Number.isFinite(value) && value > 0 ? value : null;
+}
+
+function normalizeCuesToDuration(cues, targetDuration) {
+  if (!targetDuration || !cues.length) return cues;
+  const lastEnd = cues.at(-1)?.end || 0;
+  if (!lastEnd) return cues;
+  if (Math.abs(lastEnd - targetDuration) / targetDuration <= 0.08) return cues;
+  const scale = targetDuration / lastEnd;
+  return cues.map((cue) => ({
+    ...cue,
+    start: cue.start * scale,
+    end: Math.max(cue.end * scale, cue.start * scale + 0.4),
+  }));
+}
+
+function alignmentToSrt(alignment, fallbackText, targetDuration = null) {
   const chars = alignment?.chars || [];
   const starts = alignment?.char_start_times_seconds || [];
   const ends = alignment?.char_end_times_seconds || [];
-  if (!chars.length || !starts.length || !ends.length) return roughSrt(fallbackText);
+  if (!chars.length || !starts.length || !ends.length) return roughSrt(fallbackText, targetDuration);
 
   const cues = [];
   let text = "";
@@ -42,14 +63,21 @@ function alignmentToSrt(alignment, fallbackText) {
     }
   }
   if (text.trim()) cues.push({ start, end: Math.max(end, start + 0.6), text: text.replace(/\s+/g, " ").trim() });
-  return cuesToSrt(cues);
+  return cuesToSrt(normalizeCuesToDuration(cues, targetDuration));
 }
 
-function roughSrt(text) {
+function roughSrt(text, targetDuration = null) {
   const lines = text.split(/\n+/).map((line) => line.trim()).filter(Boolean);
+  const weights = lines.map((line) => Math.max(1.8, Math.min(5.2, line.length / 7)));
+  const totalWeight = weights.reduce((sum, value) => sum + value, 0) || 1;
+  const target = targetDuration || totalWeight;
+  let cursor = 0;
   const cues = lines.map((line, index) => {
-    const start = index * 3.2;
-    return { start, end: start + Math.max(2.2, Math.min(5.0, line.length / 9)), text: line };
+    const duration = Math.max(0.8, (weights[index] / totalWeight) * target);
+    const start = cursor;
+    const end = index === lines.length - 1 ? target : Math.min(target, start + duration);
+    cursor = end;
+    return { start, end: Math.max(end, start + 0.4), text: line };
   });
   return cuesToSrt(cues);
 }
@@ -84,6 +112,22 @@ const outDir = join(projectPath, "voiceover/solo");
 const audioPath = join(outDir, "voiceover-solo-elevenlabs.mp3");
 const srtPath = join(outDir, "voiceover-solo-elevenlabs.srt");
 const manifestPath = join(outDir, "elevenlabs_manifest.json");
+
+if (args["repair-srt"]) {
+  if (!existsSync(audioPath)) {
+    console.error(`SRT repair blocked: missing ${rel(audioPath)}`);
+    process.exit(1);
+  }
+  const duration = audioDurationSeconds(audioPath);
+  await writeText(srtPath, roughSrt(script, duration));
+  project.artifacts.tts = existsSync(audioPath) && existsSync(srtPath);
+  project.status = "tts";
+  project.currentGate = "timing";
+  await saveProject(projectPath, project);
+  console.log(`Repaired: ${rel(srtPath)}`);
+  console.log(`Duration: ${duration?.toFixed(3) || "unknown"}s`);
+  process.exit(0);
+}
 
 if (args["dry-run"]) {
   console.log(`Dry run: would generate ElevenLabs TTS for ${rel(projectPath)}`);
@@ -135,7 +179,9 @@ if (!data.audio_base64) {
 
 await writeBinary(audioPath, Buffer.from(data.audio_base64, "base64"));
 const alignment = data.normalized_alignment || data.alignment;
-await writeText(srtPath, alignmentToSrt(alignment, script));
+const alignmentReady = Boolean(alignment?.chars?.length && alignment?.char_start_times_seconds?.length && alignment?.char_end_times_seconds?.length);
+const duration = audioDurationSeconds(audioPath);
+await writeText(srtPath, alignmentToSrt(alignment, script, duration));
 await writeJson(manifestPath, {
   provider: "ElevenLabs",
   voice: "Sam Hottman",
@@ -145,7 +191,8 @@ await writeJson(manifestPath, {
   outputFormat: OUTPUT_FORMAT,
   audio: rel(audioPath),
   srt: rel(srtPath),
-  alignment: Boolean(alignment),
+  alignment: alignmentReady,
+  durationSeconds: duration,
   generatedAt: new Date().toISOString(),
 });
 

@@ -3,35 +3,35 @@
   "id": "002",
   "slug": "claude-managed-agents",
   "title": "Claude Managed Agents 업데이트",
-  "status": "review",
-  "currentGate": "review",
+  "status": "done",
+  "currentGate": "done",
   "createdAt": "2026-05-08T00:00:00.000Z",
-  "updatedAt": "2026-05-08T13:58:37.000Z",
+  "updatedAt": "2026-05-08T14:22:22.440Z",
   "approved": {
     "creativeBrief": true,
-    "plan": false,
-    "tts": false,
-    "timedScenePackets": false,
-    "render": false
+    "plan": true,
+    "tts": true,
+    "timedScenePackets": true,
+    "render": true
   },
   "artifacts": {
     "researchPack": true,
     "creativeBrief": true,
     "draftScenePackets": true,
     "plan": true,
-    "tts": false,
-    "audioMix": false,
-    "timedScenePackets": false,
+    "tts": true,
+    "audioMix": true,
+    "timedScenePackets": true,
     "assetPlan": true,
     "designContext": true,
-    "composition": false,
-    "render": false
+    "composition": true,
+    "render": true
   },
   "routes": {
-    "workOrders": "not_required",
+    "workOrders": "done",
     "videoUse": "not_required",
     "imagegen": "not_required",
-    "capture": "planned",
-    "hyperframes": "planned"
+    "capture": "done",
+    "hyperframes": "done"
   }
 }

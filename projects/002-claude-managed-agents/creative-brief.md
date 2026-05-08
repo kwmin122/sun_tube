@@ -7,7 +7,7 @@ Owner: `hype-showrunner` and `hype-creative-director`
 - Chosen angle: Claude Managed Agents 업데이트의 본질은 "더 똑똑한 모델"이 아니라 "에이전트를 회사처럼 운영하는 시스템"이다.
 - Viewer promise: 드리밍, 아웃컴, 멀티에이전트 오케스트레이션, 웹훅이 각각 무엇이고 언제 좋은지 이해한다.
 - Target viewer: AI 코딩/자동화/콘텐츠 제작에 에이전트를 쓰는 개발자와 빌더
-- Length decision: about 6min, information-delivery explainer
+- Length decision: about 5min 34s, information-delivery explainer
 - Format: 1920x1080 horizontal
 - Tone: clear information delivery + technical explainer
 - Primary content pattern: Problem -> Cause -> Fix

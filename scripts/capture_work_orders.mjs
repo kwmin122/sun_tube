@@ -28,7 +28,11 @@ if (!["required", "planned", "in_progress"].includes(project.routes?.capture)) {
 
 const workOrderPath = join(projectPath, "work-orders/capture.md");
 const rows = tableRows(await readText(workOrderPath)).flatMap((table) => table.rows);
-const tasks = rows.filter((row) => row.Route !== "not_required" && row.Input && /^https?:\/\//.test(row.Input));
+const tasks = rows.flatMap((row) => {
+  if (row.Route === "not_required" || !row.Input) return [];
+  const urls = String(row.Input).match(/https?:\/\/[^\s,|)]+/g) || [];
+  return urls.map((url, urlIndex) => ({ ...row, Input: url, urlIndex }));
+});
 
 if (!tasks.length) {
   console.log(`No executable capture URLs found in ${rel(workOrderPath)}`);
