@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/hype-tuber/project.schema.json",
+  "title": "Hype Tuber Project State",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "slug",
+    "title",
+    "status",
+    "currentGate",
+    "createdAt",
+    "updatedAt",
+    "approved",
+    "artifacts",
+    "routes"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^[0-9]{3}$" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "title": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": [
+        "idea",
+        "research",
+        "creative",
+        "script",
+        "review",
+        "tts",
+        "timing",
+        "assets",
+        "motion",
+        "pre_render_qa",
+        "render",
+        "final_qa",
+        "package",
+        "done",
+        "blocked"
+      ]
+    },
+    "currentGate": {
+      "type": "string",
+      "enum": [
+        "topic_intake",
+        "research",
+        "creative",
+        "draft_scenes",
+        "script",
+        "review",
+        "tts",
+        "timing",
+        "assets",
+        "motion",
+        "pre_render_qa",
+        "render",
+        "final_qa",
+        "package",
+        "done",
+        "blocked"
+      ]
+    },
+    "createdAt": { "type": "string" },
+    "updatedAt": { "type": "string" },
+    "approved": {
+      "type": "object",
+      "required": ["creativeBrief", "plan", "tts", "timedScenePackets", "render"],
+      "properties": {
+        "creativeBrief": { "type": "boolean" },
+        "plan": { "type": "boolean" },
+        "tts": { "type": "boolean" },
+        "timedScenePackets": { "type": "boolean" },
+        "render": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "artifacts": {
+      "type": "object",
+      "required": [
+        "researchPack",
+        "creativeBrief",
+        "draftScenePackets",
+        "plan",
+        "tts",
+        "audioMix",
+        "timedScenePackets",
+        "assetPlan",
+        "designContext",
+        "composition",
+        "render"
+      ],
+      "properties": {
+        "researchPack": { "type": "boolean" },
+        "creativeBrief": { "type": "boolean" },
+        "draftScenePackets": { "type": "boolean" },
+        "plan": { "type": "boolean" },
+        "tts": { "type": "boolean" },
+        "audioMix": { "type": "boolean" },
+        "timedScenePackets": { "type": "boolean" },
+        "assetPlan": { "type": "boolean" },
+        "designContext": { "type": "boolean" },
+        "composition": { "type": "boolean" },
+        "render": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "routes": {
+      "type": "object",
+      "required": ["workOrders", "videoUse", "imagegen", "capture", "hyperframes"],
+      "properties": {
+        "workOrders": { "$ref": "#/$defs/routeState" },
+        "videoUse": { "$ref": "#/$defs/routeState" },
+        "imagegen": { "$ref": "#/$defs/routeState" },
+        "capture": { "$ref": "#/$defs/routeState" },
+        "hyperframes": { "$ref": "#/$defs/routeState" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "routeState": {
+      "type": "string",
+      "enum": ["not_required", "required", "planned", "in_progress", "done", "blocked"]
+    }
+  }
+}

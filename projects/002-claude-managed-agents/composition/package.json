@@ -1,0 +1,12 @@
+{
+  "name": "hype-tuber-composition-template",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes hyperframes@0.5.3 preview",
+    "check": "npx --yes hyperframes@0.5.3 lint && npx --yes hyperframes@0.5.3 inspect",
+    "snapshot": "npx --yes hyperframes@0.5.3 snapshot",
+    "render": "npx --yes hyperframes@0.5.3 render",
+    "publish": "npx --yes hyperframes@0.5.3 publish"
+  }
+}

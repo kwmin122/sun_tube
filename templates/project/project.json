@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "000",
+  "slug": "template",
+  "title": "Template Project",
+  "status": "idea",
+  "currentGate": "topic_intake",
+  "createdAt": "",
+  "updatedAt": "",
+  "approved": {
+    "creativeBrief": false,
+    "plan": false,
+    "tts": false,
+    "timedScenePackets": false,
+    "render": false
+  },
+  "artifacts": {
+    "researchPack": false,
+    "creativeBrief": false,
+    "draftScenePackets": false,
+    "plan": false,
+    "tts": false,
+    "audioMix": false,
+    "timedScenePackets": false,
+    "assetPlan": false,
+    "designContext": false,
+    "composition": false,
+    "render": false
+  },
+  "routes": {
+    "workOrders": "not_required",
+    "videoUse": "not_required",
+    "imagegen": "not_required",
+    "capture": "not_required",
+    "hyperframes": "planned"
+  }
+}

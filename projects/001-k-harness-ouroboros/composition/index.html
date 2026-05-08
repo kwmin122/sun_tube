@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #071018;
+        font-family: "Noto Sans KR", system-ui, sans-serif;
+      }
+      :root {
+        --bg: #071018;
+        --panel: rgba(18, 30, 50, 0.82);
+        --panel-2: rgba(26, 40, 66, 0.94);
+        --border: rgba(135, 218, 255, 0.18);
+        --text: #f3f7fb;
+        --muted: #8998aa;
+        --cyan: #68e1f5;
+        --yellow: #ffd935;
+        --green: #66f095;
+        --purple: #b46cff;
+        --danger: #ff4e8a;
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 18% 72%, rgba(104, 225, 245, 0.18), transparent 22%),
+          radial-gradient(circle at 78% 24%, rgba(180, 108, 255, 0.17), transparent 24%),
+          linear-gradient(135deg, #071018 0%, #0a111d 55%, #101827 100%);
+      }
+      .clip { position: absolute; }
+      .background { inset: 0; }
+      .grid {
+        position: absolute;
+        inset: 0;
+        opacity: 0.2;
+        background-image:
+          linear-gradient(rgba(255,255,255,0.026) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+        background-size: 72px 72px;
+        mask-image: radial-gradient(circle at center, black, transparent 78%);
+      }
+      .orb {
+        position: absolute;
+        width: 340px;
+        height: 340px;
+        border-radius: 999px;
+        filter: blur(54px);
+        opacity: 0.16;
+      }
+      .orb.cyan { left: 100px; top: 660px; background: var(--cyan); }
+      .orb.purple { right: 180px; top: 90px; background: var(--purple); }
+      .star {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 999px;
+        background: rgba(243,247,251,0.8);
+        box-shadow: 0 0 18px rgba(104,225,245,0.55);
+      }
+      .s1 { left: 170px; top: 150px; opacity: 0.42; }
+      .s2 { left: 420px; top: 765px; background: var(--green); opacity: 0.38; }
+      .s3 { left: 630px; top: 300px; background: var(--cyan); opacity: 0.56; }
+      .s4 { left: 940px; top: 825px; opacity: 0.42; }
+      .s5 { left: 1220px; top: 190px; background: var(--purple); opacity: 0.62; }
+      .s6 { left: 1500px; top: 630px; background: var(--yellow); opacity: 0.52; }
+      .s7 { left: 1745px; top: 315px; opacity: 0.34; }
+      .scene {
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        transform: translateY(-120px);
+      }
+      .stage-wide {
+        position: absolute;
+        left: -120px;
+        top: 0;
+        width: 2280px;
+        height: 1080px;
+      }
+      .hero {
+        position: absolute;
+        left: 250px;
+        top: 245px;
+        width: 1420px;
+        font-size: 86px;
+        line-height: 1.12;
+        font-weight: 950;
+        text-align: center;
+        letter-spacing: 0;
+        text-shadow: 0 22px 70px rgba(0,0,0,0.45);
+      }
+      .accent-cyan { color: var(--cyan); text-shadow: 0 0 34px rgba(104,225,245,0.42); }
+      .accent-yellow { color: var(--yellow); text-shadow: 0 0 34px rgba(255,217,53,0.34); }
+      .muted { color: var(--muted); }
+      .subtitle {
+        position: absolute;
+        left: 380px;
+        top: 525px;
+        width: 1160px;
+        text-align: center;
+        font-size: 34px;
+        line-height: 1.35;
+        font-weight: 700;
+        color: rgba(243,247,251,0.72);
+      }
+      .broken-list {
+        position: absolute;
+        left: 650px;
+        top: 655px;
+        width: 620px;
+        display: grid;
+        gap: 16px;
+      }
+      .bad-item, .question-card, .spec-card, .gate, .process-card {
+        border-radius: 22px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+        box-shadow: 0 24px 80px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+      }
+      .bad-item {
+        padding: 22px 28px;
+        font-size: 28px;
+        font-weight: 850;
+        color: rgba(243,247,251,0.88);
+      }
+      .bad-item span {
+        display: inline-grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        margin-right: 16px;
+        border-radius: 999px;
+        color: var(--danger);
+        background: rgba(255,78,138,0.12);
+        box-shadow: 0 0 24px rgba(255,78,138,0.18);
+      }
+      .product-card {
+        position: absolute;
+        left: 365px;
+        top: 260px;
+        width: 1190px;
+        height: 470px;
+        padding: 62px 70px;
+        border-radius: 34px;
+        border: 1px solid rgba(104,225,245,0.22);
+        background: linear-gradient(135deg, rgba(22,36,60,0.96), rgba(8,16,28,0.9));
+        box-shadow: 0 28px 110px rgba(0,0,0,0.38), 0 0 90px rgba(104,225,245,0.08);
+      }
+      .eyebrow {
+        font-size: 24px;
+        font-weight: 900;
+        color: var(--cyan);
+        margin-bottom: 32px;
+      }
+      .product-title {
+        font-size: 74px;
+        line-height: 1.05;
+        font-weight: 950;
+        margin-bottom: 32px;
+      }
+      .product-copy {
+        font-size: 34px;
+        line-height: 1.38;
+        font-weight: 720;
+        color: rgba(243,247,251,0.75);
+      }
+      .questions {
+        position: absolute;
+        left: 330px;
+        top: 248px;
+        width: 1260px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .question-card {
+        min-height: 360px;
+        padding: 46px 40px;
+      }
+      .question-card .num, .process-card .num {
+        font-size: 36px;
+        font-weight: 950;
+        color: var(--cyan);
+        margin-bottom: 46px;
+      }
+      .question-card .q {
+        font-size: 42px;
+        line-height: 1.22;
+        font-weight: 920;
+      }
+      .scene-title {
+        position: absolute;
+        left: 360px;
+        top: 145px;
+        width: 1200px;
+        text-align: center;
+        font-size: 48px;
+        font-weight: 950;
+      }
+      .meter-wrap {
+        position: absolute;
+        left: 410px;
+        top: 365px;
+        width: 1100px;
+        padding: 58px 62px;
+        border-radius: 32px;
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+      }
+      .meter-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 34px;
+        font-weight: 900;
+        margin-bottom: 34px;
+      }
+      .meter {
+        position: relative;
+        width: 100%;
+        height: 42px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.08);
+        overflow: hidden;
+      }
+      .meter-fill {
+        width: 78%;
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--danger), var(--yellow), var(--green));
+        transform-origin: left center;
+      }
+      .meter-note {
+        margin-top: 34px;
+        font-size: 42px;
+        font-weight: 950;
+        text-align: center;
+      }
+      .diamond-wrap {
+        position: absolute;
+        left: 265px;
+        top: 220px;
+        width: 1390px;
+        height: 560px;
+      }
+      .diamond {
+        position: absolute;
+        width: 310px;
+        height: 310px;
+        transform: rotate(45deg);
+        border: 3px solid rgba(104,225,245,0.45);
+        background: rgba(26,40,66,0.5);
+        box-shadow: 0 0 60px rgba(104,225,245,0.08);
+      }
+      .diamond.d1 { left: 200px; top: 130px; }
+      .diamond.d2 { right: 200px; top: 130px; border-color: rgba(255,217,53,0.48); }
+      .diamond-label {
+        position: absolute;
+        width: 320px;
+        text-align: center;
+        font-size: 40px;
+        line-height: 1.2;
+        font-weight: 950;
+      }
+      .diamond-label.l1 { left: 195px; top: 230px; }
+      .diamond-label.l2 { right: 195px; top: 230px; }
+      .arrow-line {
+        position: absolute;
+        left: 590px;
+        top: 284px;
+        width: 220px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--cyan), var(--yellow));
+        box-shadow: 0 0 26px rgba(104,225,245,0.25);
+      }
+      .gates {
+        position: absolute;
+        left: 265px;
+        top: 315px;
+        width: 1390px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 26px;
+      }
+      .gate {
+        min-height: 270px;
+        padding: 46px;
+      }
+      .gate .label {
+        font-size: 24px;
+        font-weight: 900;
+        color: var(--muted);
+        margin-bottom: 48px;
+      }
+      .gate .name {
+        font-size: 48px;
+        font-weight: 950;
+      }
+      .gate.active {
+        border-color: rgba(102,240,149,0.56);
+        box-shadow: 0 0 60px rgba(102,240,149,0.12), 0 24px 80px rgba(0,0,0,0.3);
+      }
+      .loop {
+        position: absolute;
+        left: 410px;
+        top: 200px;
+        width: 1100px;
+        height: 520px;
+      }
+      .loop svg {
+        position: absolute;
+        left: 250px;
+        top: 40px;
+        width: 600px;
+        height: 360px;
+        overflow: visible;
+      }
+      .loop path {
+        fill: none;
+        stroke: var(--cyan);
+        stroke-width: 8;
+        stroke-linecap: round;
+        stroke-dasharray: 1100;
+        stroke-dashoffset: 1100;
+        filter: drop-shadow(0 0 22px rgba(104,225,245,0.35));
+      }
+      .loop-node {
+        position: absolute;
+        width: 210px;
+        padding: 20px 24px;
+        text-align: center;
+        border-radius: 18px;
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        font-size: 28px;
+        font-weight: 900;
+      }
+      .n1 { left: 445px; top: 15px; }
+      .n2 { right: 165px; top: 210px; }
+      .n3 { left: 445px; bottom: 20px; }
+      .n4 { left: 165px; top: 210px; }
+      .final {
+        position: absolute;
+        left: 220px;
+        top: 250px;
+        width: 1480px;
+        text-align: center;
+        font-size: 76px;
+        line-height: 1.18;
+        font-weight: 950;
+      }
+      .caption {
+        left: 315px;
+        bottom: 72px;
+        width: 1290px;
+        min-height: 106px;
+        padding: 28px 48px;
+        border-radius: 20px;
+        background: rgba(0,0,0,0.74);
+        border: 1px solid rgba(255,255,255,0.08);
+        text-align: center;
+        font-size: 42px;
+        line-height: 1.2;
+        font-weight: 850;
+        color: #f6fbff;
+        box-shadow: 0 22px 90px rgba(0,0,0,0.45);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="82" data-width="1920" data-height="1080">
+      <div id="background" class="clip background" data-start="0" data-duration="82" data-track-index="0">
+        <div class="grid"></div>
+        <div class="orb cyan"></div>
+        <div class="orb purple"></div>
+        <span class="star s1"></span><span class="star s2"></span><span class="star s3"></span><span class="star s4"></span>
+        <span class="star s5"></span><span class="star s6"></span><span class="star s7"></span>
+      </div>
+
+      <audio id="narration" data-start="0" data-duration="82" data-track-index="90" src="assets/audio/voiceover-solo-final-mix.m4a"></audio>
+
+      <section id="scene-hook" class="clip scene" data-start="0" data-duration="8.6" data-track-index="1">
+        <div class="hero">AI가 코드를<br /><span class="accent-yellow">못 쓰는 게 아닙니다</span></div>
+        <div class="subtitle">문제는 출력이 아니라 입력입니다</div>
+        <div class="broken-list">
+          <div class="bad-item"><span>x</span>목표가 흐림</div>
+          <div class="bad-item"><span>x</span>제약이 없음</div>
+          <div class="bad-item"><span>x</span>성공 기준이 없음</div>
+        </div>
+      </section>
+
+      <section id="scene-definition" class="clip scene" data-start="8.6" data-duration="9.4" data-track-index="1">
+        <div class="product-card">
+          <div class="eyebrow">K-HARNESS / OUROBOROS</div>
+          <div class="product-title">코드 전에<br /><span class="accent-cyan">명세를 고정하는 엔진</span></div>
+          <div class="product-copy">막연한 아이디어를 검증된 스펙으로 바꾼 뒤 실행합니다.</div>
+        </div>
+      </section>
+
+      <section id="scene-questions" class="clip scene" data-start="18" data-duration="13.6" data-track-index="1">
+        <div class="scene-title">먼저 질문합니다</div>
+        <div class="questions">
+          <div class="question-card q1"><div class="num">01</div><div class="q">무엇을<br />만들 건가</div></div>
+          <div class="question-card q2"><div class="num">02</div><div class="q">제약은<br />뭔가</div></div>
+          <div class="question-card q3"><div class="num">03</div><div class="q">성공 기준은<br />뭔가</div></div>
+        </div>
+      </section>
+
+      <section id="scene-seed" class="clip scene" data-start="31.6" data-duration="9.4" data-track-index="1">
+        <div class="scene-title">Seed Gate</div>
+        <div class="meter-wrap">
+          <div class="meter-label"><span>Ambiguity</span><span class="accent-cyan">0.2 이하</span></div>
+          <div class="meter"><div class="meter-fill"></div></div>
+          <div class="meter-note">그 전에는 코딩이 아니라 <span class="accent-yellow">추측</span>입니다</div>
+        </div>
+      </section>
+
+      <section id="scene-diamond" class="clip scene" data-start="41" data-duration="6.9" data-track-index="1">
+        <div class="scene-title">Double Diamond</div>
+        <div class="diamond-wrap">
+          <div class="diamond d1"></div><div class="diamond d2"></div>
+          <div class="arrow-line"></div>
+          <div class="diamond-label l1">넓히고<br /><span class="muted">탐색</span></div>
+          <div class="diamond-label l2">좁혀서<br /><span class="accent-yellow">설계</span></div>
+        </div>
+      </section>
+
+      <section id="scene-evaluate" class="clip scene" data-start="47.9" data-duration="7.3" data-track-index="1">
+        <div class="scene-title">세 단계 평가</div>
+        <div class="gates">
+          <div class="gate g1"><div class="label">01</div><div class="name">Mechanical</div></div>
+          <div class="gate g2"><div class="label">02</div><div class="name">Semantic</div></div>
+          <div class="gate g3"><div class="label">03</div><div class="name">Consensus</div></div>
+        </div>
+      </section>
+
+      <section id="scene-loop" class="clip scene" data-start="55.2" data-duration="8.0" data-track-index="1">
+        <div class="scene-title">평가 결과가 다음 명세의 입력이 됩니다</div>
+        <div class="loop">
+          <svg viewBox="0 0 600 360" aria-hidden="true">
+            <path d="M300 30 C520 30 560 170 420 265 C300 345 80 300 75 170 C70 65 180 35 300 30" />
+          </svg>
+          <div class="loop-node n1">Interview</div>
+          <div class="loop-node n2">Seed</div>
+          <div class="loop-node n3">Evaluate</div>
+          <div class="loop-node n4">Evolve</div>
+        </div>
+      </section>
+
+      <section id="scene-final" class="clip scene" data-start="63.3" data-duration="18.7" data-track-index="1">
+        <div class="final">
+          좋은 AI 코딩은<br />
+          <span class="accent-cyan">프롬프트를 잘 치는 게 아니라</span><br />
+          코드 전에 명세를 통과시키는 겁니다
+        </div>
+      </section>
+
+      <div id="cap-01" class="clip caption" data-start="0.029" data-duration="1.810" data-track-index="80">AI가 코드를 못 쓰는 게 아닙니다.</div>
+      <div id="cap-02" class="clip caption" data-start="2.049" data-duration="1.890" data-track-index="80">우리가 뭘 만들지 덜 정한 겁니다.</div>
+      <div id="cap-03" class="clip caption" data-start="4.209" data-duration="2.290" data-track-index="80">그래서 결과가 자꾸 흔들립니다.</div>
+      <div id="cap-04" class="clip caption" data-start="6.729" data-duration="1.691" data-track-index="80">오늘 볼 건 우로보로스입니다.</div>
+      <div id="cap-05" class="clip caption" data-start="8.969" data-duration="1.531" data-track-index="80">K-harness로 설명하면,</div>
+      <div id="cap-06" class="clip caption" data-start="10.910" data-duration="2.409" data-track-index="80">코드 전에 명세를 고정하는 엔진입니다.</div>
+      <div id="cap-07" class="clip caption" data-start="13.889" data-duration="1.151" data-track-index="80">아이디어가 막연하면,</div>
+      <div id="cap-08" class="clip caption" data-start="15.289" data-duration="1.390" data-track-index="80">바로 구현하지 않습니다.</div>
+      <div id="cap-09" class="clip caption" data-start="17.050" data-duration="0.990" data-track-index="80">먼저 질문합니다.</div>
+      <div id="cap-10" class="clip caption" data-start="18.550" data-duration="1.189" data-track-index="80">무엇을 만들 건가.</div>
+      <div id="cap-11" class="clip caption" data-start="20.189" data-duration="0.931" data-track-index="80">제약은 뭔가.</div>
+      <div id="cap-12" class="clip caption" data-start="21.450" data-duration="1.129" data-track-index="80">성공 기준은 뭔가.</div>
+      <div id="cap-13" class="clip caption" data-start="22.929" data-duration="1.871" data-track-index="80">이게 소크라테스식 인터뷰입니다.</div>
+      <div id="cap-14" class="clip caption" data-start="25.309" data-duration="1.510" data-track-index="80">그 다음 Seed로 바꿉니다.</div>
+      <div id="cap-15" class="clip caption" data-start="27.389" data-duration="1.731" data-track-index="80">대답을 그냥 저장하는 게 아니라,</div>
+      <div id="cap-16" class="clip caption" data-start="29.429" data-duration="1.970" data-track-index="80">실행 가능한 스펙으로 압축합니다.</div>
+      <div id="cap-17" class="clip caption" data-start="31.809" data-duration="1.210" data-track-index="80">핵심 숫자도 있습니다.</div>
+      <div id="cap-18" class="clip caption" data-start="33.409" data-duration="2.271" data-track-index="80">모호성이 0.2 밑으로 내려가야,</div>
+      <div id="cap-19" class="clip caption" data-start="35.869" data-duration="1.650" data-track-index="80">비로소 만들 준비가 됩니다.</div>
+      <div id="cap-20" class="clip caption" data-start="37.729" data-duration="1.571" data-track-index="80">그 전에는 코딩이 아닙니다.</div>
+      <div id="cap-21" class="clip caption" data-start="39.490" data-duration="1.109" data-track-index="80">그건 추측입니다.</div>
+      <div id="cap-22" class="clip caption" data-start="40.749" data-duration="1.670" data-track-index="80">그 다음은 실행입니다.</div>
+      <div id="cap-23" class="clip caption" data-start="42.490" data-duration="1.429" data-track-index="80">Double Diamond로 넓히고,</div>
+      <div id="cap-24" class="clip caption" data-start="44.189" data-duration="1.750" data-track-index="80">다시 좁혀서 설계합니다.</div>
+      <div id="cap-25" class="clip caption" data-start="46.109" data-duration="1.490" data-track-index="80">마지막은 평가입니다.</div>
+      <div id="cap-26" class="clip caption" data-start="47.970" data-duration="0.889" data-track-index="80">Mechanical,</div>
+      <div id="cap-27" class="clip caption" data-start="48.889" data-duration="0.611" data-track-index="80">Semantic,</div>
+      <div id="cap-28" class="clip caption" data-start="49.529" data-duration="0.870" data-track-index="80">Consensus.</div>
+      <div id="cap-29" class="clip caption" data-start="50.489" data-duration="1.830" data-track-index="80">세 단계로 결과를 걸러냅니다.</div>
+      <div id="cap-30" class="clip caption" data-start="52.609" data-duration="2.190" data-track-index="80">그리고 끝나면 다시 돌아옵니다.</div>
+      <div id="cap-31" class="clip caption" data-start="55.310" data-duration="2.769" data-track-index="80">평가 결과가 다음 명세의 입력이 됩니다.</div>
+      <div id="cap-32" class="clip caption" data-start="58.329" data-duration="2.830" data-track-index="80">그래서 우로보로스는 반복이 아니라,</div>
+      <div id="cap-33" class="clip caption" data-start="61.549" data-duration="1.350" data-track-index="80">진화 루프입니다.</div>
+      <div id="cap-34" class="clip caption" data-start="63.689" data-duration="1.291" data-track-index="80">좋은 AI 코딩은,</div>
+      <div id="cap-35" class="clip caption" data-start="65.249" data-duration="2.010" data-track-index="80">프롬프트를 잘 치는 게 아닙니다.</div>
+      <div id="cap-36" class="clip caption" data-start="68.030" data-duration="2.209" data-track-index="80">코드 전에 명세를 통과시키는 겁니다.</div>
+      <div id="cap-37" class="clip caption" data-start="70.829" data-duration="1.070" data-track-index="80">아이디어가 흐리면,</div>
+      <div id="cap-38" class="clip caption" data-start="72.310" data-duration="1.350" data-track-index="80">AI는 빠르게 틀립니다.</div>
+      <div id="cap-39" class="clip caption" data-start="73.829" data-duration="1.130" data-track-index="80">명세가 선명하면,</div>
+      <div id="cap-40" class="clip caption" data-start="75.249" data-duration="1.430" data-track-index="80">AI는 빠르게 맞춥니다.</div>
+      <div id="cap-41" class="clip caption" data-start="76.889" data-duration="1.930" data-track-index="80">이게 우로보로스의 핵심입니다.</div>
+      <div id="cap-42" class="clip caption" data-start="79.049" data-duration="1.310" data-track-index="80">프롬프트를 멈추고,</div>
+      <div id="cap-43" class="clip caption" data-start="80.549" data-duration="1.130" data-track-index="80">명세부터 시작하세요.</div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      tl.from("#scene-hook .hero", { opacity: 0, y: 42, scale: 0.96, filter: "blur(8px)", duration: 0.7, ease: "power3.out" }, 0)
+        .from("#scene-hook .subtitle", { opacity: 0, y: 24, duration: 0.5, ease: "power3.out" }, 1.2)
+        .from("#scene-hook .bad-item", { opacity: 0, y: 24, stagger: 0.18, duration: 0.45, ease: "power3.out" }, 3.8)
+        .to("#scene-hook .accent-yellow", { scale: 1.045, transformOrigin: "center center", yoyo: true, repeat: 1, duration: 0.22 }, 5.0)
+
+        .from("#scene-definition .product-card", { opacity: 0, y: 46, scale: 0.96, filter: "blur(8px)", duration: 0.65, ease: "power3.out" }, 8.65)
+        .from("#scene-definition .eyebrow", { opacity: 0, y: 18, duration: 0.35 }, 9.05)
+        .from("#scene-definition .product-title", { opacity: 0, y: 24, duration: 0.45, ease: "power3.out" }, 9.55)
+        .from("#scene-definition .product-copy", { opacity: 0, y: 20, duration: 0.45, ease: "power3.out" }, 11.2)
+
+        .from("#scene-questions .scene-title", { opacity: 0, y: 20, duration: 0.45 }, 18.0)
+        .from("#scene-questions .question-card", { opacity: 0, y: 36, scale: 0.96, stagger: 0.35, duration: 0.55, ease: "power3.out" }, 18.6)
+        .to("#scene-questions .q1", { borderColor: "rgba(104,225,245,0.58)", duration: 0.35 }, 18.6)
+        .to("#scene-questions .q2", { borderColor: "rgba(104,225,245,0.58)", duration: 0.35 }, 20.1)
+        .to("#scene-questions .q3", { borderColor: "rgba(104,225,245,0.58)", duration: 0.35 }, 21.45)
+
+        .from("#scene-seed .scene-title", { opacity: 0, y: 18, duration: 0.45 }, 31.6)
+        .from("#scene-seed .meter-wrap", { opacity: 0, y: 36, scale: 0.97, duration: 0.55, ease: "power3.out" }, 32.0)
+        .fromTo("#scene-seed .meter-fill", { scaleX: 1 }, { scaleX: 0.2, duration: 2.2, ease: "power2.inOut" }, 33.3)
+        .from("#scene-seed .meter-note", { opacity: 0, y: 22, duration: 0.45 }, 37.5)
+
+        .from("#scene-diamond .scene-title", { opacity: 0, y: 20, duration: 0.45 }, 41.0)
+        .from("#scene-diamond .diamond", { opacity: 0, scale: 0.72, stagger: 0.18, duration: 0.62, ease: "back.out(1.5)" }, 41.7)
+        .from("#scene-diamond .arrow-line", { opacity: 0, scaleX: 0, transformOrigin: "left center", duration: 0.6, ease: "power3.out" }, 42.6)
+        .from("#scene-diamond .diamond-label", { opacity: 0, y: 22, stagger: 0.22, duration: 0.45 }, 43.0)
+
+        .from("#scene-evaluate .scene-title", { opacity: 0, y: 18, duration: 0.45 }, 47.9)
+        .from("#scene-evaluate .gate", { opacity: 0, y: 34, stagger: 0.22, duration: 0.5, ease: "power3.out" }, 48.0)
+        .to("#scene-evaluate .g1", { className: "+=active", duration: 0.01 }, 47.97)
+        .to("#scene-evaluate .g2", { className: "+=active", duration: 0.01 }, 48.88)
+        .to("#scene-evaluate .g3", { className: "+=active", duration: 0.01 }, 49.52)
+
+        .from("#scene-loop .scene-title", { opacity: 0, y: 20, duration: 0.45 }, 55.2)
+        .from("#scene-loop .loop-node", { opacity: 0, scale: 0.88, stagger: 0.2, duration: 0.42, ease: "back.out(1.4)" }, 55.8)
+        .to("#scene-loop path", { strokeDashoffset: 0, duration: 2.8, ease: "power2.inOut" }, 56.2)
+
+        .from("#scene-final .final", { opacity: 0, y: 44, scale: 0.97, filter: "blur(8px)", duration: 0.7, ease: "power3.out" }, 63.4)
+        .to("#scene-final .accent-cyan", { scale: 1.04, transformOrigin: "center center", yoyo: true, repeat: 1, duration: 0.22 }, 65.4)
+        .to("#scene-final .final", { y: -28, duration: 2.6, ease: "sine.inOut" }, 73.2)
+        .to("#scene-final .accent-cyan", { color: "#ffd935", duration: 0.3 }, 79.05);
+
+      gsap.to(".star", { y: -18, opacity: 0.72, stagger: 0.2, repeat: 24, yoyo: true, duration: 3.2, ease: "sine.inOut" });
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

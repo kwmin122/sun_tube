@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #071018;
+        font-family: Pretendard, SUIT, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+      }
+
+      :root {
+        --bg: #071018;
+        --panel: rgba(19, 30, 49, 0.76);
+        --panel-strong: rgba(25, 38, 63, 0.92);
+        --border: rgba(140, 211, 255, 0.18);
+        --text: #f3f7fb;
+        --muted: #8b98a8;
+        --cyan: #68e1f5;
+        --yellow: #ffd935;
+        --green: #66f095;
+        --purple: #b46cff;
+        --danger: #ff4e8a;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 18% 72%, rgba(104, 225, 245, 0.18), transparent 22%),
+          radial-gradient(circle at 74% 24%, rgba(180, 108, 255, 0.16), transparent 24%),
+          linear-gradient(135deg, #071018 0%, #0a111d 52%, #101827 100%);
+      }
+
+      .clip {
+        position: absolute;
+      }
+
+      .background {
+        inset: 0;
+      }
+
+      .grain {
+        position: absolute;
+        inset: 0;
+        opacity: 0.22;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+        background-size: 64px 64px;
+        mask-image: radial-gradient(circle at center, black, transparent 78%);
+      }
+
+      .star {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 999px;
+        background: rgba(243, 247, 251, 0.88);
+        box-shadow: 0 0 16px rgba(104, 225, 245, 0.5);
+      }
+
+      .star.s1 { left: 140px; top: 155px; opacity: 0.55; }
+      .star.s2 { left: 380px; top: 760px; opacity: 0.4; }
+      .star.s3 { left: 615px; top: 268px; opacity: 0.65; background: var(--cyan); }
+      .star.s4 { left: 880px; top: 840px; opacity: 0.45; }
+      .star.s5 { left: 1180px; top: 180px; opacity: 0.52; background: var(--purple); }
+      .star.s6 { left: 1520px; top: 640px; opacity: 0.5; background: var(--yellow); }
+      .star.s7 { left: 1740px; top: 310px; opacity: 0.42; }
+      .star.s8 { left: 1660px; top: 900px; opacity: 0.38; background: var(--green); }
+
+      .stage {
+        position: absolute;
+        width: 2500px;
+        height: 1220px;
+        left: 0;
+        top: 0;
+        transform-origin: center center;
+      }
+
+      .eyebrow {
+        font-size: 22px;
+        line-height: 1.2;
+        color: var(--cyan);
+        letter-spacing: 0;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .hero-title {
+        left: 330px;
+        top: 275px;
+        width: 1260px;
+        font-size: 92px;
+        line-height: 1.08;
+        font-weight: 900;
+        letter-spacing: 0;
+        text-align: center;
+        text-shadow: 0 16px 54px rgba(0, 0, 0, 0.42);
+      }
+
+      .hero-title .accent,
+      .headline .accent,
+      .metric .accent {
+        color: var(--cyan);
+        text-shadow: 0 0 28px rgba(104, 225, 245, 0.48);
+      }
+
+      .subline {
+        left: 570px;
+        top: 520px;
+        width: 780px;
+        text-align: center;
+        font-size: 30px;
+        line-height: 1.4;
+        color: rgba(243, 247, 251, 0.72);
+        font-weight: 650;
+      }
+
+      .compare {
+        left: 260px;
+        top: 332px;
+        width: 1400px;
+        height: 360px;
+      }
+
+      .compare-line {
+        left: 690px;
+        top: 14px;
+        width: 2px;
+        height: 330px;
+        background: linear-gradient(transparent, rgba(104, 225, 245, 0.35), transparent);
+      }
+
+      .mini-card {
+        width: 132px;
+        height: 90px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+        box-shadow: 0 0 40px rgba(104, 225, 245, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        display: grid;
+        place-items: center;
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--muted);
+      }
+
+      .mini-card.active {
+        color: var(--text);
+        border-color: rgba(104, 225, 245, 0.56);
+        box-shadow: 0 0 34px rgba(104, 225, 245, 0.28);
+      }
+
+      .diagram-label {
+        top: -48px;
+        width: 560px;
+        text-align: center;
+        font-size: 21px;
+        color: rgba(243, 247, 251, 0.56);
+        font-weight: 800;
+      }
+
+      .diagram-label.left { left: 30px; }
+      .diagram-label.right { left: 815px; color: rgba(104, 225, 245, 0.78); }
+
+      .grid-title {
+        left: 545px;
+        top: 140px;
+        width: 830px;
+        text-align: center;
+        font-size: 42px;
+        font-weight: 900;
+      }
+
+      .cards {
+        left: 310px;
+        top: 280px;
+        width: 1300px;
+        height: 500px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+      }
+
+      .feature-card {
+        position: relative;
+        border-radius: 22px;
+        border: 1px solid rgba(140, 211, 255, 0.16);
+        background: linear-gradient(135deg, rgba(25, 38, 63, 0.94), rgba(14, 23, 40, 0.92));
+        padding: 42px 46px;
+        box-shadow: 0 20px 70px rgba(0, 0, 0, 0.28);
+      }
+
+      .feature-card .num {
+        color: var(--cyan);
+        font-size: 42px;
+        font-weight: 900;
+        margin-bottom: 28px;
+      }
+
+      .feature-card .title {
+        font-size: 34px;
+        font-weight: 900;
+        margin-bottom: 16px;
+      }
+
+      .feature-card .desc {
+        font-size: 22px;
+        color: var(--muted);
+        font-weight: 650;
+      }
+
+      .metric {
+        left: 210px;
+        top: 300px;
+        width: 650px;
+      }
+
+      .metric .label {
+        color: var(--cyan);
+        font-size: 22px;
+        font-weight: 800;
+        margin-bottom: 28px;
+      }
+
+      .metric .number {
+        font-size: 150px;
+        line-height: 0.9;
+        color: var(--cyan);
+        font-weight: 950;
+        text-shadow: 0 0 50px rgba(104, 225, 245, 0.4);
+      }
+
+      .chart {
+        left: 1040px;
+        top: 560px;
+        width: 560px;
+        height: 230px;
+        display: flex;
+        align-items: flex-end;
+        gap: 28px;
+        padding: 0 20px 18px;
+        border-bottom: 2px solid rgba(140, 211, 255, 0.12);
+      }
+
+      .bar {
+        width: 76px;
+        border-radius: 14px 14px 4px 4px;
+        background: linear-gradient(180deg, var(--purple), var(--cyan));
+        box-shadow: 0 0 32px rgba(104, 225, 245, 0.18);
+        transform-origin: bottom;
+      }
+
+      .bar.b1 { height: 62px; }
+      .bar.b2 { height: 92px; }
+      .bar.b3 { height: 130px; }
+      .bar.b4 { height: 176px; }
+      .bar.b5 { height: 108px; }
+
+      .process {
+        left: 250px;
+        top: 250px;
+        width: 1420px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .process-card {
+        min-height: 360px;
+        border-radius: 24px;
+        background: var(--panel-strong);
+        border: 1px solid var(--border);
+        padding: 54px 44px;
+        box-shadow: 0 28px 90px rgba(0, 0, 0, 0.28);
+      }
+
+      .process-card .tag {
+        color: var(--cyan);
+        font-size: 24px;
+        font-weight: 900;
+        margin-bottom: 45px;
+      }
+
+      .process-card .main {
+        font-size: 42px;
+        line-height: 1.2;
+        font-weight: 900;
+      }
+
+      .headline {
+        left: 360px;
+        top: 430px;
+        width: 1200px;
+        text-align: center;
+        font-size: 68px;
+        line-height: 1.18;
+        font-weight: 900;
+      }
+
+      .caption {
+        left: 360px;
+        bottom: 82px;
+        width: 1200px;
+        padding: 28px 46px;
+        border-radius: 18px;
+        background: rgba(0, 0, 0, 0.72);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        text-align: center;
+        font-size: 42px;
+        line-height: 1.2;
+        font-weight: 800;
+        box-shadow: 0 22px 80px rgba(0, 0, 0, 0.44);
+      }
+
+      .safe-frame {
+        position: absolute;
+        inset: 54px;
+        border: 1px solid rgba(140, 211, 255, 0.04);
+        border-radius: 28px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="18"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="background" class="clip background" data-start="0" data-duration="18" data-track-index="0">
+        <div class="grain"></div>
+        <span class="star s1"></span>
+        <span class="star s2"></span>
+        <span class="star s3"></span>
+        <span class="star s4"></span>
+        <span class="star s5"></span>
+        <span class="star s6"></span>
+        <span class="star s7"></span>
+        <span class="star s8"></span>
+        <div class="safe-frame"></div>
+      </div>
+
+      <div id="stage" class="clip stage" data-start="0" data-duration="18" data-track-index="1">
+        <div id="heroTitle" class="clip hero-title" data-start="0" data-duration="4.5" data-track-index="2">
+          AI한테 시키면<br />
+          <span class="accent">알아서 끝까지</span> 해주는 시대
+        </div>
+        <div id="heroSub" class="clip subline" data-start="0.8" data-duration="3.5" data-track-index="3">
+          Agentic AI는 답변이 아니라 작업 흐름을 완성합니다
+        </div>
+
+        <div id="compare" class="clip compare" data-start="4.1" data-duration="4.2" data-track-index="4">
+          <div id="compare-label-generative" class="clip diagram-label left" data-start="4.1" data-duration="4.2" data-track-index="5">GENERATIVE AI</div>
+          <div id="compare-label-agentic" class="clip diagram-label right" data-start="4.1" data-duration="4.2" data-track-index="6">AGENTIC AI</div>
+          <div id="compare-divider" class="clip compare-line" data-start="4.1" data-duration="4.2" data-track-index="7"></div>
+          <div id="compare-old-question" class="clip mini-card old1" data-start="4.2" data-duration="4" data-track-index="8" style="left: 100px; top: 130px">질문</div>
+          <div id="compare-old-answer" class="clip mini-card old2" data-start="4.3" data-duration="3.9" data-track-index="9" style="left: 290px; top: 130px">답변</div>
+          <div id="compare-old-end" class="clip mini-card old3" data-start="4.4" data-duration="3.8" data-track-index="10" style="left: 480px; top: 130px">끝</div>
+          <div id="compare-new-plan" class="clip mini-card active new1" data-start="4.2" data-duration="4" data-track-index="11" style="left: 980px; top: 28px">계획</div>
+          <div id="compare-new-execute" class="clip mini-card active new2" data-start="4.5" data-duration="3.7" data-track-index="12" style="left: 1180px; top: 128px">실행</div>
+          <div id="compare-new-verify" class="clip mini-card active new3" data-start="4.8" data-duration="3.4" data-track-index="13" style="left: 980px; top: 230px">검증</div>
+          <div id="compare-new-revise" class="clip mini-card active new4" data-start="5.1" data-duration="3.1" data-track-index="14" style="left: 780px; top: 128px">수정</div>
+        </div>
+
+        <div id="gridTitle" class="clip grid-title" data-start="8.1" data-duration="4.5" data-track-index="30">
+          에이전틱 AI의 네 가지 핵심
+        </div>
+        <div id="cards" class="clip cards" data-start="8.3" data-duration="4.4" data-track-index="31">
+          <div class="feature-card c1">
+            <div class="num">01</div>
+            <div class="title">목표 분해</div>
+            <div class="desc">큰 요청을 실행 가능한 단계로 나눕니다</div>
+          </div>
+          <div class="feature-card c2">
+            <div class="num">02</div>
+            <div class="title">도구 사용</div>
+            <div class="desc">검색, 코드, 파일 작업을 직접 호출합니다</div>
+          </div>
+          <div class="feature-card c3">
+            <div class="num">03</div>
+            <div class="title">자기 검증</div>
+            <div class="desc">결과가 맞는지 다시 확인합니다</div>
+          </div>
+          <div class="feature-card c4">
+            <div class="num">04</div>
+            <div class="title">장기 기억</div>
+            <div class="desc">이전 맥락을 다음 작업에 반영합니다</div>
+          </div>
+        </div>
+
+        <div id="metric" class="clip metric" data-start="12.4" data-duration="3" data-track-index="32">
+          <div class="label">GARTNER / 시장 전망</div>
+          <div class="number"><span id="count">0</span><span class="accent">%</span></div>
+        </div>
+        <div id="chart" class="clip chart" data-start="12.7" data-duration="3.2" data-track-index="33">
+          <div class="bar b1"></div>
+          <div class="bar b2"></div>
+          <div class="bar b3"></div>
+          <div class="bar b4"></div>
+          <div class="bar b5"></div>
+        </div>
+
+        <div id="process" class="clip process" data-start="15.1" data-duration="2.9" data-track-index="34">
+          <div class="process-card p1">
+            <div class="tag">01</div>
+            <div class="main">고객 응대<br /><span class="accent">30초</span></div>
+          </div>
+          <div class="process-card p2">
+            <div class="tag">02</div>
+            <div class="main">코드 작성<br /><span class="accent">12분</span></div>
+          </div>
+          <div class="process-card p3">
+            <div class="tag">03</div>
+            <div class="main">사용 조사<br /><span class="accent">20분</span></div>
+          </div>
+        </div>
+
+        <div id="finalLine" class="clip headline" data-start="16.2" data-duration="1.8" data-track-index="35">
+          이제 AI는 답하는 도구가 아니라,<br />
+          <span class="accent">일하는 시스템</span>입니다.
+        </div>
+      </div>
+
+      <div id="caption" class="clip caption" data-start="0" data-duration="18" data-track-index="20">
+        AI한테 일을 시키는 방식이 바뀌고 있습니다.
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      const tl = gsap.timeline({ paused: true });
+      const count = { value: 0 };
+
+      tl.from("#heroTitle", { opacity: 0, y: 42, scale: 0.96, filter: "blur(8px)", duration: 0.7, ease: "power3.out" }, 0)
+        .from("#heroSub", { opacity: 0, y: 24, duration: 0.55, ease: "power3.out" }, 0.55)
+        .to("#caption", { textContent: "AI한테 시키면 알아서 끝까지 해주는 시대입니다.", duration: 0.01 }, 0)
+        .to("#heroTitle .accent", { scale: 1.045, transformOrigin: "center center", yoyo: true, repeat: 1, duration: 0.22 }, 1.35)
+        .to("#stage", { x: -70, y: -20, scale: 1.035, duration: 2.3, ease: "sine.inOut" }, 1.1)
+        .to(["#heroTitle", "#heroSub"], { opacity: 0.12, filter: "blur(2px)", duration: 0.5 }, 3.55)
+
+        .from("#compare", { opacity: 0, y: 36, duration: 0.55, ease: "power3.out" }, 4.05)
+        .from(".old1, .old2, .old3", { opacity: 0, y: 22, stagger: 0.12, duration: 0.42, ease: "power3.out" }, 4.25)
+        .from(".new1, .new2, .new3, .new4", { opacity: 0, scale: 0.86, stagger: 0.16, duration: 0.42, ease: "back.out(1.7)" }, 4.75)
+        .to("#caption", { textContent: "기존 AI는 답하고 끝났지만, 에이전틱 AI는 단계별로 실행합니다.", duration: 0.01 }, 4.25)
+        .to("#stage", { x: -210, y: -35, scale: 1.04, duration: 2.4, ease: "sine.inOut" }, 5.1)
+        .to("#compare", { opacity: 0.12, filter: "blur(2px)", duration: 0.45 }, 7.65)
+
+        .from("#gridTitle", { opacity: 0, y: 28, duration: 0.45, ease: "power3.out" }, 8.0)
+        .from(".feature-card", { opacity: 0, y: 34, scale: 0.96, stagger: 0.14, duration: 0.48, ease: "power3.out" }, 8.35)
+        .to("#caption", { textContent: "핵심은 목표 분해, 도구 사용, 자기 검증, 장기 기억입니다.", duration: 0.01 }, 8.25)
+        .to("#stage", { x: -20, y: -90, scale: 1.0, duration: 2.6, ease: "sine.inOut" }, 8.8)
+        .to(["#gridTitle", "#cards"], { opacity: 0.1, filter: "blur(2px)", duration: 0.45 }, 12.1)
+
+        .from("#metric", { opacity: 0, x: -55, duration: 0.55, ease: "power3.out" }, 12.35)
+        .to(count, {
+          value: 15,
+          duration: 1.1,
+          ease: "power2.out",
+          onUpdate: function () {
+            document.getElementById("count").textContent = String(Math.round(count.value));
+          }
+        }, 12.55)
+        .from(".bar", { scaleY: 0, stagger: 0.12, duration: 0.55, ease: "power3.out" }, 12.85)
+        .to("#caption", { textContent: "숫자와 그래프는 주장의 무게를 바로 보여줍니다.", duration: 0.01 }, 12.45)
+        .to("#stage", { x: -120, y: -80, scale: 1.025, duration: 2.1, ease: "sine.inOut" }, 13.0)
+        .to(["#metric", "#chart"], { opacity: 0.12, filter: "blur(2px)", duration: 0.45 }, 15.15)
+
+        .from(".process-card", { opacity: 0, y: 42, scale: 0.96, stagger: 0.16, duration: 0.45, ease: "power3.out" }, 15.25)
+        .to("#caption", { textContent: "좋은 모션은 말의 순서대로 화면을 설계하는 것입니다.", duration: 0.01 }, 15.35)
+        .to("#process", { opacity: 0, y: -26, duration: 0.45 }, 16.2)
+        .from("#finalLine", { opacity: 0, y: 36, scale: 0.98, duration: 0.55, ease: "power3.out" }, 16.35)
+        .to("#caption", { textContent: "이제 AI는 답하는 도구가 아니라, 일하는 시스템입니다.", duration: 0.01 }, 16.35)
+        .to("#finalLine .accent", { scale: 1.045, transformOrigin: "center center", yoyo: true, repeat: 1, duration: 0.2 }, 17.2);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "hype-tuber-factory",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Role-based YouTube/Hyperframes production factory control panel.",
+  "scripts": {
+    "factory:doctor": "node scripts/doctor.mjs",
+    "factory:validate-templates": "node scripts/validate_templates.mjs",
+    "factory:new": "node scripts/new_project.mjs",
+    "factory:status": "node scripts/status.mjs",
+    "factory:next": "node scripts/next.mjs",
+    "factory:tts": "node scripts/tts_elevenlabs.mjs",
+    "factory:mix": "node scripts/mix_voiceover_audio.mjs",
+    "factory:timing": "node scripts/timing_from_srt.mjs",
+    "factory:route": "node scripts/route_work_orders.mjs",
+    "factory:video-use": "node scripts/video_use_work_orders.mjs",
+    "factory:imagegen": "node scripts/imagegen_work_orders.mjs",
+    "factory:capture": "node scripts/capture_work_orders.mjs",
+    "factory:compose": "node scripts/compose_project.mjs",
+    "factory:qa": "node scripts/qa_project.mjs",
+    "factory:render": "node scripts/render_project.mjs",
+    "factory:package": "node scripts/package_project.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
