@@ -2,6 +2,7 @@ node_modules/
 .env
 .DS_Store
 *.log
+.factory-tmp/
 renders/*.mp4
 renders/*.webm
 projects/*/composition/node_modules/

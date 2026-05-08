@@ -73,6 +73,8 @@ Every production scene should carry one primary route and optional support route
 
 `timed-scene-packets.md` chooses the route per scene. `asset-plan.md` turns that route into concrete file work. `design-context.md` controls how the routed assets are visually integrated. Hyperframes receives only approved or processed assets, not unresolved raw material.
 
+A routed asset is not complete just because the file exists. It is complete only when the work order is done, the `asset-plan.md` row is marked done or not required, and the final composition references the processed file. Capture routes must use real page captures with stable local paths under `composition/assets/screenshots/`; blank verification pages or unused screenshots must stay blocked until replaced or removed from the route.
+
 ## Non-Goals
 
 - Do not turn this into a legal/source review gate.

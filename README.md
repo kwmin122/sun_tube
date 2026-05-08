@@ -65,10 +65,15 @@ hype_tuber/
 ```bash
 npm run factory:doctor
 npm run factory:validate-templates
-npm run factory:new -- "your topic"
+npm run factory:smoke
+npm run factory:new -- "your topic" --slug your-topic
 npm run factory:status -- <project-path>
 npm run factory:next -- <project-path>
 ```
+
+`factory:smoke` uses `.factory-tmp/factory-smoke` only. Do not use real `projects/NNN-*` folders for control-panel smoke tests.
+
+For Korean-only topics, pass `--slug`; otherwise `factory:new` falls back to an ID-based slug such as `project-997`.
 
 After TTS is approved:
 
@@ -83,6 +88,8 @@ npm run factory:render -- <project-path>
 npm run factory:qa -- <project-path> -- --stage final
 npm run factory:package -- <project-path>
 ```
+
+`factory:route` is blocked until `project.json.artifacts.timedScenePackets` and `project.json.artifacts.assetPlan` are both `true`. Placeholder template rows must not become executable work orders.
 
 ## TTS Standard
 

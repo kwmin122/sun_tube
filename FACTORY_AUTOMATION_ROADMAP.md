@@ -545,7 +545,7 @@ Current BGM standard:
 Name: Glass Horizon
 Artist: loudsquaredance310
 Path: assets/bgm/default-bgm.mp3
-BGM volume: 0.16
+BGM volume: default 0.08 with voice-first ducking
 Ducking: enabled under narration
 ```
 
@@ -773,9 +773,12 @@ composition/src/project-data.json
 composition/src/scenes.json
 composition/src/captions.json
 composition/src/assets.json
+composition/src/captures.json
 ```
 
 Do not attempt 100 percent creative HTML generation on the first pass. Start with stable data scaffolding that a motion designer or agent can implement.
+
+When capture or audio assets already exist, compose must sync them into `composition/assets/` so Hyperframes can reference stable local paths instead of project-root paths.
 
 ### `qa_project.mjs`
 
@@ -795,6 +798,9 @@ Pre-render checks:
 - `project.json.artifacts.audioMix === true`.
 - final mix file exists.
 - route work orders are done or marked not required.
+- `asset-plan.md` rows are complete; `todo`, `pending`, and `blocked` rows cannot pass.
+- `timed-scene-packets.md` rows are resolved; caption/audio/status fields cannot remain `pending`.
+- captured assets are actually referenced in the composition when `routes.capture === "done"`.
 - `asset-plan.md` has no blocking pending items.
 - `timed-scene-packets.md` has no blocking pending items.
 - Hyperframes `npm run check` passes.
@@ -917,7 +923,8 @@ Do not prioritize npm packaging before the GitHub template workflow works.
 ```bash
 npm run factory:doctor
 npm run factory:validate-templates
-npm run factory:new -- "주제"
+npm run factory:smoke
+npm run factory:new -- "주제" --slug topic
 npm run factory:status -- projects/003-topic
 npm run factory:next -- projects/003-topic
 
@@ -938,6 +945,16 @@ npm run factory:qa -- projects/003-topic -- --stage final
 npm run factory:package -- projects/003-topic
 ```
 
+## Factory Safety Rules
+
+- Smoke tests must use `.factory-tmp/factory-smoke`, not real `projects/NNN-*` folders.
+- `factory:new --dry-run` must not create files.
+- `factory:new` supports `--slug`; Korean-only topics fall back to an ID slug such as `project-997` when no slug is supplied.
+- `factory:route` is blocked until `artifacts.timedScenePackets === true` and `artifacts.assetPlan === true`.
+- Placeholder template rows are not executable work orders.
+- Capture, imagegen, and video-use rows with missing executable input or action are blocked.
+- Mutating commands must print changed `project.json` fields; dry-run tool commands must not mutate `project.json`.
+
 ## Implementation Order
 
 ### First Implementation Session
@@ -951,8 +968,9 @@ Phase 1 is complete only when:
 ```bash
 npm run factory:doctor
 npm run factory:validate-templates
+npm run factory:smoke
 npm run factory:new -- "테스트 주제" --id 999 --dry-run
-npm run factory:new -- "테스트 주제"
+npm run factory:new -- "테스트 주제" --slug test-topic
 npm run factory:status -- <path printed by factory:new>
 npm run factory:next -- <path printed by factory:new>
 ```
@@ -1006,6 +1024,9 @@ npm package preparation
 - TTS must require `project.json.approved.plan === true`.
 - Render must require pre-render QA unless explicitly passed with a documented override.
 - Costly or environment-dependent commands must support `--dry-run`.
+- Smoke tests must run in `.factory-tmp/factory-smoke`, never in real `projects/NNN-*` folders.
+- `factory:route` must refuse incomplete timed packet or asset plan artifacts and must ignore placeholder template rows.
+- Capture, imagegen, and video-use routes with missing executable inputs/actions must block instead of becoming done.
 - `factory:next` must not call an LLM in Phase 1.
 - `video-use` must run only for routed raw/source video work.
 - `imagegen` must not be used for factual evidence screenshots.

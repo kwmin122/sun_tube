@@ -23,6 +23,12 @@ const voice = join(projectPath, "voiceover/solo/voiceover-solo-elevenlabs.mp3");
 const bgm = join(projectPath, "assets/bgm/default-bgm.mp3");
 const out = join(projectPath, "voiceover/solo/voiceover-solo-final-mix.m4a");
 const manifest = join(projectPath, "voiceover/solo/audio_mix_manifest.json");
+const bgmVolume = Number(args["bgm-volume"] ?? process.env.HYPE_BGM_VOLUME ?? 0.08);
+
+if (!Number.isFinite(bgmVolume) || bgmVolume < 0 || bgmVolume > 1) {
+  console.error("Mix blocked: --bgm-volume must be a number between 0 and 1.");
+  process.exit(1);
+}
 
 if (!existsSync(voice)) {
   console.error(`Mix blocked: missing ${rel(voice)}`);
@@ -49,7 +55,7 @@ const command = [
   "-i",
   bgm,
   "-filter_complex",
-  "[1:a]volume=0.16[bgm];[bgm][0:a]sidechaincompress=threshold=0.03:ratio=8:attack=20:release=250[ducked];[0:a][ducked]amix=inputs=2:duration=first:dropout_transition=2[a]",
+  `[0:a]volume=1.0[voice];[1:a]volume=${bgmVolume}[bgm];[bgm][voice]sidechaincompress=threshold=0.02:ratio=12:attack=30:release=550[ducked];[voice][ducked]amix=inputs=2:duration=first:dropout_transition=2:normalize=0,loudnorm=I=-16:LRA=11:TP=-1.5[a]`,
   "-map",
   "[a]",
   "-c:a",
@@ -79,8 +85,10 @@ await writeJson(manifest, {
   voiceover: rel(voice),
   bgm: rel(bgm),
   output: rel(out),
-  bgmVolume: 0.16,
+  bgmVolume,
   ducking: true,
+  amixNormalize: false,
+  loudnorm: "I=-16:LRA=11:TP=-1.5",
   generatedAt: new Date().toISOString(),
 });
 console.log(`Generated: ${rel(out)}`);

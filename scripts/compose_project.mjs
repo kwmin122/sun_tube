@@ -1,5 +1,6 @@
 import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { copyFile } from "node:fs/promises";
+import { basename, join } from "node:path";
 import {
   ensureDir,
   findRowsWithToolRoute,
@@ -8,6 +9,7 @@ import {
   parseSrt,
   readText,
   rel,
+  resolveInsideRoot,
   saveProject,
   tableRows,
   writeJson,
@@ -31,6 +33,33 @@ const timed = await readText(join(projectPath, "timed-scene-packets.md"));
 const assetPlan = await readText(join(projectPath, "asset-plan.md"));
 const designContext = await readText(join(projectPath, "design-context.md"));
 const captions = existsSync(srtPath) ? parseSrt(await readText(srtPath)) : [];
+const compositionAudio = join(composition, "assets/audio/voiceover-solo-final-mix.m4a");
+const captureManifestPath = join(projectPath, "assets/screenshots/capture_manifest.json");
+const captures = [];
+
+if (existsSync(mixPath)) {
+  await ensureDir(join(composition, "assets/audio"));
+  await copyFile(mixPath, compositionAudio);
+}
+
+if (existsSync(captureManifestPath)) {
+  const manifest = JSON.parse(await readText(captureManifestPath));
+  await ensureDir(join(composition, "assets/screenshots"));
+  for (const task of manifest.tasks || []) {
+    if (!task.ok || !task.output) continue;
+    const sourcePath = resolveInsideRoot(task.output);
+    if (!existsSync(sourcePath)) continue;
+    const file = basename(sourcePath);
+    const dest = join(composition, "assets/screenshots", file);
+    await copyFile(sourcePath, dest);
+    captures.push({
+      scene: String(task.scene || "").padStart(2, "0"),
+      source: task.input || "",
+      path: `assets/screenshots/${file}`,
+    });
+  }
+}
+
 const scenes = findRowsWithToolRoute(timed).map((row, index) => ({
   id: String(row.Scene || row["#"] || index + 1).padStart(2, "0"),
   timeRange: row["Time Range"] || "",
@@ -57,12 +86,13 @@ await writeJson(join(src, "project-data.json"), {
   title: project.title,
   status: project.status,
   currentGate: project.currentGate,
-  audio: existsSync(mixPath) ? rel(mixPath) : "",
+  audio: existsSync(compositionAudio) ? "assets/audio/voiceover-solo-final-mix.m4a" : "",
   generatedAt: new Date().toISOString(),
 });
 await writeJson(join(src, "scenes.json"), scenes);
 await writeJson(join(src, "captions.json"), captions);
 await writeJson(join(src, "assets.json"), assets);
+await writeJson(join(src, "captures.json"), captures);
 await writeJson(join(src, "design-context.json"), {
   source: rel(join(projectPath, "design-context.md")),
   markdown: designContext,

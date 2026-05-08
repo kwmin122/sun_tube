@@ -3,10 +3,10 @@
   "id": "002",
   "slug": "claude-managed-agents",
   "title": "Claude Managed Agents 업데이트",
-  "status": "done",
-  "currentGate": "done",
+  "status": "final_qa",
+  "currentGate": "package",
   "createdAt": "2026-05-08T00:00:00.000Z",
-  "updatedAt": "2026-05-08T14:22:22.440Z",
+  "updatedAt": "2026-05-08T15:22:06.692Z",
   "approved": {
     "creativeBrief": true,
     "plan": true,

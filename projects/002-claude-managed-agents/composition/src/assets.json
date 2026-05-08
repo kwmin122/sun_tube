@@ -3,9 +3,9 @@
     "scene": "01",
     "route": "capture + hyperframes",
     "type": "webpage screenshot + HTML motion",
-    "candidate": "https://wikidocs.net/blog/@jaehong/12977/, https://claude.com/blog/new-in-claude-managed-agents",
-    "processing": "capture/crop headline, build 4 feature cards",
-    "status": "todo"
+    "candidate": "https://claude.com/blog/new-in-claude-managed-agents",
+    "processing": "captured official source page, placed screenshot in composition, built 4 feature cards",
+    "status": "done"
   },
   {
     "scene": "02",
@@ -13,15 +13,15 @@
     "type": "HTML/SVG diagram",
     "candidate": "generated",
     "processing": "model card replaced by system card",
-    "status": "todo"
+    "status": "done"
   },
   {
     "scene": "03",
     "route": "capture + hyperframes",
     "type": "official screenshot + generated visual",
     "candidate": "https://claude.com/blog/new-in-claude-managed-agents",
-    "processing": "capture dreaming section, memory-card sorting animation",
-    "status": "todo"
+    "processing": "captured official page, placed source screenshot with memory sorting cards",
+    "status": "done"
   },
   {
     "scene": "04",
@@ -29,7 +29,7 @@
     "type": "diagram/data",
     "candidate": "Harvey section from Anthropic blog",
     "processing": "repeat-work pattern cards + long-running timeline",
-    "status": "todo"
+    "status": "done"
   },
   {
     "scene": "05",
@@ -37,7 +37,7 @@
     "type": "diagram/data",
     "candidate": "generated from official blog facts",
     "processing": "rubric gate + revision loop",
-    "status": "todo"
+    "status": "done"
   },
   {
     "scene": "06",
@@ -45,23 +45,23 @@
     "type": "checklist diagram",
     "candidate": "generated from official blog facts",
     "processing": "requirements/brand/design checklist scan",
-    "status": "todo"
+    "status": "done"
   },
   {
     "scene": "07",
     "route": "hyperframes",
     "type": "network diagram",
     "candidate": "generated from official blog examples",
-    "processing": "lead/subagent routing graph",
-    "status": "todo"
+    "processing": "lead/subagent routing graph with SVG paths",
+    "status": "done"
   },
   {
     "scene": "08",
     "route": "hyperframes",
     "type": "parallel work diagram",
     "candidate": "Netflix section from Anthropic blog",
-    "processing": "logs/metrics/docs/support parallel panels",
-    "status": "todo"
+    "processing": "logs/metrics/docs/support parallel panels filled with information rows",
+    "status": "done"
   },
   {
     "scene": "09",
@@ -69,7 +69,7 @@
     "type": "callback diagram",
     "candidate": "https://platform.claude.com/docs/en/managed-agents/webhooks",
     "processing": "completed task -> webhook -> next workflow pulse",
-    "status": "todo"
+    "status": "done"
   },
   {
     "scene": "10",
@@ -77,7 +77,7 @@
     "type": "event-chain diagram",
     "candidate": "generated from webhook docs",
     "processing": "review queue / notification / QA chain",
-    "status": "todo"
+    "status": "done"
   },
   {
     "scene": "11",
@@ -85,15 +85,15 @@
     "type": "HTML/SVG diagram",
     "candidate": "generated",
     "processing": "4-axis lock-in animation",
-    "status": "todo"
+    "status": "done"
   },
   {
     "scene": "12",
     "route": "capture + hyperframes",
     "type": "case cards",
     "candidate": "https://claude.com/blog/new-in-claude-managed-agents",
-    "processing": "capture case section, build Harvey/Netflix/Spiral/Wisedocs cards + counters",
-    "status": "todo"
+    "processing": "captured official case section, placed screenshot with case cards",
+    "status": "done"
   },
   {
     "scene": "13",
@@ -101,6 +101,6 @@
     "type": "kinetic typography",
     "candidate": "generated",
     "processing": "text replacement animation",
-    "status": "todo"
+    "status": "done"
   }
 ]

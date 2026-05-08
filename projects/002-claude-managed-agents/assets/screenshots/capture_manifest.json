@@ -3,14 +3,6 @@
   "tasks": [
     {
       "scene": "01",
-      "input": "https://wikidocs.net/blog/@jaehong/12977/",
-      "output": "projects/002-claude-managed-agents/assets/screenshots/scene-01-capture-1.png",
-      "evidence": "projects/002-claude-managed-agents/assets/evidence/scene-01-capture-1.png",
-      "ok": true,
-      "stderr": ""
-    },
-    {
-      "scene": "01",
       "input": "https://claude.com/blog/new-in-claude-managed-agents",
       "output": "projects/002-claude-managed-agents/assets/screenshots/scene-01-capture-2.png",
       "evidence": "projects/002-claude-managed-agents/assets/evidence/scene-01-capture-2.png",

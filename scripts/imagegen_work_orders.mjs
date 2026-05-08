@@ -31,13 +31,28 @@ const rows = tableRows(await readText(join(projectPath, "work-orders/imagegen.md
 const tasks = rows.filter((row) => row.Route !== "not_required");
 if (!tasks.length) {
   console.log("No imagegen tasks found.");
-  project.routes.imagegen = "done";
+  if (args["dry-run"]) {
+    console.log("Dry run: project.json not modified.");
+    process.exit(0);
+  }
+  project.routes.imagegen = "not_required";
   await saveProject(projectPath, project);
   process.exit(0);
 }
 
-await ensureDir(join(projectPath, "assets/generated"));
-await ensureDir(join(projectPath, "assets/processed"));
+const invalid = tasks.filter((task) => !String(task.Input || "").trim() || !String(task.Action || "").trim());
+if (invalid.length) {
+  console.error(`Imagegen blocked: ${invalid.length} row(s) are missing input or action.`);
+  for (const task of invalid) console.error(`- scene ${task.Scene || "unknown"} input=${task.Input || "(empty)"} action=${task.Action || "(empty)"}`);
+  if (!args["dry-run"]) {
+    project.routes.imagegen = "blocked";
+    await saveProject(projectPath, project);
+  } else {
+    console.log("Dry run: project.json not modified.");
+  }
+  process.exit(1);
+}
+
 const command = process.env.IMAGEGEN_COMMAND || "";
 const manifest = [];
 
@@ -54,11 +69,13 @@ for (const [index, task] of tasks.entries()) {
   const promptPath = join(projectPath, "assets/generated", `scene-${scene}-imagegen.prompt.txt`);
   const outputPath = join(projectPath, "assets/generated", `scene-${scene}-imagegen.png`);
   const processedPath = join(projectPath, "assets/processed", `scene-${scene}-imagegen.png`);
-  await writeText(promptPath, prompt);
   manifest.push({ scene, prompt: rel(promptPath), output: rel(outputPath), processed: rel(processedPath), dryRun: Boolean(args["dry-run"]) });
   console.log(`- ${rel(promptPath)} -> ${rel(outputPath)}`);
 
   if (!args["dry-run"]) {
+    await ensureDir(join(projectPath, "assets/generated"));
+    await ensureDir(join(projectPath, "assets/processed"));
+    await writeText(promptPath, prompt);
     if (!command) {
       console.error("Imagegen blocked: set IMAGEGEN_COMMAND with optional {prompt} and {output} placeholders.");
       process.exit(1);
@@ -81,6 +98,7 @@ await writeJson(join(projectPath, "assets/generated/imagegen_manifest.json"), {
 
 if (args["dry-run"]) {
   console.log("Dry run: image generation not executed.");
+  console.log("Dry run: project.json not modified.");
   process.exit(0);
 }
 

@@ -28,17 +28,37 @@ if (!["required", "planned", "in_progress"].includes(project.routes?.capture)) {
 
 const workOrderPath = join(projectPath, "work-orders/capture.md");
 const rows = tableRows(await readText(workOrderPath)).flatMap((table) => table.rows);
-const tasks = rows.flatMap((row) => {
-  if (row.Route === "not_required" || !row.Input) return [];
+const routeRows = rows.filter((row) => row.Route !== "not_required");
+const invalidRows = routeRows.filter((row) => {
+  const urls = String(row.Input || "").match(/https?:\/\/[^\s,|)]+/g) || [];
+  return urls.length === 0;
+});
+const tasks = routeRows.flatMap((row) => {
   const urls = String(row.Input).match(/https?:\/\/[^\s,|)]+/g) || [];
   return urls.map((url, urlIndex) => ({ ...row, Input: url, urlIndex }));
 });
 
-if (!tasks.length) {
-  console.log(`No executable capture URLs found in ${rel(workOrderPath)}`);
-  project.routes.capture = "done";
+if (!routeRows.length) {
+  console.log(`No capture rows found in ${rel(workOrderPath)}`);
+  if (args["dry-run"]) {
+    console.log("Dry run: project.json not modified.");
+    process.exit(0);
+  }
+  project.routes.capture = "not_required";
   await saveProject(projectPath, project);
   process.exit(0);
+}
+
+if (invalidRows.length) {
+  console.error(`Capture blocked: ${invalidRows.length} row(s) have no executable URL.`);
+  for (const row of invalidRows) console.error(`- scene ${row.Scene || "unknown"} input=${row.Input || "(empty)"}`);
+  if (!args["dry-run"]) {
+    project.routes.capture = "blocked";
+    await saveProject(projectPath, project);
+  } else {
+    console.log("Dry run: project.json not modified.");
+  }
+  process.exit(1);
 }
 
 console.log(`Capture tasks: ${tasks.length}`);
@@ -49,6 +69,7 @@ for (const [index, task] of tasks.entries()) {
 
 if (args["dry-run"]) {
   console.log("Dry run: browser capture not executed.");
+  console.log("Dry run: project.json not modified.");
   process.exit(0);
 }
 
@@ -58,7 +79,18 @@ const manifest = [];
 for (const [index, task] of tasks.entries()) {
   const out = join(projectPath, "assets/screenshots", `scene-${String(task.Scene).padStart(2, "0")}-capture-${index + 1}.png`);
   const evidence = join(projectPath, "assets/evidence", `scene-${String(task.Scene).padStart(2, "0")}-capture-${index + 1}.png`);
-  const result = run("npx", ["--yes", "playwright@latest", "screenshot", task.Input, out], {
+  const result = run("npx", [
+    "--yes",
+    "playwright@latest",
+    "screenshot",
+    "--wait-for-timeout",
+    "5000",
+    "--viewport-size",
+    "1440,1200",
+    "--full-page",
+    task.Input,
+    out,
+  ], {
     cwd: projectPath,
     timeout: 120_000,
   });

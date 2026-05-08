@@ -30,7 +30,7 @@ Own TTS, SRT, and mix notes.
 - Track: Glass Horizon
 - Artist: loudsquaredance310
 - Path: `assets/bgm/default-bgm.mp3`
-- Volume: `0.16`
+- Volume: default `0.08`, voice-first ducking
 - Use ducking under narration.
 
 ## Handoff

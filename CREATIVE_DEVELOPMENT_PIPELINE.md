@@ -138,7 +138,7 @@ Do not create timed packets without SRT.
 - Subtitle: `voiceover/solo/voiceover-solo-elevenlabs.srt`
 - Final mix: `voiceover/solo/voiceover-solo-final-mix.m4a`
 - BGM: Glass Horizon, loudsquaredance310, `assets/bgm/default-bgm.mp3`
-- BGM volume: `0.16`
+- BGM volume: default `0.08`, voice-first ducking
 
 Do not put the ElevenLabs API key in a project `.env`.
 

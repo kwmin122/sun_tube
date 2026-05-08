@@ -29,14 +29,28 @@ const rows = tableRows(await readText(join(projectPath, "work-orders/video-use.m
 const tasks = rows.filter((row) => row.Route !== "not_required");
 if (!tasks.length) {
   console.log("No video-use tasks found.");
-  project.routes.videoUse = "done";
+  if (args["dry-run"]) {
+    console.log("Dry run: project.json not modified.");
+    process.exit(0);
+  }
+  project.routes.videoUse = "not_required";
   await saveProject(projectPath, project);
   process.exit(0);
 }
 
-await ensureDir(join(projectPath, "assets/interviews/processed"));
-await ensureDir(join(projectPath, "assets/broll/processed"));
-await ensureDir(join(projectPath, "assets/demos/processed"));
+const invalid = tasks.filter((task) => !String(task.Input || "").trim() || !String(task.Action || "").trim());
+if (invalid.length) {
+  console.error(`video-use blocked: ${invalid.length} row(s) are missing input or action.`);
+  for (const task of invalid) console.error(`- scene ${task.Scene || "unknown"} input=${task.Input || "(empty)"} action=${task.Action || "(empty)"}`);
+  if (!args["dry-run"]) {
+    project.routes.videoUse = "blocked";
+    await saveProject(projectPath, project);
+  } else {
+    console.log("Dry run: project.json not modified.");
+  }
+  process.exit(1);
+}
+
 const command = process.env.VIDEO_USE_COMMAND || "";
 const manifest = [];
 console.log(`video-use tasks: ${tasks.length}`);
@@ -76,8 +90,13 @@ await writeJson(join(projectPath, "assets/interviews/processed/video_use_manifes
 
 if (args["dry-run"]) {
   console.log("Dry run: video-use not executed.");
+  console.log("Dry run: project.json not modified.");
   process.exit(0);
 }
+
+await ensureDir(join(projectPath, "assets/interviews/processed"));
+await ensureDir(join(projectPath, "assets/broll/processed"));
+await ensureDir(join(projectPath, "assets/demos/processed"));
 
 const ok = manifest.every((item) => item.ok);
 project.routes.videoUse = ok ? "done" : "blocked";

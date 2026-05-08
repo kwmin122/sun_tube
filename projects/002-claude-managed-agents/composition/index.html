@@ -92,8 +92,8 @@
       min-height: 220px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      gap: 24px;
+      justify-content: flex-start;
+      gap: 22px;
     }
     .panel {
       padding: 34px;
@@ -104,6 +104,27 @@
       font-size: 28px;
       line-height: 1.28;
       font-weight: 610;
+    }
+    .signal-list {
+      display: grid;
+      gap: 12px;
+      margin-top: auto;
+    }
+    .signal-list span {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 6px;
+      background: rgba(247,243,234,0.07);
+      color: rgba(247,243,234,0.86);
+      font-size: 22px;
+      line-height: 1.14;
+      font-weight: 720;
+    }
+    .mini-rail {
+      height: 8px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #f4a261 0 45%, rgba(42,157,143,0.82) 45% 78%, rgba(233,196,106,0.84) 78% 100%);
+      opacity: 0.9;
     }
     .tag {
       width: max-content;
@@ -120,6 +141,12 @@
       gap: 28px;
       align-items: stretch;
     }
+    .source-card-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      min-height: 0;
+    }
     .screenshot {
       position: relative;
       overflow: hidden;
@@ -127,10 +154,13 @@
       border: 1px solid rgba(247,243,234,0.18);
       background: #111;
     }
+    .screenshot.source-main { min-height: 520px; }
+    .screenshot.source-side { min-height: 500px; }
     .screenshot img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: top center;
       display: block;
       filter: saturate(0.92) contrast(1.02);
     }
@@ -144,6 +174,48 @@
       color: #f7f3ea;
       font-size: 18px;
       font-weight: 780;
+    }
+    .source-caption {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      padding: 14px 16px;
+      border-radius: 6px;
+      background: rgba(8,9,11,0.84);
+      color: rgba(247,243,234,0.9);
+      font-size: 23px;
+      line-height: 1.18;
+      font-weight: 720;
+    }
+    .dream-shot img { object-position: center 34%; }
+    .case-shot img { object-position: center 78%; }
+    .feature-card-stack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .feature-card {
+      padding: 24px;
+      min-height: 196px;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.16);
+      background: rgba(18,18,18,0.74);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .feature-card strong {
+      color: #f4a261;
+      font-size: 22px;
+      font-weight: 820;
+    }
+    .feature-card h3 { font-size: 30px; }
+    .feature-card p {
+      color: rgba(247,243,234,0.76);
+      font-size: 22px;
+      line-height: 1.22;
+      font-weight: 650;
     }
     .stack {
       display: flex;
@@ -192,6 +264,12 @@
       display: grid;
       grid-template-columns: 0.95fr 1.05fr;
       gap: 30px;
+      align-items: stretch;
+    }
+    .memory-source {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 28px;
       align-items: stretch;
     }
     .dream-panel {
@@ -254,10 +332,24 @@
       width: 100%;
       height: 600px;
     }
+    .network-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .network-lines path {
+      fill: none;
+      stroke: rgba(244,162,97,0.82);
+      stroke-width: 3;
+      stroke-linecap: round;
+      vector-effect: non-scaling-stroke;
+    }
     .agent-node {
       position: absolute;
-      width: 270px;
-      height: 150px;
+      width: 292px;
+      min-height: 170px;
       padding: 26px;
       border-radius: 8px;
       border: 1px solid rgba(247,243,234,0.2);
@@ -269,25 +361,15 @@
     }
     .agent-node.lead {
       left: 50%;
-      top: 44px;
+      top: 28px;
       transform: translateX(-50%);
       background: rgba(244,162,97,0.16);
       border-color: rgba(244,162,97,0.45);
     }
-    .agent-node.a { left: 90px; top: 330px; }
-    .agent-node.b { left: 520px; top: 330px; }
-    .agent-node.c { right: 520px; top: 330px; }
-    .agent-node.d { right: 90px; top: 330px; }
-    .line {
-      position: absolute;
-      height: 2px;
-      background: rgba(244,162,97,0.7);
-      transform-origin: left center;
-    }
-    .l1 { width: 425px; left: 742px; top: 250px; transform: rotate(145deg); }
-    .l2 { width: 330px; left: 836px; top: 250px; transform: rotate(128deg); }
-    .l3 { width: 330px; left: 1084px; top: 250px; transform: rotate(52deg); }
-    .l4 { width: 425px; left: 1180px; top: 250px; transform: rotate(35deg); }
+    .agent-node.a { left: 80px; top: 330px; }
+    .agent-node.b { left: 510px; top: 330px; }
+    .agent-node.c { right: 510px; top: 330px; }
+    .agent-node.d { right: 80px; top: 330px; }
     .event-flow {
       display: grid;
       grid-template-columns: 1fr 70px 1fr 70px 1fr;
@@ -300,6 +382,9 @@
       border: 1px solid rgba(247,243,234,0.18);
       background: rgba(247,243,234,0.075);
       min-height: 270px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
     }
     .event-box small {
       display: block;
@@ -307,6 +392,20 @@
       color: #2a9d8f;
       font-size: 22px;
       font-weight: 820;
+    }
+    .event-detail {
+      display: grid;
+      gap: 12px;
+      margin-top: auto;
+    }
+    .event-detail span {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 6px;
+      background: rgba(42,157,143,0.11);
+      color: rgba(247,243,234,0.86);
+      font-size: 22px;
+      font-weight: 700;
     }
     .axis {
       display: grid;
@@ -328,12 +427,32 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 20px;
     }
+    .case-layout {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 24px;
+      min-height: 0;
+    }
+    .case-layout .case-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .case-layout .case-card {
+      min-height: 214px;
+      padding: 24px;
+      gap: 14px;
+    }
+    .case-layout .case-card p {
+      font-size: 23px;
+      line-height: 1.22;
+    }
     .case-card {
       padding: 28px;
       min-height: 270px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
+      gap: 22px;
     }
     .final-statement {
       display: grid;
@@ -380,11 +499,18 @@
         </div>
         <div class="scene-no">01</div>
       </div>
-      <div class="grid-4 stage">
-        <div class="card"><span class="big-number">01</span><h3>드리밍</h3><p>비활성 시간에 경험과 메모리를 다시 정리합니다.</p></div>
-        <div class="card"><span class="big-number">02</span><h3>아웃컴</h3><p>좋은 결과의 기준을 주고 결과물을 평가합니다.</p></div>
-        <div class="card"><span class="big-number">03</span><h3>멀티에이전트</h3><p>리드가 일을 쪼개고 전문 에이전트가 병렬 처리합니다.</p></div>
-        <div class="card"><span class="big-number">04</span><h3>이벤트</h3><p>조건이 발생하면 에이전트 작업이 자동으로 시작됩니다.</p></div>
+      <div class="source-card-grid stage">
+        <div class="screenshot source-main">
+          <img src="assets/screenshots/scene-01-capture-2.png" alt="Anthropic Claude Managed Agents announcement capture" />
+          <div class="label">공식 발표 캡처</div>
+          <div class="source-caption">발표의 핵심은 모델 하나가 아니라, 에이전트를 운영하는 시스템 기능 네 가지입니다.</div>
+        </div>
+        <div class="feature-card-stack">
+          <div class="feature-card"><strong>01</strong><h3>드리밍</h3><p>비활성 시간에 경험과 메모리를 다시 정리합니다.</p></div>
+          <div class="feature-card"><strong>02</strong><h3>아웃컴</h3><p>좋은 결과의 기준을 주고 결과물을 평가합니다.</p></div>
+          <div class="feature-card"><strong>03</strong><h3>멀티에이전트</h3><p>리드가 일을 쪼개고 전문 에이전트가 병렬 처리합니다.</p></div>
+          <div class="feature-card"><strong>04</strong><h3>이벤트</h3><p>조건이 발생하면 에이전트 작업이 자동으로 시작됩니다.</p></div>
+        </div>
       </div>
     </section>
 
@@ -407,19 +533,14 @@
         <div><div class="eyebrow">1. Dreaming</div><h2>드리밍은 쉬는 시간에 경험을 다시 정리하는 기능입니다.</h2></div>
         <div class="scene-no">03</div>
       </div>
-      <div class="memory-board">
-        <div class="panel dream-panel">
-          <span class="tag">세션 사이의 학습</span>
-          <div class="cycle">
-            <div class="cycle-step">작업 기록</div>
-            <div class="arrow"></div>
-            <div class="cycle-step">패턴 정리</div>
-            <div class="arrow"></div>
-            <div class="cycle-step">다음 세션 메모리</div>
-          </div>
-          <p>작업 중에 배우는 게 메모리라면, 드리밍은 세션 사이에 배우는 구조입니다.</p>
+      <div class="memory-source">
+        <div class="screenshot source-side dream-shot">
+          <img src="assets/screenshots/scene-03-capture-3.png" alt="Claude Managed Agents dreaming section capture" />
+          <div class="label">드리밍 발표 근거</div>
+          <div class="source-caption">작업이 멈춘 뒤에도 과거 세션과 메모리를 훑어 더 쓸모 있는 패턴으로 정리합니다.</div>
         </div>
         <div class="stack">
+          <div class="item">작업 기록 → 패턴 정리 → 다음 세션 메모리</div>
           <div class="item">반복해서 막힌 지점</div>
           <div class="item">자주 성공한 작업 방식</div>
           <div class="item">팀이 선호한 표현과 구조</div>
@@ -434,9 +555,9 @@
         <div class="scene-no">04</div>
       </div>
       <div class="grid-3 stage">
-        <div class="card"><span class="big-number">01</span><h3>장기 프로젝트</h3><p>어제의 판단과 오늘의 요청이 이어질 때 컨텍스트 손실을 줄입니다.</p></div>
-        <div class="card"><span class="big-number">02</span><h3>반복 업무</h3><p>매번 같은 실수를 다시 설명하지 않아도 됩니다.</p></div>
-        <div class="card"><span class="big-number">03</span><h3>팀 단위 규칙</h3><p>개인의 취향이 아니라 팀의 작업 패턴을 메모리로 정리합니다.</p></div>
+        <div class="card"><span class="big-number">01</span><h3>장기 프로젝트</h3><p>어제의 판단과 오늘의 요청이 이어질 때 컨텍스트 손실을 줄입니다.</p><div class="mini-rail"></div><div class="signal-list"><span>이전 결정 유지</span><span>다음 세션 연결</span></div></div>
+        <div class="card"><span class="big-number">02</span><h3>반복 업무</h3><p>매번 같은 실수를 다시 설명하지 않아도 됩니다.</p><div class="mini-rail"></div><div class="signal-list"><span>오류 재발 감소</span><span>좋은 절차 재사용</span></div></div>
+        <div class="card"><span class="big-number">03</span><h3>팀 단위 규칙</h3><p>개인의 취향이 아니라 팀의 작업 패턴을 메모리로 정리합니다.</p><div class="mini-rail"></div><div class="signal-list"><span>톤 앤 매너</span><span>리뷰 기준</span></div></div>
       </div>
     </section>
 
@@ -481,8 +602,13 @@
         <div class="scene-no">07</div>
       </div>
       <div class="network">
-        <div class="line l1"></div><div class="line l2"></div><div class="line l3"></div><div class="line l4"></div>
-        <div class="agent-node lead"><h3>리드 에이전트</h3><p>계획, 분배, 통합</p></div>
+        <svg class="network-lines" viewBox="0 0 1720 600" aria-hidden="true">
+          <path d="M860 288 L226 330" />
+          <path d="M860 288 L656 330" />
+          <path d="M860 288 L1064 330" />
+          <path d="M860 288 L1494 330" />
+        </svg>
+        <div class="agent-node lead"><h3>리드 에이전트</h3><p>계획, 분배, 통합</p><div class="signal-list"><span>작업 분해</span><span>결과 병합</span></div></div>
         <div class="agent-node a"><h3>로그 담당</h3><p>오류 원인 분석</p></div>
         <div class="agent-node b"><h3>문서 담당</h3><p>변경점 정리</p></div>
         <div class="agent-node c"><h3>메트릭 담당</h3><p>수치와 추세 확인</p></div>
@@ -496,10 +622,10 @@
         <div class="scene-no">08</div>
       </div>
       <div class="grid-4 stage">
-        <div class="card"><h3>빌드 로그</h3><p>수백 개 로그를 나눠 읽고 실패 패턴을 합칩니다.</p></div>
-        <div class="card"><h3>문서 변경</h3><p>문서 담당은 릴리즈 노트와 사용자 안내를 정리합니다.</p></div>
-        <div class="card"><h3>코드 경로</h3><p>구현 담당은 실제 코드 위치와 수정 범위를 봅니다.</p></div>
-        <div class="card"><h3>통합 판단</h3><p>리드가 결과를 합쳐 다음 액션을 결정합니다.</p></div>
+        <div class="card"><h3>빌드 로그</h3><div class="signal-list"><span>로그 묶음 분할</span><span>실패 키워드 추출</span><span>원인 후보 합치기</span></div><p>수백 개 로그를 나눠 읽고 실패 패턴을 합칩니다.</p></div>
+        <div class="card"><h3>문서 변경</h3><div class="signal-list"><span>릴리즈 노트</span><span>사용자 안내</span><span>변경 요약</span></div><p>문서 담당은 릴리즈 노트와 사용자 안내를 정리합니다.</p></div>
+        <div class="card"><h3>코드 경로</h3><div class="signal-list"><span>파일 위치</span><span>수정 범위</span><span>테스트 영향</span></div><p>구현 담당은 실제 코드 위치와 수정 범위를 봅니다.</p></div>
+        <div class="card"><h3>통합 판단</h3><div class="signal-list"><span>중복 제거</span><span>충돌 확인</span><span>다음 액션</span></div><p>리드가 결과를 합쳐 다음 액션을 결정합니다.</p></div>
       </div>
     </section>
 
@@ -509,11 +635,11 @@
         <div class="scene-no">09</div>
       </div>
       <div class="event-flow">
-        <div class="event-box"><small>Event</small><h3>문서 업로드</h3><p>새 파일이나 요청이 들어옵니다.</p></div>
+        <div class="event-box"><small>Event</small><h3>문서 업로드</h3><p>새 파일이나 요청이 들어옵니다.</p><div class="event-detail"><span>계약서</span><span>리포트</span><span>지원 티켓</span></div></div>
         <div class="arrow"></div>
-        <div class="event-box"><small>Trigger</small><h3>조건 감지</h3><p>시스템이 자동으로 담당 에이전트를 깨웁니다.</p></div>
+        <div class="event-box"><small>Trigger</small><h3>조건 감지</h3><p>시스템이 자동으로 담당 에이전트를 깨웁니다.</p><div class="event-detail"><span>파일 생성</span><span>상태 변경</span><span>웹훅 수신</span></div></div>
         <div class="arrow"></div>
-        <div class="event-box"><small>Action</small><h3>후속 작업</h3><p>분석, 요약, 검토, 알림이 이어집니다.</p></div>
+        <div class="event-box"><small>Action</small><h3>후속 작업</h3><p>분석, 요약, 검토, 알림이 이어집니다.</p><div class="event-detail"><span>분석</span><span>검토</span><span>알림</span></div></div>
       </div>
     </section>
 
@@ -523,9 +649,9 @@
         <div class="scene-no">10</div>
       </div>
       <div class="grid-3 stage">
-        <div class="card"><span class="tag">문서</span><h3>업로드 후 검토</h3><p>계약서나 리포트가 들어오면 검토 흐름을 시작합니다.</p></div>
-        <div class="card"><span class="tag">운영</span><h3>로그 후 알림</h3><p>장애 신호가 오면 분석하고 슬랙으로 요약합니다.</p></div>
-        <div class="card"><span class="tag">콘텐츠</span><h3>렌더 후 QA</h3><p>새 영상이 나오면 스냅샷과 자막 상태를 확인합니다.</p></div>
+        <div class="card"><span class="tag">문서</span><h3>업로드 후 검토</h3><p>계약서나 리포트가 들어오면 검토 흐름을 시작합니다.</p><div class="signal-list"><span>요약</span><span>위험 항목 표시</span><span>담당자 알림</span></div></div>
+        <div class="card"><span class="tag">운영</span><h3>로그 후 알림</h3><p>장애 신호가 오면 분석하고 슬랙으로 요약합니다.</p><div class="signal-list"><span>로그 수집</span><span>원인 후보</span><span>대응 초안</span></div></div>
+        <div class="card"><span class="tag">콘텐츠</span><h3>렌더 후 QA</h3><p>새 영상이 나오면 스냅샷과 자막 상태를 확인합니다.</p><div class="signal-list"><span>프레임 샘플</span><span>자막 위치</span><span>오디오 스트림</span></div></div>
       </div>
     </section>
 
@@ -547,11 +673,18 @@
         <div><div class="eyebrow">Use Cases</div><h2>실제 사례는 같은 방향을 보여줍니다.</h2></div>
         <div class="scene-no">12</div>
       </div>
-      <div class="case-grid">
-        <div class="case-card"><span class="tag">Harvey</span><h3>장기 법률 작업</h3><p>드리밍처럼 반복 맥락을 정리해야 가치가 커집니다.</p></div>
-        <div class="case-card"><span class="tag">Netflix</span><h3>빌드 로그 분석</h3><p>수많은 로그를 병렬로 나눠 보는 구조가 맞습니다.</p></div>
-        <div class="case-card"><span class="tag">Spiral</span><h3>요청 라우팅</h3><p>가벼운 모델과 강한 모델을 역할별로 배치합니다.</p></div>
-        <div class="case-card"><span class="tag">Wisedocs</span><h3>문서 검수</h3><p>결과 기준이 분명한 작업에서 아웃컴이 어울립니다.</p></div>
+      <div class="case-layout">
+        <div class="screenshot source-side case-shot">
+          <img src="assets/screenshots/scene-12-capture-4.png" alt="Claude Managed Agents customer examples capture" />
+          <div class="label">사례 섹션 캡처</div>
+          <div class="source-caption">사례들은 네 기능이 각각 따로가 아니라 운영 시스템으로 묶이는 방향을 보여줍니다.</div>
+        </div>
+        <div class="case-grid">
+          <div class="case-card"><span class="tag">Harvey</span><h3>장기 법률 작업</h3><p>반복 맥락을 정리해야 가치가 커집니다.</p><div class="signal-list"><span>과거 세션</span><span>사례 맥락</span></div></div>
+          <div class="case-card"><span class="tag">Netflix</span><h3>빌드 로그 분석</h3><p>수많은 로그를 병렬로 나눠 봅니다.</p><div class="signal-list"><span>로그 분산</span><span>원인 통합</span></div></div>
+          <div class="case-card"><span class="tag">Spiral</span><h3>요청 라우팅</h3><p>가벼운 모델과 강한 모델을 역할별로 배치합니다.</p><div class="signal-list"><span>저비용 분류</span><span>고품질 작성</span></div></div>
+          <div class="case-card"><span class="tag">Wisedocs</span><h3>문서 검수</h3><p>기준이 분명한 작업에서 아웃컴이 어울립니다.</p><div class="signal-list"><span>기준 평가</span><span>검수 속도</span></div></div>
+        </div>
       </div>
     </section>
 
@@ -567,6 +700,7 @@
 
   <script>
     const DURATION = 333.903;
+    const CAPTION_LEAD_SECONDS = 0.65;
     const SCENES = [
       ["#scene-01", 0, 13.4],
       ["#scene-02", 13.4, 9.0],
@@ -607,7 +741,8 @@
         { y: 0, autoAlpha: 1, duration: 0.8, stagger: 0.08 },
         start + 0.35
       );
-      tl.fromTo(`${selector} .arrow, ${selector} .line`, { scaleX: 0, autoAlpha: 0 }, { scaleX: 1, autoAlpha: 1, duration: 0.7, stagger: 0.07 }, start + 0.9);
+      tl.fromTo(`${selector} .arrow`, { scaleX: 0, autoAlpha: 0 }, { scaleX: 1, autoAlpha: 1, duration: 0.7, stagger: 0.07 }, start + 0.9);
+      tl.fromTo(`${selector} .network-lines path`, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6, stagger: 0.06 }, start + 0.95);
       if (end < DURATION - 0.4) {
         tl.to(selector, { autoAlpha: 0, duration: 0.25 }, end - 0.25);
       }
@@ -631,7 +766,7 @@
       ];
     }
     captions.forEach((cue) => {
-      tl.set("#caption", { textContent: cue.text }, cue.start);
+      tl.set("#caption", { textContent: cue.text }, Math.max(0, cue.start - CAPTION_LEAD_SECONDS));
     });
     tl.set("#caption", { textContent: "" }, DURATION - 0.12);
 

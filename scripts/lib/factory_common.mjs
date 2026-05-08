@@ -253,6 +253,31 @@ export async function copyDir(src, dest) {
   await cp(src, dest, { recursive: true, errorOnExist: true, force: false });
 }
 
+function flattenProject(value, prefix = "", out = {}) {
+  if (value && typeof value === "object" && !Array.isArray(value)) {
+    for (const [key, child] of Object.entries(value)) {
+      flattenProject(child, prefix ? `${prefix}.${key}` : key, out);
+    }
+    return out;
+  }
+  out[prefix] = value;
+  return out;
+}
+
+export function changedProjectFields(before, after) {
+  if (!before) return ["created project.json"];
+  const left = flattenProject(before);
+  const right = flattenProject(after);
+  const keys = [...new Set([...Object.keys(left), ...Object.keys(right)])].sort();
+  return keys.filter((key) => JSON.stringify(left[key]) !== JSON.stringify(right[key]));
+}
+
+export function printChangedProjectFields(before, after) {
+  const changed = changedProjectFields(before, after);
+  console.log(`Changed project.json fields: ${changed.length ? changed.join(", ") : "none"}`);
+  return changed;
+}
+
 export function nowIso() {
   return new Date().toISOString();
 }
@@ -281,8 +306,7 @@ export function slugify(input) {
   return value || "topic";
 }
 
-export async function nextProjectId() {
-  const projectsDir = rootPath("projects");
+export async function nextProjectId(projectsDir = rootPath("projects")) {
   if (!existsSync(projectsDir)) return "001";
   const entries = await readdir(projectsDir);
   const max = entries.reduce((acc, entry) => {
@@ -308,8 +332,12 @@ export async function loadProject(projectPath) {
 }
 
 export async function saveProject(projectPath, project) {
+  const full = projectPathFromArg(projectPath);
+  const jsonPath = join(full, "project.json");
+  const before = existsSync(jsonPath) ? await readJson(jsonPath) : null;
   project.updatedAt = nowIso();
-  await writeJson(join(projectPathFromArg(projectPath), "project.json"), project);
+  await writeJson(jsonPath, project);
+  printChangedProjectFields(before, project);
 }
 
 export async function updateProject(projectPath, updater) {
