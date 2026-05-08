@@ -19,6 +19,12 @@ Wikidocs 글은 Anthropic의 Claude Managed Agents 업데이트를 한국어로 
 
 Anthropic 원문은 2026년 5월 6일 발표된 제품 공지다. Dreaming은 research preview, outcomes와 multiagent orchestration과 webhooks는 Managed Agents에서 개발자에게 제공되는 기능으로 설명된다.
 
+## Source Snapshot
+
+- User-provided topic source: Wikidocs article published 2026년 5월 7일 6:11 오전.
+- Official source: Anthropic Claude blog product announcement dated May 6, 2026.
+- Working production mode: 정보 전달형 3분 기술 해설. 핵심 기능을 뉴스처럼 나열하지 않고, 왜 이 업데이트가 "에이전트 운영 시스템" 변화인지 설명한다.
+
 ## Angle Leads
 
 | Lead | Why It Might Work | Viewer Tension | Possible Payoff |
@@ -52,8 +58,8 @@ Anthropic 원문은 2026년 5월 6일 발표된 제품 공지다. Dreaming은 re
 
 ## Open Questions For Creative Roles
 
-- 이 영상은 Anthropic 기능 소개보다 "에이전트 설계의 방향 변화"에 초점을 둘 것인가?
-- 길이는 3분으로 충분한가, 아니면 사례까지 살려 5분+로 늘릴 것인가?
+- 이 영상은 Anthropic 기능 소개보다 "에이전트 설계의 방향 변화"에 초점을 둔다.
+- 길이는 정보 전달형 3분으로 고정한다. 사례는 Harvey, Netflix, Spiral, Wisedocs를 짧은 카드로만 사용한다.
 - Claude 제품명 노출은 정보 중심 카드로 갈지, 추상적인 시스템 다이어그램 중심으로 갈지?
 
 ## Not In MVP Scope

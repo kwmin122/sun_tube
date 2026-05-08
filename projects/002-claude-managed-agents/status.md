@@ -39,8 +39,8 @@
 
 ## Open Questions
 
-- Approve 3min direction, script, and scene table?
-- If not, choose shorter 60s or longer 5min+ before TTS.
+- Approve the 3min information-delivery direction, script, and scene table?
+- TTS is blocked until `project.json.approved.plan` is true.
 
 ## Commands
 

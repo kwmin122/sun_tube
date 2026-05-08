@@ -7,9 +7,9 @@ Owner: `hype-showrunner` and `hype-creative-director`
 - Chosen angle: Claude Managed Agents 업데이트의 본질은 "더 똑똑한 모델"이 아니라 "에이전트를 회사처럼 운영하는 시스템"이다.
 - Viewer promise: 드리밍, 아웃컴, 멀티에이전트 오케스트레이션이 각각 어떤 병목을 없애는지 3분 안에 이해한다.
 - Target viewer: AI 코딩/자동화/콘텐츠 제작에 에이전트를 쓰는 개발자와 빌더
-- Length decision: 3min
+- Length decision: 3min, information-delivery explainer
 - Format: 1920x1080 horizontal
-- Tone: hype + technical explainer
+- Tone: clear information delivery + technical explainer
 - Primary content pattern: Problem -> Cause -> Fix
 - Secondary pattern, if any: Comparison / Versus, Claim -> Proof -> Explanation
 
@@ -39,7 +39,7 @@ open: 에이전트의 진짜 한계는 모델이 아니라 구조다
 
 ## Visual Direction Seed
 
-- Visual mood: 어두운 콘솔 배경 위에 밝은 시스템 카드와 라우팅 라인이 움직이는 기술 다큐 톤
+- Visual mood: 어두운 콘솔 배경 위에 밝은 시스템 카드와 라우팅 라인이 움직이는 정보형 기술 다큐 톤
 - Imagegen direction: 사람 얼굴 없는 AI 운영실, 메모리 저장소, 품질 게이트, 병렬 작업 네트워크
 - Motion personality: 분해, 라우팅, 체크, 정리, 합류
 - Reference pattern used only as inspiration: claim -> diagram -> case card -> payoff
@@ -52,6 +52,6 @@ open: 에이전트의 진짜 한계는 모델이 아니라 구조다
 
 ## Approval Notes
 
-- Script approval: pending
-- Scene contract approval: pending
+- Script approval: pending user approval
+- Scene contract approval: pending user approval
 - Risky asset approval, if any: none in MVP draft
