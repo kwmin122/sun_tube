@@ -22,6 +22,9 @@ Do not treat the production phase as editing a supplied talking-head video unles
 Do not apply `youtube-scene-director` in this workspace unless the user explicitly asks for that skill by name.
 
 For short-form Korean scriptwriting, use the global `hype-shorts-script-style` skill.
+Start scripts from the topic directly. Avoid broad essay-style prefaces unless the user asks for them.
+When the user provides a reference Shorts video or transcript, analyze its caption cadence and reuse only the structure, not the wording or persona.
+Write TTS-friendly pronunciations in the script, for example `GPT 5.5` as `지피티 오쩜오`, `500,000` as `오십만`, `50%` as `오십 퍼센트`, `6x` as `여섯 배`, `Claude` as `클로드`, and `Anthropic` as `앤스로픽`.
 
 For TTS, use the global `elevenlabs-tts` skill.
 

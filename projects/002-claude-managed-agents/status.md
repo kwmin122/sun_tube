@@ -39,7 +39,7 @@
 
 ## Open Questions
 
-- Approve the 3min information-delivery direction, script, and scene table?
+- Approve the 3min, four-update information-delivery script and 9-scene table?
 - TTS is blocked until `project.json.approved.plan` is true.
 
 ## Commands

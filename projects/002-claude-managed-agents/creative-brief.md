@@ -5,7 +5,7 @@ Owner: `hype-showrunner` and `hype-creative-director`
 ## Decision Summary
 
 - Chosen angle: Claude Managed Agents 업데이트의 본질은 "더 똑똑한 모델"이 아니라 "에이전트를 회사처럼 운영하는 시스템"이다.
-- Viewer promise: 드리밍, 아웃컴, 멀티에이전트 오케스트레이션이 각각 어떤 병목을 없애는지 3분 안에 이해한다.
+- Viewer promise: 드리밍, 아웃컴, 멀티에이전트 오케스트레이션, 웹훅이 각각 어떤 병목을 없애는지 3분 안에 이해한다.
 - Target viewer: AI 코딩/자동화/콘텐츠 제작에 에이전트를 쓰는 개발자와 빌더
 - Length decision: 3min, information-delivery explainer
 - Format: 1920x1080 horizontal
@@ -16,26 +16,26 @@ Owner: `hype-showrunner` and `hype-creative-director`
 ## Why This Video Should Exist
 
 - Viewer problem or curiosity: 에이전트가 똑똑해 보여도 실무에서는 왜 자꾸 불안정하고 반복적인가?
-- Why now: Anthropic이 Managed Agents에 드리밍, 아웃컴, 멀티에이전트 오케스트레이션을 묶어 발표했다.
-- What should the viewer remember: 앞으로 에이전트 경쟁력은 모델 성능만이 아니라 학습 루프, 검증 루프, 협업 구조에서 갈린다.
+- Why now: Anthropic이 Managed Agents에 드리밍, 아웃컴, 멀티에이전트 오케스트레이션, 웹훅을 묶어 발표했다.
+- What should the viewer remember: 앞으로 에이전트 경쟁력은 모델 성능만이 아니라 학습 루프, 검증 루프, 협업 구조, 외부 워크플로 연결에서 갈린다.
 
 ## Structure
 
 ```text
-open: 에이전트의 진짜 한계는 모델이 아니라 구조다
--> setup: 혼자 일하는 AI의 세 가지 문제
--> development: 드리밍, 아웃컴, 멀티에이전트가 각각 해결하는 축
--> visual turn: 하나의 에이전트가 작은 회사 구조로 바뀌는 다이어그램
+open: 앤스로픽이 네 가지 업데이트를 발표했다
+-> setup: 더 똑똑한 모델이 아니라 더 일 잘하는 구조다
+-> development: 드리밍, 아웃컴, 멀티에이전트, 웹훅이 각각 해결하는 축
+-> visual turn: 하나의 에이전트가 작은 회사형 시스템으로 바뀌는 다이어그램
 -> payoff: 모델 경쟁에서 시스템 설계 경쟁으로 이동
--> close: 이제 질문은 "무슨 모델?"이 아니라 "어떤 운영체계?"다
+-> close: 이제 질문은 "무슨 모델?"이 아니라 "어떤 시스템?"이다
 ```
 
 ## Pacing
 
-- Hook target: 0-12초 안에 "AI 에이전트는 직원이 아니라 회사 구조가 필요하다"를 던진다.
-- Scene count target: 8 scenes
-- Density: 중간 이상. 기능명은 3개지만 각 기능을 한 문장과 하나의 장면으로 압축한다.
-- Where the biggest turn happens: Scene 06, 세 기능을 학습축/검증축/분업축으로 합치는 순간.
+- Hook target: 0-10초 안에 "네 가지 업데이트"를 바로 말한다.
+- Scene count target: 9 scenes
+- Density: 중간 이상. 기능명은 4개지만 각 기능을 한 문장과 하나의 장면으로 압축한다.
+- Where the biggest turn happens: Scene 07, 네 기능을 학습축/검증축/분업축/연결축으로 합치는 순간.
 
 ## Visual Direction Seed
 
