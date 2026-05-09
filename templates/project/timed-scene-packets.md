@@ -27,7 +27,7 @@ Tool routes come from `../../TOOL_ROUTING_PIPELINE.md`.
 | Scene | Time Range | SRT Lines | Tool Route | Renderer Targets | Scene Recipe | Narration Verb | Motion Purpose | Caption Behavior | Primary Asset | Motion Beat | Review Check | Audio/SFX | Snapshot Time | Status |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 01 | | | hyperframes | hyperframes | | | | bottom safe-zone caption, 0.9s lead | | | | | | planned |
-| 02 | | | capture + hyperframes | both | | | | bottom safe-zone caption, 0.9s lead | | | | | | planned |
+| 02 | | | capture + hyperframes | both | | | | bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar | | | | | | planned |
 | 03 | | | video-use | hyperframes | | | | bottom safe-zone caption, 0.9s lead | | | | | | planned |
 
 ## Scene Details

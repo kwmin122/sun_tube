@@ -239,7 +239,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 |---|---|---|---|---|---|---|---|
 | 01 | 0:00-0:13.4 | direct hook | capture + hyperframes | 네 가지 업데이트 발표 | Wikidocs/Anthropic 발표 화면 + 4개 기능 카드 | title slam + 4-card pop | Wikidocs/Anthropic 발표 화면 후보 |
 | 02 | 0:13.4-0:22.4 | reframe | hyperframes | 더 똑똑한 모델이 아니라 더 일 잘하는 구조 | 모델 카드 -> 운영 시스템 카드 | replace + lock | HTML/SVG 다이어그램 |
-| 03 | 0:22.4-0:50.9 | feature/what | capture + hyperframes | 드리밍은 작업 기록을 다시 보는 기능 | 메모리 조각 정리 장면 | noise -> signal 정리 | 공식 블로그 소재 |
+| 03 | 0:22.4-0:50.9 | feature/what | hyperframes | 드리밍은 작업 기록을 다시 보는 기능 | 메모리 조각 정리 장면 | noise -> signal 정리 | 메모리 정리 다이어그램 |
 | 04 | 0:50.9-1:19.4 | feature/when useful | hyperframes | 드리밍은 반복 작업과 장기 프로젝트에 좋다 | 반복 업무 패턴과 팀 선호 카드 | pattern highlight | Harvey 소재 |
 | 05 | 1:19.4-1:55.9 | feature/what | hyperframes | 아웃컴은 좋은 결과의 기준과 별도 채점기 | 산출물 -> grader -> pass/fail | loop animation | 루브릭/품질 게이트 그래픽 |
 | 06 | 1:55.9-2:15.9 | feature/when useful | hyperframes | 아웃컴은 기준이 분명한 문서/디자인 작업에 좋다 | 요구사항/브랜드/가이드 체크리스트 | checklist scan | benchmark 소재 |
@@ -263,7 +263,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 - Layout: 발표 화면 후보 위에 4개 기능 카드
 - Primary motion: title slam
 - Secondary motion: four-card pop
-- Caption: bottom, fixed
+- Caption: bottom, fixed, text only from ElevenLabs SRT
 - SFX: low impact hit
 - Verification frame: 0:08
 
@@ -287,11 +287,11 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 - Pattern role: feature/what
 - Narration: "첫 번째, 드리밍."
 - On-screen phrase: 쉬는 시간에 작업 기록을 다시 본다
-- Tool route: capture + hyperframes
+- Tool route: hyperframes
 - Layout: memory store with cards
 - Primary motion: messy cards sort into clean lanes
 - Secondary motion: duplicate cards fade
-- Caption: bottom, fixed
+- Caption: bottom, fixed, text only from ElevenLabs SRT
 - SFX: soft sweep
 - Verification frame: 0:52
 
@@ -453,7 +453,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 - Original voice: `voiceover/solo/voiceover-solo-elevenlabs.mp3`
 - Subtitle: `voiceover/solo/voiceover-solo-elevenlabs.srt`
 - Final mix: `voiceover/solo/voiceover-solo-final-mix.m4a`
-- Sync: ElevenLabs SRT, forced_alignment preferred
+- Sync: ElevenLabs SRT, forced_alignment preferred; captions are text-only with no progress bar
 
 ## Render Checks
 

@@ -40,13 +40,14 @@ Use this table before Hyperframes implementation. It prevents large empty panels
 |---|---|---|---|---|---|---|---|
 | 01 | | capture | standard | source highlight, card reveal | not_required | hyperframes | |
 | 02 | | hyperframes | rich | path draw, route pulse, row reveal | support | both | |
-| 03 | | capture | standard | screenshot crop, callout | not_required | hyperframes | |
+| 03 | | hyperframes | rich | diagram build, row reveal | not_required | hyperframes | |
 
 Guidance:
 
 - `rich` scenes need visible information rows and at least one motion primitive such as path draw, route pulse, count-up, scan fill, or liquid sheen.
 - Imagegen can be `primary`, `support`, or `not_required` by scene. Use `primary` only when the generated image carries the explanation, emotion, metaphor, reenactment, future scenario, or visual hook.
 - Use capture, interview, data, or HTML/SVG for factual evidence, exact UI, exact text, and text-heavy diagrams.
+- A capture route must be large enough to explain the narration, usually one half-side or larger. If it would be a tiny source stamp, mark it `support` or reroute to HTML/SVG/imagegen.
 - Keep caption-critical content above the bottom caption safe zone.
 - Do not use large decorative connector paths. Any route path must be anchored to concrete nodes and tied to the narration verb.
 - Do not use Liquid Glass as a global card style. Use it only for selected state, focus lens, floating control, or transition boundary.

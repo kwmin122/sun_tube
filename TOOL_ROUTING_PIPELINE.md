@@ -51,7 +51,7 @@ A capture route is `qa_passed` only when all are true:
 
 - The capture is from the intended page or source.
 - The visible crop is relevant to the exact narration beat.
-- The important region occupies enough screen area to read or recognize.
+- The important region occupies at least one half-side of the composition, or is otherwise large enough to read/recognize as the primary evidence.
 - Highlight/zoom points to a meaningful source detail, not a decorative rectangle.
 - The scene overlays Korean interpretation, labels, or comparison structure.
 
@@ -65,6 +65,7 @@ Capture route must be downgraded to `support_texture` or rerouted to Hyperframes
 
 - the page is mostly English text and the viewer cannot quickly understand it;
 - the highlighted box does not identify a specific claim or UI affordance;
+- the capture is a small source stamp instead of half-side or larger primary evidence;
 - the capture is used as background texture;
 - the narration can be explained better by a diagram, flow, or typed evidence card.
 

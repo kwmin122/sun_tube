@@ -1,14 +1,23 @@
 # Scene Frame Notes
 
-| Scene | Evidence Frames | Director Note | Decision |
-|---|---|---|---|
-| 02 | `scene-02-mid.png` | 챗봇 대화와 운영 모듈이 분리되어 리프레임이 보임 | PASS |
-| 05 | `scene-05-mid.png` | 초안, 기준, 채점 구조가 한눈에 보임 | PASS |
-| 06 | `scene-06-mid.png` | 평가 루프와 사용처가 분리되어 Outcome 설명에 맞음 | PASS |
-| 07 | `scene-07-mid.png` | 리드에서 역할 담당자로 분배되는 구조가 보임. 하단 장식선 제거됨 | PASS |
-| 08 | `scene-08-mid.png` | fan-out/fan-in 작업 분배가 보임. 다소 밀도 높지만 blocking은 아님 | PASS |
-| 09 | `scene-09-mid.png` | Event, Trigger, Action 흐름이 카드와 packet으로 구분됨 | PASS |
-| 10 | `scene-10-mid.png` | 자동 워크플로 사용처가 status ladder로 보임 | PASS |
-| 11 | `scene-11-mid.png` | 네 축이 운영 시스템으로 수렴하는 구조가 보임 | PASS |
-| 13 | `scene-13-mid.png` | 최종 질문과 token row가 겹치지 않음 | PASS |
+프레임을 직접 보고 디렉터 리뷰를 작성하기 위한 작업지입니다.
 
+- Contact sheet: `projects/002-claude-managed-agents/review/video-review/contact-sheet.jpg`
+- Scene frames: `projects/002-claude-managed-agents/review/video-review/scene-frames`
+- Suspicious frames: `projects/002-claude-managed-agents/review/video-review/suspicious-frames`
+
+| Scene | Intended Point | Evidence Frames | What Works | Problem | Required Fix |
+|---|---|---|---|---|---|
+| 01 | - | start: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-01-start.png`<br>mid: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-01-mid.png`<br>motion-peak: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-01-motion-peak.png`<br>end: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-01-end.png` |  |  |  |
+| 02 | - | start: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-02-start.png`<br>mid: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-02-mid.png`<br>motion-peak: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-02-motion-peak.png`<br>end: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-02-end.png` |  |  |  |
+| 03 | - | start: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-03-start.png`<br>mid: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-03-mid.png`<br>motion-peak: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-03-motion-peak.png`<br>end: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-03-end.png` |  |  |  |
+| 04 | - | start: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-04-start.png`<br>mid: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-04-mid.png`<br>motion-peak: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-04-motion-peak.png`<br>end: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-04-end.png` |  |  |  |
+| 05 | - | start: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-05-start.png`<br>mid: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-05-mid.png`<br>motion-peak: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-05-motion-peak.png`<br>end: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-05-end.png` |  |  |  |
+| 06 | - | start: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-06-start.png`<br>mid: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-06-mid.png`<br>motion-peak: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-06-motion-peak.png`<br>end: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-06-end.png` |  |  |  |
+| 07 | - | start: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-07-start.png`<br>mid: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-07-mid.png`<br>motion-peak: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-07-motion-peak.png`<br>end: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-07-end.png` |  |  |  |
+| 08 | - | start: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-08-start.png`<br>mid: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-08-mid.png`<br>motion-peak: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-08-motion-peak.png`<br>end: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-08-end.png` |  |  |  |
+| 09 | - | start: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-09-start.png`<br>mid: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-09-mid.png`<br>motion-peak: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-09-motion-peak.png`<br>end: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-09-end.png` |  |  |  |
+| 10 | - | start: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-10-start.png`<br>mid: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-10-mid.png`<br>motion-peak: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-10-motion-peak.png`<br>end: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-10-end.png` |  |  |  |
+| 11 | - | start: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-11-start.png`<br>mid: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-11-mid.png`<br>motion-peak: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-11-motion-peak.png`<br>end: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-11-end.png` |  |  |  |
+| 12 | - | start: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-12-start.png`<br>mid: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-12-mid.png`<br>motion-peak: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-12-motion-peak.png`<br>end: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-12-end.png` |  |  |  |
+| 13 | - | start: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-13-start.png`<br>mid: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-13-mid.png`<br>motion-peak: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-13-motion-peak.png`<br>end: `projects/002-claude-managed-agents/review/video-review/scene-frames/scene-13-end.png` |  |  |  |

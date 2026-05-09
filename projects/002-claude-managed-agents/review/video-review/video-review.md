@@ -1,5 +1,8 @@
 # Video Review
 
+Renderer: final
+Render: `projects/002-claude-managed-agents/renders/final.mp4`
+
 ## Machine Verdict
 PASS
 
@@ -21,27 +24,36 @@ This is not final aesthetic approval. `review/video-review/director-review.md` m
 
 - Cues: 133
 - Issues: 0
+- Method: elevenlabs-forced-alignment-srt-duration-and-cps
 - Caption lead: 1.45s
 - Caption config issues: 0
+- Limitation: uses ElevenLabs forced-alignment SRT cue timings; does not yet compare against ASR word timestamps
 
 ## Motion Variety
 
 - Motion issues: 0
+- Metadata-only: yes
 - Rich scenes require rows plus path/token/scan/sheen/tick motion primitives.
 
 ## Asset Match
 
 - Asset issues: 0
 
+## Capture Utility
+
+- Capture utility issues: 0
+
+
 ## Line Quality
 
 - Floating connector issues: 0
 
+
 ## Route Transparency
 
 - Project routes: `{"workOrders":"done","videoUse":"not_required","imagegen":"not_required","capture":"done","hyperframes":"done"}`
-- Work-order route counts: `{"capture":3,"hyperframes":13,"not_required":2}`
-- Asset route counts: `{"capture":3,"hyperframes":13}`
+- Work-order route counts: `{"capture":2,"hyperframes":13,"not_required":2}`
+- Asset route counts: `{"capture":2,"hyperframes":13}`
 
 ## Editor Notes
 

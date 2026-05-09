@@ -24,10 +24,10 @@ This is not final aesthetic approval. `review/video-review/director-review.md` m
 
 - Cues: 133
 - Issues: 0
-- Method: srt-duration-and-cps
+- Method: elevenlabs-forced-alignment-srt-duration-and-cps
 - Caption lead: 1.45s
 - Caption config issues: 0
-- Limitation: does not yet include forced alignment or ASR word timestamps
+- Limitation: uses ElevenLabs forced-alignment SRT cue timings; does not yet compare against ASR word timestamps
 
 ## Motion Variety
 
@@ -39,6 +39,11 @@ This is not final aesthetic approval. `review/video-review/director-review.md` m
 
 - Asset issues: 0
 
+## Capture Utility
+
+- Capture utility issues: 0
+
+
 ## Line Quality
 
 - Floating connector issues: 0
@@ -47,8 +52,8 @@ This is not final aesthetic approval. `review/video-review/director-review.md` m
 ## Route Transparency
 
 - Project routes: `{"workOrders":"done","videoUse":"not_required","imagegen":"not_required","capture":"done","hyperframes":"done"}`
-- Work-order route counts: `{"capture":3,"hyperframes":13,"not_required":2}`
-- Asset route counts: `{"capture":3,"hyperframes":13}`
+- Work-order route counts: `{"capture":2,"hyperframes":13,"not_required":2}`
+- Asset route counts: `{"capture":2,"hyperframes":13}`
 
 ## Editor Notes
 

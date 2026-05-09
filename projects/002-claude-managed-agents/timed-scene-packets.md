@@ -8,19 +8,19 @@ Generated from ElevenLabs SRT. Timings have been reviewed for the current compos
 
 | Scene | Time Range | SRT Lines | Tool Route | Caption Behavior | Primary Asset | Motion Beat | Audio/SFX | Snapshot Time | Status |
 |---|---|---|---|---|---|---|---|---|---|
-| 01 | 0:00.0-0:13.4 | 1, 2, 3, 4, 5, 6, 7 | capture + hyperframes | bottom safe-zone caption, 0.9s lead | Wikidocs/Anthropic 발표 화면 후보 | title slam + 4-card pop | final mix, reduced BGM | 0:06.7 | done |
-| 02 | 0:13.4-0:22.4 | 7, 8, 9, 10 | hyperframes | bottom safe-zone caption, 0.9s lead | HTML/SVG 다이어그램 | replace + lock | final mix, reduced BGM | 0:17.9 | done |
-| 03 | 0:22.4-0:50.9 | 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 | capture + hyperframes | bottom safe-zone caption, 0.9s lead | 공식 블로그 소재 | noise -> signal 정리 | final mix, reduced BGM | 0:36.6 | done |
-| 04 | 0:50.9-1:19.4 | 23, 24, 25, 26, 27, 28, 29, 30, 31, 32 | hyperframes | bottom safe-zone caption, 0.9s lead | Harvey 소재 | pattern highlight | final mix, reduced BGM | 1:05.2 | done |
-| 05 | 1:19.4-1:55.9 | 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47 | hyperframes | bottom safe-zone caption, 0.9s lead | 루브릭/품질 게이트 그래픽 | loop animation | final mix, reduced BGM | 1:37.7 | done |
-| 06 | 1:55.9-2:15.9 | 47, 48, 49, 50, 51, 52, 53, 54, 55, 56 | hyperframes | bottom safe-zone caption, 0.9s lead | benchmark 소재 | checklist scan | final mix, reduced BGM | 2:05.9 | done |
-| 07 | 2:15.9-2:55.9 | 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72 | hyperframes | bottom safe-zone caption, 0.9s lead | Netflix/Spiral 소재 | fan-out/fan-in | final mix, reduced BGM | 2:35.9 | done |
-| 08 | 2:55.9-3:17.4 | 72, 73, 74, 75, 76, 77, 78, 79, 80 | hyperframes | bottom safe-zone caption, 0.9s lead | Netflix 소재 | parallel sweep | final mix, reduced BGM | 3:06.7 | done |
-| 09 | 3:17.4-3:45.4 | 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93 | hyperframes | bottom safe-zone caption, 0.9s lead | webhook diagram | pulse line + callback | final mix, reduced BGM | 3:31.4 | done |
-| 10 | 3:45.4-4:08.0 | 93, 94, 95, 96, 97, 98, 99, 100, 101 | hyperframes | bottom safe-zone caption, 0.9s lead | webhook docs | event chain | final mix, reduced BGM | 3:56.7 | done |
-| 11 | 4:08.0-4:34.9 | 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112 | hyperframes | bottom safe-zone caption, 0.9s lead | HTML/SVG | four-axis lock-in | final mix, reduced BGM | 4:21.4 | done |
-| 12 | 4:34.9-5:11.4 | 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124 | capture + hyperframes | bottom safe-zone caption, 0.9s lead | 공식 사례 소재 | card stack + counters | final mix, reduced BGM | 4:53.1 | done |
-| 13 | 5:11.4-5:33.9 | 124, 125, 126, 127, 128, 129, 130, 131, 132, 133 | hyperframes | bottom safe-zone caption, 0.9s lead | 타이포그래피 | text replace + hold | final mix, reduced BGM | 5:22.6 | done |
+| 01 | 0:00.0-0:13.4 | 1, 2, 3, 4, 5, 6, 7 | capture + hyperframes | bottom safe-zone text-only caption, SRT cue timing | Wikidocs/Anthropic 발표 화면 후보 | title slam + 4-card pop | final mix, reduced BGM | 0:06.7 | done |
+| 02 | 0:13.4-0:22.4 | 7, 8, 9, 10 | hyperframes | bottom safe-zone text-only caption, SRT cue timing | HTML/SVG 다이어그램 | replace + lock | final mix, reduced BGM | 0:17.9 | done |
+| 03 | 0:22.4-0:50.9 | 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 | hyperframes | bottom safe-zone text-only caption, SRT cue timing | 메모리 정리 다이어그램 | noise -> signal 정리 | final mix, reduced BGM | 0:36.6 | done |
+| 04 | 0:50.9-1:19.4 | 23, 24, 25, 26, 27, 28, 29, 30, 31, 32 | hyperframes | bottom safe-zone text-only caption, SRT cue timing | Harvey 소재 | pattern highlight | final mix, reduced BGM | 1:05.2 | done |
+| 05 | 1:19.4-1:55.9 | 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47 | hyperframes | bottom safe-zone text-only caption, SRT cue timing | 루브릭/품질 게이트 그래픽 | loop animation | final mix, reduced BGM | 1:37.7 | done |
+| 06 | 1:55.9-2:15.9 | 47, 48, 49, 50, 51, 52, 53, 54, 55, 56 | hyperframes | bottom safe-zone text-only caption, SRT cue timing | benchmark 소재 | checklist scan | final mix, reduced BGM | 2:05.9 | done |
+| 07 | 2:15.9-2:55.9 | 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72 | hyperframes | bottom safe-zone text-only caption, SRT cue timing | Netflix/Spiral 소재 | fan-out/fan-in | final mix, reduced BGM | 2:35.9 | done |
+| 08 | 2:55.9-3:17.4 | 72, 73, 74, 75, 76, 77, 78, 79, 80 | hyperframes | bottom safe-zone text-only caption, SRT cue timing | Netflix 소재 | parallel sweep | final mix, reduced BGM | 3:06.7 | done |
+| 09 | 3:17.4-3:45.4 | 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93 | hyperframes | bottom safe-zone text-only caption, SRT cue timing | webhook diagram | pulse line + callback | final mix, reduced BGM | 3:31.4 | done |
+| 10 | 3:45.4-4:08.0 | 93, 94, 95, 96, 97, 98, 99, 100, 101 | hyperframes | bottom safe-zone text-only caption, SRT cue timing | webhook docs | event chain | final mix, reduced BGM | 3:56.7 | done |
+| 11 | 4:08.0-4:34.9 | 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112 | hyperframes | bottom safe-zone text-only caption, SRT cue timing | HTML/SVG | four-axis lock-in | final mix, reduced BGM | 4:21.4 | done |
+| 12 | 4:34.9-5:11.4 | 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124 | capture + hyperframes | bottom safe-zone text-only caption, SRT cue timing | 공식 사례 소재 | card stack + counters | final mix, reduced BGM | 4:53.1 | done |
+| 13 | 5:11.4-5:33.9 | 124, 125, 126, 127, 128, 129, 130, 131, 132, 133 | hyperframes | bottom safe-zone text-only caption, SRT cue timing | 타이포그래피 | text replace + hold | final mix, reduced BGM | 5:22.6 | done |
 
 ## Review Notes
 
@@ -35,7 +35,7 @@ Generated from ElevenLabs SRT. Timings have been reviewed for the current compos
 |---|---|---|---|---|---|---|---|
 | 01 | Managed Agents는 네 기능이 합쳐진 운영 시스템이다 | 네 기능은 따로 나열된 카드가 아니라 하나의 작업 루프로 연결된다 | 네 모듈이 중앙 OS 레이어로 조립 | combine | 모듈들이 한 중심으로 연결되고 상태가 잠긴다 | Remotion system diagram | 기능명 카드 네 개만 보인다 |
 | 02 | 챗봇 경쟁이 아니라 운영 시스템 경쟁이다 | 답변 생성보다 기억, 기준, 역할, 후속 작업이 중요하다 | old question vs new frame 비교 | reframe | 단발 답변이 운영 모듈로 전환된다 | HTML diagram | 단순 before/after 텍스트만 보인다 |
-| 03 | 드리밍은 세션 사이에 맥락을 정리한다 | 과거 세션, 반복 실수, 성공 패턴이 메모리로 정리된다 | source zoom + memory sorting | remember | 노이즈가 메모리 항목으로 정리된다 | official capture + memory cards | 캡처가 배경처럼만 보인다 |
+| 03 | 드리밍은 세션 사이에 맥락을 정리한다 | 과거 세션, 반복 실수, 성공 패턴이 메모리로 정리된다 | memory sorting board | remember | 노이즈가 메모리 항목으로 정리된다 | memory cards | 작은 캡처가 남아 있거나 캡처가 설명을 대신한다 |
 | 04 | 긴 프로젝트에서 메모리는 세션을 이어준다 | 어제의 판단이 오늘의 요청과 다음 세션으로 이어진다 | timeline continuity | carry | 시간축을 따라 맥락이 이동한다 | Remotion timeline | 추상 카드만 반복된다 |
 | 05 | 아웃컴은 좋은 결과를 기준표로 만든다 | 결과를 느낌이 아니라 기준으로 평가한다 | rubric table build | define | 기준, 가중치, 통과선이 생성된다 | rubric diagram | 진행바나 카드만 보인다 |
 | 06 | 아웃컴은 기준, 채점, 수정, 재검수를 루프로 만든다 | 작업자와 검수자가 분리되고 기준 미달이면 돌아온다 | revision loop | revise | 실패 출력이 수정 루프로 되돌아간다 | loop diagram | 원형 장식만 돈다 |

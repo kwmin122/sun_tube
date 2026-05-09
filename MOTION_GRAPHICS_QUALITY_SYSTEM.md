@@ -28,7 +28,7 @@ If the motion does not make the verb visible, the scene fails director review.
 - Same `fade + y + stagger` as the dominant animation across scenes.
 - Long decorative connector paths floating across cards or text.
 - `path-draw` without node anchors, purpose, and safe-zone checks.
-- Full-screen source captures with decorative rectangles that do not explain a Korean narration beat.
+- Source captures that are tiny stamps, background texture, or decorative rectangles instead of readable primary evidence.
 - Large empty glass panels.
 - Liquid Glass as a global theme.
 - Repeated card-only layouts for three or more scenes.
@@ -41,9 +41,10 @@ Hyperframes is the preferred final renderer for editorial explainers in this fac
 
 - Prefer lanes, packets, rails, and state bars over decorative sweeping lines.
 - If a connector is necessary, it must attach to named node anchors and avoid readable text.
-- A source capture should be a source stamp or evidence panel, not the whole explanation unless the viewer can read and understand it quickly.
+- A source capture route must be a half-side-or-larger evidence panel with a useful crop. If the capture would be a small source stamp, remove the route and explain the scene with diagram, typography, imagegen, or another primary visual.
 - Every rich scene needs a visible Korean explanatory structure: rows, chips, gates, loops, before/after states, or a diagram.
 - Motion must show the narration verb, not just make elements appear.
+- Captions are text-only from ElevenLabs forced-alignment SRT cue timing by default; do not add subtitle progress bars unless explicitly requested.
 
 ## Primitive Contract
 
@@ -86,6 +87,7 @@ Machine review should flag:
 - unanchored or decorative path
 - caption safe-zone overlap
 - primary visual route missing from rendered frames
+- capture route rendered as a tiny stamp or without `data-capture-size="half|large|full"`
 - `director-review.md` PASS without evidence frame references
 
 ## Learning Rule

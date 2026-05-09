@@ -74,7 +74,7 @@ for (let i = 0; i < scenes.length; i += 1) {
   const route = row["Tool Route"] || ((row["Visual Concept"] || "").toLowerCase().includes("screenshot") ? "capture" : "hyperframes");
   const timeRange = `${secondsToTimestamp(start)}-${secondsToTimestamp(end)}`;
   const snapshot = secondsToTimestamp(start + Math.max(0.5, (end - start) / 2));
-  lines.push(`| ${sceneId} | ${timeRange} | ${srtLines.join(", ") || "pending"} | ${route} | pending | ${row.Assets || "pending"} | ${row["Motion Notes"] || "pending"} | pending | ${snapshot} | pending review |`);
+  lines.push(`| ${sceneId} | ${timeRange} | ${srtLines.join(", ") || "pending"} | ${route} | bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar | ${row.Assets || "pending"} | ${row["Motion Notes"] || "pending"} | pending | ${snapshot} | pending review |`);
 }
 
 lines.push("");

@@ -29,6 +29,7 @@ Build the Hyperframes composition.
 - Read `TOOL_ROUTING_PIPELINE.md` before assembling routed assets.
 - Use SRT timing as the timing source.
 - Keep captions readable and protected.
+- Keep captions text-only from ElevenLabs SRT by default; do not add caption progress bars unless the user explicitly asks.
 - Use motion to explain the scene purpose.
 - Import processed clips from `asset-plan.md`; do not use Hyperframes as the raw-video trim/transcript/subtitle preparation tool.
 - Treat `work-orders/*.md` as the executable task truth for route completion.
@@ -43,6 +44,7 @@ Use this before pre-render QA:
 - Avoid large empty cards or panels. A panel needs an information role, not just a title.
 - Keep primary labels and moving tokens above the caption safe zone.
 - Classify imagegen per scene as `primary`, `support`, or `not_required`. Use `primary` when a generated image carries the explanation/emotion/metaphor; use `support` for mood/styleframe/background/thumbnail; use `not_required` when capture, interview, data, or HTML/SVG explains the scene better.
+- If a capture is selected as a route, it must be large enough to function as primary evidence, generally one half-side or larger. Tiny official-source stamps should be removed or rerouted to a diagram.
 - Do not use full-width decorative connector SVGs that float across the canvas or pass over card titles. Lines must be anchored to concrete nodes, clipped inside their container, or replaced with short arrows/tokens.
 
 ## Renderer Comparison

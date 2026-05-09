@@ -17,10 +17,10 @@
   },
   {
     "scene": "03",
-    "route": "capture + hyperframes",
-    "type": "official screenshot + generated visual",
-    "candidate": "https://claude.com/blog/new-in-claude-managed-agents",
-    "processing": "captured official page, placed source screenshot with memory sorting cards",
+    "route": "hyperframes",
+    "type": "HTML motion diagram",
+    "candidate": "generated",
+    "processing": "official capture removed; Korean memory sorting board is primary",
     "status": "qa_passed"
   },
   {

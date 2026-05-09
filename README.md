@@ -12,7 +12,7 @@ Hyperframes 기반 모션 애니메이션 유튜브 제작 작업실입니다.
 4. `plan.md`에 승인용 대본과 씬 계약서를 만든다.
 5. 사용자가 검수한다.
 6. 승인 후 ElevenLabs TTS를 만든다.
-7. ElevenLabs SRT 타이밍에 맞춰 `timed-scene-packets.md`를 만든다.
+7. ElevenLabs forced-alignment SRT 타이밍에 맞춰 `timed-scene-packets.md`를 만든다. 자막은 기본적으로 SRT cue 기반 text-only이며 진행바를 넣지 않는다.
 8. `TOOL_ROUTING_PIPELINE.md` 기준으로 씬별 도구 경로를 정한다.
 9. 자료/비주얼/모션/오디오를 씬별로 병렬 제작한다.
 10. Hyperframes 조립 후 `snapshot`, pre-render QA, `render`, video review, final QA를 거친다.

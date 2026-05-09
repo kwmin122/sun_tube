@@ -66,7 +66,7 @@ Write spoken Korean lines here. Use one idea per line.
 - Layout:
 - Primary motion:
 - Secondary motion:
-- Caption:
+- Caption: bottom safe-zone text-only from ElevenLabs SRT, no progress bar
 - SFX:
 - Verification frame:
 
@@ -79,7 +79,7 @@ Write spoken Korean lines here. Use one idea per line.
 - Layout:
 - Primary motion:
 - Secondary motion:
-- Caption:
+- Caption: bottom safe-zone text-only from ElevenLabs SRT, no progress bar
 - SFX:
 - Verification frame:
 
@@ -101,7 +101,7 @@ Write spoken Korean lines here. Use one idea per line.
 - Original voice: `voiceover/solo/voiceover-solo-elevenlabs.mp3`
 - Subtitle: `voiceover/solo/voiceover-solo-elevenlabs.srt`
 - Final mix: `voiceover/solo/voiceover-solo-final-mix.m4a`
-- Sync: ElevenLabs SRT, forced_alignment preferred
+- Sync: ElevenLabs SRT, forced_alignment preferred; captions are text-only with no progress bar
 
 ## Render Checks
 

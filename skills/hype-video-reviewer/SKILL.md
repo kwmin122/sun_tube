@@ -32,6 +32,7 @@ Check the finished video like an editing director, not just a file validator.
 - Captions: SRT exists, timing is plausible, captions do not linger too short/long, and final caption duration matches the MP4.
 - Scene contract: each scene visually supports the purpose in `timed-scene-packets.md`.
 - Asset presence: routes marked complete in `asset-plan.md` and `work-orders/*.md` appear in the composition or rendered frames.
+- Capture fit: a capture route must be primary evidence, use a useful crop, and take at least one half-side of the frame. Small source stamps are treated as weak support, not a completed capture route.
 - Visual density: rich scenes must avoid empty panels and include readable rows, route lines, tokens, counters, scans, or comparable information.
 - Motion quality: avoid repeated static cards or identical fade/stagger scenes; diagrams should use path draw, pulse, scan, count-up, or sequential reveals where useful.
 - Line quality: block full-width decorative connector SVGs that float across panels, cross labels, or do not anchor to specific cards. Prefer short card-anchored arrows, rows, tokens, or contained micro-lines.
@@ -58,6 +59,7 @@ Never change `director-review.md` to PASS just because `video-review.md` has a m
 - Empty Feel
 - YouTube Rhythm
 - Caption Sync
+- Capture Utility
 
 ## Imagegen Role
 
@@ -80,6 +82,7 @@ Write under `review/video-review/`:
 - `frame-manifest.json`
 - `caption-sync-report.json`
 - `caption-config-report.json`
+- `capture-utility-report.json`
 - `motion-density-report.json`
 - `asset-presence-report.json`
 - `line-quality-report.json`

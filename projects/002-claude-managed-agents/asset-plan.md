@@ -34,9 +34,9 @@ This MVP asset plan is not a rights, privacy, citation, or quote-accuracy review
 
 | Scene | Time | Pattern Role | Tool Route | Capture Role | Useful Crop | Viewer Reads What | Reroute If Weak | Narration Beat | Asset Type | Link / File / Candidate | Speaker / Role | Timestamp | Processing Needed | Status |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 01 | 0:00-0:13.4 | direct hook | capture + hyperframes | support_texture | yes | official announcement context plus four Korean feature cards | hyperframes summary card | Four updates | webpage screenshot + HTML motion | https://claude.com/blog/new-in-claude-managed-agents | | | captured official source page, placed screenshot in composition, built 4 feature cards | qa_passed |
+| 01 | 0:00-0:13.4 | direct hook | capture + hyperframes | primary_evidence | yes | official announcement context plus four Korean feature cards | hyperframes summary card | Four updates | webpage screenshot + HTML motion | https://claude.com/blog/new-in-claude-managed-agents | | | half-width source page capture plus 4 feature cards | qa_passed |
 | 02 | 0:13.4-0:22.4 | reframe | hyperframes | not_required | no | operating-system reframe | not_required | Smarter model -> better operating system | HTML/SVG diagram | generated | | | model card replaced by system card | qa_passed |
-| 03 | 0:22.4-0:50.9 | feature/what | capture + hyperframes | support_texture | weak | source context only; Korean board explains the concept | primary Hyperframes memory-sorting diagram | Dreaming: what it does | official screenshot + generated visual | https://claude.com/blog/new-in-claude-managed-agents | | | small source stamp plus Korean memory sorting board | qa_passed |
+| 03 | 0:22.4-0:50.9 | feature/what | hyperframes | not_required | no | Korean memory board explains the concept | not_required | Dreaming: what it does | HTML motion diagram | generated | | | official capture removed; Korean memory sorting board is primary | qa_passed |
 | 04 | 0:50.9-1:19.4 | feature/when useful | hyperframes | not_required | no | memory stream diagram | not_required | Dreaming: when useful | diagram/data | Harvey section from Anthropic blog | | | rich memory stream, progress rail, context cards, scan fill | qa_passed |
 | 05 | 1:19.4-1:55.9 | feature/what | hyperframes | not_required | no | rubric gate and judge split | not_required | Outcomes: what it does | diagram/data | generated from official blog facts | | | rubric gate + revision loop | qa_passed |
 | 06 | 1:55.9-2:15.9 | feature/when useful | hyperframes | not_required | no | criteria -> score -> revision loop | not_required | Outcomes: when useful | checklist diagram | generated from official blog facts | | | judge loop, rubric scan, status ticks | qa_passed |
@@ -58,7 +58,8 @@ This MVP asset plan is not a rights, privacy, citation, or quote-accuracy review
 - Route final HTML motion, captions, diagrams, and composition through Hyperframes.
 - This project currently has no `video-use` scene because no raw/interview/demo video material is selected.
 - Capture role values: `primary_evidence`, `support_texture`, `not_required`, `reroute_to_diagram`.
-- Scene 03 intentionally downgrades the official capture to `support_texture`; the primary explanation is the Korean Hyperframes memory-sorting board.
+- Scene 03 intentionally removes the official capture route; the primary explanation is the Korean Hyperframes memory-sorting board.
+- If a capture route is selected, it must be primary evidence with a useful crop and at least half-side visual presence in the composition. Small source stamps are not a valid capture route.
 - Do not force a reference video's edit order onto an unrelated topic.
 
 ## Processing Checklist

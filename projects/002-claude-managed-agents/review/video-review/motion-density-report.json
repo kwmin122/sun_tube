@@ -28,13 +28,13 @@
       "scene": "03",
       "rich": false,
       "id": "03",
-      "rows": 5,
-      "tokens": 0,
+      "rows": 3,
+      "tokens": 3,
       "paths": 0,
-      "scans": 0,
-      "sheens": 0,
+      "scans": 1,
+      "sheens": 1,
       "ticks": 0,
-      "signature": "rows"
+      "signature": "rows+tokens+scans+sheens"
     },
     {
       "scene": "04",
@@ -66,11 +66,11 @@
       "id": "06",
       "rows": 7,
       "tokens": 0,
-      "paths": 4,
+      "paths": 0,
       "scans": 0,
       "sheens": 2,
       "ticks": 3,
-      "signature": "rows+paths+sheens+ticks"
+      "signature": "rows+sheens+ticks"
     },
     {
       "scene": "07",
@@ -78,11 +78,11 @@
       "id": "07",
       "rows": 4,
       "tokens": 4,
-      "paths": 4,
+      "paths": 0,
       "scans": 5,
       "sheens": 5,
       "ticks": 0,
-      "signature": "rows+tokens+paths+scans+sheens"
+      "signature": "rows+tokens+scans+sheens"
     },
     {
       "scene": "08",
@@ -102,11 +102,11 @@
       "id": "09",
       "rows": 3,
       "tokens": 0,
-      "paths": 2,
+      "paths": 0,
       "scans": 3,
       "sheens": 3,
       "ticks": 0,
-      "signature": "rows+paths+scans+sheens"
+      "signature": "rows+scans+sheens"
     },
     {
       "scene": "10",
@@ -126,11 +126,11 @@
       "id": "11",
       "rows": 0,
       "tokens": 0,
-      "paths": 4,
+      "paths": 0,
       "scans": 0,
       "sheens": 1,
       "ticks": 4,
-      "signature": "paths+sheens+ticks"
+      "signature": "sheens+ticks"
     },
     {
       "scene": "12",
@@ -150,12 +150,14 @@
       "id": "13",
       "rows": 1,
       "tokens": 4,
-      "paths": 4,
+      "paths": 0,
       "scans": 1,
       "sheens": 1,
       "ticks": 0,
-      "signature": "rows+tokens+paths+scans+sheens"
+      "signature": "rows+tokens+scans+sheens"
     }
   ],
-  "issues": []
+  "issues": [],
+  "metadataOnly": true,
+  "note": "HTML metrics are metadata-only. Director review must inspect rendered frames before PASS."
 }

@@ -29,7 +29,7 @@
 ## Tool Routing
 
 - Default route: Hyperframes for final composition, diagrams, captions, kinetic type, and render
-- Capture route: scenes 01, 03, 12 for source webpage/product announcement screenshots
+- Capture route: scenes 01 and 12 for half-side or larger source webpage/product announcement screenshots
 - Imagegen route: optional style frames only if later needed
 - `video-use` route: none currently, because no raw/interview/demo video clip is selected
 - scripts/ffmpeg route: later audio mix and render checks only
@@ -65,7 +65,7 @@ These contracts are the design source for Remotion V2. A scene fails if it rende
 |---|---|---|---|---|---|---|---|
 | 01 | Managed Agents는 네 기능이 합쳐진 운영 시스템이다 | 네 기능은 따로 나열된 카드가 아니라 하나의 작업 루프로 연결된다 | 네 모듈이 중앙 OS 레이어로 조립 | combine | 모듈들이 한 중심으로 연결되고 상태가 잠긴다 | Remotion system diagram | 기능명 카드 네 개만 보인다 |
 | 02 | 챗봇 경쟁이 아니라 운영 시스템 경쟁이다 | 답변 생성보다 기억, 기준, 역할, 후속 작업이 중요하다 | old question vs new frame 비교 | reframe | 단발 답변이 운영 모듈로 전환된다 | HTML diagram | 단순 before/after 텍스트만 보인다 |
-| 03 | 드리밍은 세션 사이에 맥락을 정리한다 | 과거 세션, 반복 실수, 성공 패턴이 메모리로 정리된다 | source zoom + memory sorting | remember | 노이즈가 메모리 항목으로 정리된다 | official capture + memory cards | 캡처가 배경처럼만 보인다 |
+| 03 | 드리밍은 세션 사이에 맥락을 정리한다 | 과거 세션, 반복 실수, 성공 패턴이 메모리로 정리된다 | memory sorting board | remember | 노이즈가 메모리 항목으로 정리된다 | memory cards | 작은 캡처가 남아 있거나 캡처가 설명을 대신한다 |
 | 04 | 긴 프로젝트에서 메모리는 세션을 이어준다 | 어제의 판단이 오늘의 요청과 다음 세션으로 이어진다 | timeline continuity | carry | 시간축을 따라 맥락이 이동한다 | Remotion timeline | 추상 카드만 반복된다 |
 | 05 | 아웃컴은 좋은 결과를 기준표로 만든다 | 결과를 느낌이 아니라 기준으로 평가한다 | rubric table build | define | 기준, 가중치, 통과선이 생성된다 | rubric diagram | 진행바나 카드만 보인다 |
 | 06 | 아웃컴은 기준, 채점, 수정, 재검수를 루프로 만든다 | 작업자와 검수자가 분리되고 기준 미달이면 돌아온다 | revision loop | revise | 실패 출력이 수정 루프로 되돌아간다 | loop diagram | 원형 장식만 돈다 |

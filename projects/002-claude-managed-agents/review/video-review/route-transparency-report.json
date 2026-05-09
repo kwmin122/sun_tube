@@ -7,12 +7,12 @@
     "hyperframes": "done"
   },
   "routeCounts": {
-    "capture": 3,
+    "capture": 2,
     "hyperframes": 13,
     "not_required": 2
   },
   "assetRoutes": {
-    "capture": 3,
+    "capture": 2,
     "hyperframes": 13
   }
 }

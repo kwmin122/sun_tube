@@ -25,7 +25,7 @@ Result: PASS
 | asset-plan has no blocking pending | PASS |  |
 | timed-scene-packets has no blocking pending | PASS |  |
 | capture manifest exists | PASS | projects/002-claude-managed-agents/assets/screenshots/capture_manifest.json |
-| capture tasks exist | PASS | 3 task(s) |
+| capture tasks exist | PASS | 2 task(s) |
 | capture files exist | PASS | all captured files present |
 | captured assets used in composition | PASS | all captured screenshots referenced |
 | Hyperframes check | PASS | npm run check passed |

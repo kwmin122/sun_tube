@@ -94,6 +94,18 @@ function sectionMetrics(html) {
   return metrics;
 }
 
+function sectionBodies(html) {
+  const bodies = new Map();
+  const sceneRegex = /<section\b([^>]*)>([\s\S]*?)<\/section>/g;
+  for (const match of html.matchAll(sceneRegex)) {
+    const attrs = match[1] || "";
+    const body = match[2] || "";
+    const id = attrs.match(/id=["']scene-([^"']+)["']/)?.[1];
+    if (id) bodies.set(id.padStart(2, "0"), body);
+  }
+  return bodies;
+}
+
 function syntheticQualityDomAudit(html, renderer) {
   if (renderer !== "remotion") return { issues: [] };
   const markerPattern = /<section\b|class=["'][^"']*(?:info-row|flow-token|scan-fill|metric-tick|path-draw)[^"']*["']/;
@@ -157,6 +169,42 @@ function assetAudit(assets, workRows) {
   return { issues };
 }
 
+function captureUtilityAudit(assets, html) {
+  const issues = [];
+  const bodies = sectionBodies(html || "");
+  for (const row of assets) {
+    const scene = clean(row.Scene).padStart(2, "0");
+    const routes = normalizeRoutes(row["Tool Route"]);
+    if (!routes.includes("capture")) continue;
+
+    const role = clean(row["Capture Role"]).toLowerCase();
+    const usefulCrop = clean(row["Useful Crop"]).toLowerCase();
+    const viewerReads = clean(row["Viewer Reads What"]);
+    const body = bodies.get(scene) || "";
+
+    if (role !== "primary_evidence") {
+      issues.push({ scene, issue: "capture_not_primary_evidence", detail: `Capture Role=${row["Capture Role"] || "empty"}; reroute weak captures to hyperframes` });
+    }
+    if (usefulCrop !== "yes") {
+      issues.push({ scene, issue: "capture_not_useful_crop", detail: `Useful Crop=${row["Useful Crop"] || "empty"}` });
+    }
+    if (/\b(weak|source context only|background|texture|decorative)\b/i.test(viewerReads)) {
+      issues.push({ scene, issue: "capture_visual_purpose_weak", detail: viewerReads });
+    }
+    if (!body) {
+      issues.push({ scene, issue: "capture_scene_missing_html", detail: "capture route has no matching rendered scene section" });
+      continue;
+    }
+    if (/source-stamp|data-capture-role=["']support_texture["']/.test(body)) {
+      issues.push({ scene, issue: "capture_too_small", detail: "capture route cannot be a small source stamp or support texture" });
+    }
+    if (!/data-capture-size=["'](?:half|large|full)["']/.test(body)) {
+      issues.push({ scene, issue: "capture_size_marker_missing", detail: "capture route must mark data-capture-size=\"half\", \"large\", or \"full\"" });
+    }
+  }
+  return { issues };
+}
+
 function lineQualityAudit(html) {
   const bannedClasses = ["route-svg", "event-route-svg", "pipeline-svg", "network-lines"];
   const issues = bannedClasses
@@ -183,6 +231,9 @@ function captionConfigAudit(html) {
   const match = html.match(/CAPTION_LEAD_SECONDS\s*=\s*([0-9.]+)/);
   const leadSeconds = match ? Number(match[1]) : null;
   const issues = [];
+  if (/caption-progress|subtitle-progress|captionProgress|subtitleProgress|data-caption-progress/.test(html)) {
+    issues.push({ issue: "caption_progress_bar_present", detail: "captions must be text-only by default; remove subtitle progress bars unless explicitly requested" });
+  }
   if (!Number.isFinite(leadSeconds)) {
     issues.push({ issue: "caption_lead_missing", detail: "composition must declare CAPTION_LEAD_SECONDS" });
   } else if (leadSeconds < 1.05) {
@@ -219,6 +270,8 @@ function rendererCompositionHtml(projectPath, key) {
     return existsSync(preferred) ? preferred : join(projectPath, "composition/index.html");
   }
   if (key === "remotion") return join(projectPath, "composition-remotion/index.html");
+  const selectedHyperframes = join(projectPath, "composition-hyperframes/index.html");
+  if (existsSync(selectedHyperframes)) return selectedHyperframes;
   return join(projectPath, "composition/index.html");
 }
 
@@ -291,13 +344,14 @@ for (const scene of scenes) {
   }
 }
 
-const captionReport = { ...captionAudit(captions, duration), method: "srt-duration-and-cps", limitation: "does not yet include forced alignment or ASR word timestamps" };
+const captionReport = { ...captionAudit(captions, duration), method: "elevenlabs-forced-alignment-srt-duration-and-cps", limitation: "uses ElevenLabs forced-alignment SRT cue timings; does not yet compare against ASR word timestamps" };
 const motionReport = hasCompositionHtml
   ? motionAudit(scenes, assets, sectionMetrics(composition))
   : { rows: [], issues: [], limitations: [`HTML audit skipped for ${reviewKey}; no ${rel(compositionPath)} found`] };
 const assetReport = assetAudit(assets, workRows);
 const lineReport = hasCompositionHtml ? lineQualityAudit(composition) : { bannedClasses: [], issues: [], limitations: [`Line audit skipped for ${reviewKey}; no ${rel(compositionPath)} found`] };
 const captionConfigReport = hasCompositionHtml ? captionConfigAudit(composition) : { leadSeconds: null, issues: [], limitations: [`Caption config audit skipped for ${reviewKey}; no ${rel(compositionPath)} found`] };
+const captureUtilityReport = hasCompositionHtml ? captureUtilityAudit(assets, composition) : { issues: [], limitations: [`Capture utility audit skipped for ${reviewKey}; no ${rel(compositionPath)} found`] };
 const syntheticDomReport = hasCompositionHtml ? syntheticQualityDomAudit(composition, reviewKey) : { issues: [] };
 const routeReport = routeTransparency(project, assets, workRows);
 const frameFailures = frameManifest.filter((frame) => !frame.ok);
@@ -315,6 +369,7 @@ const blockers = [
   ...captionReport.issues.filter((issue) => issue.issue === "caption_duration_mismatch"),
   ...motionReport.issues,
   ...assetReport.issues,
+  ...captureUtilityReport.issues,
   ...frameFailures.map((frame) => ({ scene: frame.scene, issue: "frame_extract_failed", detail: frame.label })),
 ];
 
@@ -330,6 +385,7 @@ await writeJson(join(reviewDir, `caption-sync-report${suffix}.json`), captionRep
 await writeJson(join(reviewDir, `caption-config-report${suffix}.json`), captionConfigReport);
 await writeJson(join(reviewDir, `motion-density-report${suffix}.json`), motionReport);
 await writeJson(join(reviewDir, `asset-presence-report${suffix}.json`), assetReport);
+await writeJson(join(reviewDir, `capture-utility-report${suffix}.json`), captureUtilityReport);
 await writeJson(join(reviewDir, `line-quality-report${suffix}.json`), lineReport);
 await writeJson(join(reviewDir, `synthetic-dom-report${suffix}.json`), syntheticDomReport);
 await writeJson(join(reviewDir, `route-transparency-report${suffix}.json`), routeReport);
@@ -464,6 +520,11 @@ await writeText(reviewReport, [
   "## Asset Match",
   "",
   `- Asset issues: ${assetReport.issues.length}`,
+  "",
+  "## Capture Utility",
+  "",
+  `- Capture utility issues: ${captureUtilityReport.issues.length}`,
+  captureUtilityReport.limitations?.length ? `- Limitation: ${captureUtilityReport.limitations.join("; ")}` : "",
   "",
   "## Line Quality",
   "",

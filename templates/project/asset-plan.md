@@ -65,9 +65,10 @@ Status values:
 - Do not use imagegen for official UI evidence or precise text-heavy diagrams that should be HTML/SVG/capture.
 - Dense explainer scenes should not be large empty panels. If `Visual Density` is `rich`, include information rows, tokens, paths, counters, scan fills, or other visible state changes.
 - A route is not complete until the selected renderer shows it in actual frame evidence. File existence, work-order status, and synthetic DOM markers are not enough.
-- Capture routes must crop/highlight a narrated concept; otherwise reroute the scene to diagram, imagegen support, or another primary route.
+- Capture routes must crop/highlight a narrated concept and occupy at least one half-side of the composition when used as primary evidence; otherwise reroute the scene to diagram, imagegen support, or another primary route.
 - Capture role values: `primary_evidence`, `support_texture`, `not_required`, `reroute_to_diagram`.
 - If a capture is technically correct but visually unhelpful, downgrade it: `primary_evidence -> support_texture -> not_required -> reroute_to_diagram`.
+- Small source stamps are not a valid completed capture route.
 - Do not force a reference video's edit order onto an unrelated topic.
 
 ## Processing Checklist

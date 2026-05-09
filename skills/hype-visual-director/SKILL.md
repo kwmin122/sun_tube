@@ -46,7 +46,7 @@ The design context should name the scene recipe, primary route, motion grammar, 
 
 ## Capture Utility
 
-Use capture only when it explains the scene. A useful capture needs a readable crop, a visible highlight, and a clear sentence-level reason. If the viewer cannot tell what the capture proves, downgrade it to `support` texture or reroute the scene to HTML/SVG/imagegen.
+Use capture only when it explains the scene. A useful capture needs a readable crop, a visible highlight, a clear sentence-level reason, and at least one half-side of frame presence when it is the selected route. If the viewer cannot tell what the capture proves, downgrade it to `support` texture or reroute the scene to HTML/SVG/imagegen. Do not keep tiny official-page stamps as completed capture work.
 
 ## Rules
 

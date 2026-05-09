@@ -17,7 +17,7 @@ Purpose: define what each scene must do, what material direction it needs, and w
 |---|---:|---|---|---|---|---|---|---|---|---|---|---|---|
 | 01 | | hook | visual-essay | | hyperframes | imagegen | kinetic-type | support | | | | | |
 | 02 | | mechanism | explain | | hyperframes | capture | technical-grid | not_required | | | | | |
-| 03 | | proof | proof | | capture | hyperframes | documentary-evidence | not_required | | | | | |
+| 03 | | mechanism | explain | | hyperframes | | technical-grid | not_required | | | | | |
 
 ## Scene Details
 
