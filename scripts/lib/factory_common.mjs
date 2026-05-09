@@ -20,6 +20,7 @@ export const STATUS_VALUES = [
   "motion",
   "pre_render_qa",
   "render",
+  "video_review",
   "final_qa",
   "package",
   "done",
@@ -39,6 +40,7 @@ export const GATE_VALUES = [
   "motion",
   "pre_render_qa",
   "render",
+  "video_review",
   "final_qa",
   "package",
   "done",
@@ -79,6 +81,7 @@ export const ARTIFACT_FILES = {
   designContext: "design-context.md",
   composition: "composition",
   render: "renders/final.mp4",
+  videoReview: "review/video-review/video-review.md",
 };
 
 export const ROLE_BY_GATE = {
@@ -154,9 +157,15 @@ export const ROLE_BY_GATE = {
     write: ["renders/final.mp4", "renders/render_manifest.json"],
     note: "pre-render QA 이후에만 렌더한다. 필요하면 --force로 명시 우회한다.",
   },
+  video_review: {
+    roles: ["hype-video-reviewer"],
+    read: ["project.json", "renders/final.mp4", "voiceover/solo/voiceover-solo-elevenlabs.srt", "timed-scene-packets.md", "asset-plan.md", "work-orders/*.md", "composition/"],
+    write: ["review/video-review/video-review.md", "review/video-review/*.json", "review/video-review/fix-list.md"],
+    note: "렌더된 MP4를 프레임/자막/모션/에셋 관점으로 검수하고 문제 프레임 증거를 남긴다.",
+  },
   final_qa: {
     roles: ["hype-qa-editor"],
-    read: ["project.json", "renders/final.mp4"],
+    read: ["project.json", "renders/final.mp4", "review/video-review/video-review.md"],
     write: ["review/qa-final.md"],
     note: "최종 MP4의 오디오/비디오 스트림과 duration을 확인한다.",
   },
@@ -374,7 +383,7 @@ export function validateProjectShape(project) {
 
 export function inferGate(project) {
   if (project.currentGate === "blocked" || project.status === "blocked") return "blocked";
-  if (project.currentGate === "done" || project.status === "done") return "done";
+  if ((project.currentGate === "done" || project.status === "done") && (!project.artifacts?.render || project.artifacts?.videoReview)) return "done";
   if (!project.artifacts?.researchPack) return project.currentGate === "topic_intake" ? "topic_intake" : "research";
   if (!project.artifacts?.creativeBrief || !project.approved?.creativeBrief) return "creative";
   if (!project.artifacts?.draftScenePackets) return "draft_scenes";
@@ -393,6 +402,7 @@ export function inferGate(project) {
   if (!project.artifacts?.composition) return "motion";
   if (!project.approved?.render) return "pre_render_qa";
   if (!project.artifacts?.render) return "render";
+  if (!project.artifacts?.videoReview) return "video_review";
   if (project.currentGate === "final_qa") return "final_qa";
   if (project.currentGate === "package") return "package";
   return project.currentGate || "topic_intake";
@@ -402,6 +412,7 @@ export function statusForGate(gate) {
   if (gate === "topic_intake") return "idea";
   if (gate === "draft_scenes") return "creative";
   if (gate === "pre_render_qa") return "pre_render_qa";
+  if (gate === "video_review") return "video_review";
   if (gate === "final_qa") return "final_qa";
   if (gate === "package") return "package";
   if (gate === "done") return "done";
@@ -452,14 +463,20 @@ export function findRowsWithToolRoute(markdown) {
 }
 
 export function normalizeRoute(route) {
+  return normalizeRoutes(route)[0] || "manual";
+}
+
+export function normalizeRoutes(route) {
   const value = String(route || "").trim().toLowerCase();
-  if (value.includes("video")) return "video-use";
-  if (value.includes("image")) return "imagegen";
-  if (value.includes("capture") || value.includes("screenshot")) return "capture";
-  if (value.includes("ffmpeg") || value.includes("script")) return "script/ffmpeg";
-  if (value.includes("manual")) return "manual";
-  if (value.includes("hyper")) return "hyperframes";
-  return value || "manual";
+  const routes = [];
+  if (value.includes("video")) routes.push("video-use");
+  if (value.includes("image")) routes.push("imagegen");
+  if (value.includes("capture") || value.includes("screenshot")) routes.push("capture");
+  if (value.includes("ffmpeg") || value.includes("script")) routes.push("script/ffmpeg");
+  if (value.includes("manual")) routes.push("manual");
+  if (value.includes("hyper")) routes.push("hyperframes");
+  if (!routes.length) routes.push(value || "manual");
+  return [...new Set(routes)];
 }
 
 export function routeStateKey(route) {

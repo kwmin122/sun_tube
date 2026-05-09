@@ -15,7 +15,7 @@ Build a role-based production line that turns a topic into:
 - timed scene packets after ElevenLabs TTS/SRT
 - scene-level tool routing for Hyperframes, `video-use`, imagegen, capture, or scripts
 - parallel asset, visual, motion, and audio work
-- snapshot, render, final QA, and packaging
+- snapshot, render, video review, final QA, and packaging
 
 ## Explicitly Excluded From MVP
 
@@ -66,6 +66,7 @@ Finish
 hype-motion-designer assembly
 -> hype-qa-editor snapshot/pre-render QA
 -> render
+-> hype-video-reviewer frame/editorial review
 -> hype-qa-editor final QA
 -> hype-packaging-editor
 ```
@@ -82,6 +83,7 @@ hype-motion-designer assembly
 | `asset-plan.md` | `hype-asset-producer` |
 | `design-context.md` | `hype-visual-director` |
 | `status.md` | `hype-production-orchestrator` |
+| `review/video-review/video-review.md` | `hype-video-reviewer` |
 | `TOOL_ROUTING_PIPELINE.md` | workspace-level routing contract |
 
 ## Role Contracts
@@ -163,9 +165,16 @@ hype-motion-designer assembly
 - Handoff condition: scene-planner has real SRT timing; motion-designer has final audio paths.
 - Do not: store API keys in project `.env`.
 
+### hype-video-reviewer
+
+- Input: final MP4, SRT, timed scene packets, asset plan, work orders, composition.
+- Output: frame evidence, caption sync report, motion density report, asset presence report, and `video-review.md`.
+- Handoff condition: final QA can verify the MP4 after rendered-frame editorial review passes.
+- Do not: review rights, privacy, source completeness, or quote accuracy in MVP.
+
 ### hype-qa-editor
 
-- Input: composition, snapshots, render output.
+- Input: composition, snapshots, render output, video review report.
 - Output: pre-render QA notes, final QA result, blocking fixes.
 - Handoff condition: render is valid and packaging can proceed.
 - Do not: review copyright, privacy, missing sources, or quote accuracy in MVP.

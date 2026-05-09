@@ -36,6 +36,7 @@ topic
 -> Hyperframes assembly
 -> snapshot / pre-render QA
 -> render
+-> rendered-frame video review
 -> final QA
 -> packaging
 ```
@@ -100,8 +101,10 @@ projects/{NNN-slug}/
 | 7. TTS Sync | MP3 + SRT | ElevenLabs audio and timing files exist. |
 | 8. Timed Scene Packets | `timed-scene-packets.md` | Exact scene timing, caption behavior, motion beats, and asset timing are mapped to SRT. |
 | 9. Tool Routing + Production | routed assets + composition | Every scene has a primary route before asset, visual, motion, and audio work starts. |
-| 10. Verification | snapshots + MP4 | Captions do not collide, dense frames are readable, final render is valid. |
-| 11. Packaging | title/thumbnail/description direction | Upload package direction matches the approved video. |
+| 10. Pre-render Verification | snapshots | Captions do not collide, dense frames are readable, and route work is complete before render. |
+| 11. Video Review | `review/video-review/video-review.md` | Rendered frames, captions, asset presence, empty panels, and motion variety pass the editor check. |
+| 12. Final QA | MP4 probe | Final render has valid audio/video streams and duration after video review. |
+| 13. Packaging | title/thumbnail/description direction | Upload package direction matches the approved video. |
 
 ## Asset Roles
 

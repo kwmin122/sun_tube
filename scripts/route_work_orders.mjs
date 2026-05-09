@@ -3,7 +3,7 @@ import {
   ensureDir,
   findRowsWithToolRoute,
   loadProject,
-  normalizeRoute,
+  normalizeRoutes,
   parseArgs,
   readText,
   rel,
@@ -42,8 +42,7 @@ function placeholderRow(row) {
   return emptyLike(time) && emptyLike(input) && (!actionText || ["crop, highlight", "html/svg build", "trim, subtitle, crop", "review task"].includes(actionText));
 }
 
-function blockedReason(row, source) {
-  const route = normalizeRoute(row.ToolRoute);
+function blockedReason(row, source, route) {
   const input = clean(row["Link / File / Candidate"] || row["Primary Asset"] || row.Assets || "");
   const action = clean(row["Processing Needed"] || row["Motion Beat"] || row["Narration Beat"] || row["Core Message"] || "");
   if (source === "asset" && ["capture", "video-use", "imagegen"].includes(route)) {
@@ -56,7 +55,7 @@ function blockedReason(row, source) {
 }
 
 function completeStatus(value) {
-  return ["done", "not_required"].includes(clean(value).toLowerCase());
+  return ["done", "implemented", "qa_passed", "not_required"].includes(clean(value).toLowerCase());
 }
 
 const timedRows = findRowsWithToolRoute(await readText(join(projectPath, "timed-scene-packets.md")))
@@ -65,9 +64,8 @@ const timedRows = findRowsWithToolRoute(await readText(join(projectPath, "timed-
 const assetRows = findRowsWithToolRoute(await readText(join(projectPath, "asset-plan.md")))
   .filter((row) => !placeholderRow(row))
   .map((row) => ({ ...row, source: "asset" }));
-const allRows = [...timedRows, ...assetRows].map((row, index) => {
-  const route = normalizeRoute(row.ToolRoute);
-  const reason = blockedReason(row, row.source);
+const allRows = [...timedRows, ...assetRows].flatMap((row, index) => normalizeRoutes(row.ToolRoute).map((route) => {
+  const reason = blockedReason(row, row.source, route);
   return {
     sourceIndex: index + 1,
     source: row.source,
@@ -79,6 +77,11 @@ const allRows = [...timedRows, ...assetRows].map((row, index) => {
     status: reason || clean(row.Status || "todo"),
     blocked: Boolean(reason),
   };
+}));
+const assetRouteKeys = new Set(allRows.filter((row) => row.source === "asset").map((row) => `${row.scene}::${row.route}`));
+const executableRows = allRows.filter((row) => {
+  if (row.source !== "timed") return true;
+  return !assetRouteKeys.has(`${row.scene}::${row.route}`);
 });
 
 const groups = {
@@ -89,7 +92,7 @@ const groups = {
   "script/ffmpeg": [],
   manual: [],
 };
-for (const row of allRows) {
+for (const row of executableRows) {
   if (["capture", "video-use", "imagegen"].includes(row.route) && row.source !== "asset") continue;
   const key = groups[row.route] ? row.route : "manual";
   groups[key].push(row);
@@ -110,7 +113,7 @@ function render(title, rows) {
 }
 
 const nextRoutes = { ...project.routes };
-nextRoutes.workOrders = allRows.some((row) => row.blocked) ? "blocked" : "done";
+nextRoutes.workOrders = executableRows.some((row) => row.blocked) ? "blocked" : "done";
 for (const route of ["video-use", "imagegen", "capture", "hyperframes"]) {
   const key = routeStateKey(route);
   if (!key) continue;
@@ -133,12 +136,12 @@ const missingAssetRoutes = ["video-use", "imagegen", "capture"].filter((route) =
 });
 if (missingAssetRoutes.length) nextRoutes.workOrders = "blocked";
 
-console.log(`Route rows: ${allRows.length}`);
+console.log(`Route rows: ${executableRows.length}`);
 console.log(`Routes: video-use=${nextRoutes.videoUse}, imagegen=${nextRoutes.imagegen}, capture=${nextRoutes.capture}, hyperframes=${nextRoutes.hyperframes}, workOrders=${nextRoutes.workOrders}`);
 
-if (allRows.some((row) => row.blocked) || missingAssetRoutes.length) {
+if (executableRows.some((row) => row.blocked) || missingAssetRoutes.length) {
   console.log("Blocked rows:");
-  for (const row of allRows.filter((item) => item.blocked)) console.log(`- scene ${row.scene} ${row.route}: ${row.status}`);
+  for (const row of executableRows.filter((item) => item.blocked)) console.log(`- scene ${row.scene} ${row.route}: ${row.status}`);
   for (const route of missingAssetRoutes) console.log(`- ${route}: timed scene requests route but asset-plan has no executable row`);
 }
 
@@ -148,7 +151,7 @@ if (args["dry-run"]) {
 }
 
 await ensureDir(workDir);
-await writeText(join(workDir, "route-work-orders.md"), render("Route Work Orders", allRows));
+await writeText(join(workDir, "route-work-orders.md"), render("Route Work Orders", executableRows));
 await writeText(join(workDir, "video-use.md"), render("video-use Work Orders", groups["video-use"]));
 await writeText(join(workDir, "imagegen.md"), render("imagegen Work Orders", groups.imagegen));
 await writeText(join(workDir, "capture.md"), render("capture Work Orders", groups.capture));

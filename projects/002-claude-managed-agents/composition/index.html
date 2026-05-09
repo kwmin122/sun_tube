@@ -105,6 +105,99 @@
       line-height: 1.28;
       font-weight: 610;
     }
+    .glass-panel {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(247,243,234,0.18);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.09), rgba(255,255,255,0.025)),
+        rgba(17,19,18,0.72);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 28px 80px rgba(0,0,0,0.36);
+      backdrop-filter: blur(18px) saturate(1.12);
+    }
+    .liquid-sheen {
+      position: absolute;
+      inset: -35% auto -35% -45%;
+      width: 42%;
+      transform: skewX(-16deg);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      opacity: 0.42;
+      pointer-events: none;
+    }
+    .info-row {
+      display: grid;
+      grid-template-columns: 128px 1fr;
+      gap: 16px;
+      align-items: center;
+      min-height: 54px;
+      padding: 12px 16px;
+      border-radius: 7px;
+      background: rgba(247,243,234,0.075);
+      border: 1px solid rgba(247,243,234,0.08);
+      color: rgba(247,243,234,0.88);
+      font-size: 22px;
+      line-height: 1.18;
+      font-weight: 690;
+    }
+    .info-row strong {
+      color: #f4a261;
+      font-size: 20px;
+      font-weight: 830;
+    }
+    .scan-fill {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 5px;
+      transform-origin: left center;
+      background: linear-gradient(90deg, #f4a261, #2a9d8f, #e9c46a);
+      box-shadow: 0 0 22px rgba(42,157,143,0.42);
+    }
+    .flow-token {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 72px;
+      height: 34px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(42,157,143,0.18);
+      border: 1px solid rgba(42,157,143,0.42);
+      color: #dff7ee;
+      font-size: 18px;
+      font-weight: 820;
+      box-shadow: 0 0 22px rgba(42,157,143,0.18);
+    }
+    .route-pulse {
+      transform-origin: left center;
+      background: linear-gradient(90deg, rgba(244,162,97,0.95), rgba(42,157,143,0.95));
+      box-shadow: 0 0 24px rgba(244,162,97,0.34);
+    }
+    .path-draw {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+    }
+    .metric-tick {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 7px;
+      background: rgba(233,196,106,0.12);
+      border: 1px solid rgba(233,196,106,0.22);
+      color: rgba(247,243,234,0.9);
+      font-size: 20px;
+      font-weight: 760;
+    }
+    .metric-tick:before {
+      content: "";
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      background: #e9c46a;
+      box-shadow: 0 0 18px rgba(233,196,106,0.45);
+    }
     .signal-list {
       display: grid;
       gap: 12px;
@@ -277,6 +370,61 @@
       grid-template-rows: auto 1fr auto;
       gap: 28px;
     }
+    .memory-map {
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: stretch;
+    }
+    .memory-stream {
+      min-height: 560px;
+      padding: 28px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 18px;
+    }
+    .memory-stream h3 { font-size: 34px; }
+    .timeline-rail {
+      position: relative;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(247,243,234,0.08);
+      overflow: hidden;
+    }
+    .timeline-rail span {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border-radius: 999px;
+    }
+    .timeline-rail .a { left: 0; width: 34%; background: #f4a261; }
+    .timeline-rail .b { left: 34%; width: 34%; background: #2a9d8f; }
+    .timeline-rail .c { left: 68%; width: 32%; background: #e9c46a; }
+    .context-stack {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .context-card {
+      min-height: 0;
+      padding: 20px 24px;
+      display: grid;
+      gap: 10px;
+    }
+    .context-card .big-number { font-size: 70px; }
+    .context-card h3 { font-size: 28px; }
+    .context-card p {
+      font-size: 21px;
+      line-height: 1.18;
+    }
+    .context-card .metric-tick {
+      padding: 8px 12px;
+      font-size: 18px;
+    }
+    .token-lane {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-content: start;
+    }
     .cycle {
       display: grid;
       grid-template-columns: 1fr 70px 1fr 70px 1fr;
@@ -326,6 +474,150 @@
     .score-box.fail {
       background: rgba(231,111,81,0.13);
       border-color: rgba(231,111,81,0.4);
+    }
+    .rubric-loop {
+      grid-template-columns: 0.82fr 1.18fr;
+      align-items: stretch;
+    }
+    .judge-panel {
+      position: relative;
+      min-height: 540px;
+      padding: 30px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+    }
+    .loop-canvas {
+      position: relative;
+      min-height: 300px;
+    }
+    .loop-canvas svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .loop-canvas path {
+      fill: none;
+      stroke: rgba(244,162,97,0.9);
+      stroke-width: 4;
+      stroke-linecap: round;
+      vector-effect: non-scaling-stroke;
+    }
+    .loop-node {
+      position: absolute;
+      width: 210px;
+      padding: 18px;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.18);
+      background: rgba(247,243,234,0.08);
+      font-size: 24px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .loop-node.a { left: 20px; top: 40px; }
+    .loop-node.b { left: 50%; top: 150px; transform: translateX(-50%); }
+    .loop-node.c { right: 20px; top: 40px; }
+    .result-stack {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .score-meter {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(247,243,234,0.1);
+      overflow: hidden;
+    }
+    .score-fill {
+      height: 100%;
+      width: 78%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #e76f51, #e9c46a, #2a9d8f);
+    }
+    .parallel-board {
+      position: relative;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 26px;
+    }
+    .parallel-board .card {
+      min-height: 560px;
+      justify-content: flex-start;
+    }
+    .route-svg {
+      position: absolute;
+      inset: -18px 0 auto;
+      width: 100%;
+      height: 130px;
+      pointer-events: none;
+      overflow: visible;
+    }
+    .route-svg path {
+      fill: none;
+      stroke: rgba(244,162,97,0.82);
+      stroke-width: 4;
+      stroke-linecap: round;
+      vector-effect: non-scaling-stroke;
+    }
+    .card-topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .event-flow {
+      position: relative;
+    }
+    .rich-flow .event-box {
+      min-height: 640px;
+      justify-content: space-between;
+    }
+    .event-route-svg {
+      position: absolute;
+      inset: -16px 0 auto;
+      width: 100%;
+      height: 120px;
+      overflow: visible;
+      pointer-events: none;
+    }
+    .event-route-svg path {
+      fill: none;
+      stroke: rgba(244,162,97,0.86);
+      stroke-width: 4;
+      stroke-linecap: round;
+      vector-effect: non-scaling-stroke;
+    }
+    .particle-lane {
+      display: flex;
+      gap: 12px;
+      min-height: 36px;
+    }
+    .pipeline-board {
+      position: relative;
+      min-height: 620px;
+      padding-top: 74px;
+    }
+    .pipeline-svg {
+      position: absolute;
+      left: 30px;
+      right: 30px;
+      top: 18px;
+      width: calc(100% - 60px);
+      height: 130px;
+      overflow: visible;
+      pointer-events: none;
+    }
+    .pipeline-svg path {
+      fill: none;
+      stroke: rgba(244,162,97,0.88);
+      stroke-width: 5;
+      stroke-linecap: round;
+      vector-effect: non-scaling-stroke;
+    }
+    .pipeline-board .card {
+      min-height: 480px;
+      justify-content: space-between;
     }
     .network {
       position: relative;
@@ -465,6 +757,10 @@
       font-size: 86px;
       line-height: 1.05;
     }
+    .final-statement .token-lane {
+      justify-content: center;
+      margin-top: 34px;
+    }
     .highlight { color: #f4a261; }
     .cyan { color: #2a9d8f; }
     .yellow { color: #e9c46a; }
@@ -506,10 +802,10 @@
           <div class="source-caption">발표의 핵심은 모델 하나가 아니라, 에이전트를 운영하는 시스템 기능 네 가지입니다.</div>
         </div>
         <div class="feature-card-stack">
-          <div class="feature-card"><strong>01</strong><h3>드리밍</h3><p>비활성 시간에 경험과 메모리를 다시 정리합니다.</p></div>
-          <div class="feature-card"><strong>02</strong><h3>아웃컴</h3><p>좋은 결과의 기준을 주고 결과물을 평가합니다.</p></div>
-          <div class="feature-card"><strong>03</strong><h3>멀티에이전트</h3><p>리드가 일을 쪼개고 전문 에이전트가 병렬 처리합니다.</p></div>
-          <div class="feature-card"><strong>04</strong><h3>이벤트</h3><p>조건이 발생하면 에이전트 작업이 자동으로 시작됩니다.</p></div>
+          <div class="feature-card glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>01</strong><h3>드리밍</h3><p>비활성 시간에 경험과 메모리를 다시 정리합니다.</p><span class="metric-tick">memory</span><div class="scan-fill"></div></div>
+          <div class="feature-card glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>02</strong><h3>아웃컴</h3><p>좋은 결과의 기준을 주고 결과물을 평가합니다.</p><span class="metric-tick">rubric</span><div class="scan-fill"></div></div>
+          <div class="feature-card glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>03</strong><h3>멀티에이전트</h3><p>리드가 일을 쪼개고 전문 에이전트가 병렬 처리합니다.</p><span class="metric-tick">parallel</span><div class="scan-fill"></div></div>
+          <div class="feature-card glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>04</strong><h3>이벤트</h3><p>조건이 발생하면 에이전트 작업이 자동으로 시작됩니다.</p><span class="metric-tick">trigger</span><div class="scan-fill"></div></div>
         </div>
       </div>
     </section>
@@ -520,11 +816,11 @@
         <div class="scene-no">02</div>
       </div>
       <div class="connector-row">
-        <div class="node"><span class="tag">Before</span><h3>하나의 모델</h3><p>입력하면 답하고, 세션이 끝나면 흐름도 끊깁니다.</p></div>
-        <div class="arrow"></div>
-        <div class="node"><span class="tag">Now</span><h3>운영 시스템</h3><p>기억하고, 평가하고, 나눠서 처리합니다.</p></div>
-        <div class="arrow"></div>
-        <div class="node"><span class="tag">Point</span><h3>작은 제작팀</h3><p>에이전트가 혼자 일하는 도구에서 팀 구조로 이동합니다.</p></div>
+        <div class="node glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><span class="tag">Before</span><h3>하나의 모델</h3><p>입력하면 답하고, 세션이 끝나면 흐름도 끊깁니다.</p><span class="flow-token">single</span><div class="scan-fill"></div></div>
+        <div class="arrow route-pulse"></div>
+        <div class="node glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><span class="tag">Now</span><h3>운영 시스템</h3><p>기억하고, 평가하고, 나눠서 처리합니다.</p><span class="flow-token">system</span><div class="scan-fill"></div></div>
+        <div class="arrow route-pulse"></div>
+        <div class="node glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><span class="tag">Point</span><h3>작은 제작팀</h3><p>에이전트가 혼자 일하는 도구에서 팀 구조로 이동합니다.</p><span class="flow-token">team</span><div class="scan-fill"></div></div>
       </div>
     </section>
 
@@ -549,15 +845,47 @@
       </div>
     </section>
 
-    <section id="scene-04" class="clip scene" data-start="50.9" data-duration="28.5" data-track-index="4">
+    <section id="scene-04" class="clip scene" data-start="50.9" data-duration="28.5" data-track-index="4" data-visual-density="rich">
       <div class="scene-head">
         <div><div class="eyebrow">Where It Helps</div><h2>드리밍이 좋은 순간은 작업이 하루 안에 끝나지 않을 때입니다.</h2></div>
         <div class="scene-no">04</div>
       </div>
-      <div class="grid-3 stage">
-        <div class="card"><span class="big-number">01</span><h3>장기 프로젝트</h3><p>어제의 판단과 오늘의 요청이 이어질 때 컨텍스트 손실을 줄입니다.</p><div class="mini-rail"></div><div class="signal-list"><span>이전 결정 유지</span><span>다음 세션 연결</span></div></div>
-        <div class="card"><span class="big-number">02</span><h3>반복 업무</h3><p>매번 같은 실수를 다시 설명하지 않아도 됩니다.</p><div class="mini-rail"></div><div class="signal-list"><span>오류 재발 감소</span><span>좋은 절차 재사용</span></div></div>
-        <div class="card"><span class="big-number">03</span><h3>팀 단위 규칙</h3><p>개인의 취향이 아니라 팀의 작업 패턴을 메모리로 정리합니다.</p><div class="mini-rail"></div><div class="signal-list"><span>톤 앤 매너</span><span>리뷰 기준</span></div></div>
+      <div class="memory-map stage">
+        <div class="memory-stream glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <span class="tag">Memory Stream</span>
+          <h3>세션 사이에 흩어진 작업 경험을 다시 정렬합니다.</h3>
+          <div class="timeline-rail"><span class="a route-pulse"></span><span class="b route-pulse"></span><span class="c route-pulse"></span></div>
+          <div class="stack">
+            <div class="info-row"><strong>이전 세션</strong><span>결정, 실패, 선호 패턴을 다시 읽습니다.</span></div>
+            <div class="info-row"><strong>휴면 시간</strong><span>반복 실수와 성공 절차를 더 작은 메모리로 압축합니다.</span></div>
+            <div class="info-row"><strong>다음 요청</strong><span>새 작업이 들어오면 맥락을 바로 이어 붙입니다.</span></div>
+          </div>
+          <div class="token-lane">
+            <span class="flow-token">결정</span><span class="flow-token">실패</span><span class="flow-token">선호</span><span class="flow-token">절차</span>
+          </div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="context-stack">
+          <div class="context-card glass-panel">
+            <div class="liquid-sheen" data-layout-allow-overflow></div>
+            <div class="card-topline"><span class="big-number">01</span><span class="metric-tick">컨텍스트 유지</span></div>
+            <h3>장기 프로젝트</h3>
+            <p>어제의 판단과 오늘의 요청이 이어질 때 컨텍스트 손실을 줄입니다.</p>
+          </div>
+          <div class="context-card glass-panel">
+            <div class="liquid-sheen" data-layout-allow-overflow></div>
+            <div class="card-topline"><span class="big-number">02</span><span class="metric-tick">재발 감소</span></div>
+            <h3>반복 업무</h3>
+            <p>매번 같은 실수를 다시 설명하지 않고, 좋은 절차를 다음 세션에 재사용합니다.</p>
+          </div>
+          <div class="context-card glass-panel">
+            <div class="liquid-sheen" data-layout-allow-overflow></div>
+            <div class="card-topline"><span class="big-number">03</span><span class="metric-tick">팀 규칙화</span></div>
+            <h3>팀 단위 규칙</h3>
+            <p>개인의 취향이 아니라 팀의 작업 패턴과 리뷰 기준을 메모리로 정리합니다.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -567,31 +895,53 @@
         <div class="scene-no">05</div>
       </div>
       <div class="connector-row">
-        <div class="node"><span class="tag">작업자</span><h3>에이전트가 결과물을 만듭니다.</h3><p>코드, 문서, 리포트, 답변이 여기서 나옵니다.</p></div>
-        <div class="arrow"></div>
-        <div class="node"><span class="tag">기준</span><h3>루브릭이 점검 기준을 정합니다.</h3><p>정확성, 형식, 완성도 같은 기준을 명시합니다.</p></div>
-        <div class="arrow"></div>
-        <div class="node"><span class="tag">검수자</span><h3>별도 평가 모델이 채점합니다.</h3><p>부족하면 다시 고치는 루프가 생깁니다.</p></div>
+        <div class="node glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><span class="tag">작업자</span><h3>에이전트가 결과물을 만듭니다.</h3><p>코드, 문서, 리포트, 답변이 여기서 나옵니다.</p><span class="flow-token">draft</span><div class="scan-fill"></div></div>
+        <div class="arrow route-pulse"></div>
+        <div class="node glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><span class="tag">기준</span><h3>루브릭이 점검 기준을 정합니다.</h3><p>정확성, 형식, 완성도 같은 기준을 명시합니다.</p><span class="flow-token">rubric</span><div class="scan-fill"></div></div>
+        <div class="arrow route-pulse"></div>
+        <div class="node glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><span class="tag">검수자</span><h3>별도 평가 모델이 채점합니다.</h3><p>부족하면 다시 고치는 루프가 생깁니다.</p><span class="flow-token">score</span><div class="scan-fill"></div></div>
       </div>
     </section>
 
-    <section id="scene-06" class="clip scene" data-start="115.9" data-duration="19.9" data-track-index="6">
+    <section id="scene-06" class="clip scene" data-start="115.9" data-duration="19.9" data-track-index="6" data-visual-density="rich">
       <div class="scene-head">
         <div><div class="eyebrow">When To Use Outcome</div><h2>정답보다 기준이 중요한 작업에서 강합니다.</h2></div>
         <div class="scene-no">06</div>
       </div>
-      <div class="rubric">
-        <div class="score-box">
+      <div class="rubric rubric-loop stage">
+        <div class="score-box glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
           <h3>좋은 사용처</h3>
           <div class="list">
             <div class="item">문서 품질 검수</div>
             <div class="item">지원 답변 톤 검사</div>
             <div class="item">코드 리뷰 체크리스트</div>
           </div>
+          <div class="score-meter"><div class="score-fill"></div></div>
+          <div class="stack">
+            <div class="info-row"><strong>입력</strong><span>작성 기준과 금지 조건을 먼저 둡니다.</span></div>
+            <div class="info-row"><strong>판정</strong><span>결과가 기준을 통과했는지 별도 모델이 봅니다.</span></div>
+            <div class="info-row"><strong>반복</strong><span>미달이면 같은 작업자가 아니라 수정 루프로 돌아갑니다.</span></div>
+          </div>
         </div>
-        <div class="score-box fail">
+        <div class="judge-panel glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
           <h3>핵심 변화</h3>
-          <p>에이전트가 "대충 했습니다"에서 끝나는 게 아니라, 정해진 기준을 통과할 때까지 돌아옵니다.</p>
+          <div class="loop-canvas">
+            <svg viewBox="0 0 680 300" aria-hidden="true">
+              <path class="path-draw" pathLength="1" d="M118 96 C250 18 430 18 562 96" />
+              <path class="path-draw" pathLength="1" d="M562 155 C430 276 250 276 118 155" />
+            </svg>
+            <div class="loop-node a">기준 작성</div>
+            <div class="loop-node b">별도 모델 채점</div>
+            <div class="loop-node c">수정 루프</div>
+          </div>
+          <div class="result-stack">
+            <span class="metric-tick">루브릭 통과</span>
+            <span class="metric-tick">톤 일치</span>
+            <span class="metric-tick">재작성 요청</span>
+          </div>
+          <div class="info-row"><strong>핵심</strong><span>에이전트가 "대충 했습니다"에서 끝나지 않고 기준을 통과할 때까지 돌아옵니다.</span></div>
         </div>
       </div>
     </section>
@@ -616,42 +966,119 @@
       </div>
     </section>
 
-    <section id="scene-08" class="clip scene" data-start="175.9" data-duration="21.5" data-track-index="8">
+    <section id="scene-08" class="clip scene" data-start="175.9" data-duration="21.5" data-track-index="8" data-visual-density="rich">
       <div class="scene-head">
         <div><div class="eyebrow">Parallel Work</div><h2>복잡한 작업일수록 한 명이 끝까지 붙잡는 방식이 느려집니다.</h2></div>
         <div class="scene-no">08</div>
       </div>
-      <div class="grid-4 stage">
-        <div class="card"><h3>빌드 로그</h3><div class="signal-list"><span>로그 묶음 분할</span><span>실패 키워드 추출</span><span>원인 후보 합치기</span></div><p>수백 개 로그를 나눠 읽고 실패 패턴을 합칩니다.</p></div>
-        <div class="card"><h3>문서 변경</h3><div class="signal-list"><span>릴리즈 노트</span><span>사용자 안내</span><span>변경 요약</span></div><p>문서 담당은 릴리즈 노트와 사용자 안내를 정리합니다.</p></div>
-        <div class="card"><h3>코드 경로</h3><div class="signal-list"><span>파일 위치</span><span>수정 범위</span><span>테스트 영향</span></div><p>구현 담당은 실제 코드 위치와 수정 범위를 봅니다.</p></div>
-        <div class="card"><h3>통합 판단</h3><div class="signal-list"><span>중복 제거</span><span>충돌 확인</span><span>다음 액션</span></div><p>리드가 결과를 합쳐 다음 액션을 결정합니다.</p></div>
+      <div class="parallel-board stage">
+        <svg class="route-svg" viewBox="0 0 1720 130" aria-hidden="true">
+          <path class="path-draw" pathLength="1" d="M70 92 C360 26 560 26 820 92" />
+          <path class="path-draw" pathLength="1" d="M900 92 C1160 26 1360 26 1650 92" />
+        </svg>
+        <div class="card glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <div class="card-topline"><h3>빌드 로그</h3><span class="flow-token">Log</span></div>
+          <div class="token-lane"><span class="flow-token">shard 01</span><span class="flow-token">error</span><span class="flow-token">trace</span></div>
+          <div class="signal-list"><span>로그 묶음 분할</span><span>실패 키워드 추출</span><span>원인 후보 합치기</span></div>
+          <div class="info-row"><strong>분담</strong><span>수백 개 로그를 나눠 읽고 실패 패턴을 합칩니다.</span></div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="card glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <div class="card-topline"><h3>문서 변경</h3><span class="flow-token">Docs</span></div>
+          <div class="token-lane"><span class="flow-token">note</span><span class="flow-token">guide</span><span class="flow-token">diff</span></div>
+          <div class="signal-list"><span>릴리즈 노트</span><span>사용자 안내</span><span>변경 요약</span></div>
+          <div class="info-row"><strong>정리</strong><span>문서 담당은 릴리즈 노트와 사용자 안내를 따로 완성합니다.</span></div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="card glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <div class="card-topline"><h3>코드 경로</h3><span class="flow-token">Code</span></div>
+          <div class="token-lane"><span class="flow-token">file</span><span class="flow-token">test</span><span class="flow-token">range</span></div>
+          <div class="signal-list"><span>파일 위치</span><span>수정 범위</span><span>테스트 영향</span></div>
+          <div class="info-row"><strong>구현</strong><span>구현 담당은 실제 코드 위치와 수정 범위를 좁힙니다.</span></div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="card glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <div class="card-topline"><h3>통합 판단</h3><span class="flow-token">Merge</span></div>
+          <div class="token-lane"><span class="flow-token">dedupe</span><span class="flow-token">conflict</span><span class="flow-token">next</span></div>
+          <div class="signal-list"><span>중복 제거</span><span>충돌 확인</span><span>다음 액션</span></div>
+          <div class="info-row"><strong>병합</strong><span>리드가 결과를 합쳐 다음 액션을 결정합니다.</span></div>
+          <div class="scan-fill"></div>
+        </div>
       </div>
     </section>
 
-    <section id="scene-09" class="clip scene" data-start="197.4" data-duration="28.0" data-track-index="9">
+    <section id="scene-09" class="clip scene" data-start="197.4" data-duration="28.0" data-track-index="9" data-visual-density="rich">
       <div class="scene-head">
         <div><div class="eyebrow">4. Event Triggers</div><h2>이벤트 트리거는 에이전트를 호출하지 않아도 일이 시작되게 합니다.</h2></div>
         <div class="scene-no">09</div>
       </div>
-      <div class="event-flow">
-        <div class="event-box"><small>Event</small><h3>문서 업로드</h3><p>새 파일이나 요청이 들어옵니다.</p><div class="event-detail"><span>계약서</span><span>리포트</span><span>지원 티켓</span></div></div>
-        <div class="arrow"></div>
-        <div class="event-box"><small>Trigger</small><h3>조건 감지</h3><p>시스템이 자동으로 담당 에이전트를 깨웁니다.</p><div class="event-detail"><span>파일 생성</span><span>상태 변경</span><span>웹훅 수신</span></div></div>
-        <div class="arrow"></div>
-        <div class="event-box"><small>Action</small><h3>후속 작업</h3><p>분석, 요약, 검토, 알림이 이어집니다.</p><div class="event-detail"><span>분석</span><span>검토</span><span>알림</span></div></div>
+      <div class="event-flow rich-flow">
+        <svg class="event-route-svg" viewBox="0 0 1720 120" aria-hidden="true">
+          <path class="path-draw" pathLength="1" d="M220 70 L650 70" />
+          <path class="path-draw" pathLength="1" d="M1020 70 L1500 70" />
+        </svg>
+        <div class="event-box glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <small>Event</small><h3>문서 업로드</h3><p>새 파일이나 요청이 들어옵니다.</p>
+          <div class="event-detail"><span>계약서</span><span>리포트</span><span>지원 티켓</span></div>
+          <div class="particle-lane"><span class="flow-token">file</span><span class="flow-token">request</span></div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="arrow route-pulse"></div>
+        <div class="event-box glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <small>Trigger</small><h3>조건 감지</h3><p>시스템이 자동으로 담당 에이전트를 깨웁니다.</p>
+          <div class="event-detail"><span>파일 생성</span><span>상태 변경</span><span>웹훅 수신</span></div>
+          <div class="particle-lane"><span class="flow-token">match</span><span class="flow-token">wake</span></div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="arrow route-pulse"></div>
+        <div class="event-box glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <small>Action</small><h3>후속 작업</h3><p>분석, 요약, 검토, 알림이 이어집니다.</p>
+          <div class="event-detail"><span>분석</span><span>검토</span><span>알림</span></div>
+          <div class="particle-lane"><span class="flow-token">summary</span><span class="flow-token">notify</span></div>
+          <div class="scan-fill"></div>
+        </div>
       </div>
     </section>
 
-    <section id="scene-10" class="clip scene" data-start="225.4" data-duration="22.6" data-track-index="10">
+    <section id="scene-10" class="clip scene" data-start="225.4" data-duration="22.6" data-track-index="10" data-visual-density="rich">
       <div class="scene-head">
         <div><div class="eyebrow">Automation Surface</div><h2>이벤트는 에이전트를 제품 안의 자동 워크플로로 바꿉니다.</h2></div>
         <div class="scene-no">10</div>
       </div>
-      <div class="grid-3 stage">
-        <div class="card"><span class="tag">문서</span><h3>업로드 후 검토</h3><p>계약서나 리포트가 들어오면 검토 흐름을 시작합니다.</p><div class="signal-list"><span>요약</span><span>위험 항목 표시</span><span>담당자 알림</span></div></div>
-        <div class="card"><span class="tag">운영</span><h3>로그 후 알림</h3><p>장애 신호가 오면 분석하고 슬랙으로 요약합니다.</p><div class="signal-list"><span>로그 수집</span><span>원인 후보</span><span>대응 초안</span></div></div>
-        <div class="card"><span class="tag">콘텐츠</span><h3>렌더 후 QA</h3><p>새 영상이 나오면 스냅샷과 자막 상태를 확인합니다.</p><div class="signal-list"><span>프레임 샘플</span><span>자막 위치</span><span>오디오 스트림</span></div></div>
+      <div class="pipeline-board stage">
+        <svg class="pipeline-svg" viewBox="0 0 1600 130" aria-hidden="true">
+          <path class="path-draw" pathLength="1" d="M80 80 C340 18 520 18 760 80 S1180 142 1520 80" />
+        </svg>
+        <div class="grid-3 stage">
+          <div class="card glass-panel">
+            <div class="liquid-sheen" data-layout-allow-overflow></div>
+            <span class="tag">문서</span><h3>업로드 후 검토</h3><p>계약서나 리포트가 들어오면 검토 흐름을 시작합니다.</p>
+            <div class="signal-list"><span>요약</span><span>검토 항목 표시</span><span>담당자 알림</span></div>
+            <div class="info-row"><strong>상태</strong><span class="metric-tick">자동 시작</span></div>
+            <div class="scan-fill"></div>
+          </div>
+          <div class="card glass-panel">
+            <div class="liquid-sheen" data-layout-allow-overflow></div>
+            <span class="tag">운영</span><h3>로그 후 알림</h3><p>장애 신호가 오면 분석하고 슬랙으로 요약합니다.</p>
+            <div class="signal-list"><span>로그 수집</span><span>원인 후보</span><span>대응 초안</span></div>
+            <div class="info-row"><strong>상태</strong><span class="metric-tick">대응 초안</span></div>
+            <div class="scan-fill"></div>
+          </div>
+          <div class="card glass-panel">
+            <div class="liquid-sheen" data-layout-allow-overflow></div>
+            <span class="tag">콘텐츠</span><h3>렌더 후 QA</h3><p>새 영상이 나오면 스냅샷과 자막 상태를 확인합니다.</p>
+            <div class="signal-list"><span>프레임 샘플</span><span>자막 위치</span><span>오디오 스트림</span></div>
+            <div class="info-row"><strong>상태</strong><span class="metric-tick">검수 완료</span></div>
+            <div class="scan-fill"></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -661,10 +1088,10 @@
         <div class="scene-no">11</div>
       </div>
       <div class="stack">
-        <div class="axis"><strong>드리밍</strong><p>시간 축에서 이전 경험을 다음 작업으로 연결합니다.</p></div>
-        <div class="axis"><strong>아웃컴</strong><p>품질 축에서 결과물이 기준을 통과하게 만듭니다.</p></div>
-        <div class="axis"><strong>멀티에이전트</strong><p>복잡도 축에서 일을 분산하고 통합합니다.</p></div>
-        <div class="axis"><strong>이벤트</strong><p>자동화 축에서 조건이 맞으면 작업을 시작합니다.</p></div>
+        <div class="axis glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>드리밍</strong><p>시간 축에서 이전 경험을 다음 작업으로 연결합니다.</p><span class="metric-tick">time</span><div class="scan-fill"></div></div>
+        <div class="axis glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>아웃컴</strong><p>품질 축에서 결과물이 기준을 통과하게 만듭니다.</p><span class="metric-tick">quality</span><div class="scan-fill"></div></div>
+        <div class="axis glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>멀티에이전트</strong><p>복잡도 축에서 일을 분산하고 통합합니다.</p><span class="metric-tick">complexity</span><div class="scan-fill"></div></div>
+        <div class="axis glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>이벤트</strong><p>자동화 축에서 조건이 맞으면 작업을 시작합니다.</p><span class="metric-tick">automation</span><div class="scan-fill"></div></div>
       </div>
     </section>
 
@@ -692,6 +1119,13 @@
       <div>
         <div class="eyebrow">Final Question</div>
         <h2>에이전트 경쟁은 <span class="highlight">어떤 모델</span>에서<br />어떤 시스템으로 운영하느냐로 넘어가고 있습니다.</h2>
+        <div class="token-lane">
+          <span class="flow-token">learn</span>
+          <span class="flow-token">judge</span>
+          <span class="flow-token">orchestrate</span>
+          <span class="flow-token">trigger</span>
+        </div>
+        <div class="scan-fill"></div>
       </div>
     </section>
 
@@ -700,7 +1134,7 @@
 
   <script>
     const DURATION = 333.903;
-    const CAPTION_LEAD_SECONDS = 0.65;
+    const CAPTION_LEAD_SECONDS = 0.9;
     const SCENES = [
       ["#scene-01", 0, 13.4],
       ["#scene-02", 13.4, 9.0],
@@ -731,18 +1165,32 @@
     const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
     gsap.set(".scene", { autoAlpha: 0 });
     gsap.set("#caption", { textContent: "" });
+    gsap.set(".path-draw", { strokeDashoffset: 1 });
 
     SCENES.forEach(([selector, start, duration]) => {
       const end = start + duration;
       tl.set(selector, { autoAlpha: 1 }, start);
-      tl.fromTo(`${selector} .scene-head`, { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7 }, start + 0.12);
-      tl.fromTo(`${selector} .card, ${selector} .node, ${selector} .item, ${selector} .event-box, ${selector} .axis, ${selector} .case-card, ${selector} .screenshot, ${selector} .agent-node`,
-        { y: 38, autoAlpha: 0 },
-        { y: 0, autoAlpha: 1, duration: 0.8, stagger: 0.08 },
+      tl.fromTo(selector, { clipPath: "inset(0% 0% 4% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.65 }, start);
+      tl.fromTo(`${selector} .scene-head`, { y: 24, autoAlpha: 0, filter: "blur(10px)" }, { y: 0, autoAlpha: 1, filter: "blur(0px)", duration: 0.7 }, start + 0.12);
+      tl.fromTo(`${selector} .card, ${selector} .node, ${selector} .item, ${selector} .event-box, ${selector} .axis, ${selector} .case-card, ${selector} .screenshot, ${selector} .agent-node, ${selector} .glass-panel`,
+        { y: 38, autoAlpha: 0, filter: "blur(12px)" },
+        { y: 0, autoAlpha: 1, filter: "blur(0px)", duration: 0.85, stagger: 0.08 },
         start + 0.35
       );
       tl.fromTo(`${selector} .arrow`, { scaleX: 0, autoAlpha: 0 }, { scaleX: 1, autoAlpha: 1, duration: 0.7, stagger: 0.07 }, start + 0.9);
-      tl.fromTo(`${selector} .network-lines path`, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6, stagger: 0.06 }, start + 0.95);
+      tl.fromTo(`${selector} .path-draw, ${selector} .network-lines path`, { strokeDashoffset: 1, autoAlpha: 0 }, { strokeDashoffset: 0, autoAlpha: 1, duration: 1.1, stagger: 0.08 }, start + 0.85);
+      tl.fromTo(`${selector} .liquid-sheen`, { xPercent: -130, autoAlpha: 0 }, { xPercent: 260, autoAlpha: 0.58, duration: 1.35, stagger: 0.08 }, start + 0.55);
+      tl.fromTo(`${selector} .scan-fill`, { scaleX: 0, autoAlpha: 0 }, { scaleX: 1, autoAlpha: 1, duration: 1.0, stagger: 0.08 }, start + 1.0);
+      tl.fromTo(`${selector} .info-row, ${selector} .signal-list span, ${selector} .event-detail span`,
+        { x: -18, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.55, stagger: 0.055 },
+        start + 1.05
+      );
+      tl.fromTo(`${selector} .flow-token, ${selector} .metric-tick`,
+        { scale: 0.86, x: -22, autoAlpha: 0 },
+        { scale: 1, x: 0, autoAlpha: 1, duration: 0.55, stagger: 0.06 },
+        start + 1.22
+      );
       if (end < DURATION - 0.4) {
         tl.to(selector, { autoAlpha: 0, duration: 0.25 }, end - 0.25);
       }

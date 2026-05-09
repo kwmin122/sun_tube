@@ -13,7 +13,7 @@ Default workflow:
 5. User reviews and approves the script and scene contract.
 6. TTS is generated after approval.
 7. Agent creates `timed-scene-packets.md` from ElevenLabs SRT, assigns a tool route per scene, then runs asset, visual, motion, and audio work by scene.
-8. Agent assembles the Hyperframes composition, runs snapshot/pre-render QA, renders, runs final QA, then prepares packaging.
+8. Agent assembles the Hyperframes composition, runs snapshot/pre-render QA, renders, runs video review, runs final QA, then prepares packaging.
 
 Do not treat the production phase as editing a supplied talking-head video unless the user explicitly asks for that.
 

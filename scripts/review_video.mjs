@@ -1,0 +1,296 @@
+import { existsSync } from "node:fs";
+import { rm } from "node:fs/promises";
+import { basename, join } from "node:path";
+import {
+  ensureDir,
+  loadProject,
+  normalizeRoutes,
+  parseArgs,
+  parseSrt,
+  readText,
+  rel,
+  run,
+  saveProject,
+  tableRows,
+  writeJson,
+  writeText,
+} from "./lib/factory_common.mjs";
+
+const args = parseArgs();
+const projectArg = args._[0];
+if (!projectArg) {
+  console.error("Usage: npm run factory:review-video -- <project-path> [--force]");
+  process.exit(1);
+}
+
+function clean(value) {
+  return String(value || "").trim();
+}
+
+function timestampToSeconds(value) {
+  const parts = clean(value).split(":").map(Number);
+  if (parts.length === 2 && parts.every(Number.isFinite)) return parts[0] * 60 + parts[1];
+  if (parts.length === 3 && parts.every(Number.isFinite)) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+  return null;
+}
+
+function parseRange(value) {
+  const [startRaw, endRaw] = clean(value).split("-");
+  const start = timestampToSeconds(startRaw);
+  const end = timestampToSeconds(endRaw);
+  if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return null;
+  return { start, end };
+}
+
+function dataRows(markdown) {
+  return tableRows(markdown).flatMap((table) => table.rows);
+}
+
+function statusDone(status) {
+  return ["done", "implemented", "qa_passed", "not_required"].includes(clean(status).toLowerCase());
+}
+
+function sceneRows(markdown) {
+  return dataRows(markdown)
+    .filter((row) => row.Scene && row["Time Range"])
+    .map((row) => ({ ...row, id: clean(row.Scene).padStart(2, "0"), range: parseRange(row["Time Range"]) }))
+    .filter((row) => row.range);
+}
+
+function extractFrame(render, atSeconds, output, scale = "960:-1") {
+  return run("ffmpeg", [
+    "-y",
+    "-ss",
+    atSeconds.toFixed(2),
+    "-i",
+    render,
+    "-frames:v",
+    "1",
+    "-vf",
+    `scale=${scale}`,
+    output,
+  ], { timeout: 60_000 });
+}
+
+function sectionMetrics(html) {
+  const metrics = new Map();
+  const sceneRegex = /<section\b([^>]*)>([\s\S]*?)<\/section>/g;
+  for (const match of html.matchAll(sceneRegex)) {
+    const attrs = match[1] || "";
+    const body = match[2] || "";
+    const id = attrs.match(/id=["']scene-([^"']+)["']/)?.[1];
+    if (!id) continue;
+    const classes = {
+      rows: (body.match(/class=["'][^"']*(?:info-row|event-detail|signal-list|item)[^"']*["']/g) || []).length,
+      tokens: (body.match(/class=["'][^"']*flow-token[^"']*["']/g) || []).length,
+      paths: (body.match(/class=["'][^"']*path-draw[^"']*["']/g) || []).length,
+      scans: (body.match(/class=["'][^"']*scan-fill[^"']*["']/g) || []).length,
+      sheens: (body.match(/class=["'][^"']*liquid-sheen[^"']*["']/g) || []).length,
+      ticks: (body.match(/class=["'][^"']*metric-tick[^"']*["']/g) || []).length,
+    };
+    const signature = Object.entries(classes).filter(([, count]) => count > 0).map(([key]) => key).join("+") || "static";
+    metrics.set(id.padStart(2, "0"), { id: id.padStart(2, "0"), rich: /data-visual-density=["']rich["']/.test(attrs), ...classes, signature });
+  }
+  return metrics;
+}
+
+function captionAudit(captions, duration) {
+  const issues = [];
+  for (const cue of captions) {
+    const cueDuration = cue.end - cue.start;
+    const cps = cue.text.length / Math.max(cueDuration, 0.1);
+    if (cueDuration < 0.7) issues.push({ time: cue.start, issue: "caption_too_short", detail: `${cueDuration.toFixed(2)}s` });
+    if (cueDuration > 7.0) issues.push({ time: cue.start, issue: "caption_too_long", detail: `${cueDuration.toFixed(2)}s` });
+    if (cps > 18) issues.push({ time: cue.start, issue: "caption_too_fast", detail: `${cps.toFixed(1)} chars/sec` });
+  }
+  if (captions.length && duration && Math.abs(captions.at(-1).end - duration) > 8) {
+    issues.push({ time: captions.at(-1).end, issue: "caption_duration_mismatch", detail: `last caption ${captions.at(-1).end.toFixed(1)}s vs video ${duration.toFixed(1)}s` });
+  }
+  return { cueCount: captions.length, issues };
+}
+
+function motionAudit(scenes, assets, metrics) {
+  const issues = [];
+  const rows = [];
+  for (const scene of scenes) {
+    const asset = assets.find((row) => clean(row.Scene).padStart(2, "0") === scene.id) || {};
+    const rich = clean(asset["Visual Density"]).toLowerCase() === "rich" || metrics.get(scene.id)?.rich;
+    const metric = metrics.get(scene.id) || { rows: 0, tokens: 0, paths: 0, scans: 0, sheens: 0, ticks: 0, signature: "missing" };
+    const primitiveCount = metric.tokens + metric.paths + metric.scans + metric.sheens + metric.ticks;
+    if (rich && metric.rows < 3) issues.push({ scene: scene.id, issue: "rich_scene_low_rows", detail: `${metric.rows} visual rows` });
+    if (rich && primitiveCount < 3) issues.push({ scene: scene.id, issue: "rich_scene_low_motion", detail: `${primitiveCount} motion primitives` });
+    rows.push({ scene: scene.id, rich, ...metric });
+  }
+  const staticScenes = rows.filter((row) => row.signature === "static").map((row) => row.scene);
+  if (staticScenes.length >= 3) issues.push({ scene: staticScenes.join(", "), issue: "too_many_static_scenes", detail: "three or more scenes have no motion primitive markers" });
+  return { rows, issues };
+}
+
+function assetAudit(assets, workRows) {
+  const issues = [];
+  const workKeys = new Set(workRows.map((row) => `${clean(row.Scene).padStart(2, "0")}::${clean(row.Route)}`));
+  for (const row of assets) {
+    const scene = clean(row.Scene).padStart(2, "0");
+    const routes = normalizeRoutes(row["Tool Route"]).filter((route) => !["manual", "script/ffmpeg", "not_required"].includes(route));
+    if (!statusDone(row.Status)) issues.push({ scene, issue: "asset_row_not_complete", detail: row.Status || "empty status" });
+    for (const route of routes) {
+      if (!workKeys.has(`${scene}::${route}`)) issues.push({ scene, issue: "missing_work_order", detail: route });
+    }
+  }
+  for (const row of workRows) {
+    if (!statusDone(row.Status)) {
+      issues.push({ scene: clean(row.Scene).padStart(2, "0"), issue: "work_order_not_complete", detail: `${row.Route}: ${row.Status}` });
+    }
+  }
+  return { issues };
+}
+
+const { project, projectPath } = await loadProject(projectArg);
+const render = join(projectPath, "renders/final.mp4");
+const srtPath = join(projectPath, "voiceover/solo/voiceover-solo-elevenlabs.srt");
+const timedPath = join(projectPath, "timed-scene-packets.md");
+const assetPath = join(projectPath, "asset-plan.md");
+const compositionPath = join(projectPath, "composition/index.html");
+const reviewDir = join(projectPath, "review/video-review");
+const framesDir = join(reviewDir, "frames/scene-frames");
+const suspiciousDir = join(reviewDir, "frames/suspicious-frames");
+const contactDir = join(reviewDir, "contact-sheets");
+
+if (!existsSync(render)) {
+  console.error(`Review blocked: missing ${rel(render)}`);
+  process.exit(1);
+}
+if (project.artifacts?.render !== true && !args.force) {
+  console.error("Review blocked: render artifact must be complete. Use --force only as an explicit override.");
+  process.exit(1);
+}
+
+await rm(join(reviewDir, "frames"), { recursive: true, force: true });
+await rm(contactDir, { recursive: true, force: true });
+await ensureDir(framesDir);
+await ensureDir(suspiciousDir);
+await ensureDir(contactDir);
+
+const timed = await readText(timedPath);
+const asset = await readText(assetPath);
+const composition = await readText(compositionPath);
+const scenes = sceneRows(timed);
+const assets = dataRows(asset).filter((row) => row.Scene);
+const workMarkdowns = await Promise.all(
+  ["capture", "hyperframes", "imagegen", "video-use"].map((name) => readText(join(projectPath, "work-orders", `${name}.md`), "")),
+);
+const workRows = workMarkdowns.flatMap(dataRows);
+const captions = existsSync(srtPath) ? parseSrt(await readText(srtPath)) : [];
+const probe = run("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", render], { timeout: 30_000 });
+const duration = probe.status === 0 ? Number(probe.stdout.trim()) : 0;
+
+const contactSheet = join(contactDir, "contact-sheet.png");
+const contact = run("ffmpeg", ["-y", "-i", render, "-vf", "fps=1/10,scale=320:-1,tile=6x6", "-frames:v", "1", contactSheet], { timeout: 120_000 });
+const frameManifest = [];
+for (const scene of scenes) {
+  const points = [
+    ["start", scene.range.start + 0.4],
+    ["mid", (scene.range.start + scene.range.end) / 2],
+    ["end", Math.max(scene.range.start, scene.range.end - 0.4)],
+  ];
+  for (const [label, at] of points) {
+    const out = join(framesDir, `scene-${scene.id}-${label}.png`);
+    const result = extractFrame(render, at, out);
+    frameManifest.push({ scene: scene.id, label, at, output: rel(out), ok: result.status === 0 });
+  }
+}
+
+const captionReport = captionAudit(captions, duration);
+const motionReport = motionAudit(scenes, assets, sectionMetrics(composition));
+const assetReport = assetAudit(assets, workRows);
+const frameFailures = frameManifest.filter((frame) => !frame.ok);
+const inputIssues = [];
+if (!scenes.length) inputIssues.push({ issue: "missing_timed_scene_rows", detail: rel(timedPath) });
+if (!captions.length) inputIssues.push({ issue: "missing_srt_captions", detail: rel(srtPath) });
+if (!assets.length) inputIssues.push({ issue: "missing_asset_plan_rows", detail: rel(assetPath) });
+if (!composition.trim()) inputIssues.push({ issue: "missing_composition_html", detail: rel(compositionPath) });
+const blockers = [
+  ...inputIssues,
+  ...(contact.status === 0 ? [] : [{ issue: "contact_sheet_failed", detail: contact.stderr || contact.stdout || "ffmpeg failed" }]),
+  ...captionReport.issues.filter((issue) => issue.issue === "caption_duration_mismatch"),
+  ...motionReport.issues,
+  ...assetReport.issues,
+  ...frameFailures.map((frame) => ({ scene: frame.scene, issue: "frame_extract_failed", detail: frame.label })),
+];
+
+for (const issue of blockers.slice(0, 12)) {
+  const scene = clean(issue.scene).padStart(2, "0");
+  const target = join(suspiciousDir, `scene-${scene}-${issue.issue}.png`);
+  const row = scenes.find((item) => item.id === scene);
+  if (row) extractFrame(render, (row.range.start + row.range.end) / 2, target, "1280:-1");
+}
+
+await writeJson(join(reviewDir, "frame-manifest.json"), { contactSheet: rel(contactSheet), contactSheetOk: contact.status === 0, frames: frameManifest });
+await writeJson(join(reviewDir, "caption-sync-report.json"), captionReport);
+await writeJson(join(reviewDir, "motion-density-report.json"), motionReport);
+await writeJson(join(reviewDir, "asset-presence-report.json"), assetReport);
+
+const verdict = blockers.length ? "FAIL" : "PASS";
+const sceneFindings = blockers.length
+  ? blockers.map((issue) => `| ${issue.scene || "-"} | ${issue.issue} | ${String(issue.detail || "").replaceAll("|", "/")} |`).join("\n")
+  : "| - | none | - |";
+
+await writeText(join(reviewDir, "fix-list.md"), [
+  "# Video Review Fix List",
+  "",
+  blockers.length ? blockers.map((issue) => `- Scene ${issue.scene || "-"}: ${issue.issue} - ${issue.detail || ""}`).join("\n") : "- No blocking fixes.",
+  "",
+].join("\n"));
+
+await writeText(join(reviewDir, "video-review.md"), [
+  "# Video Review",
+  "",
+  `## Verdict`,
+  verdict,
+  "",
+  "## Evidence",
+  "",
+  `- Contact sheet: \`${rel(contactSheet)}\``,
+  `- Scene frames: \`${rel(framesDir)}\``,
+  `- Suspicious frames: \`${rel(suspiciousDir)}\``,
+  "",
+  "## Scene Findings",
+  "",
+  "| Scene | Issue | Detail |",
+  "|---|---|---|",
+  sceneFindings,
+  "",
+  "## Caption Sync",
+  "",
+  `- Cues: ${captionReport.cueCount}`,
+  `- Issues: ${captionReport.issues.length}`,
+  "",
+  "## Motion Variety",
+  "",
+  `- Motion issues: ${motionReport.issues.length}`,
+  "- Rich scenes require rows plus path/token/scan/sheen/tick motion primitives.",
+  "",
+  "## Asset Match",
+  "",
+  `- Asset issues: ${assetReport.issues.length}`,
+  "",
+  "## Editor Notes",
+  "",
+  "- Review the contact sheet and scene frames before upload.",
+  "- Package is allowed only when this verdict is PASS.",
+  "",
+].join("\n"));
+
+project.artifacts.videoReview = verdict === "PASS";
+if (verdict === "PASS") {
+  project.status = "video_review";
+  project.currentGate = "final_qa";
+} else {
+  project.status = "blocked";
+  project.currentGate = "blocked";
+}
+await saveProject(projectPath, project);
+
+console.log(`Wrote: ${rel(join(reviewDir, "video-review.md"))}`);
+console.log(`Result: ${verdict}`);
+process.exit(verdict === "PASS" ? 0 : 1);

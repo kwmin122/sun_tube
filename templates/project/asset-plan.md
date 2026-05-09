@@ -32,11 +32,19 @@ This MVP asset plan is not a rights, privacy, citation, or quote-accuracy review
 
 ## Scene Asset Map
 
-| Scene | Time | Pattern Role | Tool Route | Narration Beat | Asset Type | Link / File / Candidate | Speaker / Role | Timestamp | Processing Needed | Status |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 01 | | claim/proof/context | capture | | proof screenshot | | | | crop, highlight | todo |
-| 02 | | diagram/demo/data | hyperframes | | diagram | | | | HTML/SVG build | todo |
-| 03 | | quote/context | video-use | | interview clip | | | | trim, subtitle, crop | todo |
+Status values:
+
+- `planned`: route and visual role are known, but inputs are not ready.
+- `inputs_ready`: files, links, script beats, or design notes are ready for implementation.
+- `implemented`: composition or processed asset has been created.
+- `qa_passed`: pre-render QA has confirmed the row and matching work order.
+- `blocked`: input, implementation, or QA problem must be resolved first.
+
+| Scene | Time | Pattern Role | Tool Route | Visual Density | Motion Layer | Imagegen Need | Narration Beat | Asset Type | Link / File / Candidate | Speaker / Role | Timestamp | Processing Needed | Status |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 01 | | claim/proof/context | capture | standard | screenshot highlight | not_required | | proof screenshot | | | | crop, highlight | planned |
+| 02 | | diagram/demo/data | hyperframes | rich | path draw, row reveal | optional | | diagram | | | | HTML/SVG build | planned |
+| 03 | | quote/context | video-use | standard | clip trim, subtitle | not_required | | interview clip | | | | trim, subtitle, crop | planned |
 
 ## Material Rules
 
@@ -46,6 +54,8 @@ This MVP asset plan is not a rights, privacy, citation, or quote-accuracy review
 - For interview clips, note speaker, role, and timestamp when available.
 - Route raw/reference/interview/demo video through `video-use` when it needs analysis, trimming, transcript, subtitles, crop, or export.
 - Route final HTML motion, captions, diagrams, and composition through Hyperframes.
+- Use imagegen for mood textures, abstract style frames, thumbnails, or non-factual atmosphere. Do not use imagegen for text-heavy information graphics, official UI evidence, or precise diagrams that should be HTML/SVG/capture.
+- Dense explainer scenes should not be large empty panels. If `Visual Density` is `rich`, include information rows, tokens, paths, counters, scan fills, or other visible state changes.
 - Do not force a reference video's edit order onto an unrelated topic.
 
 ## Processing Checklist

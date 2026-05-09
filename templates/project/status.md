@@ -25,6 +25,7 @@
 - [ ] Hyperframes inspect passed
 - [ ] Snapshot/pre-render QA passed
 - [ ] MP4 rendered
+- [ ] Frame/video review passed
 - [ ] ffprobe checked
 - [ ] Final QA passed
 - [ ] Packaging directions drafted
@@ -48,6 +49,7 @@ These keys are completion flags in `project.json.artifacts`, not file-existence 
 - `designContext`
 - `composition`
 - `render`
+- `videoReview`
 
 ## Current Gate
 

@@ -76,6 +76,7 @@ Production pass conditions:
 hype-motion-designer assembly
 -> hype-qa-editor snapshot/pre-render QA
 -> render
+-> hype-video-reviewer rendered-frame review
 -> hype-qa-editor final QA
 -> hype-packaging-editor
 ```
@@ -84,6 +85,7 @@ Required outputs:
 
 - snapshot frames
 - render output in `renders/`
+- video review report in `review/video-review/`
 - final QA notes in `status.md`
 - title, thumbnail, description, and pinned comment direction
 
@@ -91,6 +93,7 @@ Finish pass conditions:
 
 - Dense scenes are snapshotted before final render.
 - Captions are readable and do not collide with important visuals.
+- Rendered frames are checked for caption timing, empty panels, asset presence, and motion variety.
 - Rendered MP4 has valid audio/video streams.
 - Final QA passes before packaging.
 
@@ -138,7 +141,7 @@ Do not create timed packets without SRT.
 - Subtitle: `voiceover/solo/voiceover-solo-elevenlabs.srt`
 - Final mix: `voiceover/solo/voiceover-solo-final-mix.m4a`
 - BGM: Glass Horizon, loudsquaredance310, `assets/bgm/default-bgm.mp3`
-- BGM volume: default `0.08`, voice-first ducking
+- BGM volume: default `0.05`, voice-first ducking
 
 Do not put the ElevenLabs API key in a project `.env`.
 

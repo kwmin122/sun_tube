@@ -5,6 +5,8 @@ Result: PASS
 | Check | Result | Detail |
 |---|---|---|
 | project.json schema | PASS |  |
+| video review complete | PASS | factory:review-video must pass before final QA |
+| video review report exists | PASS | projects/002-claude-managed-agents/review/video-review/video-review.md |
 | render exists | PASS | projects/002-claude-managed-agents/renders/final.mp4 |
 | ffprobe | PASS | {
     "programs": [

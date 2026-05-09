@@ -34,19 +34,19 @@ This MVP asset plan is not a rights, privacy, citation, or quote-accuracy review
 
 | Scene | Time | Pattern Role | Tool Route | Narration Beat | Asset Type | Link / File / Candidate | Speaker / Role | Timestamp | Processing Needed | Status |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 01 | 0:00-0:13.4 | direct hook | capture + hyperframes | Four updates | webpage screenshot + HTML motion | https://claude.com/blog/new-in-claude-managed-agents | | | captured official source page, placed screenshot in composition, built 4 feature cards | done |
-| 02 | 0:13.4-0:22.4 | reframe | hyperframes | Smarter model -> better operating system | HTML/SVG diagram | generated | | | model card replaced by system card | done |
-| 03 | 0:22.4-0:50.9 | feature/what | capture + hyperframes | Dreaming: what it does | official screenshot + generated visual | https://claude.com/blog/new-in-claude-managed-agents | | | captured official page, placed source screenshot with memory sorting cards | done |
-| 04 | 0:50.9-1:19.4 | feature/when useful | hyperframes | Dreaming: when useful | diagram/data | Harvey section from Anthropic blog | | | repeat-work pattern cards + long-running timeline | done |
-| 05 | 1:19.4-1:55.9 | feature/what | hyperframes | Outcomes: what it does | diagram/data | generated from official blog facts | | | rubric gate + revision loop | done |
-| 06 | 1:55.9-2:15.9 | feature/when useful | hyperframes | Outcomes: when useful | checklist diagram | generated from official blog facts | | | requirements/brand/design checklist scan | done |
-| 07 | 2:15.9-2:55.9 | feature/what | hyperframes | Multiagent orchestration: what it does | network diagram | generated from official blog examples | | | lead/subagent routing graph with SVG paths | done |
-| 08 | 2:55.9-3:17.4 | feature/when useful | hyperframes | Multiagent orchestration: when useful | parallel work diagram | Netflix section from Anthropic blog | | | logs/metrics/docs/support parallel panels filled with information rows | done |
-| 09 | 3:17.4-3:45.4 | feature/what | hyperframes | Webhooks: what it does | callback diagram | https://platform.claude.com/docs/en/managed-agents/webhooks | | | completed task -> webhook -> next workflow pulse | done |
-| 10 | 3:45.4-4:08.0 | feature/when useful | hyperframes | Webhooks: when useful | event-chain diagram | generated from webhook docs | | | review queue / notification / QA chain | done |
-| 11 | 4:08.0-4:34.9 | synthesis/diagram | hyperframes | Four-axis system | HTML/SVG diagram | generated | | | 4-axis lock-in animation | done |
-| 12 | 4:34.9-5:11.4 | case/data | capture + hyperframes | Team examples | case cards | https://claude.com/blog/new-in-claude-managed-agents | | | captured official case section, placed screenshot with case cards | done |
-| 13 | 5:11.4-5:33.9 | takeaway | hyperframes | Model -> system | kinetic typography | generated | | | text replacement animation | done |
+| 01 | 0:00-0:13.4 | direct hook | capture + hyperframes | Four updates | webpage screenshot + HTML motion | https://claude.com/blog/new-in-claude-managed-agents | | | captured official source page, placed screenshot in composition, built 4 feature cards | qa_passed |
+| 02 | 0:13.4-0:22.4 | reframe | hyperframes | Smarter model -> better operating system | HTML/SVG diagram | generated | | | model card replaced by system card | qa_passed |
+| 03 | 0:22.4-0:50.9 | feature/what | capture + hyperframes | Dreaming: what it does | official screenshot + generated visual | https://claude.com/blog/new-in-claude-managed-agents | | | captured official page, placed source screenshot with memory sorting cards | qa_passed |
+| 04 | 0:50.9-1:19.4 | feature/when useful | hyperframes | Dreaming: when useful | diagram/data | Harvey section from Anthropic blog | | | rich memory stream, progress rail, context cards, scan fill | qa_passed |
+| 05 | 1:19.4-1:55.9 | feature/what | hyperframes | Outcomes: what it does | diagram/data | generated from official blog facts | | | rubric gate + revision loop | qa_passed |
+| 06 | 1:55.9-2:15.9 | feature/when useful | hyperframes | Outcomes: when useful | checklist diagram | generated from official blog facts | | | judge loop, rubric scan, status ticks | qa_passed |
+| 07 | 2:15.9-2:55.9 | feature/what | hyperframes | Multiagent orchestration: what it does | network diagram | generated from official blog examples | | | lead/subagent routing graph with SVG paths | qa_passed |
+| 08 | 2:55.9-3:17.4 | feature/when useful | hyperframes | Multiagent orchestration: when useful | parallel work diagram | Netflix section from Anthropic blog | | | fan-out/fan-in paths, route tokens, filled information rows | qa_passed |
+| 09 | 3:17.4-3:45.4 | feature/what | hyperframes | Webhooks: what it does | callback diagram | https://platform.claude.com/docs/en/managed-agents/webhooks | | | event -> trigger -> action route pulse and particles | qa_passed |
+| 10 | 3:45.4-4:08.0 | feature/when useful | hyperframes | Webhooks: when useful | event-chain diagram | generated from webhook docs | | | pipeline path draw, status ticks, scan fills | qa_passed |
+| 11 | 4:08.0-4:34.9 | synthesis/diagram | hyperframes | Four-axis system | HTML/SVG diagram | generated | | | 4-axis lock-in animation | qa_passed |
+| 12 | 4:34.9-5:11.4 | case/data | capture + hyperframes | Team examples | case cards | https://claude.com/blog/new-in-claude-managed-agents | | | captured official case section, placed screenshot with case cards | qa_passed |
+| 13 | 5:11.4-5:33.9 | takeaway | hyperframes | Model -> system | kinetic typography | generated | | | text replacement animation | qa_passed |
 
 ## Material Rules
 

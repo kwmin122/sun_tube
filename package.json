@@ -20,6 +20,7 @@
     "factory:capture": "node scripts/capture_work_orders.mjs",
     "factory:compose": "node scripts/compose_project.mjs",
     "factory:qa": "node scripts/qa_project.mjs",
+    "factory:review-video": "node scripts/review_video.mjs",
     "factory:render": "node scripts/render_project.mjs",
     "factory:package": "node scripts/package_project.mjs"
   },

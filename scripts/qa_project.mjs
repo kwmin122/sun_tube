@@ -2,6 +2,8 @@ import { existsSync, readdirSync } from "node:fs";
 import { basename, join } from "node:path";
 import {
   loadProject,
+  normalizeRoute,
+  normalizeRoutes,
   parseArgs,
   readText,
   rel,
@@ -52,19 +54,121 @@ function tableDataRows(markdown) {
 function unresolvedStatusRows(rows) {
   return rows.filter((row) => {
     const status = String(row.Status || "").trim().toLowerCase();
-    return !status || /\b(todo|pending|blocked)\b/.test(status);
+    return !status || /\b(todo|pending|planned|inputs_ready|blocked)\b/.test(status);
   });
 }
 
 function unresolvedTimedRows(rows) {
   return rows.filter((row) => {
     const values = [row["Caption Behavior"], row["Audio/SFX"], row.Status].map((value) => String(value || "").trim().toLowerCase());
-    return values.some((value) => !value || /\b(todo|pending|blocked)\b/.test(value));
+    return values.some((value) => !value || /\b(todo|pending|planned|inputs_ready|blocked)\b/.test(value));
   });
 }
 
 function detailRows(rows) {
   return rows.slice(0, 6).map((row) => `scene ${row.Scene || row["#"] || "?"}: ${row.Status || "empty"}`).join("; ");
+}
+
+function clean(value) {
+  return String(value || "").trim();
+}
+
+function statusValue(row) {
+  return clean(row.Status).toLowerCase();
+}
+
+function isNotRequiredRow(row) {
+  return statusValue(row) === "not_required" || normalizeRoute(row.Route || row["Tool Route"]) === "not_required";
+}
+
+function workOrderRows(markdown, source) {
+  return tableDataRows(markdown)
+    .map((row) => ({ ...row, source, route: normalizeRoute(row.Route || row["Tool Route"]) }))
+    .filter((row) => !isNotRequiredRow(row));
+}
+
+function unresolvedWorkOrderRows(rows) {
+  return rows.filter((row) => {
+    const status = statusValue(row);
+    return !status || /\b(todo|pending|planned|inputs_ready|blocked)\b/.test(status);
+  });
+}
+
+function emptyInputWorkOrderRows(rows) {
+  return rows.filter((row) => {
+    const input = clean(row.Input || row["Link / File / Candidate"] || row["Primary Asset"]);
+    if (row.route === "hyperframes" || row.route === "manual") return false;
+    return !input || input === "-";
+  });
+}
+
+function sceneRouteKey(scene, route) {
+  return `${clean(scene).padStart(2, "0")}::${normalizeRoute(route)}`;
+}
+
+function workOrderMap(rows) {
+  const map = new Map();
+  for (const row of rows) {
+    const key = sceneRouteKey(row.Scene, row.route);
+    if (!map.has(key)) map.set(key, []);
+    map.get(key).push(row);
+  }
+  return map;
+}
+
+function assetWorkOrderMismatches(assetRows, workRows) {
+  const bySceneRoute = workOrderMap(workRows);
+  return assetRows.filter((row) => {
+    const status = statusValue(row);
+    if (!["done", "implemented", "qa_passed"].includes(status)) return false;
+    const routes = normalizeRoutes(row["Tool Route"]).filter((route) => !["not_required", "manual", "script/ffmpeg"].includes(route));
+    return routes.some((route) => {
+      const matches = bySceneRoute.get(sceneRouteKey(row.Scene, route)) || [];
+      return matches.length === 0 || matches.some((workRow) => unresolvedWorkOrderRows([workRow]).length > 0);
+    });
+  });
+}
+
+function visualDensityIssues(compositionHtml, assetRows = []) {
+  const issues = [];
+  const richSceneIds = new Set();
+  for (const row of assetRows) {
+    if (clean(row["Visual Density"]).toLowerCase() === "rich") {
+      richSceneIds.add(`scene-${clean(row.Scene).padStart(2, "0")}`);
+    }
+  }
+  const sections = new Map();
+  const sceneRegex = /<section\b([^>]*)>([\s\S]*?)<\/section>/g;
+  for (const match of compositionHtml.matchAll(sceneRegex)) {
+    const attrs = match[1] || "";
+    const body = match[2] || "";
+    const id = attrs.match(/id=["']([^"']+)["']/)?.[1] || "unknown";
+    sections.set(id, { attrs, body });
+    if (/data-visual-density=["']rich["']/.test(attrs)) richSceneIds.add(id);
+  }
+  for (const id of richSceneIds) {
+    const body = sections.get(id)?.body || "";
+    if (!body) {
+      issues.push(`${id}: missing section for rich visual density`);
+      continue;
+    }
+    const rowCount = (body.match(/class=["'][^"']*(?:info-row|event-detail|signal-list|flow-token|metric-tick|item)[^"']*["']/g) || []).length;
+    const motionCount = (body.match(/class=["'][^"']*(?:route-pulse|flow-token|scan-fill|liquid-sheen|metric-tick|path-draw|reveal-mask)[^"']*["']/g) || []).length;
+    const hasMotionPrimitive = /(?:route-pulse|flow-token|scan-fill|liquid-sheen|metric-tick|path-draw|reveal-mask|<path\b)/.test(body);
+    if (rowCount < 3) issues.push(`${id}: visual rows ${rowCount} < 3`);
+    if (motionCount < 1 || !hasMotionPrimitive) issues.push(`${id}: missing rich motion primitive`);
+  }
+  return issues;
+}
+
+async function readWorkOrders(projectPath) {
+  const files = ["video-use", "imagegen", "capture", "hyperframes"];
+  const rows = [];
+  for (const name of files) {
+    const source = `${name}.md`;
+    rows.push(...workOrderRows(await readText(join(projectPath, "work-orders", source), ""), source));
+  }
+  return rows;
 }
 
 const args = parseArgs();
@@ -91,6 +195,7 @@ if (stage === "pre-render") {
   const compositionHtml = await readText(compositionHtmlPath, "");
   const assetRows = tableDataRows(asset);
   const timedRows = tableDataRows(timed);
+  const workRows = await readWorkOrders(projectPath);
 
   add(checks, project.approved?.plan === true, "plan approved", "project.json.approved.plan must be true");
   add(checks, project.approved?.timedScenePackets === true || Boolean(args["waive-timed-approval"]), "timed scene packets approved", "use --waive-timed-approval only for explicit test runs");
@@ -98,13 +203,25 @@ if (stage === "pre-render") {
   add(checks, project.artifacts?.audioMix === true, "audioMix artifact complete");
   add(checks, existsSync(mix), "final mix exists", rel(mix));
   add(checks, ["done", "not_required"].includes(project.routes?.workOrders), "route work orders done", project.routes?.workOrders);
-  for (const key of ["videoUse", "imagegen", "capture"]) {
+  for (const key of ["videoUse", "imagegen", "capture", "hyperframes"]) {
     add(checks, ["done", "not_required"].includes(project.routes?.[key]), `route ${key} resolved`, project.routes?.[key]);
   }
   const unfinishedAssetRows = unresolvedStatusRows(assetRows);
   const unfinishedTimedRows = unresolvedTimedRows(timedRows);
-  add(checks, unfinishedAssetRows.length === 0, "asset-plan rows complete", unfinishedAssetRows.length ? detailRows(unfinishedAssetRows) : "all rows done/not_required");
+  const unfinishedWorkRows = unresolvedWorkOrderRows(workRows);
+  const missingWorkInputs = emptyInputWorkOrderRows(workRows);
+  const statusMismatches = assetWorkOrderMismatches(assetRows, workRows);
+  const unfinishedHyperframesRows = unresolvedWorkOrderRows(workRows.filter((row) => row.route === "hyperframes"));
+  const densityIssues = visualDensityIssues(compositionHtml, assetRows);
+  add(checks, unfinishedAssetRows.length === 0, "asset-plan rows complete", unfinishedAssetRows.length ? detailRows(unfinishedAssetRows) : "all rows done/implemented/qa_passed/not_required");
   add(checks, unfinishedTimedRows.length === 0, "timed-scene-packets rows resolved", unfinishedTimedRows.length ? detailRows(unfinishedTimedRows) : "caption/audio/status resolved");
+  add(checks, unfinishedWorkRows.length === 0, "work-orders rows complete", unfinishedWorkRows.length ? detailRows(unfinishedWorkRows) : "all work-orders implemented/qa_passed/not_required");
+  add(checks, missingWorkInputs.length === 0, "work-orders required inputs present", missingWorkInputs.length ? detailRows(missingWorkInputs) : "route inputs present or not required");
+  add(checks, statusMismatches.length === 0, "asset-plan/work-orders status aligned", statusMismatches.length ? detailRows(statusMismatches) : "completed asset rows have completed route work");
+  if (["done", "ready", "qa_passed"].includes(project.routes?.hyperframes)) {
+    add(checks, unfinishedHyperframesRows.length === 0, "hyperframes route done matches work-orders", unfinishedHyperframesRows.length ? detailRows(unfinishedHyperframesRows) : "hyperframes work-orders complete");
+  }
+  add(checks, densityIssues.length === 0, "rich visual density", densityIssues.length ? densityIssues.slice(0, 6).join("; ") : "rich scenes have rows and motion primitives");
   add(checks, !/\b(blocked|blocking pending)\b/i.test(asset), "asset-plan has no blocking pending");
   add(checks, !/\b(blocked|blocking pending)\b/i.test(timed), "timed-scene-packets has no blocking pending");
   if (project.routes?.capture === "done") {
@@ -155,6 +272,9 @@ if (stage === "pre-render") {
 
 if (stage === "final") {
   const render = join(projectPath, "renders/final.mp4");
+  const videoReview = join(projectPath, "review/video-review/video-review.md");
+  add(checks, project.artifacts?.videoReview === true, "video review complete", "factory:review-video must pass before final QA");
+  add(checks, existsSync(videoReview), "video review report exists", rel(videoReview));
   add(checks, existsSync(render), "render exists", rel(render));
   if (existsSync(render)) {
     const probe = run("ffprobe", ["-v", "error", "-show_entries", "format=duration:stream=codec_type,width,height,avg_frame_rate", "-of", "json", render], { timeout: 30_000 });

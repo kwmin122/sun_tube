@@ -14,6 +14,7 @@ Own visual and render QA.
 - `plan.md`
 - snapshots
 - rendered MP4, for final QA
+- `review/video-review/video-review.md`, for final QA
 
 ## Pre-Render QA
 
@@ -33,6 +34,7 @@ Do this before render.
 
 Check:
 
+- video review has passed
 - MP4 exists
 - duration is plausible
 - video/audio streams are valid
@@ -47,4 +49,5 @@ Update `status.md` with pre-render QA and final QA status.
 ## Do Not
 
 - Review copyright, privacy, quote accuracy, missing sources, or rights risk in MVP.
+- Replace `hype-video-reviewer`; rendered-frame editorial review must happen before final QA.
 - Package before final QA passes.

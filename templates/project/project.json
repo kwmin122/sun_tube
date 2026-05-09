@@ -25,7 +25,8 @@
     "assetPlan": false,
     "designContext": false,
     "composition": false,
-    "render": false
+    "render": false,
+    "videoReview": false
   },
   "routes": {
     "workOrders": "not_required",

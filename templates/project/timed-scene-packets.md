@@ -24,11 +24,11 @@ Tool routes come from `../../TOOL_ROUTING_PIPELINE.md`.
 
 ## Timing Table
 
-| Scene | Time Range | SRT Lines | Tool Route | Caption Behavior | Primary Asset | Motion Beat | Audio/SFX | Snapshot Time |
-|---|---|---|---|---|---|---|---|---|
-| 01 | | | hyperframes | | | | | |
-| 02 | | | capture | | | | | |
-| 03 | | | video-use | | | | | |
+| Scene | Time Range | SRT Lines | Tool Route | Caption Behavior | Primary Asset | Motion Beat | Audio/SFX | Snapshot Time | Status |
+|---|---|---|---|---|---|---|---|---|---|
+| 01 | | | hyperframes | bottom safe-zone caption, 0.9s lead | | | | | planned |
+| 02 | | | capture | bottom safe-zone caption, 0.9s lead | | | | | planned |
+| 03 | | | video-use | bottom safe-zone caption, 0.9s lead | | | | | planned |
 
 ## Scene Details
 

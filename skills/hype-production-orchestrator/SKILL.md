@@ -22,7 +22,7 @@ Choose the current gate:
 1. Development: topic, material research, creative brief, draft scene packets, script.
 2. Approval: user approves `plan.md`.
 3. Production: TTS/SRT, timed scene packets, parallel asset/visual/motion/audio work.
-4. Finish: composition assembly, snapshot QA, render, final QA, packaging.
+4. Finish: composition assembly, snapshot QA, render, video review, final QA, packaging.
 
 Run only the roles needed for that gate.
 
@@ -42,6 +42,7 @@ During production, ensure every scene has a route: `hyperframes`, `video-use`, `
 - Do not create `timed-scene-packets.md` before ElevenLabs SRT exists.
 - Do not route every project through `video-use`; use it only for raw/source video analysis or processing.
 - Do not render before snapshot/pre-render QA.
+- Do not run final QA before `factory:review-video` passes.
 - Do not package before final QA.
 
 ## MVP Boundary

@@ -24,6 +24,7 @@ topic / user material
 -> Hyperframes assembly
 -> snapshot / pre-render QA
 -> render
+-> video review / frame evidence
 -> final QA
 -> packaging
 ```
@@ -73,7 +74,58 @@ Every production scene should carry one primary route and optional support route
 
 `timed-scene-packets.md` chooses the route per scene. `asset-plan.md` turns that route into concrete file work. `design-context.md` controls how the routed assets are visually integrated. Hyperframes receives only approved or processed assets, not unresolved raw material.
 
-A routed asset is not complete just because the file exists. It is complete only when the work order is done, the `asset-plan.md` row is marked done or not required, and the final composition references the processed file. Capture routes must use real page captures with stable local paths under `composition/assets/screenshots/`; blank verification pages or unused screenshots must stay blocked until replaced or removed from the route.
+A routed asset is not complete just because the file exists. It is complete only when the work order is complete, the `asset-plan.md` row is `implemented` or `qa_passed`, and the final composition references the processed file or implements the scene contract. Capture routes must use real page captures with stable local paths under `composition/assets/screenshots/`; blank verification pages or unused screenshots must stay blocked until replaced or removed from the route.
+
+## Truth Layers
+
+Use these layers in this order:
+
+| Layer | Responsibility |
+|---|---|
+| `project.json` | Large canonical project state and route state. |
+| `asset-plan.md` | Scene-level asset, visual, imagegen, and implementation-readiness state. |
+| `work-orders/*.md` | Route-level executable task state. |
+| `composition/index.html` and composition data | Actual implemented result. |
+| `review/video-review/*` | Rendered-frame evidence, caption sync, asset presence, and motion variety review. |
+| QA reports | Compare the project layers and block inconsistent state. |
+
+`work-orders/*.md` does not replace `project.json`, but it is the truth for whether route work is actually complete. If `project.routes.hyperframes` is `done` while `work-orders/hyperframes.md` still has `todo`, `pending`, `planned`, `inputs_ready`, or `blocked`, pre-render QA must fail.
+
+## Route Status Values
+
+Use the same row-level status language in `asset-plan.md` and `work-orders/*.md`.
+
+| Status | Meaning |
+|---|---|
+| `planned` | Route and visual role are known, but implementation inputs are not ready. |
+| `inputs_ready` | Required links/files/design notes are available for implementation. |
+| `implemented` | The processed asset or Hyperframes implementation exists. |
+| `qa_passed` | QA has checked the row against work orders and composition output. |
+| `blocked` | A missing input, implementation gap, or QA issue prevents progress. |
+| `not_required` | The route is not needed for this scene/project. |
+
+Pre-render QA treats `planned`, `inputs_ready`, `todo`, `pending`, and `blocked` as incomplete. Legacy `done` may be accepted for older projects, but new work should use `implemented` or `qa_passed`.
+
+## Visual Density And Imagegen
+
+For information explainer scenes, prefer HTML/SVG/GSAP over generated images when the viewer needs to read labels, compare steps, or understand a system diagram.
+
+Use imagegen for:
+
+- mood texture
+- abstract background
+- opening styleframe
+- thumbnail candidates
+- non-factual atmosphere layers
+
+Do not use imagegen for:
+
+- text-heavy information graphics
+- official docs, UI, or product evidence
+- precise system diagrams that should be implemented in HTML/SVG
+- screenshots that should come from capture
+
+If a scene is marked `data-visual-density="rich"`, the composition must include enough visible structure: information rows, route tokens, SVG paths, progress rails, scan fills, count/tick states, or equivalent motion primitives. Large empty glass panels fail pre-render QA.
 
 ## Non-Goals
 

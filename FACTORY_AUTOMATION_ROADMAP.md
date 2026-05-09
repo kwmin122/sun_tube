@@ -20,6 +20,7 @@ topic
 -> video-use / imagegen / capture / Hyperframes work
 -> QA
 -> render
+-> rendered-frame video review
 -> final QA
 -> packaging
 -> GitHub template / npm distribution
@@ -148,6 +149,7 @@ assets
 motion
 pre_render_qa
 render
+video_review
 final_qa
 package
 done
@@ -171,6 +173,7 @@ assets
 motion
 pre_render_qa
 render
+video_review
 final_qa
 package
 done
@@ -423,6 +426,7 @@ Example role routing:
 | motion | `hype-motion-designer` |
 | pre_render_qa | `hype-qa-editor` |
 | render | render command allowed after pre-render QA |
+| video_review | `hype-video-reviewer` |
 | final_qa | `hype-qa-editor` |
 | package | `hype-packaging-editor` |
 | done | no next production role |
@@ -545,7 +549,7 @@ Current BGM standard:
 Name: Glass Horizon
 Artist: loudsquaredance310
 Path: assets/bgm/default-bgm.mp3
-BGM volume: default 0.08 with voice-first ducking
+BGM volume: default 0.05 with voice-first ducking
 Ducking: enabled under narration
 ```
 
@@ -726,6 +730,7 @@ Rule:
 scripts/compose_project.mjs
 scripts/qa_project.mjs
 scripts/render_project.mjs
+scripts/review_video.mjs
 scripts/package_project.mjs
 ```
 
@@ -737,6 +742,7 @@ scripts/package_project.mjs
     "factory:compose": "node scripts/compose_project.mjs",
     "factory:qa": "node scripts/qa_project.mjs",
     "factory:render": "node scripts/render_project.mjs",
+    "factory:review-video": "node scripts/review_video.mjs",
     "factory:package": "node scripts/package_project.mjs"
   }
 }
@@ -748,6 +754,7 @@ scripts/package_project.mjs
 npm run factory:compose -- projects/003-topic
 npm run factory:qa -- projects/003-topic -- --stage pre-render
 npm run factory:render -- projects/003-topic
+npm run factory:review-video -- projects/003-topic
 npm run factory:qa -- projects/003-topic -- --stage final
 npm run factory:package -- projects/003-topic
 ```
@@ -849,6 +856,27 @@ renders/final.mp4
 renders/render_manifest.json
 ```
 
+### `review_video.mjs`
+
+Purpose:
+
+- extract scene frames and a contact sheet from the rendered MP4
+- compare captions, timed scene packets, asset plan, work orders, and composition markers
+- block final QA if rich scenes look empty, route assets are missing, captions drift badly, or motion variety is too weak
+
+Outputs:
+
+```text
+review/video-review/video-review.md
+review/video-review/fix-list.md
+review/video-review/frame-manifest.json
+review/video-review/caption-sync-report.json
+review/video-review/motion-density-report.json
+review/video-review/asset-presence-report.json
+review/video-review/frames/
+review/video-review/contact-sheets/
+```
+
 ### `package_project.mjs`
 
 Purpose:
@@ -941,6 +969,7 @@ npm run factory:compose -- projects/003-topic
 npm run factory:qa -- projects/003-topic -- --stage pre-render
 npm run factory:render -- projects/003-topic -- --dry-run
 npm run factory:render -- projects/003-topic
+npm run factory:review-video -- projects/003-topic
 npm run factory:qa -- projects/003-topic -- --stage final
 npm run factory:package -- projects/003-topic
 ```
@@ -961,7 +990,7 @@ npm run factory:package -- projects/003-topic
 
 Implement only Phase 1.
 
-Do not implement TTS, route execution, capture, imagegen, video-use, render, GitHub Actions, or npm packaging in the first pass.
+For the first control-panel pass only, hold TTS, route execution, capture, imagegen, video-use, render, GitHub Actions, and npm packaging for later phases.
 
 Phase 1 is complete only when:
 
@@ -1065,7 +1094,7 @@ Implement Phase 1 only from FACTORY_AUTOMATION_ROADMAP.md:
 - scripts/status.mjs
 - scripts/next.mjs
 
-Do not implement TTS, render, video-use, imagegen, capture, GitHub Actions, or npm packaging yet.
+For this setup pass only, keep TTS, render, video-use, imagegen, capture, GitHub Actions, and npm packaging in later phases rather than treating them as permanent exclusions.
 
 Done means these commands pass:
 npm run factory:doctor

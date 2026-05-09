@@ -23,7 +23,7 @@ const voice = join(projectPath, "voiceover/solo/voiceover-solo-elevenlabs.mp3");
 const bgm = join(projectPath, "assets/bgm/default-bgm.mp3");
 const out = join(projectPath, "voiceover/solo/voiceover-solo-final-mix.m4a");
 const manifest = join(projectPath, "voiceover/solo/audio_mix_manifest.json");
-const bgmVolume = Number(args["bgm-volume"] ?? process.env.HYPE_BGM_VOLUME ?? 0.08);
+const bgmVolume = Number(args["bgm-volume"] ?? process.env.HYPE_BGM_VOLUME ?? 0.05);
 
 if (!Number.isFinite(bgmVolume) || bgmVolume < 0 || bgmVolume > 1) {
   console.error("Mix blocked: --bgm-volume must be a number between 0 and 1.");

@@ -35,6 +35,7 @@
         "motion",
         "pre_render_qa",
         "render",
+        "video_review",
         "final_qa",
         "package",
         "done",
@@ -56,6 +57,7 @@
         "motion",
         "pre_render_qa",
         "render",
+        "video_review",
         "final_qa",
         "package",
         "done",
@@ -89,7 +91,8 @@
         "assetPlan",
         "designContext",
         "composition",
-        "render"
+        "render",
+        "videoReview"
       ],
       "properties": {
         "researchPack": { "type": "boolean" },
@@ -102,7 +105,8 @@
         "assetPlan": { "type": "boolean" },
         "designContext": { "type": "boolean" },
         "composition": { "type": "boolean" },
-        "render": { "type": "boolean" }
+        "render": { "type": "boolean" },
+        "videoReview": { "type": "boolean" }
       },
       "additionalProperties": false
     },

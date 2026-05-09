@@ -15,7 +15,7 @@ Hyperframes 기반 모션 애니메이션 유튜브 제작 작업실입니다.
 7. ElevenLabs SRT 타이밍에 맞춰 `timed-scene-packets.md`를 만든다.
 8. `TOOL_ROUTING_PIPELINE.md` 기준으로 씬별 도구 경로를 정한다.
 9. 자료/비주얼/모션/오디오를 씬별로 병렬 제작한다.
-10. Hyperframes 조립 후 `snapshot`, pre-render QA, `render`, final QA를 거친다.
+10. Hyperframes 조립 후 `snapshot`, pre-render QA, `render`, video review, final QA를 거친다.
 11. 제목, 썸네일, 설명문, 고정댓글 방향을 패키징한다.
 
 ## Folder Map
@@ -85,6 +85,7 @@ npm run factory:route -- <project-path>
 npm run factory:compose -- <project-path>
 npm run factory:qa -- <project-path> -- --stage pre-render
 npm run factory:render -- <project-path>
+npm run factory:review-video -- <project-path>
 npm run factory:qa -- <project-path> -- --stage final
 npm run factory:package -- <project-path>
 ```
