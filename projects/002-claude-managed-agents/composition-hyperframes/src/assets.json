@@ -1,0 +1,106 @@
+[
+  {
+    "scene": "01",
+    "route": "capture + hyperframes",
+    "type": "webpage screenshot + HTML motion",
+    "candidate": "https://claude.com/blog/new-in-claude-managed-agents",
+    "processing": "captured official source page, placed screenshot in composition, built 4 feature cards",
+    "status": "qa_passed"
+  },
+  {
+    "scene": "02",
+    "route": "hyperframes",
+    "type": "HTML/SVG diagram",
+    "candidate": "generated",
+    "processing": "model card replaced by system card",
+    "status": "qa_passed"
+  },
+  {
+    "scene": "03",
+    "route": "capture + hyperframes",
+    "type": "official screenshot + generated visual",
+    "candidate": "https://claude.com/blog/new-in-claude-managed-agents",
+    "processing": "captured official page, placed source screenshot with memory sorting cards",
+    "status": "qa_passed"
+  },
+  {
+    "scene": "04",
+    "route": "hyperframes",
+    "type": "diagram/data",
+    "candidate": "Harvey section from Anthropic blog",
+    "processing": "rich memory stream, progress rail, context cards, scan fill",
+    "status": "qa_passed"
+  },
+  {
+    "scene": "05",
+    "route": "hyperframes",
+    "type": "diagram/data",
+    "candidate": "generated from official blog facts",
+    "processing": "rubric gate + revision loop",
+    "status": "qa_passed"
+  },
+  {
+    "scene": "06",
+    "route": "hyperframes",
+    "type": "checklist diagram",
+    "candidate": "generated from official blog facts",
+    "processing": "judge loop, rubric scan, status ticks",
+    "status": "qa_passed"
+  },
+  {
+    "scene": "07",
+    "route": "hyperframes",
+    "type": "network diagram",
+    "candidate": "generated from official blog examples",
+    "processing": "lead/subagent routing graph with SVG paths",
+    "status": "qa_passed"
+  },
+  {
+    "scene": "08",
+    "route": "hyperframes",
+    "type": "parallel work diagram",
+    "candidate": "Netflix section from Anthropic blog",
+    "processing": "fan-out/fan-in paths, route tokens, filled information rows",
+    "status": "qa_passed"
+  },
+  {
+    "scene": "09",
+    "route": "hyperframes",
+    "type": "callback diagram",
+    "candidate": "https://platform.claude.com/docs/en/managed-agents/webhooks",
+    "processing": "event -> trigger -> action route pulse and particles",
+    "status": "qa_passed"
+  },
+  {
+    "scene": "10",
+    "route": "hyperframes",
+    "type": "event-chain diagram",
+    "candidate": "generated from webhook docs",
+    "processing": "pipeline path draw, status ticks, scan fills",
+    "status": "qa_passed"
+  },
+  {
+    "scene": "11",
+    "route": "hyperframes",
+    "type": "HTML/SVG diagram",
+    "candidate": "generated",
+    "processing": "4-axis lock-in animation",
+    "status": "qa_passed"
+  },
+  {
+    "scene": "12",
+    "route": "capture + hyperframes",
+    "type": "case cards",
+    "candidate": "https://claude.com/blog/new-in-claude-managed-agents",
+    "processing": "captured official case section, placed screenshot with case cards",
+    "status": "qa_passed"
+  },
+  {
+    "scene": "13",
+    "route": "hyperframes",
+    "type": "kinetic typography",
+    "candidate": "generated",
+    "processing": "text replacement animation",
+    "status": "qa_passed"
+  }
+]

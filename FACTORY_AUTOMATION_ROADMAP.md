@@ -761,6 +761,10 @@ npm run factory:package -- projects/003-topic
 
 `factory:review-video` is evidence extraction plus machine checks. It must create/refresh `review/video-review/director-review.md` as `Verdict: FAIL` by default. Packaging is allowed only after a human editor or `hype-video-reviewer` inspects the frames and changes it to `Verdict: PASS` with critical findings resolved.
 
+Renderer comparison extends the same command with `--render final-hyperframes.mp4` and `--render final-remotion.mp4`. The comparison must write `review/video-review/renderer-comparison.md`; `renders/final.mp4` is the selected candidate, not a separate third interpretation.
+
+Recurring failures use a post-fix learning loop: log the issue, fix it, verify it, then run `/ce-compound` only if the prevention rule is reusable.
+
 ### `compose_project.mjs`
 
 Purpose:

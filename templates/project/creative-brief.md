@@ -12,6 +12,14 @@ Owner: `hype-showrunner` and `hype-creative-director`
 - Tone:
 - Primary content pattern:
 - Secondary pattern, if any:
+- Primary content type: explain | story | proof | reaction | tutorial | product | documentary | visual-essay
+- Secondary content types:
+- Primary visual strategy:
+- Motion grammar: technical-grid | liquid-glass | documentary-evidence | kinetic-type | cinematic-story | product-demo | data-driven | reaction-split
+- Imagegen role: primary | support | not_required
+- Evidence role: primary | support | not_required
+- Renderer targets: hyperframes | remotion | both
+- Review rubric:
 
 ## Why This Video Should Exist
 
@@ -43,6 +51,10 @@ open
 - Imagegen direction:
 - Motion personality:
 - Reference pattern used only as inspiration:
+- Scene recipe candidates:
+- Motion primitive candidates:
+- Liquid Glass use, if any:
+- Forbidden motion patterns:
 
 ## Non-Goals
 
@@ -54,3 +66,4 @@ open
 - Script approval:
 - Scene contract approval:
 - Risky asset approval, if any:
+- Renderer comparison approval:

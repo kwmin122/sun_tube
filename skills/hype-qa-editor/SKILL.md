@@ -41,6 +41,20 @@ Check:
 - captions remain readable
 - final mix exists when expected
 - no blocking render errors
+- `director-review.md` includes evidence frames and has no unresolved critical findings
+- `review/video-review/issue-log.md` has no unresolved blocker
+
+## Failure Learning
+
+If QA previously passed a result that should have failed, treat that as a production-system bug.
+
+After the fix is verified:
+
+- mark the issue as resolved in `review/video-review/issue-log.md`
+- if recurrence risk exists, run `/ce-compound`
+- promote the prevention into QA rules, a role skill, or project instructions
+
+Do not run `/ce-compound` for unresolved problems, simple typos, or one-off edits.
 
 ## Output
 

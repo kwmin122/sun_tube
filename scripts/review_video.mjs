@@ -19,7 +19,7 @@ import {
 const args = parseArgs();
 const projectArg = args._[0];
 if (!projectArg) {
-  console.error("Usage: npm run factory:review-video -- <project-path> [--force]");
+  console.error("Usage: npm run factory:review-video -- <project-path> [--render final.mp4|final-hyperframes.mp4|final-remotion.mp4] [--force]");
   process.exit(1);
 }
 
@@ -153,7 +153,18 @@ function lineQualityAudit(html) {
       issue: "floating_connector_line",
       detail: `${className} creates unanchored decorative connector lines; use card-anchored arrows, rows, tokens, or contained micro-lines instead`,
     }));
-  return { bannedClasses, issues };
+  const pathDraws = [...html.matchAll(/<path\b([^>]*)class=["'][^"']*path-draw[^"']*["'][^>]*>/g)];
+  for (const path of pathDraws) {
+    const attrs = path[1] || "";
+    if (!/data-anchor-from=/.test(attrs) || !/data-anchor-to=/.test(attrs)) {
+      issues.push({
+        issue: "unanchored_path_draw",
+        detail: "path-draw must declare data-anchor-from and data-anchor-to so route lines are tied to scene elements",
+      });
+      break;
+    }
+  }
+  return { bannedClasses, pathDrawCount: pathDraws.length, issues };
 }
 
 function captionConfigAudit(html) {
@@ -184,24 +195,46 @@ function routeTransparency(project, assets, workRows) {
   return { routes, routeCounts, assetRoutes };
 }
 
+function renderKeyFromName(name) {
+  if (name.includes("hyperframes")) return "hyperframes";
+  if (name.includes("remotion")) return "remotion";
+  return "final";
+}
+
+function rendererCompositionHtml(projectPath, key) {
+  if (key === "hyperframes") {
+    const preferred = join(projectPath, "composition-hyperframes/index.html");
+    return existsSync(preferred) ? preferred : join(projectPath, "composition/index.html");
+  }
+  if (key === "remotion") return join(projectPath, "composition-remotion/index.html");
+  return join(projectPath, "composition/index.html");
+}
+
 const { project, projectPath } = await loadProject(projectArg);
-const render = join(projectPath, "renders/final.mp4");
+const renderFile = basename(String(args.render || "final.mp4"));
+const reviewKey = renderKeyFromName(renderFile);
+const comparisonMode = Boolean(args.render);
+const suffix = comparisonMode ? `-${reviewKey}` : "";
+const render = join(projectPath, "renders", renderFile);
 const srtPath = join(projectPath, "voiceover/solo/voiceover-solo-elevenlabs.srt");
 const timedPath = join(projectPath, "timed-scene-packets.md");
 const assetPath = join(projectPath, "asset-plan.md");
-const compositionPath = join(projectPath, "composition/index.html");
+const compositionPath = rendererCompositionHtml(projectPath, reviewKey);
 const reviewDir = join(projectPath, "review/video-review");
-const framesRoot = join(reviewDir, "frames");
-const framesDir = join(reviewDir, "scene-frames");
-const suspiciousDir = join(reviewDir, "suspicious-frames");
-const contactDir = join(reviewDir, "contact-sheets");
-const contactSheet = join(reviewDir, "contact-sheet.jpg");
+const framesRoot = join(reviewDir, `frames${suffix}`);
+const framesDir = join(reviewDir, `scene-frames${suffix}`);
+const suspiciousDir = join(reviewDir, `suspicious-frames${suffix}`);
+const contactDir = join(reviewDir, `contact-sheets${suffix}`);
+const contactSheet = join(reviewDir, `contact-sheet${suffix}.jpg`);
+const reviewReport = join(reviewDir, comparisonMode ? `${reviewKey}-review.md` : "video-review.md");
+const sceneNotesPath = join(reviewDir, comparisonMode ? `scene-frame-notes-${reviewKey}.md` : "scene-frame-notes.md");
+const fixListPath = join(reviewDir, comparisonMode ? `fix-list-${reviewKey}.md` : "fix-list.md");
 
 if (!existsSync(render)) {
   console.error(`Review blocked: missing ${rel(render)}`);
   process.exit(1);
 }
-if (project.artifacts?.render !== true && !args.force) {
+if (!comparisonMode && project.artifacts?.render !== true && !args.force) {
   console.error("Review blocked: render artifact must be complete. Use --force only as an explicit override.");
   process.exit(1);
 }
@@ -219,6 +252,7 @@ await ensureDir(contactDir);
 const timed = await readText(timedPath);
 const asset = await readText(assetPath);
 const composition = await readText(compositionPath);
+const hasCompositionHtml = Boolean(composition.trim());
 const scenes = sceneRows(timed);
 const assets = dataRows(asset).filter((row) => row.Scene);
 const workMarkdowns = await Promise.all(
@@ -244,18 +278,20 @@ for (const scene of scenes) {
   }
 }
 
-const captionReport = captionAudit(captions, duration);
-const motionReport = motionAudit(scenes, assets, sectionMetrics(composition));
+const captionReport = { ...captionAudit(captions, duration), method: "srt-duration-and-cps", limitation: "does not yet include forced alignment or ASR word timestamps" };
+const motionReport = hasCompositionHtml
+  ? motionAudit(scenes, assets, sectionMetrics(composition))
+  : { rows: [], issues: [], limitations: [`HTML audit skipped for ${reviewKey}; no ${rel(compositionPath)} found`] };
 const assetReport = assetAudit(assets, workRows);
-const lineReport = lineQualityAudit(composition);
-const captionConfigReport = captionConfigAudit(composition);
+const lineReport = hasCompositionHtml ? lineQualityAudit(composition) : { bannedClasses: [], issues: [], limitations: [`Line audit skipped for ${reviewKey}; no ${rel(compositionPath)} found`] };
+const captionConfigReport = hasCompositionHtml ? captionConfigAudit(composition) : { leadSeconds: null, issues: [], limitations: [`Caption config audit skipped for ${reviewKey}; no ${rel(compositionPath)} found`] };
 const routeReport = routeTransparency(project, assets, workRows);
 const frameFailures = frameManifest.filter((frame) => !frame.ok);
 const inputIssues = [];
 if (!scenes.length) inputIssues.push({ issue: "missing_timed_scene_rows", detail: rel(timedPath) });
 if (!captions.length) inputIssues.push({ issue: "missing_srt_captions", detail: rel(srtPath) });
 if (!assets.length) inputIssues.push({ issue: "missing_asset_plan_rows", detail: rel(assetPath) });
-if (!composition.trim()) inputIssues.push({ issue: "missing_composition_html", detail: rel(compositionPath) });
+if (!hasCompositionHtml && reviewKey !== "remotion") inputIssues.push({ issue: "missing_composition_html", detail: rel(compositionPath) });
 const blockers = [
   ...inputIssues,
   ...lineReport.issues,
@@ -274,13 +310,13 @@ for (const issue of blockers.slice(0, 12)) {
   if (row) extractFrame(render, (row.range.start + row.range.end) / 2, target, "1280:-1");
 }
 
-await writeJson(join(reviewDir, "frame-manifest.json"), { contactSheet: rel(contactSheet), contactSheetOk: contact.status === 0, frames: frameManifest });
-await writeJson(join(reviewDir, "caption-sync-report.json"), captionReport);
-await writeJson(join(reviewDir, "caption-config-report.json"), captionConfigReport);
-await writeJson(join(reviewDir, "motion-density-report.json"), motionReport);
-await writeJson(join(reviewDir, "asset-presence-report.json"), assetReport);
-await writeJson(join(reviewDir, "line-quality-report.json"), lineReport);
-await writeJson(join(reviewDir, "route-transparency-report.json"), routeReport);
+await writeJson(join(reviewDir, `frame-manifest${suffix}.json`), { renderer: reviewKey, render: rel(render), contactSheet: rel(contactSheet), contactSheetOk: contact.status === 0, frames: frameManifest });
+await writeJson(join(reviewDir, `caption-sync-report${suffix}.json`), captionReport);
+await writeJson(join(reviewDir, `caption-config-report${suffix}.json`), captionConfigReport);
+await writeJson(join(reviewDir, `motion-density-report${suffix}.json`), motionReport);
+await writeJson(join(reviewDir, `asset-presence-report${suffix}.json`), assetReport);
+await writeJson(join(reviewDir, `line-quality-report${suffix}.json`), lineReport);
+await writeJson(join(reviewDir, `route-transparency-report${suffix}.json`), routeReport);
 
 const verdict = blockers.length ? "FAIL" : "PASS";
 const sceneFindings = blockers.length
@@ -297,7 +333,7 @@ const sceneFrameNotes = scenes.length
     }).join("\n")
   : "| - | - | - | - | - | - |";
 
-await writeText(join(reviewDir, "scene-frame-notes.md"), [
+await writeText(sceneNotesPath, [
   "# Scene Frame Notes",
   "",
   "프레임을 직접 보고 디렉터 리뷰를 작성하기 위한 작업지입니다.",
@@ -312,56 +348,70 @@ await writeText(join(reviewDir, "scene-frame-notes.md"), [
   "",
 ].join("\n"));
 
-await writeText(join(reviewDir, "director-review.md"), [
-  "# Director Review",
-  "",
-  "Verdict: FAIL",
-  "",
-  "> `factory:review-video` only extracts evidence and runs machine checks. A human or `hype-video-reviewer` must inspect the frames and change this to `Verdict: PASS` only after the rendered video works as a YouTube/motion piece.",
-  "",
-  "## Evidence To Inspect",
-  "",
-  `- Contact sheet: \`${rel(contactSheet)}\``,
-  `- Scene frames: \`${rel(framesDir)}\``,
-  `- Scene notes: \`${rel(join(reviewDir, "scene-frame-notes.md"))}\``,
-  `- Machine review: \`${rel(join(reviewDir, "video-review.md"))}\``,
-  "",
-  "## Critical Findings",
-  "",
-  "| Severity | Scene | Issue | Evidence Frame | Required Fix | Resolved |",
-  "|---|---|---|---|---|---|",
-  blockers.length
-    ? blockers.map((issue) => `| Critical | ${issue.scene || "-"} | ${issue.issue} | ${String(issue.detail || "").replaceAll("|", "/")} | Fix before package | no |`).join("\n")
-    : "| Critical | all | Director review not completed yet | contact sheet + scene frames | Inspect frames and confirm captions, rhythm, motion, assets, and empty-feel | no |",
-  "",
-  "## Review Axes",
-  "",
-  "- Scene Intent: 화면이 지금 말하는 내용을 이해시키는가.",
-  "- Visual Thesis: 한눈에 보이는 핵심 구조가 있는가.",
-  "- Motion Purpose: 움직임이 설명을 돕는가.",
-  "- Motion Variety: 같은 카드/페이드 반복이 아닌가.",
-  "- Asset Fit: capture/imagegen/HTML/interview가 적절한 역할로 쓰였는가.",
-  "- Empty Feel: 채웠지만 비어 보이는 장면은 없는가.",
-  "- YouTube Rhythm: 5-10초마다 볼 이유가 생기는가.",
-  "- Caption Sync: 말과 자막이 맞고 중요한 화면을 가리지 않는가.",
-  "",
-  "## Scene Notes",
-  "",
-  "| Scene | Intent | Visual Thesis | Motion Purpose | Caption/Asset Fit | Decision |",
-  "|---|---|---|---|---|---|",
-  scenes.length ? scenes.map((scene) => `| ${scene.id} |  |  |  |  | review |`).join("\n") : "| - |  |  |  |  | review |",
-  "",
-].join("\n"));
+if (!comparisonMode) {
+  await writeText(join(reviewDir, "director-review.md"), [
+    "# Director Review",
+    "",
+    "Verdict: FAIL",
+    "",
+    "> `factory:review-video` only extracts evidence and runs machine checks. A human or `hype-video-reviewer` must inspect the frames and change this to `Verdict: PASS` only after the rendered video works as a YouTube/motion piece.",
+    "",
+    "## Evidence To Inspect",
+    "",
+    `- Contact sheet: \`${rel(contactSheet)}\``,
+    `- Scene frames: \`${rel(framesDir)}\``,
+    `- Scene notes: \`${rel(sceneNotesPath)}\``,
+    `- Machine review: \`${rel(reviewReport)}\``,
+    "- Renderer comparison: `review/video-review/renderer-comparison.md`",
+    "",
+    "## Critical Findings",
+    "",
+    "| Severity | Scene | Issue | Evidence Frame | Required Fix | Resolved |",
+    "|---|---|---|---|---|---|",
+    blockers.length
+      ? blockers.map((issue) => `| Critical | ${issue.scene || "-"} | ${issue.issue} | ${String(issue.detail || "").replaceAll("|", "/")} | Fix before package | no |`).join("\n")
+      : "| Critical | all | Director review not completed yet | contact sheet + scene frames | Inspect frames and confirm captions, rhythm, motion, assets, and empty-feel | no |",
+    "",
+    "## Renderer Decision",
+    "",
+    "- Selected renderer:",
+    "- Hyperframes evidence:",
+    "- Remotion evidence or blocker:",
+    "- Why selected:",
+    "",
+    "## Review Axes",
+    "",
+    "- Scene Intent: 화면이 지금 말하는 내용을 이해시키는가.",
+    "- Visual Thesis: 한눈에 보이는 핵심 구조가 있는가.",
+    "- Motion Purpose: 움직임이 설명을 돕는가.",
+    "- Motion Variety: 같은 카드/페이드 반복이 아닌가.",
+    "- Asset Fit: capture/imagegen/HTML/interview가 적절한 역할로 쓰였는가.",
+    "- Empty Feel: 채웠지만 비어 보이는 장면은 없는가.",
+    "- YouTube Rhythm: 5-10초마다 볼 이유가 생기는가.",
+    "- Caption Sync: 말과 자막이 맞고 중요한 화면을 가리지 않는가.",
+    "- Renderer Fit: 선택된 렌더러가 motion purpose, caption sync, static gap, scene uniqueness, and line quality 기준에서 더 나은가.",
+    "",
+    "## Scene Notes",
+    "",
+    "| Scene | Intent | Evidence Frame | Visual Thesis | Motion Purpose | Caption/Asset Fit | Decision |",
+    "|---|---|---|---|---|---|---|",
+    scenes.length ? scenes.map((scene) => `| ${scene.id} |  |  |  |  |  | review |`).join("\n") : "| - |  |  |  |  |  | review |",
+    "",
+  ].join("\n"));
+}
 
-await writeText(join(reviewDir, "fix-list.md"), [
+await writeText(fixListPath, [
   "# Video Review Fix List",
   "",
   blockers.length ? blockers.map((issue) => `- Scene ${issue.scene || "-"}: ${issue.issue} - ${issue.detail || ""}`).join("\n") : "- No blocking fixes.",
   "",
 ].join("\n"));
 
-await writeText(join(reviewDir, "video-review.md"), [
+await writeText(reviewReport, [
   "# Video Review",
+  "",
+  `Renderer: ${reviewKey}`,
+  `Render: \`${rel(render)}\``,
   "",
   "## Machine Verdict",
   verdict,
@@ -384,8 +434,10 @@ await writeText(join(reviewDir, "video-review.md"), [
   "",
   `- Cues: ${captionReport.cueCount}`,
   `- Issues: ${captionReport.issues.length}`,
+  `- Method: ${captionReport.method}`,
   `- Caption lead: ${captionConfigReport.leadSeconds ?? "missing"}s`,
   `- Caption config issues: ${captionConfigReport.issues.length}`,
+  captionReport.limitation ? `- Limitation: ${captionReport.limitation}` : "",
   "",
   "## Motion Variety",
   "",
@@ -399,6 +451,7 @@ await writeText(join(reviewDir, "video-review.md"), [
   "## Line Quality",
   "",
   `- Floating connector issues: ${lineReport.issues.length}`,
+  lineReport.limitations?.length ? `- Limitation: ${lineReport.limitations.join("; ")}` : "",
   "",
   "## Route Transparency",
   "",
@@ -413,17 +466,19 @@ await writeText(join(reviewDir, "video-review.md"), [
   "",
 ].join("\n"));
 
-project.artifacts.videoReview = verdict === "PASS";
-project.artifacts.directorReview = false;
-if (verdict === "PASS") {
-  project.status = "video_review";
-  project.currentGate = "video_review";
-} else {
-  project.status = "blocked";
-  project.currentGate = "blocked";
+if (!comparisonMode) {
+  project.artifacts.videoReview = verdict === "PASS";
+  project.artifacts.directorReview = false;
+  if (verdict === "PASS") {
+    project.status = "video_review";
+    project.currentGate = "video_review";
+  } else {
+    project.status = "blocked";
+    project.currentGate = "blocked";
+  }
 }
 await saveProject(projectPath, project);
 
-console.log(`Wrote: ${rel(join(reviewDir, "video-review.md"))}`);
+console.log(`Wrote: ${rel(reviewReport)}`);
 console.log(`Result: ${verdict}`);
 process.exit(verdict === "PASS" ? 0 : 1);

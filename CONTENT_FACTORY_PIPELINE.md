@@ -103,8 +103,13 @@ projects/{NNN-slug}/
 | 9. Tool Routing + Production | routed assets + composition | Every scene has a primary route before asset, visual, motion, and audio work starts. |
 | 10. Pre-render Verification | snapshots | Captions do not collide, dense frames are readable, and route work is complete before render. |
 | 11. Video Review | `review/video-review/video-review.md` + `director-review.md` | Rendered frames and contact sheet are generated, then the editor/director explicitly approves scene intent, motion purpose, rhythm, captions, assets, and empty-feel. |
+| 11b. Renderer Comparison, if used | `hyperframes-review.md`, `remotion-review.md`, `renderer-comparison.md` | Both renderer candidates use the same scene contract. The selected renderer is copied to `renders/final.mp4`; blocked renderers are recorded, not hidden. |
 | 12. Final QA | MP4 probe | Final render has valid audio/video streams and duration after machine video review and director review both pass. |
 | 13. Packaging | title/thumbnail/description direction | Upload package direction matches the approved video. |
+
+## Post-Failure Learning
+
+When a quality or gate failure recurs, log it in `review/video-review/issue-log.md` while fixing it. After the fix is verified, run `/ce-compound` only if the prevention rule should help future projects.
 
 ## Asset Roles
 

@@ -24,11 +24,11 @@ Tool routes come from `../../TOOL_ROUTING_PIPELINE.md`.
 
 ## Timing Table
 
-| Scene | Time Range | SRT Lines | Tool Route | Caption Behavior | Primary Asset | Motion Beat | Audio/SFX | Snapshot Time | Status |
-|---|---|---|---|---|---|---|---|---|---|
-| 01 | | | hyperframes | bottom safe-zone caption, 0.9s lead | | | | | planned |
-| 02 | | | capture | bottom safe-zone caption, 0.9s lead | | | | | planned |
-| 03 | | | video-use | bottom safe-zone caption, 0.9s lead | | | | | planned |
+| Scene | Time Range | SRT Lines | Tool Route | Renderer Targets | Scene Recipe | Narration Verb | Motion Purpose | Caption Behavior | Primary Asset | Motion Beat | Review Check | Audio/SFX | Snapshot Time | Status |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 01 | | | hyperframes | hyperframes | | | | bottom safe-zone caption, 0.9s lead | | | | | | planned |
+| 02 | | | capture + hyperframes | both | | | | bottom safe-zone caption, 0.9s lead | | | | | | planned |
+| 03 | | | video-use | hyperframes | | | | bottom safe-zone caption, 0.9s lead | | | | | | planned |
 
 ## Scene Details
 
@@ -39,10 +39,15 @@ Tool routes come from `../../TOOL_ROUTING_PIPELINE.md`.
 - Narration:
 - On-screen phrase:
 - Tool route:
+- Renderer targets:
+- Scene recipe:
+- Narration verb:
+- Motion purpose:
 - Caption safe zone:
 - Primary asset:
 - Asset timing:
 - Motion timing:
+- Review check:
 - Audio/SFX:
 - Snapshot frame:
 - Handoff notes:
@@ -54,10 +59,15 @@ Tool routes come from `../../TOOL_ROUTING_PIPELINE.md`.
 - Narration:
 - On-screen phrase:
 - Tool route:
+- Renderer targets:
+- Scene recipe:
+- Narration verb:
+- Motion purpose:
 - Caption safe zone:
 - Primary asset:
 - Asset timing:
 - Motion timing:
+- Review check:
 - Audio/SFX:
 - Snapshot frame:
 - Handoff notes:

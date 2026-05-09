@@ -12,6 +12,10 @@ This MVP asset plan is not a rights, privacy, citation, or quote-accuracy review
 
 - Primary pattern:
 - Secondary pattern, if any:
+- Primary content type:
+- Secondary content types:
+- Primary visual strategy:
+- Renderer targets:
 - Why this pattern fits the topic:
 - Reference patterns used only as inspiration:
 - Research pack: `research-pack.md`
@@ -40,11 +44,11 @@ Status values:
 - `qa_passed`: pre-render QA has confirmed the row and matching work order.
 - `blocked`: input, implementation, or QA problem must be resolved first.
 
-| Scene | Time | Pattern Role | Tool Route | Visual Density | Motion Layer | Imagegen Role | Narration Beat | Asset Type | Link / File / Candidate | Speaker / Role | Timestamp | Processing Needed | Status |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 01 | | claim/proof/context | capture | standard | screenshot highlight | not_required | | proof screenshot | | | | crop, highlight | planned |
-| 02 | | diagram/demo/data | hyperframes | rich | path draw, row reveal | support | | diagram | | | | HTML/SVG build | planned |
-| 03 | | quote/context | video-use | standard | clip trim, subtitle | not_required | | interview clip | | | | trim, subtitle, crop | planned |
+| Scene | Time | Pattern Role | Scene Recipe | Tool Route | Primary Visual | Support Visual | Visual Density | Motion Layer | Imagegen Role | Evidence Needed | Narration Beat | Asset Type | Link / File / Candidate | Speaker / Role | Timestamp | Processing Needed | Implementation Status | Status |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 01 | | claim/proof/context | | capture | proof screenshot | HTML highlight | standard | screenshot highlight | not_required | yes | | proof screenshot | | | | crop, highlight | planned | planned |
+| 02 | | diagram/demo/data | | hyperframes | diagram | texture/styleframe | rich | path draw, row reveal | support | no | | diagram | | | | HTML/SVG build | planned | planned |
+| 03 | | quote/context | | video-use | interview clip | lower third | standard | clip trim, subtitle | not_required | no | | interview clip | | | | trim, subtitle, crop | planned | planned |
 
 ## Material Rules
 

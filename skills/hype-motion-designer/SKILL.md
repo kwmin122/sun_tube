@@ -45,6 +45,17 @@ Use this before pre-render QA:
 - Classify imagegen per scene as `primary`, `support`, or `not_required`. Use `primary` when a generated image carries the explanation/emotion/metaphor; use `support` for mood/styleframe/background/thumbnail; use `not_required` when capture, interview, data, or HTML/SVG explains the scene better.
 - Do not use full-width decorative connector SVGs that float across the canvas or pass over card titles. Lines must be anchored to concrete nodes, clipped inside their container, or replaced with short arrows/tokens.
 
+## Renderer Comparison
+
+If both `composition-hyperframes/` and `composition-remotion/` exist, both must implement the same scene recipe and narration verb. Do not create renderer-specific meanings.
+
+Quality rules:
+
+- Use anchored paths or lane/rail flow; never let route lines cross text or float through cards.
+- Use Liquid Glass only as focus, state, or transition layer, not as a global card style.
+- Prefer scene-local timelines or frame-local control over one global animation blob.
+- Leave metadata or DOM markers that `factory:review-video` can inspect.
+
 ## Motion Primitives
 
 Prefer small, inspectable primitives that can be reused across scenes:

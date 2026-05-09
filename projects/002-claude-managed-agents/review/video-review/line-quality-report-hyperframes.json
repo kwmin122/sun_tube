@@ -1,0 +1,15 @@
+{
+  "bannedClasses": [
+    "route-svg",
+    "event-route-svg",
+    "pipeline-svg",
+    "network-lines"
+  ],
+  "pathDrawCount": 18,
+  "issues": [
+    {
+      "issue": "unanchored_path_draw",
+      "detail": "path-draw must declare data-anchor-from and data-anchor-to so route lines are tied to scene elements"
+    }
+  ]
+}

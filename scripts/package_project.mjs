@@ -1,3 +1,5 @@
+import { copyFileSync, existsSync } from "node:fs";
+import { homedir } from "node:os";
 import { join } from "node:path";
 import {
   ensureDir,
@@ -24,10 +26,25 @@ if ((project.currentGate !== "package" || project.artifacts?.render !== true || 
 }
 const outDir = join(projectPath, "package");
 await ensureDir(outDir);
+const downloadsDir = join(homedir(), "Downloads");
+await ensureDir(downloadsDir);
 
 const plan = await readText(join(projectPath, "plan.md"));
 const script = extractVoiceoverScript(plan);
 const title = project.title;
+const renderCopies = [
+  ["renders/final.mp4", `${project.slug}-final.mp4`],
+  ["renders/final-hyperframes.mp4", `${project.slug}-hyperframes.mp4`],
+  ["renders/final-remotion.mp4", `${project.slug}-remotion.mp4`],
+];
+const copied = [];
+for (const [srcRel, destName] of renderCopies) {
+  const src = join(projectPath, srcRel);
+  if (!existsSync(src)) continue;
+  const dest = join(downloadsDir, destName);
+  copyFileSync(src, dest);
+  copied.push({ src: srcRel, dest });
+}
 
 await writeText(join(outDir, "title-options.md"), [
   "# Title Options",
@@ -46,7 +63,14 @@ await writeText(join(outDir, "description.md"), [
   "## Video",
   "",
   "- Render: `renders/final.mp4`",
+  "- Hyperframes comparison: `renders/final-hyperframes.mp4` when available",
+  "- Remotion comparison: `renders/final-remotion.mp4` when available",
+  "- Renderer comparison: `review/video-review/renderer-comparison.md`",
   "- Script: `plan.md`",
+  "",
+  "## Downloads",
+  "",
+  copied.length ? copied.map((item) => `- ${item.src} -> ${item.dest}`).join("\n") : "- No render files copied.",
   "",
 ].join("\n"));
 
@@ -73,6 +97,8 @@ await writeText(join(outDir, "upload-checklist.md"), [
   "- [ ] Director review passed",
   "- [ ] Final QA passed",
   "- [ ] `renders/final.mp4` exists",
+  "- [ ] `review/video-review/renderer-comparison.md` exists",
+  "- [ ] Available comparison renders copied to Downloads",
   "- [ ] Title selected",
   "- [ ] Thumbnail selected",
   "- [ ] Description reviewed",

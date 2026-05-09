@@ -168,6 +168,18 @@ function directorVerdict(markdown) {
   return section ? section[1].trim().toUpperCase() : "";
 }
 
+function selectedRenderer(markdown) {
+  const direct = markdown.match(/Selected renderer:\s*\**([a-z_-]+)/i);
+  if (direct) return direct[1].toLowerCase();
+  const tableRowsFound = tableRows(markdown).flatMap((table) => table.rows);
+  const selected = tableRowsFound.find((row) => /selected|winner|final/i.test(clean(row.Status || row.Decision || row.Result || "")));
+  return clean(selected?.Renderer || selected?.render || "").toLowerCase();
+}
+
+function comparisonHasRemotionBlocked(markdown) {
+  return /remotion\s*\|\s*blocked/i.test(markdown) || /Remotion blocked/i.test(markdown);
+}
+
 function unresolvedCriticalFindings(markdown) {
   const rows = tableRows(markdown).flatMap((table) => table.rows);
   const unresolved = [];
@@ -181,6 +193,16 @@ function unresolvedCriticalFindings(markdown) {
     .split(/\r?\n/)
     .filter((line) => /-\s+\[\s\]/.test(line) && /\b(critical|blocker)\b/i.test(line));
   return [...unresolved, ...uncheckedCritical.map((line) => ({ Issue: line }))];
+}
+
+function machineVerdict(markdown) {
+  const match = markdown.match(/^## Machine Verdict\s*\n+([A-Z]+)/im);
+  return match ? match[1].toUpperCase() : "";
+}
+
+function hyperframesCompositionPath(projectPath) {
+  const preferred = join(projectPath, "composition-hyperframes");
+  return existsSync(join(preferred, "package.json")) ? preferred : join(projectPath, "composition");
 }
 
 async function readWorkOrders(projectPath) {
@@ -211,7 +233,7 @@ if (stage === "pre-render") {
   const mix = join(projectPath, "voiceover/solo/voiceover-solo-final-mix.m4a");
   const timed = await readText(join(projectPath, "timed-scene-packets.md"));
   const asset = await readText(join(projectPath, "asset-plan.md"));
-  const composition = join(projectPath, "composition");
+  const composition = hyperframesCompositionPath(projectPath);
   const snapshots = join(composition, "snapshots");
   const compositionHtmlPath = join(composition, "index.html");
   const compositionHtml = await readText(compositionHtmlPath, "");
@@ -294,13 +316,35 @@ if (stage === "pre-render") {
 
 if (stage === "final") {
   const render = join(projectPath, "renders/final.mp4");
+  const hyperframesRender = join(projectPath, "renders/final-hyperframes.mp4");
+  const remotionRender = join(projectPath, "renders/final-remotion.mp4");
   const videoReview = join(projectPath, "review/video-review/video-review.md");
+  const hyperframesReview = join(projectPath, "review/video-review/hyperframes-review.md");
+  const remotionReview = join(projectPath, "review/video-review/remotion-review.md");
+  const rendererComparison = join(projectPath, "review/video-review/renderer-comparison.md");
   const directorReview = join(projectPath, "review/video-review/director-review.md");
   const directorText = await readText(directorReview, "");
+  const comparisonText = await readText(rendererComparison, "");
+  const hyperframesReviewText = await readText(hyperframesReview, "");
+  const remotionReviewText = await readText(remotionReview, "");
   const criticalOpen = unresolvedCriticalFindings(directorText);
   const verdict = directorVerdict(directorText);
-  add(checks, project.artifacts?.videoReview === true, "video review complete", "factory:review-video must pass before final QA");
-  add(checks, existsSync(videoReview), "video review report exists", rel(videoReview));
+  const selected = selectedRenderer(`${directorText}\n${comparisonText}`);
+  const remotionBlocked = comparisonHasRemotionBlocked(comparisonText);
+  add(checks, project.artifacts?.videoReview === true || existsSync(hyperframesReview) || existsSync(videoReview), "video review evidence exists", "factory:review-video must create frame evidence before final QA");
+  add(checks, existsSync(videoReview) || existsSync(hyperframesReview), "video review report exists", existsSync(videoReview) ? rel(videoReview) : rel(hyperframesReview));
+  add(checks, existsSync(rendererComparison), "renderer comparison exists", rel(rendererComparison));
+  add(checks, Boolean(selected), "selected renderer stated", selected || "missing Selected renderer");
+  add(checks, existsSync(hyperframesRender), "hyperframes render exists", rel(hyperframesRender));
+  add(checks, existsSync(remotionRender) || remotionBlocked, "remotion render or blocker recorded", existsSync(remotionRender) ? rel(remotionRender) : (remotionBlocked ? "Remotion blocked recorded" : "missing remotion render/blocker"));
+  if (existsSync(remotionRender)) add(checks, existsSync(remotionReview), "remotion review exists", rel(remotionReview));
+  add(checks, existsSync(hyperframesReview) || existsSync(videoReview), "hyperframes review exists", existsSync(hyperframesReview) ? rel(hyperframesReview) : rel(videoReview));
+  if (selected === "hyperframes") {
+    add(checks, machineVerdict(hyperframesReviewText || await readText(videoReview, "")) === "PASS", "selected hyperframes machine review PASS", machineVerdict(hyperframesReviewText || await readText(videoReview, "")) || "missing machine verdict");
+  }
+  if (selected === "remotion") {
+    add(checks, machineVerdict(remotionReviewText) === "PASS", "selected remotion machine review PASS", machineVerdict(remotionReviewText) || "missing machine verdict");
+  }
   add(checks, existsSync(directorReview), "director review exists", rel(directorReview));
   add(checks, verdict === "PASS", "director review verdict PASS", verdict || "missing Verdict: PASS");
   add(checks, criticalOpen.length === 0, "director critical findings resolved", criticalOpen.length ? `${criticalOpen.length} unresolved critical finding(s)` : "no unresolved critical findings");
@@ -312,6 +356,8 @@ if (stage === "final") {
   const result = report("final", checks);
   await writeText(join(projectPath, "review/qa-final.md"), result.markdown);
   if (result.ok) {
+    project.artifacts.render = true;
+    project.artifacts.videoReview = true;
     project.artifacts.directorReview = true;
     project.status = "final_qa";
     project.currentGate = "package";

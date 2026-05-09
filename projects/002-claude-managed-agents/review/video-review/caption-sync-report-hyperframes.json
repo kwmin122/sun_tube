@@ -1,0 +1,6 @@
+{
+  "cueCount": 133,
+  "issues": [],
+  "method": "srt-duration-and-cps",
+  "limitation": "does not yet include forced alignment or ASR word timestamps"
+}

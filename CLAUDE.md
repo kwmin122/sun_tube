@@ -21,6 +21,9 @@ Rules:
 - Research is material development, not rights/privacy/citation review.
 - TTS requires `project.json.approved.plan === true`.
 - Render requires pre-render QA unless the user explicitly passes an override.
+- Renderer comparison must use one shared scene contract. Do not let Hyperframes and Remotion invent different scene meanings.
+- `factory:review-video` is evidence generation, not final creative approval.
+- `/ce-compound` is only for fixed, verified, recurring-risk failures.
 
 Start here:
 

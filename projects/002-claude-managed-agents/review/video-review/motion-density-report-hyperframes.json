@@ -1,0 +1,161 @@
+{
+  "rows": [
+    {
+      "scene": "01",
+      "rich": false,
+      "id": "01",
+      "rows": 0,
+      "tokens": 0,
+      "paths": 0,
+      "scans": 4,
+      "sheens": 4,
+      "ticks": 4,
+      "signature": "scans+sheens+ticks"
+    },
+    {
+      "scene": "02",
+      "rich": false,
+      "id": "02",
+      "rows": 1,
+      "tokens": 4,
+      "paths": 0,
+      "scans": 1,
+      "sheens": 2,
+      "ticks": 0,
+      "signature": "rows+tokens+scans+sheens"
+    },
+    {
+      "scene": "03",
+      "rich": false,
+      "id": "03",
+      "rows": 5,
+      "tokens": 0,
+      "paths": 0,
+      "scans": 0,
+      "sheens": 0,
+      "ticks": 0,
+      "signature": "rows"
+    },
+    {
+      "scene": "04",
+      "rich": true,
+      "id": "04",
+      "rows": 3,
+      "tokens": 4,
+      "paths": 0,
+      "scans": 1,
+      "sheens": 4,
+      "ticks": 3,
+      "signature": "rows+tokens+scans+sheens+ticks"
+    },
+    {
+      "scene": "05",
+      "rich": false,
+      "id": "05",
+      "rows": 3,
+      "tokens": 4,
+      "paths": 0,
+      "scans": 3,
+      "sheens": 3,
+      "ticks": 1,
+      "signature": "rows+tokens+scans+sheens+ticks"
+    },
+    {
+      "scene": "06",
+      "rich": true,
+      "id": "06",
+      "rows": 7,
+      "tokens": 0,
+      "paths": 4,
+      "scans": 0,
+      "sheens": 2,
+      "ticks": 3,
+      "signature": "rows+paths+sheens+ticks"
+    },
+    {
+      "scene": "07",
+      "rich": true,
+      "id": "07",
+      "rows": 4,
+      "tokens": 4,
+      "paths": 4,
+      "scans": 5,
+      "sheens": 5,
+      "ticks": 0,
+      "signature": "rows+tokens+paths+scans+sheens"
+    },
+    {
+      "scene": "08",
+      "rich": true,
+      "id": "08",
+      "rows": 10,
+      "tokens": 16,
+      "paths": 0,
+      "scans": 6,
+      "sheens": 6,
+      "ticks": 0,
+      "signature": "rows+tokens+scans+sheens"
+    },
+    {
+      "scene": "09",
+      "rich": true,
+      "id": "09",
+      "rows": 3,
+      "tokens": 0,
+      "paths": 2,
+      "scans": 3,
+      "sheens": 3,
+      "ticks": 0,
+      "signature": "rows+paths+scans+sheens"
+    },
+    {
+      "scene": "10",
+      "rich": true,
+      "id": "10",
+      "rows": 3,
+      "tokens": 0,
+      "paths": 0,
+      "scans": 3,
+      "sheens": 3,
+      "ticks": 3,
+      "signature": "rows+scans+sheens+ticks"
+    },
+    {
+      "scene": "11",
+      "rich": false,
+      "id": "11",
+      "rows": 0,
+      "tokens": 0,
+      "paths": 4,
+      "scans": 0,
+      "sheens": 1,
+      "ticks": 4,
+      "signature": "paths+sheens+ticks"
+    },
+    {
+      "scene": "12",
+      "rich": false,
+      "id": "12",
+      "rows": 4,
+      "tokens": 0,
+      "paths": 0,
+      "scans": 0,
+      "sheens": 0,
+      "ticks": 0,
+      "signature": "rows"
+    },
+    {
+      "scene": "13",
+      "rich": false,
+      "id": "13",
+      "rows": 1,
+      "tokens": 4,
+      "paths": 4,
+      "scans": 1,
+      "sheens": 1,
+      "ticks": 0,
+      "signature": "rows+tokens+paths+scans+sheens"
+    }
+  ],
+  "issues": []
+}

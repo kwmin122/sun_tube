@@ -90,3 +90,15 @@ Write under `review/video-review/`:
 - `contact-sheet.jpg`
 
 `video-review.md` and `director-review.md` must both pass before final QA and packaging. This role does not review source rights, privacy, or copyright risk.
+
+## Renderer Comparison Review
+
+When both Hyperframes and Remotion candidates exist:
+
+- inspect `contact-sheet-hyperframes.jpg` and `contact-sheet-remotion.jpg`
+- compare `hyperframes-review.md` and `remotion-review.md`
+- write `renderer-comparison.md`
+- select exactly one renderer for `renders/final.mp4`
+- record any blocked renderer honestly
+
+Never give PASS just because a render exists. PASS requires evidence frames and no unresolved critical findings.

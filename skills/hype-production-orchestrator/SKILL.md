@@ -44,6 +44,7 @@ During production, ensure every scene has a route: `hyperframes`, `video-use`, `
 - Do not render before snapshot/pre-render QA.
 - Do not run final QA before `factory:review-video` passes.
 - Do not package before final QA.
+- Do not treat a solved recurring failure as finished until the prevention path is recorded. Use `review/video-review/issue-log.md` during production and run `/ce-compound` after the fix is verified when recurrence risk exists.
 
 ## MVP Boundary
 

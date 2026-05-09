@@ -90,6 +90,21 @@ npm run factory:qa -- <project-path> -- --stage final
 npm run factory:package -- <project-path>
 ```
 
+Renderer comparison projects may also run:
+
+```bash
+npm run factory:render -- <project-path> -- --renderer hyperframes
+npm run factory:render -- <project-path> -- --renderer remotion
+npm run factory:review-video -- <project-path> -- --render final-hyperframes.mp4
+npm run factory:review-video -- <project-path> -- --render final-remotion.mp4
+```
+
+`factory:review-video` generates evidence; it is not the final aesthetic judge. `review/video-review/director-review.md` and `renderer-comparison.md` must select the final renderer before final QA/package.
+
+If a recurring factory mistake is fixed and verified, document the prevention with `/ce-compound`. Do not run `/ce-compound` for unresolved problems or one-off typos.
+
+Rendered MP4s, contact sheets, scene frames, snapshots, and downloaded/generated media are local delivery artifacts. They are intentionally ignored for GitHub size control. The canonical handoff location for finished videos is `~/Downloads`, and project review Markdown/JSON records the local evidence paths.
+
 `factory:route` is blocked until `project.json.artifacts.timedScenePackets` and `project.json.artifacts.assetPlan` are both `true`. Placeholder template rows must not become executable work orders.
 
 ## TTS Standard

@@ -27,6 +27,18 @@ Create or update `design-context.md` with:
 - forbidden styles
 - scene visual notes
 
+## Renderer-Aware Direction
+
+When a project targets both Hyperframes and Remotion, define the visual logic once at the scene level. Do not let each renderer invent a different scene interpretation.
+
+Classify imagegen per scene:
+
+- `primary`: generated image carries the scene's explanation, emotion, or metaphor
+- `support`: mood, texture, transition, opening, or thumbnail layer
+- `not_required`: capture, interview, data, or HTML/SVG/Remotion diagram is clearer
+
+The design context should name the scene recipe, primary route, motion grammar, and review risk before implementation starts.
+
 ## Rules
 
 - Design for the approved angle.

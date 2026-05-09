@@ -13,11 +13,11 @@ Purpose: define what each scene must do, what material direction it needs, and w
 
 ## Scene Table
 
-| Scene | Estimated Duration | Pattern Role | Likely Tool Route | Scene Purpose | Material Direction | Expected Visual | Writer Guidance |
-|---|---:|---|---|---|---|---|---|
-| 01 | | hook | hyperframes | | | | |
-| 02 | | context | capture | | | | |
-| 03 | | diagram/demo/proof | hyperframes/video-use | | | | |
+| Scene | Estimated Duration | Scene Role | Scene Content Type | Scene Recipe | Primary Visual Route | Secondary Visual Route | Motion Grammar | Imagegen Role | Scene Purpose | Material Direction | Expected Visual | Review Risk | Writer Guidance |
+|---|---:|---|---|---|---|---|---|---|---|---|---|---|---|
+| 01 | | hook | visual-essay | | hyperframes | imagegen | kinetic-type | support | | | | | |
+| 02 | | mechanism | explain | | hyperframes | capture | technical-grid | not_required | | | | | |
+| 03 | | proof | proof | | capture | hyperframes | documentary-evidence | not_required | | | | | |
 
 ## Scene Details
 
@@ -26,9 +26,18 @@ Purpose: define what each scene must do, what material direction it needs, and w
 - Purpose:
 - Viewer should understand:
 - Pattern role:
+- Scene content type:
+- Scene recipe:
 - Likely tool route:
+- Primary visual route:
+- Secondary visual route:
+- Motion grammar:
+- Imagegen role:
 - Material direction:
 - Visual idea:
+- Narration verb:
+- Motion purpose:
+- Review risk:
 - Motion idea:
 - Writer guidance:
 
@@ -37,9 +46,18 @@ Purpose: define what each scene must do, what material direction it needs, and w
 - Purpose:
 - Viewer should understand:
 - Pattern role:
+- Scene content type:
+- Scene recipe:
 - Likely tool route:
+- Primary visual route:
+- Secondary visual route:
+- Motion grammar:
+- Imagegen role:
 - Material direction:
 - Visual idea:
+- Narration verb:
+- Motion purpose:
+- Review risk:
 - Motion idea:
 - Writer guidance:
 

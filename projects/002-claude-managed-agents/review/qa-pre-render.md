@@ -30,4 +30,4 @@ Result: PASS
 | captured assets used in composition | PASS | all captured screenshots referenced |
 | Hyperframes check | PASS | npm run check passed |
 | scene snapshots refreshed | PASS | 6.7s, 17.9s, 36.6s, 65.2s, 97.7s, 125.9s, 155.9s, 186.7s, 211.4s, 236.7s, 261.4s, 293.1s |
-| dense snapshots exist | PASS | 32 png files in projects/002-claude-managed-agents/composition/snapshots |
+| dense snapshots exist | PASS | 32 png files in projects/002-claude-managed-agents/composition-hyperframes/snapshots |

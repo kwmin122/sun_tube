@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Managed Agents</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #08090b;
+      color: #f7f3ea;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow: hidden;
+    }
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(135deg, #090a0d 0%, #14100d 46%, #090a0d 100%);
+      background-size: 80px 80px, 80px 80px, 100% 100%;
+    }
+    .clip { position: absolute; }
+    .scene {
+      inset: 0;
+      padding: 84px 100px 170px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 38px;
+    }
+    .scene-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 48px;
+      min-height: 126px;
+    }
+    .eyebrow {
+      color: #f4a261;
+      font-size: 28px;
+      font-weight: 780;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin: 0; letter-spacing: 0; }
+    h1 {
+      max-width: 1260px;
+      font-size: 86px;
+      line-height: 0.98;
+      font-weight: 820;
+    }
+    h2 {
+      max-width: 1180px;
+      font-size: 70px;
+      line-height: 1.02;
+      font-weight: 820;
+    }
+    h3 {
+      font-size: 32px;
+      line-height: 1.15;
+      font-weight: 800;
+    }
+    .scene-no {
+      min-width: 150px;
+      text-align: right;
+      color: rgba(247,243,234,0.42);
+      font-size: 30px;
+      font-weight: 760;
+    }
+    .stage {
+      position: relative;
+      display: grid;
+      gap: 28px;
+      min-height: 0;
+    }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .card, .panel, .metric, .case-card {
+      border: 1px solid rgba(247,243,234,0.16);
+      background: rgba(18,18,18,0.74);
+      border-radius: 8px;
+      box-shadow: 0 26px 70px rgba(0,0,0,0.34);
+    }
+    .card {
+      padding: 34px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 22px;
+    }
+    .panel {
+      padding: 34px;
+      min-height: 260px;
+    }
+    .card p, .panel p, .case-card p {
+      color: rgba(247,243,234,0.76);
+      font-size: 28px;
+      line-height: 1.28;
+      font-weight: 610;
+    }
+    .glass-panel {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(247,243,234,0.18);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.09), rgba(255,255,255,0.025)),
+        rgba(17,19,18,0.72);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 28px 80px rgba(0,0,0,0.36);
+      backdrop-filter: blur(18px) saturate(1.12);
+    }
+    .liquid-sheen {
+      position: absolute;
+      inset: -35% auto -35% -45%;
+      width: 42%;
+      transform: skewX(-16deg);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      opacity: 0.42;
+      pointer-events: none;
+    }
+    .info-row {
+      display: grid;
+      grid-template-columns: 128px 1fr;
+      gap: 16px;
+      align-items: center;
+      min-height: 54px;
+      padding: 12px 16px;
+      border-radius: 7px;
+      background: rgba(247,243,234,0.075);
+      border: 1px solid rgba(247,243,234,0.08);
+      color: rgba(247,243,234,0.88);
+      font-size: 22px;
+      line-height: 1.18;
+      font-weight: 690;
+    }
+    .info-row strong {
+      color: #f4a261;
+      font-size: 20px;
+      font-weight: 830;
+    }
+    .scan-fill {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 5px;
+      transform-origin: left center;
+      background: linear-gradient(90deg, #f4a261, #2a9d8f, #e9c46a);
+      box-shadow: 0 0 22px rgba(42,157,143,0.42);
+    }
+    .flow-token {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 72px;
+      height: 34px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(42,157,143,0.18);
+      border: 1px solid rgba(42,157,143,0.42);
+      color: #dff7ee;
+      font-size: 18px;
+      font-weight: 820;
+      box-shadow: 0 0 22px rgba(42,157,143,0.18);
+    }
+    .route-pulse {
+      transform-origin: left center;
+      background: linear-gradient(90deg, rgba(244,162,97,0.95), rgba(42,157,143,0.95));
+      box-shadow: 0 0 24px rgba(244,162,97,0.34);
+    }
+    .metric-tick {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 7px;
+      background: rgba(233,196,106,0.12);
+      border: 1px solid rgba(233,196,106,0.22);
+      color: rgba(247,243,234,0.9);
+      font-size: 20px;
+      font-weight: 760;
+    }
+    .metric-tick:before {
+      content: "";
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      background: #e9c46a;
+      box-shadow: 0 0 18px rgba(233,196,106,0.45);
+    }
+    .signal-list {
+      display: grid;
+      gap: 12px;
+      margin-top: auto;
+    }
+    .signal-list span {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 6px;
+      background: rgba(247,243,234,0.07);
+      color: rgba(247,243,234,0.86);
+      font-size: 22px;
+      line-height: 1.14;
+      font-weight: 720;
+    }
+    .mini-rail {
+      height: 8px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #f4a261 0 45%, rgba(42,157,143,0.82) 45% 78%, rgba(233,196,106,0.84) 78% 100%);
+      opacity: 0.9;
+    }
+    .tag {
+      width: max-content;
+      padding: 8px 14px;
+      border: 1px solid rgba(244,162,97,0.4);
+      border-radius: 999px;
+      color: #f4a261;
+      font-size: 20px;
+      font-weight: 800;
+    }
+    .source-wall {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+    .source-card-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      min-height: 0;
+    }
+    .screenshot {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.18);
+      background: #111;
+    }
+    .screenshot.source-main { min-height: 520px; }
+    .screenshot.source-side { min-height: 500px; }
+    .screenshot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      filter: saturate(0.92) contrast(1.02);
+    }
+    .screenshot .label {
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background: rgba(8,9,11,0.82);
+      color: #f7f3ea;
+      font-size: 18px;
+      font-weight: 780;
+    }
+    .source-caption {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      padding: 14px 16px;
+      border-radius: 6px;
+      background: rgba(8,9,11,0.84);
+      color: rgba(247,243,234,0.9);
+      font-size: 23px;
+      line-height: 1.18;
+      font-weight: 720;
+    }
+    .dream-shot img { object-position: center 34%; }
+    .case-shot img { object-position: center 78%; }
+    .feature-card-stack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .feature-card {
+      padding: 24px;
+      min-height: 196px;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.16);
+      background: rgba(18,18,18,0.74);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .feature-card strong {
+      color: #f4a261;
+      font-size: 22px;
+      font-weight: 820;
+    }
+    .feature-card h3 { font-size: 30px; }
+    .feature-card p {
+      color: rgba(247,243,234,0.76);
+      font-size: 22px;
+      line-height: 1.22;
+      font-weight: 650;
+    }
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .big-number {
+      font-size: 98px;
+      line-height: 0.9;
+      font-weight: 850;
+      color: #f4a261;
+    }
+    .connector-row {
+      display: grid;
+      grid-template-columns: 1fr 90px 1fr 90px 1fr;
+      align-items: center;
+      gap: 18px;
+    }
+    .node {
+      min-height: 250px;
+      padding: 34px;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.18);
+      background: rgba(247,243,234,0.07);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+    .arrow {
+      height: 3px;
+      background: #f4a261;
+      position: relative;
+      opacity: 0.9;
+    }
+    .arrow:after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: -7px;
+      border-left: 16px solid #f4a261;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+    }
+    .memory-board {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 30px;
+      align-items: stretch;
+    }
+    .memory-source {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+    .dream-panel {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 28px;
+    }
+    .memory-map {
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: stretch;
+    }
+    .memory-stream {
+      min-height: 560px;
+      padding: 28px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 18px;
+    }
+    .memory-stream h3 { font-size: 34px; }
+    .timeline-rail {
+      position: relative;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(247,243,234,0.08);
+      overflow: hidden;
+    }
+    .timeline-rail span {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border-radius: 999px;
+    }
+    .timeline-rail .a { left: 0; width: 34%; background: #f4a261; }
+    .timeline-rail .b { left: 34%; width: 34%; background: #2a9d8f; }
+    .timeline-rail .c { left: 68%; width: 32%; background: #e9c46a; }
+    .context-stack {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .context-card {
+      min-height: 0;
+      padding: 20px 24px;
+      display: grid;
+      gap: 10px;
+    }
+    .context-card .big-number { font-size: 70px; }
+    .context-card h3 { font-size: 28px; }
+    .context-card p {
+      font-size: 21px;
+      line-height: 1.18;
+    }
+    .context-card .metric-tick {
+      padding: 8px 12px;
+      font-size: 18px;
+    }
+    .token-lane {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-content: start;
+    }
+    .cycle {
+      display: grid;
+      grid-template-columns: 1fr 70px 1fr 70px 1fr;
+      align-items: center;
+      gap: 16px;
+    }
+    .cycle-step {
+      min-height: 150px;
+      padding: 24px;
+      border-radius: 8px;
+      background: rgba(42,157,143,0.12);
+      border: 1px solid rgba(42,157,143,0.28);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: #f7f3ea;
+      font-size: 26px;
+      font-weight: 780;
+      line-height: 1.18;
+    }
+    .list {
+      display: grid;
+      gap: 18px;
+    }
+    .item {
+      min-height: 82px;
+      padding: 20px 24px;
+      border-left: 5px solid #2a9d8f;
+      border-radius: 7px;
+      background: rgba(247,243,234,0.08);
+      color: rgba(247,243,234,0.9);
+      font-size: 27px;
+      line-height: 1.2;
+      font-weight: 680;
+    }
+    .rubric {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .score-box {
+      padding: 28px;
+      border-radius: 8px;
+      background: rgba(42,157,143,0.12);
+      border: 1px solid rgba(42,157,143,0.35);
+    }
+    .score-box.fail {
+      background: rgba(231,111,81,0.13);
+      border-color: rgba(231,111,81,0.4);
+    }
+    .rubric-loop {
+      grid-template-columns: 0.82fr 1.18fr;
+      align-items: stretch;
+    }
+    .judge-panel {
+      position: relative;
+      min-height: 540px;
+      padding: 30px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+    }
+    .loop-canvas {
+      position: relative;
+      min-height: 300px;
+    }
+    .loop-node {
+      position: absolute;
+      width: 210px;
+      padding: 18px;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.18);
+      background: rgba(247,243,234,0.08);
+      font-size: 24px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .loop-node.a { left: 20px; top: 40px; }
+    .loop-node.b { left: 50%; top: 150px; transform: translateX(-50%); }
+    .loop-node.c { right: 20px; top: 40px; }
+    .result-stack {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .score-meter {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(247,243,234,0.1);
+      overflow: hidden;
+    }
+    .score-fill {
+      height: 100%;
+      width: 78%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #e76f51, #e9c46a, #2a9d8f);
+    }
+    .switch-board {
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: 36px;
+      align-items: stretch;
+    }
+    .chat-stack, .ops-stack {
+      min-height: 570px;
+      padding: 30px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 22px;
+    }
+    .chat-bubbles {
+      display: grid;
+      align-content: center;
+      gap: 18px;
+    }
+    .bot-bubble {
+      max-width: 86%;
+      padding: 18px 22px;
+      border-radius: 8px;
+      background: rgba(247,243,234,0.08);
+      color: rgba(247,243,234,0.9);
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 760;
+    }
+    .bot-bubble.user {
+      justify-self: end;
+      background: rgba(244,162,97,0.16);
+      border: 1px solid rgba(244,162,97,0.28);
+    }
+    .mode-switch {
+      position: relative;
+      height: 54px;
+      border-radius: 999px;
+      background: rgba(42,157,143,0.16);
+      border: 1px solid rgba(42,157,143,0.34);
+      overflow: hidden;
+    }
+    .mode-switch .scan-fill {
+      top: 0;
+      bottom: 0;
+      height: auto;
+      opacity: 0.35;
+    }
+    .ops-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      align-content: center;
+    }
+    .ops-module {
+      min-height: 138px;
+      padding: 20px;
+      border-radius: 8px;
+      background: rgba(247,243,234,0.07);
+      border: 1px solid rgba(247,243,234,0.14);
+      display: grid;
+      gap: 12px;
+    }
+    .ops-module strong {
+      color: #f4a261;
+      font-size: 22px;
+    }
+    .ops-module span {
+      color: rgba(247,243,234,0.82);
+      font-size: 24px;
+      line-height: 1.16;
+      font-weight: 740;
+    }
+    .outcome-workbench {
+      grid-template-columns: 0.96fr 1.08fr 0.96fr;
+      align-items: stretch;
+    }
+    .workbench-card {
+      min-height: 560px;
+      padding: 28px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+    }
+    .doc-lines {
+      display: grid;
+      align-content: center;
+      gap: 14px;
+    }
+    .doc-line {
+      height: 24px;
+      border-radius: 999px;
+      background: rgba(247,243,234,0.14);
+    }
+    .doc-line.short { width: 62%; }
+    .doc-line.med { width: 78%; }
+    .rubric-checks {
+      display: grid;
+      gap: 14px;
+      align-content: center;
+    }
+    .rubric-check {
+      display: grid;
+      grid-template-columns: 34px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 8px;
+      background: rgba(247,243,234,0.075);
+      font-size: 22px;
+      font-weight: 760;
+    }
+    .rubric-check:before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: #e9c46a;
+      box-shadow: 0 0 18px rgba(233,196,106,0.36);
+    }
+    .judge-score {
+      display: grid;
+      align-content: center;
+      gap: 20px;
+    }
+    .score-readout {
+      font-size: 86px;
+      line-height: 1;
+      color: #2a9d8f;
+      font-weight: 850;
+    }
+    .feedback-loop {
+      position: relative;
+      min-height: 520px;
+      padding: 28px;
+    }
+    .feedback-loop svg, .agent-map svg, .event-router svg, .system-core svg, .final-map svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+    .path-draw {
+      fill: none;
+      stroke: rgba(244,162,97,0.88);
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 0 12px rgba(244,162,97,0.24));
+    }
+    .loop-chip {
+      position: absolute;
+      width: 240px;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.18);
+      background: rgba(16,18,18,0.82);
+      font-size: 26px;
+      line-height: 1.16;
+      font-weight: 820;
+      text-align: center;
+    }
+    .loop-chip.a { left: 44px; top: 68px; }
+    .loop-chip.b { left: 50%; top: 230px; transform: translateX(-50%); }
+    .loop-chip.c { right: 44px; top: 68px; }
+    .loop-chip.d { left: 50%; bottom: 42px; transform: translateX(-50%); color: #f4a261; }
+    .agent-map {
+      position: relative;
+      min-height: 600px;
+    }
+    .agent-link path {
+      fill: none;
+      stroke: rgba(244,162,97,0.74);
+      stroke-width: 4;
+      stroke-linecap: round;
+    }
+    .agent-node {
+      z-index: 3;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        rgba(14,16,15,0.88);
+    }
+    .agent-node.lead {
+      width: 380px;
+      min-height: 214px;
+    }
+    .agent-node .info-row {
+      grid-template-columns: 62px 1fr;
+      min-height: 42px;
+      padding: 8px 10px;
+      font-size: 17px;
+      line-height: 1.12;
+    }
+    .agent-node .info-row strong { font-size: 17px; }
+    .task-packet {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: #2a9d8f;
+      box-shadow: 0 0 26px rgba(42,157,143,0.72);
+    }
+    .task-packet.p1 { left: 49%; top: 220px; }
+    .task-packet.p2 { left: 42%; top: 258px; }
+    .task-packet.p3 { left: 56%; top: 258px; }
+    .merge-bar {
+      position: absolute;
+      left: 34%;
+      right: 34%;
+      bottom: 44px;
+      padding: 12px 18px;
+      border-radius: 8px;
+      background: rgba(42,157,143,0.15);
+      border: 1px solid rgba(42,157,143,0.35);
+      color: rgba(247,243,234,0.9);
+      font-size: 21px;
+      font-weight: 820;
+      text-align: center;
+      z-index: 2;
+    }
+    .fanout-board {
+      position: relative;
+      min-height: 600px;
+      display: grid;
+      grid-template-columns: 240px repeat(4, 1fr) 240px;
+      gap: 14px;
+      align-items: center;
+    }
+    .hub-card, .merge-card {
+      min-height: 250px;
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+      align-content: center;
+    }
+    .workstream {
+      min-height: 470px;
+      padding: 18px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 13px;
+    }
+    .fanout-board .info-row {
+      grid-template-columns: 64px 1fr;
+      min-height: 48px;
+      padding: 10px 12px;
+      font-size: 18px;
+      line-height: 1.14;
+    }
+    .fanout-board .info-row strong { font-size: 18px; }
+    .fanout-board .signal-list span {
+      padding: 10px 12px;
+      font-size: 19px;
+    }
+    .packet-stack {
+      display: grid;
+      gap: 9px;
+    }
+    .packet-stack span {
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(42,157,143,0.28);
+      box-shadow: 0 0 14px rgba(42,157,143,0.2);
+    }
+    .event-router {
+      position: relative;
+      min-height: 600px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 34px;
+      align-items: stretch;
+    }
+    .event-stage {
+      padding: 30px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 18px;
+    }
+    .event-packet {
+      width: max-content;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(244,162,97,0.18);
+      border: 1px solid rgba(244,162,97,0.44);
+      color: #ffe3c8;
+      font-size: 20px;
+      font-weight: 820;
+      box-shadow: 0 0 20px rgba(244,162,97,0.22);
+    }
+    .packet-rail {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-content: start;
+    }
+    .workflow-board {
+      position: relative;
+      min-height: 590px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 26px;
+    }
+    .workflow-card {
+      padding: 28px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 18px;
+    }
+    .status-ladder {
+      display: grid;
+      gap: 12px;
+      align-content: center;
+    }
+    .status-ladder span {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 7px;
+      background: rgba(247,243,234,0.075);
+      font-size: 22px;
+      font-weight: 740;
+    }
+    .status-ladder span:before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: #2a9d8f;
+      box-shadow: 0 0 16px rgba(42,157,143,0.42);
+    }
+    .system-core {
+      position: relative;
+      min-height: 610px;
+      display: grid;
+      place-items: center;
+    }
+    .core-node {
+      position: relative;
+      z-index: 3;
+      width: 420px;
+      height: 260px;
+      padding: 34px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 40px;
+      line-height: 1.08;
+      font-weight: 850;
+    }
+    .orbit-card {
+      position: absolute;
+      width: 360px;
+      padding: 22px;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.17);
+      background: rgba(18,19,18,0.82);
+      display: grid;
+      gap: 10px;
+    }
+    .orbit-card strong { color: #f4a261; font-size: 26px; }
+    .orbit-card p { font-size: 22px; line-height: 1.18; color: rgba(247,243,234,0.78); }
+    .orbit-card.a { left: 92px; top: 32px; }
+    .orbit-card.b { right: 92px; top: 32px; }
+    .orbit-card.c { left: 92px; bottom: 36px; }
+    .orbit-card.d { right: 92px; bottom: 36px; }
+    .final-map {
+      position: relative;
+      min-height: 620px;
+      display: grid;
+      place-items: center;
+    }
+    .final-core {
+      position: relative;
+      z-index: 3;
+      width: 760px;
+      padding: 34px 44px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .final-core h2 {
+      font-size: 58px;
+      line-height: 1.06;
+      max-width: none;
+    }
+    .final-token-row {
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .final-pill {
+      position: absolute;
+      z-index: 4;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: rgba(42,157,143,0.18);
+      border: 1px solid rgba(42,157,143,0.38);
+      font-size: 22px;
+      font-weight: 820;
+    }
+    .final-pill.a { left: 180px; top: 126px; }
+    .final-pill.b { right: 180px; top: 126px; }
+    .final-pill.c { left: 210px; bottom: 122px; }
+    .final-pill.d { right: 210px; bottom: 122px; }
+    .parallel-board {
+      position: relative;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 26px;
+    }
+    .parallel-board .card {
+      min-height: 560px;
+      justify-content: flex-start;
+    }
+    .card-topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .event-flow {
+      position: relative;
+    }
+    .rich-flow .event-box {
+      min-height: 640px;
+      justify-content: space-between;
+    }
+    .particle-lane {
+      display: flex;
+      gap: 12px;
+      min-height: 36px;
+    }
+    .pipeline-board {
+      position: relative;
+      min-height: 620px;
+    }
+    .pipeline-board .card {
+      min-height: 480px;
+      justify-content: space-between;
+    }
+    .network {
+      position: relative;
+      width: 100%;
+      height: 600px;
+    }
+    .agent-node {
+      position: absolute;
+      width: 292px;
+      min-height: 170px;
+      padding: 26px;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.2);
+      background: rgba(247,243,234,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+    .agent-node.lead {
+      left: 50%;
+      top: 28px;
+      transform: translateX(-50%);
+      background: rgba(244,162,97,0.16);
+      border-color: rgba(244,162,97,0.45);
+    }
+    .agent-node.a { left: 80px; top: 330px; }
+    .agent-node.b { left: 510px; top: 330px; }
+    .agent-node.c { right: 510px; top: 330px; }
+    .agent-node.d { right: 80px; top: 330px; }
+    .event-flow {
+      display: grid;
+      grid-template-columns: 1fr 70px 1fr 70px 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .event-box {
+      padding: 30px;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.18);
+      background: rgba(247,243,234,0.075);
+      min-height: 270px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .event-box small {
+      display: block;
+      margin-bottom: 18px;
+      color: #2a9d8f;
+      font-size: 22px;
+      font-weight: 820;
+    }
+    .event-detail {
+      display: grid;
+      gap: 12px;
+      margin-top: auto;
+    }
+    .event-detail span {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 6px;
+      background: rgba(42,157,143,0.11);
+      color: rgba(247,243,234,0.86);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .axis {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      align-items: center;
+      gap: 28px;
+      padding: 22px 28px;
+      border-radius: 8px;
+      background: rgba(247,243,234,0.075);
+      border: 1px solid rgba(247,243,234,0.14);
+    }
+    .axis strong {
+      color: #f4a261;
+      font-size: 30px;
+      font-weight: 820;
+    }
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .case-layout {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 24px;
+      min-height: 0;
+    }
+    .case-layout .case-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .case-layout .case-card {
+      min-height: 214px;
+      padding: 24px;
+      gap: 14px;
+    }
+    .case-layout .case-card p {
+      font-size: 23px;
+      line-height: 1.22;
+    }
+    .case-card {
+      padding: 28px;
+      min-height: 270px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 22px;
+    }
+    .final-statement {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding-bottom: 60px;
+    }
+    .final-statement h2 {
+      max-width: 1420px;
+      font-size: 86px;
+      line-height: 1.05;
+    }
+    .final-statement .token-lane {
+      justify-content: center;
+      margin-top: 34px;
+    }
+    .agent-node {
+      z-index: 3;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        rgba(14,16,15,0.88);
+    }
+    .agent-node.lead {
+      width: 380px;
+      min-height: 214px;
+    }
+    .agent-node .info-row {
+      grid-template-columns: 62px 1fr;
+      min-height: 42px;
+      padding: 8px 10px;
+      font-size: 17px;
+      line-height: 1.12;
+    }
+    .agent-node .info-row strong { font-size: 17px; }
+    .highlight { color: #f4a261; }
+    .cyan { color: #2a9d8f; }
+    .yellow { color: #e9c46a; }
+    #caption {
+      left: 210px;
+      right: 210px;
+      bottom: 66px;
+      min-height: 82px;
+      padding: 18px 32px;
+      border-radius: 8px;
+      background: rgba(8,9,11,0.86);
+      border: 1px solid rgba(247,243,234,0.16);
+      color: #fffaf0;
+      text-align: center;
+      font-size: 42px;
+      line-height: 1.18;
+      font-weight: 760;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.64);
+      z-index: 50;
+    }
+  </style>
+</head>
+<body>
+  <main id="root" class="clip" data-composition-id="main" data-width="1920" data-height="1080" data-start="0" data-duration="333.903" data-track-index="0">
+    <audio id="narration" data-start="0" data-duration="333.903" data-track-index="90" src="assets/audio/voiceover-solo-final-mix.m4a"></audio>
+
+    <section id="scene-01" class="clip scene" data-start="0" data-duration="13.4" data-track-index="1">
+      <div class="scene-head">
+        <div>
+          <div class="eyebrow">Claude Managed Agents</div>
+          <h1>앤스로픽이 에이전트 기능 <span class="highlight">네 가지</span>를 공개했습니다.</h1>
+        </div>
+        <div class="scene-no">01</div>
+      </div>
+      <div class="source-card-grid stage">
+        <div class="screenshot source-main">
+          <img src="assets/screenshots/scene-01-capture-2.png" alt="Anthropic Claude Managed Agents announcement capture" />
+          <div class="label">공식 발표 캡처</div>
+          <div class="source-caption">발표의 핵심은 모델 하나가 아니라, 에이전트를 운영하는 시스템 기능 네 가지입니다.</div>
+        </div>
+        <div class="feature-card-stack">
+          <div class="feature-card glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>01</strong><h3>드리밍</h3><p>비활성 시간에 경험과 메모리를 다시 정리합니다.</p><span class="metric-tick">memory</span><div class="scan-fill"></div></div>
+          <div class="feature-card glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>02</strong><h3>아웃컴</h3><p>좋은 결과의 기준을 주고 결과물을 평가합니다.</p><span class="metric-tick">rubric</span><div class="scan-fill"></div></div>
+          <div class="feature-card glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>03</strong><h3>멀티에이전트</h3><p>리드가 일을 쪼개고 전문 에이전트가 병렬 처리합니다.</p><span class="metric-tick">parallel</span><div class="scan-fill"></div></div>
+          <div class="feature-card glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>04</strong><h3>이벤트</h3><p>조건이 발생하면 에이전트 작업이 자동으로 시작됩니다.</p><span class="metric-tick">trigger</span><div class="scan-fill"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-02" class="clip scene" data-start="13.4" data-duration="9.0" data-track-index="2">
+      <div class="scene-head">
+        <div><div class="eyebrow">Reframe</div><h2>이번 핵심은 더 똑똑한 챗봇이 아닙니다.</h2></div>
+        <div class="scene-no">02</div>
+      </div>
+      <div class="switch-board stage">
+        <div class="chat-stack glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <span class="tag">Before: Chatbot</span>
+          <div class="chat-bubbles">
+            <div class="bot-bubble user">요청 하나를 보냅니다.</div>
+            <div class="bot-bubble">답변 하나가 돌아옵니다.</div>
+            <div class="bot-bubble">세션이 끝나면 흐름도 끊깁니다.</div>
+          </div>
+          <div class="mode-switch"><div class="scan-fill"></div></div>
+        </div>
+        <div class="ops-stack glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <span class="tag">Now: Operating System</span>
+          <div class="ops-grid">
+            <div class="ops-module"><strong>기억</strong><span>세션 사이 맥락을 다시 정렬</span><span class="flow-token">learn</span></div>
+            <div class="ops-module"><strong>기준</strong><span>결과가 좋은지 별도 판정</span><span class="flow-token">judge</span></div>
+            <div class="ops-module"><strong>분업</strong><span>작업을 나눠 병렬 처리</span><span class="flow-token">orchestrate</span></div>
+            <div class="ops-module"><strong>트리거</strong><span>조건이 맞으면 자동 시작</span><span class="flow-token">trigger</span></div>
+          </div>
+          <div class="info-row"><strong>핵심</strong><span>모델 성능이 아니라 운영 구조가 바뀌는 업데이트입니다.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-03" class="clip scene" data-start="22.4" data-duration="28.5" data-track-index="3">
+      <div class="scene-head">
+        <div><div class="eyebrow">1. Dreaming</div><h2>드리밍은 쉬는 시간에 경험을 다시 정리하는 기능입니다.</h2></div>
+        <div class="scene-no">03</div>
+      </div>
+      <div class="memory-source">
+        <div class="screenshot source-side dream-shot">
+          <img src="assets/screenshots/scene-03-capture-3.png" alt="Claude Managed Agents dreaming section capture" />
+          <div class="label">드리밍 발표 근거</div>
+          <div class="source-caption">작업이 멈춘 뒤에도 과거 세션과 메모리를 훑어 더 쓸모 있는 패턴으로 정리합니다.</div>
+        </div>
+        <div class="stack">
+          <div class="item">작업 기록 → 패턴 정리 → 다음 세션 메모리</div>
+          <div class="item">반복해서 막힌 지점</div>
+          <div class="item">자주 성공한 작업 방식</div>
+          <div class="item">팀이 선호한 표현과 구조</div>
+          <div class="item">다음 세션에 쓸 만한 메모리</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-04" class="clip scene" data-start="50.9" data-duration="28.5" data-track-index="4" data-visual-density="rich">
+      <div class="scene-head">
+        <div><div class="eyebrow">Where It Helps</div><h2>드리밍이 좋은 순간은 작업이 하루 안에 끝나지 않을 때입니다.</h2></div>
+        <div class="scene-no">04</div>
+      </div>
+      <div class="memory-map stage">
+        <div class="memory-stream glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <span class="tag">Memory Stream</span>
+          <h3>세션 사이에 흩어진 작업 경험을 다시 정렬합니다.</h3>
+          <div class="timeline-rail"><span class="a route-pulse"></span><span class="b route-pulse"></span><span class="c route-pulse"></span></div>
+          <div class="stack">
+            <div class="info-row"><strong>이전 세션</strong><span>결정, 실패, 선호 패턴을 다시 읽습니다.</span></div>
+            <div class="info-row"><strong>휴면 시간</strong><span>반복 실수와 성공 절차를 더 작은 메모리로 압축합니다.</span></div>
+            <div class="info-row"><strong>다음 요청</strong><span>새 작업이 들어오면 맥락을 바로 이어 붙입니다.</span></div>
+          </div>
+          <div class="token-lane">
+            <span class="flow-token">결정</span><span class="flow-token">실패</span><span class="flow-token">선호</span><span class="flow-token">절차</span>
+          </div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="context-stack">
+          <div class="context-card glass-panel">
+            <div class="liquid-sheen" data-layout-allow-overflow></div>
+            <div class="card-topline"><span class="big-number">01</span><span class="metric-tick">컨텍스트 유지</span></div>
+            <h3>장기 프로젝트</h3>
+            <p>어제의 판단과 오늘의 요청이 이어질 때 컨텍스트 손실을 줄입니다.</p>
+          </div>
+          <div class="context-card glass-panel">
+            <div class="liquid-sheen" data-layout-allow-overflow></div>
+            <div class="card-topline"><span class="big-number">02</span><span class="metric-tick">재발 감소</span></div>
+            <h3>반복 업무</h3>
+            <p>매번 같은 실수를 다시 설명하지 않고, 좋은 절차를 다음 세션에 재사용합니다.</p>
+          </div>
+          <div class="context-card glass-panel">
+            <div class="liquid-sheen" data-layout-allow-overflow></div>
+            <div class="card-topline"><span class="big-number">03</span><span class="metric-tick">팀 규칙화</span></div>
+            <h3>팀 단위 규칙</h3>
+            <p>개인의 취향이 아니라 팀의 작업 패턴과 리뷰 기준을 메모리로 정리합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-05" class="clip scene" data-start="79.4" data-duration="36.5" data-track-index="5">
+      <div class="scene-head">
+        <div><div class="eyebrow">2. Outcome</div><h2>아웃컴은 에이전트에게 좋은 결과의 기준을 주는 기능입니다.</h2></div>
+        <div class="scene-no">05</div>
+      </div>
+      <div class="outcome-workbench stage">
+        <div class="workbench-card glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <span class="tag">Worker</span>
+          <h3>결과물 작성</h3>
+          <div class="doc-lines">
+            <span class="doc-line"></span><span class="doc-line med"></span><span class="doc-line short"></span><span class="doc-line"></span>
+          </div>
+          <div class="info-row"><strong>초안</strong><span>에이전트가 문서, 코드, 답변을 먼저 만듭니다.</span></div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="workbench-card glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <span class="tag">Rubric</span>
+          <h3>좋은 결과의 기준</h3>
+          <div class="rubric-checks">
+            <div class="rubric-check"><span>정확성</span><b class="flow-token">must</b></div>
+            <div class="rubric-check"><span>형식 일치</span><b class="flow-token">must</b></div>
+            <div class="rubric-check"><span>톤 앤 매너</span><b class="flow-token">style</b></div>
+            <div class="rubric-check"><span>금지 조건</span><b class="flow-token">guard</b></div>
+          </div>
+          <div class="info-row"><strong>기준</strong><span>“좋아 보임”이 아니라 채점 가능한 문장으로 바꿉니다.</span></div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="workbench-card glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <span class="tag">Judge</span>
+          <h3>별도 모델 채점</h3>
+          <div class="judge-score">
+            <div class="score-readout">78%</div>
+            <div class="score-meter"><div class="score-fill"></div></div>
+            <span class="metric-tick">수정 루프로 반환</span>
+          </div>
+          <div class="info-row"><strong>변화</strong><span>작업자와 검수자가 분리되어 결과가 기준을 통과할 때까지 돕습니다.</span></div>
+          <div class="scan-fill"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-06" class="clip scene" data-start="115.9" data-duration="19.9" data-track-index="6" data-visual-density="rich">
+      <div class="scene-head">
+        <div><div class="eyebrow">When To Use Outcome</div><h2>정답보다 기준이 중요한 작업에서 강합니다.</h2></div>
+        <div class="scene-no">06</div>
+      </div>
+      <div class="rubric rubric-loop stage">
+        <div class="score-box glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <h3>좋은 사용처</h3>
+          <div class="list">
+            <div class="item">문서 품질 검수</div>
+            <div class="item">지원 답변 톤 검사</div>
+            <div class="item">코드 리뷰 체크리스트</div>
+          </div>
+          <div class="score-meter"><div class="score-fill"></div></div>
+          <div class="stack">
+            <div class="info-row"><strong>입력</strong><span>작성 기준과 금지 조건을 먼저 둡니다.</span></div>
+            <div class="info-row"><strong>판정</strong><span>결과가 기준을 통과했는지 별도 모델이 봅니다.</span></div>
+            <div class="info-row"><strong>반복</strong><span>미달이면 같은 작업자가 아니라 수정 루프로 돌아갑니다.</span></div>
+          </div>
+        </div>
+        <div class="judge-panel feedback-loop glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <h3>핵심 변화</h3>
+          <svg viewBox="0 0 720 360" aria-hidden="true">
+            <path class="path-draw" d="M122 92 C260 8 460 8 598 92" />
+            <path class="path-draw" d="M598 248 C460 338 260 338 122 248" />
+            <path class="path-draw" d="M122 92 C74 148 74 196 122 248" />
+            <path class="path-draw" d="M598 92 C646 148 646 196 598 248" />
+          </svg>
+          <div class="loop-canvas">
+            <div class="loop-chip a">기준 작성</div>
+            <div class="loop-chip b">별도 모델 채점</div>
+            <div class="loop-chip c">수정 루프</div>
+            <div class="loop-chip d">통과할 때까지 반복</div>
+          </div>
+          <div class="result-stack">
+            <span class="metric-tick">루브릭 통과</span>
+            <span class="metric-tick">톤 일치</span>
+            <span class="metric-tick">재작성 요청</span>
+          </div>
+          <div class="info-row"><strong>핵심</strong><span>에이전트가 "대충 했습니다"에서 끝나지 않고 기준을 통과할 때까지 돌아옵니다.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-07" class="clip scene" data-start="135.9" data-duration="40.0" data-track-index="7" data-visual-density="rich">
+      <div class="scene-head">
+        <div><div class="eyebrow">3. Multi-Agent</div><h2>멀티에이전트 오케스트레이션은 일을 쪼개서 병렬로 맡기는 구조입니다.</h2></div>
+        <div class="scene-no">07</div>
+      </div>
+      <div class="agent-map network">
+        <svg class="agent-link" viewBox="0 0 1720 600" aria-hidden="true">
+          <path class="path-draw" d="M860 172 C560 210 304 258 226 330" />
+          <path class="path-draw" d="M860 172 C710 230 612 270 654 330" />
+          <path class="path-draw" d="M860 172 C1010 230 1108 270 1066 330" />
+          <path class="path-draw" d="M860 172 C1160 210 1416 258 1494 330" />
+        </svg>
+        <span class="task-packet p1"></span><span class="task-packet p2"></span><span class="task-packet p3"></span>
+        <div class="agent-node lead glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><h3>리드 에이전트</h3><p>계획, 분배, 통합</p><div class="signal-list"><span>작업 분해</span><span>결과 병합</span></div><div class="info-row"><strong>분배</strong><span>역할별로 쪼개고 다시 압축합니다.</span></div><div class="scan-fill"></div></div>
+        <div class="agent-node a glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><h3>로그 담당</h3><p>오류 원인 분석</p><span class="flow-token">logs</span><div class="info-row"><strong>입력</strong><span>실패 로그</span></div><div class="scan-fill"></div></div>
+        <div class="agent-node b glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><h3>문서 담당</h3><p>변경점 정리</p><span class="flow-token">docs</span><div class="info-row"><strong>출력</strong><span>요약 문서</span></div><div class="scan-fill"></div></div>
+        <div class="agent-node c glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><h3>메트릭 담당</h3><p>수치와 추세 확인</p><span class="flow-token">metrics</span><div class="scan-fill"></div></div>
+        <div class="agent-node d glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><h3>지원 담당</h3><p>고객 맥락 정리</p><span class="flow-token">support</span><div class="scan-fill"></div></div>
+      </div>
+    </section>
+
+    <section id="scene-08" class="clip scene" data-start="175.9" data-duration="21.5" data-track-index="8" data-visual-density="rich">
+      <div class="scene-head">
+        <div><div class="eyebrow">Parallel Work</div><h2>복잡한 작업일수록 한 명이 끝까지 붙잡는 방식이 느려집니다.</h2></div>
+        <div class="scene-no">08</div>
+      </div>
+      <div class="fanout-board stage">
+        <div class="hub-card glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <span class="tag">Lead</span>
+          <h3>질문 분해</h3>
+          <div class="packet-stack"><span></span><span></span><span></span><span></span></div>
+          <div class="info-row"><strong>fan-out</strong><span>큰 문제를 작은 작업 묶음으로 쪼갭니다.</span></div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="workstream glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <div class="card-topline"><h3>빌드 로그</h3><span class="flow-token">Log</span></div>
+          <div class="token-lane"><span class="flow-token">shard 01</span><span class="flow-token">error</span><span class="flow-token">trace</span></div>
+          <div class="signal-list"><span>로그 묶음 분할</span><span>실패 키워드 추출</span><span>원인 후보 합치기</span></div>
+          <div class="info-row"><strong>분담</strong><span>수백 개 로그를 나눠 읽고 실패 패턴을 합칩니다.</span></div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="workstream glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <div class="card-topline"><h3>문서 변경</h3><span class="flow-token">Docs</span></div>
+          <div class="token-lane"><span class="flow-token">note</span><span class="flow-token">guide</span><span class="flow-token">diff</span></div>
+          <div class="signal-list"><span>릴리즈 노트</span><span>사용자 안내</span><span>변경 요약</span></div>
+          <div class="info-row"><strong>정리</strong><span>문서 담당은 릴리즈 노트와 사용자 안내를 따로 완성합니다.</span></div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="workstream glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <div class="card-topline"><h3>코드 경로</h3><span class="flow-token">Code</span></div>
+          <div class="token-lane"><span class="flow-token">file</span><span class="flow-token">test</span><span class="flow-token">range</span></div>
+          <div class="signal-list"><span>파일 위치</span><span>수정 범위</span><span>테스트 영향</span></div>
+          <div class="info-row"><strong>구현</strong><span>구현 담당은 실제 코드 위치와 수정 범위를 좁힙니다.</span></div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="workstream glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <div class="card-topline"><h3>통합 판단</h3><span class="flow-token">Merge</span></div>
+          <div class="token-lane"><span class="flow-token">dedupe</span><span class="flow-token">conflict</span><span class="flow-token">next</span></div>
+          <div class="signal-list"><span>중복 제거</span><span>충돌 확인</span><span>다음 액션</span></div>
+          <div class="info-row"><strong>병합</strong><span>리드가 결과를 합쳐 다음 액션을 결정합니다.</span></div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="merge-card glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <span class="tag">Merge</span>
+          <h3>한 문장 결론</h3>
+          <div class="packet-stack"><span></span><span></span><span></span></div>
+          <div class="info-row"><strong>fan-in</strong><span>중복과 충돌을 제거해 다음 액션만 남깁니다.</span></div>
+          <div class="scan-fill"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-09" class="clip scene" data-start="197.4" data-duration="28.0" data-track-index="9" data-visual-density="rich">
+      <div class="scene-head">
+        <div><div class="eyebrow">4. Event Triggers</div><h2>이벤트 트리거는 에이전트를 호출하지 않아도 일이 시작되게 합니다.</h2></div>
+        <div class="scene-no">09</div>
+      </div>
+      <div class="event-router stage">
+        <svg viewBox="0 0 1720 600" aria-hidden="true">
+          <path class="path-draw" d="M290 108 C520 82 640 82 830 108" />
+          <path class="path-draw" d="M890 108 C1120 82 1240 82 1430 108" />
+        </svg>
+        <div class="event-stage glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <small>Event</small><h3>문서 업로드</h3><p>새 파일이나 요청이 들어옵니다.</p>
+          <div class="event-detail"><span>계약서</span><span>리포트</span><span>지원 티켓</span></div>
+          <div class="packet-rail"><span class="event-packet">file.created</span><span class="event-packet">request.inbox</span></div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="event-stage glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <small>Trigger</small><h3>조건 감지</h3><p>시스템이 자동으로 담당 에이전트를 깨웁니다.</p>
+          <div class="event-detail"><span>파일 생성</span><span>상태 변경</span><span>웹훅 수신</span></div>
+          <div class="packet-rail"><span class="event-packet">match</span><span class="event-packet">wake</span></div>
+          <div class="scan-fill"></div>
+        </div>
+        <div class="event-stage glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <small>Action</small><h3>후속 작업</h3><p>분석, 요약, 검토, 알림이 이어집니다.</p>
+          <div class="event-detail"><span>분석</span><span>검토</span><span>알림</span></div>
+          <div class="packet-rail"><span class="event-packet">summary</span><span class="event-packet">notify</span></div>
+          <div class="scan-fill"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-10" class="clip scene" data-start="225.4" data-duration="22.6" data-track-index="10" data-visual-density="rich">
+      <div class="scene-head">
+        <div><div class="eyebrow">Automation Surface</div><h2>이벤트는 에이전트를 제품 안의 자동 워크플로로 바꿉니다.</h2></div>
+        <div class="scene-no">10</div>
+      </div>
+      <div class="workflow-board stage">
+          <div class="workflow-card glass-panel">
+            <div class="liquid-sheen" data-layout-allow-overflow></div>
+            <span class="tag">문서</span><h3>업로드 후 검토</h3><p>계약서나 리포트가 들어오면 검토 흐름을 시작합니다.</p>
+            <div class="status-ladder"><span>요약</span><span>검토 항목 표시</span><span>담당자 알림</span></div>
+            <div class="info-row"><strong>상태</strong><span class="metric-tick">자동 시작</span></div>
+            <div class="scan-fill"></div>
+          </div>
+          <div class="workflow-card glass-panel">
+            <div class="liquid-sheen" data-layout-allow-overflow></div>
+            <span class="tag">운영</span><h3>로그 후 알림</h3><p>장애 신호가 오면 분석하고 슬랙으로 요약합니다.</p>
+            <div class="status-ladder"><span>로그 수집</span><span>원인 후보</span><span>대응 초안</span></div>
+            <div class="info-row"><strong>상태</strong><span class="metric-tick">대응 초안</span></div>
+            <div class="scan-fill"></div>
+          </div>
+          <div class="workflow-card glass-panel">
+            <div class="liquid-sheen" data-layout-allow-overflow></div>
+            <span class="tag">콘텐츠</span><h3>렌더 후 QA</h3><p>새 영상이 나오면 스냅샷과 자막 상태를 확인합니다.</p>
+            <div class="status-ladder"><span>프레임 샘플</span><span>자막 위치</span><span>오디오 스트림</span></div>
+            <div class="info-row"><strong>상태</strong><span class="metric-tick">검수 완료</span></div>
+            <div class="scan-fill"></div>
+          </div>
+      </div>
+    </section>
+
+    <section id="scene-11" class="clip scene" data-start="248.0" data-duration="26.9" data-track-index="11">
+      <div class="scene-head">
+        <div><div class="eyebrow">System Shift</div><h2>네 기능은 서로 다른 축에서 에이전트를 바꿉니다.</h2></div>
+        <div class="scene-no">11</div>
+      </div>
+      <div class="system-core">
+        <svg viewBox="0 0 1720 610" aria-hidden="true">
+          <path class="path-draw" d="M430 140 C640 214 730 230 860 304" />
+          <path class="path-draw" d="M1290 140 C1080 214 990 230 860 304" />
+          <path class="path-draw" d="M430 470 C640 396 730 380 860 304" />
+          <path class="path-draw" d="M1290 470 C1080 396 990 380 860 304" />
+        </svg>
+        <div class="core-node glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div>운영 시스템으로 통합</div>
+        <div class="orbit-card a"><strong>드리밍</strong><p>시간 축에서 이전 경험을 다음 작업으로 연결합니다.</p><span class="metric-tick">time</span></div>
+        <div class="orbit-card b"><strong>아웃컴</strong><p>품질 축에서 결과물이 기준을 통과하게 만듭니다.</p><span class="metric-tick">quality</span></div>
+        <div class="orbit-card c"><strong>멀티에이전트</strong><p>복잡도 축에서 일을 분산하고 통합합니다.</p><span class="metric-tick">complexity</span></div>
+        <div class="orbit-card d"><strong>이벤트</strong><p>자동화 축에서 조건이 맞으면 작업을 시작합니다.</p><span class="metric-tick">automation</span></div>
+      </div>
+    </section>
+
+    <section id="scene-12" class="clip scene" data-start="274.9" data-duration="36.5" data-track-index="12">
+      <div class="scene-head">
+        <div><div class="eyebrow">Use Cases</div><h2>실제 사례는 같은 방향을 보여줍니다.</h2></div>
+        <div class="scene-no">12</div>
+      </div>
+      <div class="case-layout">
+        <div class="screenshot source-side case-shot">
+          <img src="assets/screenshots/scene-12-capture-4.png" alt="Claude Managed Agents customer examples capture" />
+          <div class="label">사례 섹션 캡처</div>
+          <div class="source-caption">사례들은 네 기능이 각각 따로가 아니라 운영 시스템으로 묶이는 방향을 보여줍니다.</div>
+        </div>
+        <div class="case-grid">
+          <div class="case-card"><span class="tag">Harvey</span><h3>장기 법률 작업</h3><p>반복 맥락을 정리해야 가치가 커집니다.</p><div class="signal-list"><span>과거 세션</span><span>사례 맥락</span></div></div>
+          <div class="case-card"><span class="tag">Netflix</span><h3>빌드 로그 분석</h3><p>수많은 로그를 병렬로 나눠 봅니다.</p><div class="signal-list"><span>로그 분산</span><span>원인 통합</span></div></div>
+          <div class="case-card"><span class="tag">Spiral</span><h3>요청 라우팅</h3><p>가벼운 모델과 강한 모델을 역할별로 배치합니다.</p><div class="signal-list"><span>저비용 분류</span><span>고품질 작성</span></div></div>
+          <div class="case-card"><span class="tag">Wisedocs</span><h3>문서 검수</h3><p>기준이 분명한 작업에서 아웃컴이 어울립니다.</p><div class="signal-list"><span>기준 평가</span><span>검수 속도</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-13" class="clip scene final-statement" data-start="311.4" data-duration="22.5" data-track-index="13">
+      <div class="final-map">
+        <svg viewBox="0 0 1720 620" aria-hidden="true">
+          <path class="path-draw" d="M360 144 C620 226 706 260 860 314" />
+          <path class="path-draw" d="M1360 144 C1100 226 1014 260 860 314" />
+          <path class="path-draw" d="M380 488 C640 410 728 378 860 314" />
+          <path class="path-draw" d="M1340 488 C1080 410 992 378 860 314" />
+        </svg>
+        <div class="final-core glass-panel">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <div class="eyebrow">Final Question</div>
+          <h2>경쟁은 <span class="highlight">어떤 모델</span>에서<br />어떤 시스템으로 운영하느냐로 넘어갑니다.</h2>
+          <div class="token-lane final-token-row">
+            <span class="flow-token">learn</span>
+            <span class="flow-token">judge</span>
+            <span class="flow-token">orchestrate</span>
+            <span class="flow-token">trigger</span>
+          </div>
+          <div class="info-row"><strong>질문</strong><span>내 AI는 얼마나 똑똑한가보다, 어떻게 배우고 검수하고 팀으로 일하는가입니다.</span></div>
+          <div class="scan-fill"></div>
+        </div>
+      </div>
+    </section>
+
+    <div id="caption" class="clip" data-start="0" data-duration="333.903" data-track-index="80"></div>
+  </main>
+
+  <script>
+    const DURATION = 333.903;
+    const CAPTION_LEAD_SECONDS = 1.45;
+    const SCENES = [
+      ["#scene-01", 0, 13.4],
+      ["#scene-02", 13.4, 9.0],
+      ["#scene-03", 22.4, 28.5],
+      ["#scene-04", 50.9, 28.5],
+      ["#scene-05", 79.4, 36.5],
+      ["#scene-06", 115.9, 19.9],
+      ["#scene-07", 135.9, 40.0],
+      ["#scene-08", 175.9, 21.5],
+      ["#scene-09", 197.4, 28.0],
+      ["#scene-10", 225.4, 22.6],
+      ["#scene-11", 248.0, 26.9],
+      ["#scene-12", 274.9, 36.5],
+      ["#scene-13", 311.4, 22.5]
+    ];
+
+    function loadJson(path) {
+      const request = new XMLHttpRequest();
+      request.open("GET", path, false);
+      request.send(null);
+      return JSON.parse(request.responseText);
+    }
+
+    window.__hyperframes = window.__hyperframes || {};
+    window.__hyperframes.duration = DURATION;
+    window.__timelines = window.__timelines || {};
+
+    const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
+    gsap.set(".scene", { autoAlpha: 0 });
+    gsap.set("#caption", { textContent: "" });
+    document.querySelectorAll(".path-draw").forEach((path) => {
+      const length = path.getTotalLength();
+      gsap.set(path, { strokeDasharray: length, strokeDashoffset: length, autoAlpha: 0 });
+    });
+
+    SCENES.forEach(([selector, start, duration]) => {
+      const end = start + duration;
+      tl.set(selector, { autoAlpha: 1 }, start);
+      tl.fromTo(selector, { clipPath: "inset(0% 0% 4% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.65 }, start);
+      tl.fromTo(`${selector} .scene-head`, { y: 24, autoAlpha: 0, filter: "blur(10px)" }, { y: 0, autoAlpha: 1, filter: "blur(0px)", duration: 0.7 }, start + 0.12);
+      tl.fromTo(`${selector} .card, ${selector} .node, ${selector} .item, ${selector} .event-box, ${selector} .event-stage, ${selector} .axis, ${selector} .case-card, ${selector} .screenshot, ${selector} .agent-node, ${selector} .ops-module, ${selector} .workbench-card, ${selector} .workstream, ${selector} .hub-card, ${selector} .merge-card, ${selector} .workflow-card, ${selector} .orbit-card, ${selector} .core-node, ${selector} .final-core, ${selector} .final-pill, ${selector} .glass-panel`,
+        { y: 38, autoAlpha: 0, filter: "blur(12px)" },
+        { y: 0, autoAlpha: 1, filter: "blur(0px)", duration: 0.85, stagger: 0.08 },
+        start + 0.35
+      );
+      tl.fromTo(`${selector} .arrow`, { scaleX: 0, autoAlpha: 0 }, { scaleX: 1, autoAlpha: 1, duration: 0.7, stagger: 0.07 }, start + 0.9);
+      tl.to(`${selector} .path-draw`, { strokeDashoffset: 0, autoAlpha: 1, duration: 1.15, stagger: 0.08 }, start + 0.78);
+      tl.fromTo(`${selector} .liquid-sheen`, { xPercent: -130, autoAlpha: 0 }, { xPercent: 260, autoAlpha: 0.58, duration: 1.35, stagger: 0.08 }, start + 0.55);
+      tl.fromTo(`${selector} .scan-fill`, { scaleX: 0, autoAlpha: 0 }, { scaleX: 1, autoAlpha: 1, duration: 1.0, stagger: 0.08 }, start + 1.0);
+      tl.fromTo(`${selector} .info-row, ${selector} .signal-list span, ${selector} .event-detail span, ${selector} .status-ladder span, ${selector} .rubric-check, ${selector} .doc-line`,
+        { x: -18, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.55, stagger: 0.055 },
+        start + 1.05
+      );
+      tl.fromTo(`${selector} .flow-token, ${selector} .metric-tick, ${selector} .event-packet, ${selector} .task-packet`,
+        { scale: 0.86, x: -22, autoAlpha: 0 },
+        { scale: 1, x: 0, autoAlpha: 1, duration: 0.55, stagger: 0.06 },
+        start + 1.22
+      );
+      tl.fromTo(`${selector} .task-packet`, { y: -36 }, { y: 54, duration: 1.2, yoyo: true, repeat: 1, stagger: 0.1 }, start + 1.55);
+      tl.fromTo(`${selector} .event-packet`, { x: -34 }, { x: 34, duration: 1.05, yoyo: true, repeat: 1, stagger: 0.08 }, start + 1.45);
+      tl.fromTo(`${selector} .score-fill`, { scaleX: 0, transformOrigin: "left center" }, { scaleX: 1, duration: 1.0 }, start + 1.15);
+      if (end < DURATION - 0.4) {
+        tl.to(selector, { autoAlpha: 0, duration: 0.25 }, end - 0.25);
+      }
+    });
+
+    window.__timelines["main"] = tl;
+
+    let captions = [];
+    try {
+      captions = loadJson("src/captions.json");
+    } catch (error) {
+      captions = [
+        { start: 0, text: "앤스로픽이 에이전트 기능 네 가지를 공개했습니다." },
+        { start: 13.4, text: "이번 핵심은 더 똑똑한 챗봇이 아니라 운영 구조입니다." },
+        { start: 22.4, text: "첫 번째, 드리밍은 쉬는 시간에 경험을 다시 정리합니다." },
+        { start: 79.4, text: "두 번째, 아웃컴은 좋은 결과의 기준을 주는 기능입니다." },
+        { start: 135.9, text: "세 번째, 멀티에이전트는 일을 쪼개서 병렬로 맡깁니다." },
+        { start: 197.4, text: "네 번째, 이벤트 트리거는 조건이 맞으면 작업을 자동으로 시작합니다." },
+        { start: 248.0, text: "네 기능은 에이전트를 모델이 아니라 시스템으로 바꿉니다." },
+        { start: 311.4, text: "이제 경쟁은 어떤 모델을 쓰느냐에서 어떤 시스템으로 운영하느냐로 넘어갑니다." }
+      ];
+    }
+    captions.forEach((cue) => {
+      tl.set("#caption", { textContent: cue.text }, Math.max(0, cue.start - CAPTION_LEAD_SECONDS));
+    });
+    tl.set("#caption", { textContent: "" }, DURATION - 0.12);
+
+    window.__timelines["main"] = tl;
+  </script>
+</body>
+</html>

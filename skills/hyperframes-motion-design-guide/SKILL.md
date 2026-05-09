@@ -1,6 +1,6 @@
 ---
 name: hyperframes-motion-design-guide
-description: Use in the hype_tuber workspace when creating, revising, polishing, or reviewing HTML/CSS/JS/GSAP/Hyperframes motion graphics, kinetic typography, animated explainers, infographics, YouTube scenes, or visual systems. Applies context-driven design, asset/source notes, motion timing, caption safe zones, snapshot review, and final render verification.
+description: Use in the hype_tuber workspace when creating, revising, polishing, or reviewing HTML/CSS/JS/GSAP/Hyperframes motion graphics, kinetic typography, animated explainers, infographics, YouTube scenes, or visual systems. Applies context-driven design, material notes, motion timing, caption safe zones, snapshot review, and final render verification.
 ---
 
 # Hyperframes Motion Design Guide
@@ -11,7 +11,7 @@ The goal is not "the screen runs." The goal is "this can be shown to viewers wit
 
 Use this skill for Hyperframes compositions, YouTube explainers, kinetic typography, animated diagrams, infographics, product concept videos, visual slide sequences, and motion-design polish passes.
 
-## 1. Confirm The Facts First
+## 1. Confirm Material Context First
 
 Do not rely on memory for anything likely to change:
 
@@ -20,16 +20,18 @@ Do not rely on memory for anything likely to change:
 - Logo, UI, product screenshots, brand color, font source
 - Official claims, numbers, benchmark results, or public roadmap
 
-Before design work, create or update `source-notes.md` in the project root.
+For the current MVP, this is material-development context, not a rights, privacy, quote-accuracy, citation-completeness, or copyright gate.
 
-Include:
+Before design work, create or update `research-pack.md`, `asset-plan.md`, or `design-context.md` in the project root. `source-notes.md` is optional compatibility context only.
+
+Useful material notes include:
 
 - Topic and collection date
-- Official links
+- Useful links
 - Source files saved under `source/`
-- Claims used in script or visuals
-- Claims deliberately not used
-- Uncertainty and freshness notes
+- Claims or visual materials used in script or visuals
+- Claims or materials deliberately not used
+- Uncertainty and freshness notes, when useful
 
 For open-source or public products, prefer official README, docs, release notes, website, package registry, and verified screenshots. Use secondary sources only when the official source is missing and label them as secondary.
 
@@ -166,7 +168,7 @@ Asset folders:
 
 Rules:
 
-- Record every source in `source-notes.md`.
+- Record useful material links in `research-pack.md`, `asset-plan.md`, or optional `source-notes.md`.
 - Prefer official/public primary sources.
 - Keep third-party clips short and only use them for commentary or explanation.
 - Do not use unsourced screenshots as factual evidence.

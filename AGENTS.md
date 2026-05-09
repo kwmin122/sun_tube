@@ -32,6 +32,12 @@ For role-based topic-to-render orchestration, use the local `hype-*` role skills
 
 For tool routing, read `TOOL_ROUTING_PIPELINE.md`. Hyperframes is the default final composition/render path. Use `video-use` only when a scene needs raw/source video analysis, trimming, transcript, clip processing, or burned subtitles before importing the processed result into Hyperframes.
 
+Renderer comparison uses one shared scene contract and separate `composition-hyperframes/` and `composition-remotion/` folders. Do not split interpretation by renderer-specific agents.
+
+`factory:review-video` produces frame evidence and machine reports only. Final PASS requires `director-review.md` with evidence and, when comparing renderers, `renderer-comparison.md`.
+
+If a recurring failure is fixed and verified, consider `/ce-compound`; do not run it during unresolved debugging.
+
 For motion design, animation, visual polish, Hyperframes composition, HTML/CSS/SVG/GSAP layout, or design review, read and apply the local workspace skill:
 
 ```text

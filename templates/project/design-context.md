@@ -8,6 +8,9 @@
 - Format:
 - Target viewer:
 - Viewing situation:
+- Primary content type:
+- Secondary content types:
+- Renderer targets:
 
 ## Sources And Assets
 
@@ -24,16 +27,20 @@
 - Visual mood:
 - Motion personality:
 - Caption safe zone:
+- Primary visual strategy:
+- Motion grammar:
+- Liquid Glass use:
+- Reference anti-patterns:
 
 ## Scene Visual Density
 
 Use this table before Hyperframes implementation. It prevents large empty panels and makes imagegen decisions explicit.
 
-| Scene | Visual Density | Motion Layer | Imagegen Role | Notes |
-|---|---|---|---|---|
-| 01 | standard | source highlight, card reveal | not_required | |
-| 02 | rich | path draw, route pulse, row reveal | support | |
-| 03 | standard | screenshot crop, callout | not_required | |
+| Scene | Scene Recipe | Primary Visual Route | Visual Density | Motion Layer | Imagegen Role | Renderer Targets | Notes |
+|---|---|---|---|---|---|---|---|
+| 01 | | capture | standard | source highlight, card reveal | not_required | hyperframes | |
+| 02 | | hyperframes | rich | path draw, route pulse, row reveal | support | both | |
+| 03 | | capture | standard | screenshot crop, callout | not_required | hyperframes | |
 
 Guidance:
 
@@ -41,6 +48,8 @@ Guidance:
 - Imagegen can be `primary`, `support`, or `not_required` by scene. Use `primary` only when the generated image carries the explanation, emotion, metaphor, reenactment, future scenario, or visual hook.
 - Use capture, interview, data, or HTML/SVG for factual evidence, exact UI, exact text, and text-heavy diagrams.
 - Keep caption-critical content above the bottom caption safe zone.
+- Do not use large decorative connector paths. Any route path must be anchored to concrete nodes and tied to the narration verb.
+- Do not use Liquid Glass as a global card style. Use it only for selected state, focus lens, floating control, or transition boundary.
 
 ## Constraints
 
