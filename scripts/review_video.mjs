@@ -191,9 +191,11 @@ const timedPath = join(projectPath, "timed-scene-packets.md");
 const assetPath = join(projectPath, "asset-plan.md");
 const compositionPath = join(projectPath, "composition/index.html");
 const reviewDir = join(projectPath, "review/video-review");
-const framesDir = join(reviewDir, "frames/scene-frames");
-const suspiciousDir = join(reviewDir, "frames/suspicious-frames");
+const framesRoot = join(reviewDir, "frames");
+const framesDir = join(reviewDir, "scene-frames");
+const suspiciousDir = join(reviewDir, "suspicious-frames");
 const contactDir = join(reviewDir, "contact-sheets");
+const contactSheet = join(reviewDir, "contact-sheet.jpg");
 
 if (!existsSync(render)) {
   console.error(`Review blocked: missing ${rel(render)}`);
@@ -204,8 +206,12 @@ if (project.artifacts?.render !== true && !args.force) {
   process.exit(1);
 }
 
-await rm(join(reviewDir, "frames"), { recursive: true, force: true });
+await rm(framesRoot, { recursive: true, force: true });
+await rm(framesDir, { recursive: true, force: true });
+await rm(suspiciousDir, { recursive: true, force: true });
 await rm(contactDir, { recursive: true, force: true });
+await rm(contactSheet, { force: true });
+await ensureDir(framesRoot);
 await ensureDir(framesDir);
 await ensureDir(suspiciousDir);
 await ensureDir(contactDir);
@@ -223,7 +229,6 @@ const captions = existsSync(srtPath) ? parseSrt(await readText(srtPath)) : [];
 const probe = run("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", render], { timeout: 30_000 });
 const duration = probe.status === 0 ? Number(probe.stdout.trim()) : 0;
 
-const contactSheet = join(contactDir, "contact-sheet.png");
 const contact = run("ffmpeg", ["-y", "-i", render, "-vf", "fps=1/10,scale=320:-1,tile=6x6", "-frames:v", "1", contactSheet], { timeout: 120_000 });
 const frameManifest = [];
 for (const scene of scenes) {
@@ -282,6 +287,72 @@ const sceneFindings = blockers.length
   ? blockers.map((issue) => `| ${issue.scene || "-"} | ${issue.issue} | ${String(issue.detail || "").replaceAll("|", "/")} |`).join("\n")
   : "| - | none | - |";
 
+const sceneFrameNotes = scenes.length
+  ? scenes.map((scene) => {
+      const frames = frameManifest
+        .filter((frame) => frame.scene === scene.id)
+        .map((frame) => `${frame.label}: \`${frame.output}\``)
+        .join("<br>");
+      return `| ${scene.id} | ${scene["Purpose"] || scene["Scene Purpose"] || "-"} | ${frames} |  |  |  |`;
+    }).join("\n")
+  : "| - | - | - | - | - | - |";
+
+await writeText(join(reviewDir, "scene-frame-notes.md"), [
+  "# Scene Frame Notes",
+  "",
+  "프레임을 직접 보고 디렉터 리뷰를 작성하기 위한 작업지입니다.",
+  "",
+  `- Contact sheet: \`${rel(contactSheet)}\``,
+  `- Scene frames: \`${rel(framesDir)}\``,
+  `- Suspicious frames: \`${rel(suspiciousDir)}\``,
+  "",
+  "| Scene | Intended Point | Evidence Frames | What Works | Problem | Required Fix |",
+  "|---|---|---|---|---|---|",
+  sceneFrameNotes,
+  "",
+].join("\n"));
+
+await writeText(join(reviewDir, "director-review.md"), [
+  "# Director Review",
+  "",
+  "Verdict: FAIL",
+  "",
+  "> `factory:review-video` only extracts evidence and runs machine checks. A human or `hype-video-reviewer` must inspect the frames and change this to `Verdict: PASS` only after the rendered video works as a YouTube/motion piece.",
+  "",
+  "## Evidence To Inspect",
+  "",
+  `- Contact sheet: \`${rel(contactSheet)}\``,
+  `- Scene frames: \`${rel(framesDir)}\``,
+  `- Scene notes: \`${rel(join(reviewDir, "scene-frame-notes.md"))}\``,
+  `- Machine review: \`${rel(join(reviewDir, "video-review.md"))}\``,
+  "",
+  "## Critical Findings",
+  "",
+  "| Severity | Scene | Issue | Evidence Frame | Required Fix | Resolved |",
+  "|---|---|---|---|---|---|",
+  blockers.length
+    ? blockers.map((issue) => `| Critical | ${issue.scene || "-"} | ${issue.issue} | ${String(issue.detail || "").replaceAll("|", "/")} | Fix before package | no |`).join("\n")
+    : "| Critical | all | Director review not completed yet | contact sheet + scene frames | Inspect frames and confirm captions, rhythm, motion, assets, and empty-feel | no |",
+  "",
+  "## Review Axes",
+  "",
+  "- Scene Intent: 화면이 지금 말하는 내용을 이해시키는가.",
+  "- Visual Thesis: 한눈에 보이는 핵심 구조가 있는가.",
+  "- Motion Purpose: 움직임이 설명을 돕는가.",
+  "- Motion Variety: 같은 카드/페이드 반복이 아닌가.",
+  "- Asset Fit: capture/imagegen/HTML/interview가 적절한 역할로 쓰였는가.",
+  "- Empty Feel: 채웠지만 비어 보이는 장면은 없는가.",
+  "- YouTube Rhythm: 5-10초마다 볼 이유가 생기는가.",
+  "- Caption Sync: 말과 자막이 맞고 중요한 화면을 가리지 않는가.",
+  "",
+  "## Scene Notes",
+  "",
+  "| Scene | Intent | Visual Thesis | Motion Purpose | Caption/Asset Fit | Decision |",
+  "|---|---|---|---|---|---|",
+  scenes.length ? scenes.map((scene) => `| ${scene.id} |  |  |  |  | review |`).join("\n") : "| - |  |  |  |  | review |",
+  "",
+].join("\n"));
+
 await writeText(join(reviewDir, "fix-list.md"), [
   "# Video Review Fix List",
   "",
@@ -292,8 +363,10 @@ await writeText(join(reviewDir, "fix-list.md"), [
 await writeText(join(reviewDir, "video-review.md"), [
   "# Video Review",
   "",
-  `## Verdict`,
+  "## Machine Verdict",
   verdict,
+  "",
+  "This is not final aesthetic approval. `review/video-review/director-review.md` must be `Verdict: PASS` before final QA/package.",
   "",
   "## Evidence",
   "",
@@ -336,14 +409,15 @@ await writeText(join(reviewDir, "video-review.md"), [
   "## Editor Notes",
   "",
   "- Review the contact sheet and scene frames before upload.",
-  "- Package is allowed only when this verdict is PASS.",
+  "- Package is allowed only when the machine review and director review both pass.",
   "",
 ].join("\n"));
 
 project.artifacts.videoReview = verdict === "PASS";
+project.artifacts.directorReview = false;
 if (verdict === "PASS") {
   project.status = "video_review";
-  project.currentGate = "final_qa";
+  project.currentGate = "video_review";
 } else {
   project.status = "blocked";
   project.currentGate = "blocked";

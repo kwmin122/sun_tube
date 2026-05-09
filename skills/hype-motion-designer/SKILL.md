@@ -42,7 +42,7 @@ Use this before pre-render QA:
 - Add at least one real motion primitive: path draw, route pulse, scan fill, count-up, sequential row reveal, or liquid sheen.
 - Avoid large empty cards or panels. A panel needs an information role, not just a title.
 - Keep primary labels and moving tokens above the caption safe zone.
-- Use imagegen only for mood/styleframe/background/thumbnail assets. Build text-heavy diagrams in HTML/SVG/GSAP.
+- Classify imagegen per scene as `primary`, `support`, or `not_required`. Use `primary` when a generated image carries the explanation/emotion/metaphor; use `support` for mood/styleframe/background/thumbnail; use `not_required` when capture, interview, data, or HTML/SVG explains the scene better.
 - Do not use full-width decorative connector SVGs that float across the canvas or pass over card titles. Lines must be anchored to concrete nodes, clipped inside their container, or replaced with short arrows/tokens.
 
 ## Motion Primitives

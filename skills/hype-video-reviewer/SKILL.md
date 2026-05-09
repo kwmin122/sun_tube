@@ -23,6 +23,8 @@ Use after Hyperframes render and before final QA/package.
 npm run factory:review-video -- <project-path>
 ```
 
+This command extracts evidence and runs machine checks. It does not grant final approval.
+
 ## Review Standard
 
 Check the finished video like an editing director, not just a file validator.
@@ -36,12 +38,45 @@ Check the finished video like an editing director, not just a file validator.
 - Route transparency: state whether `imagegen`, `capture`, `video-use`, and Hyperframes were required or not. Missing imagegen is fine only when the route is explicitly `not_required`.
 - YouTube pacing: flag long dead zones, weak hook frames, caption overlap, and visuals that feel like unfinished slides.
 
+## Director Review Gate
+
+After running `factory:review-video`, inspect the contact sheet and start/mid/end scene frames before writing `director-review.md`.
+
+`director-review.md` is the packaging gate:
+
+- `Verdict: PASS` means the video can proceed to final QA.
+- `Verdict: FAIL` means package must stay blocked.
+- Critical rows must have `Resolved` set to `yes`, `pass`, `resolved`, `done`, or `fixed`.
+
+Never change `director-review.md` to PASS just because `video-review.md` has a machine PASS. PASS requires visual judgment across the axes below:
+
+- Scene Intent
+- Visual Thesis
+- Motion Purpose
+- Motion Variety
+- Asset Fit
+- Empty Feel
+- YouTube Rhythm
+- Caption Sync
+
+## Imagegen Role
+
+Judge imagegen per scene. Do not globally force it on or off.
+
+- `primary`: generated image is the scene's core explanation, emotion, reenactment, future scenario, metaphor, or visual hook.
+- `support`: generated image is mood, texture, atmosphere, transition, opening styleframe, or thumbnail candidate.
+- `not_required`: official docs, UI capture, interview, data, exact text, or HTML/SVG diagram is clearer.
+
+For the current Claude Managed Agents video, most body scenes are HTML/SVG/GSAP first, so imagegen is usually `support` or `not_required`. Other topics may legitimately use imagegen as `primary`.
+
 ## Output
 
 Write under `review/video-review/`:
 
 - `video-review.md`
 - `fix-list.md`
+- `director-review.md`
+- `scene-frame-notes.md`
 - `frame-manifest.json`
 - `caption-sync-report.json`
 - `caption-config-report.json`
@@ -50,6 +85,8 @@ Write under `review/video-review/`:
 - `line-quality-report.json`
 - `route-transparency-report.json`
 - `frames/`
-- `contact-sheets/`
+- `scene-frames/`
+- `suspicious-frames/`
+- `contact-sheet.jpg`
 
-`video-review.md` must be `PASS` before final QA and packaging. This role does not review source rights, privacy, or copyright risk.
+`video-review.md` and `director-review.md` must both pass before final QA and packaging. This role does not review source rights, privacy, or copyright risk.

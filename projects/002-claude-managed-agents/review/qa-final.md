@@ -7,6 +7,9 @@ Result: PASS
 | project.json schema | PASS |  |
 | video review complete | PASS | factory:review-video must pass before final QA |
 | video review report exists | PASS | projects/002-claude-managed-agents/review/video-review/video-review.md |
+| director review exists | PASS | projects/002-claude-managed-agents/review/video-review/director-review.md |
+| director review verdict PASS | PASS | PASS |
+| director critical findings resolved | PASS | no unresolved critical findings |
 | render exists | PASS | projects/002-claude-managed-agents/renders/final.mp4 |
 | ffprobe | PASS | {
     "programs": [

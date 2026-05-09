@@ -82,6 +82,7 @@ export const ARTIFACT_FILES = {
   composition: "composition",
   render: "renders/final.mp4",
   videoReview: "review/video-review/video-review.md",
+  directorReview: "review/video-review/director-review.md",
 };
 
 export const ROLE_BY_GATE = {
@@ -160,14 +161,14 @@ export const ROLE_BY_GATE = {
   video_review: {
     roles: ["hype-video-reviewer"],
     read: ["project.json", "renders/final.mp4", "voiceover/solo/voiceover-solo-elevenlabs.srt", "timed-scene-packets.md", "asset-plan.md", "work-orders/*.md", "composition/"],
-    write: ["review/video-review/video-review.md", "review/video-review/*.json", "review/video-review/fix-list.md"],
-    note: "렌더된 MP4를 프레임/자막/모션/에셋 관점으로 검수하고 문제 프레임 증거를 남긴다.",
+    write: ["review/video-review/video-review.md", "review/video-review/scene-frame-notes.md", "review/video-review/director-review.md", "review/video-review/*.json", "review/video-review/fix-list.md"],
+    note: "렌더된 MP4에서 프레임 증거를 만들고, 디렉터가 director-review.md에 PASS/FAIL 판단을 남긴다.",
   },
   final_qa: {
     roles: ["hype-qa-editor"],
-    read: ["project.json", "renders/final.mp4", "review/video-review/video-review.md"],
+    read: ["project.json", "renders/final.mp4", "review/video-review/video-review.md", "review/video-review/director-review.md"],
     write: ["review/qa-final.md"],
-    note: "최종 MP4의 오디오/비디오 스트림과 duration을 확인한다.",
+    note: "디렉터 리뷰 PASS와 최종 MP4의 오디오/비디오 스트림, duration을 확인한다.",
   },
   package: {
     roles: ["hype-packaging-editor"],
@@ -383,7 +384,12 @@ export function validateProjectShape(project) {
 
 export function inferGate(project) {
   if (project.currentGate === "blocked" || project.status === "blocked") return "blocked";
-  if ((project.currentGate === "done" || project.status === "done") && (!project.artifacts?.render || project.artifacts?.videoReview)) return "done";
+  if (
+    (project.currentGate === "done" || project.status === "done") &&
+    project.artifacts?.render &&
+    project.artifacts?.videoReview &&
+    project.artifacts?.directorReview
+  ) return "done";
   if (!project.artifacts?.researchPack) return project.currentGate === "topic_intake" ? "topic_intake" : "research";
   if (!project.artifacts?.creativeBrief || !project.approved?.creativeBrief) return "creative";
   if (!project.artifacts?.draftScenePackets) return "draft_scenes";
@@ -403,6 +409,7 @@ export function inferGate(project) {
   if (!project.approved?.render) return "pre_render_qa";
   if (!project.artifacts?.render) return "render";
   if (!project.artifacts?.videoReview) return "video_review";
+  if (!project.artifacts?.directorReview) return "video_review";
   if (project.currentGate === "final_qa") return "final_qa";
   if (project.currentGate === "package") return "package";
   return project.currentGate || "topic_intake";

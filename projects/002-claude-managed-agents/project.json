@@ -6,7 +6,7 @@
   "status": "done",
   "currentGate": "done",
   "createdAt": "2026-05-08T00:00:00.000Z",
-  "updatedAt": "2026-05-09T04:22:06.316Z",
+  "updatedAt": "2026-05-09T05:12:39.304Z",
   "approved": {
     "creativeBrief": true,
     "plan": true,
@@ -26,7 +26,8 @@
     "designContext": true,
     "composition": true,
     "render": true,
-    "videoReview": true
+    "videoReview": true,
+    "directorReview": true
   },
   "routes": {
     "workOrders": "done",

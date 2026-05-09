@@ -1,278 +1,278 @@
 {
-  "contactSheet": "projects/002-claude-managed-agents/review/video-review/contact-sheets/contact-sheet.png",
+  "contactSheet": "projects/002-claude-managed-agents/review/video-review/contact-sheet.jpg",
   "contactSheetOk": true,
   "frames": [
     {
       "scene": "01",
       "label": "start",
       "at": 0.4,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-01-start.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-01-start.png",
       "ok": true
     },
     {
       "scene": "01",
       "label": "mid",
       "at": 6.7,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-01-mid.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-01-mid.png",
       "ok": true
     },
     {
       "scene": "01",
       "label": "end",
       "at": 13,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-01-end.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-01-end.png",
       "ok": true
     },
     {
       "scene": "02",
       "label": "start",
       "at": 13.8,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-02-start.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-02-start.png",
       "ok": true
     },
     {
       "scene": "02",
       "label": "mid",
       "at": 17.9,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-02-mid.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-02-mid.png",
       "ok": true
     },
     {
       "scene": "02",
       "label": "end",
       "at": 22,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-02-end.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-02-end.png",
       "ok": true
     },
     {
       "scene": "03",
       "label": "start",
       "at": 22.799999999999997,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-03-start.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-03-start.png",
       "ok": true
     },
     {
       "scene": "03",
       "label": "mid",
       "at": 36.65,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-03-mid.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-03-mid.png",
       "ok": true
     },
     {
       "scene": "03",
       "label": "end",
       "at": 50.5,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-03-end.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-03-end.png",
       "ok": true
     },
     {
       "scene": "04",
       "label": "start",
       "at": 51.3,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-04-start.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-04-start.png",
       "ok": true
     },
     {
       "scene": "04",
       "label": "mid",
       "at": 65.15,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-04-mid.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-04-mid.png",
       "ok": true
     },
     {
       "scene": "04",
       "label": "end",
       "at": 79,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-04-end.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-04-end.png",
       "ok": true
     },
     {
       "scene": "05",
       "label": "start",
       "at": 79.80000000000001,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-05-start.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-05-start.png",
       "ok": true
     },
     {
       "scene": "05",
       "label": "mid",
       "at": 97.65,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-05-mid.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-05-mid.png",
       "ok": true
     },
     {
       "scene": "05",
       "label": "end",
       "at": 115.5,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-05-end.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-05-end.png",
       "ok": true
     },
     {
       "scene": "06",
       "label": "start",
       "at": 116.30000000000001,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-06-start.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-06-start.png",
       "ok": true
     },
     {
       "scene": "06",
       "label": "mid",
       "at": 125.9,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-06-mid.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-06-mid.png",
       "ok": true
     },
     {
       "scene": "06",
       "label": "end",
       "at": 135.5,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-06-end.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-06-end.png",
       "ok": true
     },
     {
       "scene": "07",
       "label": "start",
       "at": 136.3,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-07-start.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-07-start.png",
       "ok": true
     },
     {
       "scene": "07",
       "label": "mid",
       "at": 155.9,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-07-mid.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-07-mid.png",
       "ok": true
     },
     {
       "scene": "07",
       "label": "end",
       "at": 175.5,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-07-end.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-07-end.png",
       "ok": true
     },
     {
       "scene": "08",
       "label": "start",
       "at": 176.3,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-08-start.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-08-start.png",
       "ok": true
     },
     {
       "scene": "08",
       "label": "mid",
       "at": 186.65,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-08-mid.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-08-mid.png",
       "ok": true
     },
     {
       "scene": "08",
       "label": "end",
       "at": 197,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-08-end.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-08-end.png",
       "ok": true
     },
     {
       "scene": "09",
       "label": "start",
       "at": 197.8,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-09-start.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-09-start.png",
       "ok": true
     },
     {
       "scene": "09",
       "label": "mid",
       "at": 211.4,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-09-mid.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-09-mid.png",
       "ok": true
     },
     {
       "scene": "09",
       "label": "end",
       "at": 225,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-09-end.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-09-end.png",
       "ok": true
     },
     {
       "scene": "10",
       "label": "start",
       "at": 225.8,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-10-start.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-10-start.png",
       "ok": true
     },
     {
       "scene": "10",
       "label": "mid",
       "at": 236.7,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-10-mid.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-10-mid.png",
       "ok": true
     },
     {
       "scene": "10",
       "label": "end",
       "at": 247.6,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-10-end.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-10-end.png",
       "ok": true
     },
     {
       "scene": "11",
       "label": "start",
       "at": 248.4,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-11-start.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-11-start.png",
       "ok": true
     },
     {
       "scene": "11",
       "label": "mid",
       "at": 261.45,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-11-mid.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-11-mid.png",
       "ok": true
     },
     {
       "scene": "11",
       "label": "end",
       "at": 274.5,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-11-end.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-11-end.png",
       "ok": true
     },
     {
       "scene": "12",
       "label": "start",
       "at": 275.29999999999995,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-12-start.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-12-start.png",
       "ok": true
     },
     {
       "scene": "12",
       "label": "mid",
       "at": 293.15,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-12-mid.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-12-mid.png",
       "ok": true
     },
     {
       "scene": "12",
       "label": "end",
       "at": 311,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-12-end.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-12-end.png",
       "ok": true
     },
     {
       "scene": "13",
       "label": "start",
       "at": 311.79999999999995,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-13-start.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-13-start.png",
       "ok": true
     },
     {
       "scene": "13",
       "label": "mid",
       "at": 322.65,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-13-mid.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-13-mid.png",
       "ok": true
     },
     {
       "scene": "13",
       "label": "end",
       "at": 333.5,
-      "output": "projects/002-claude-managed-agents/review/video-review/frames/scene-frames/scene-13-end.png",
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames/scene-13-end.png",
       "ok": true
     }
   ]

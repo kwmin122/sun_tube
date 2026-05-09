@@ -40,10 +40,10 @@ Status values:
 - `qa_passed`: pre-render QA has confirmed the row and matching work order.
 - `blocked`: input, implementation, or QA problem must be resolved first.
 
-| Scene | Time | Pattern Role | Tool Route | Visual Density | Motion Layer | Imagegen Need | Narration Beat | Asset Type | Link / File / Candidate | Speaker / Role | Timestamp | Processing Needed | Status |
+| Scene | Time | Pattern Role | Tool Route | Visual Density | Motion Layer | Imagegen Role | Narration Beat | Asset Type | Link / File / Candidate | Speaker / Role | Timestamp | Processing Needed | Status |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 01 | | claim/proof/context | capture | standard | screenshot highlight | not_required | | proof screenshot | | | | crop, highlight | planned |
-| 02 | | diagram/demo/data | hyperframes | rich | path draw, row reveal | optional | | diagram | | | | HTML/SVG build | planned |
+| 02 | | diagram/demo/data | hyperframes | rich | path draw, row reveal | support | | diagram | | | | HTML/SVG build | planned |
 | 03 | | quote/context | video-use | standard | clip trim, subtitle | not_required | | interview clip | | | | trim, subtitle, crop | planned |
 
 ## Material Rules
@@ -54,7 +54,11 @@ Status values:
 - For interview clips, note speaker, role, and timestamp when available.
 - Route raw/reference/interview/demo video through `video-use` when it needs analysis, trimming, transcript, subtitles, crop, or export.
 - Route final HTML motion, captions, diagrams, and composition through Hyperframes.
-- Use imagegen for mood textures, abstract style frames, thumbnails, or non-factual atmosphere. Do not use imagegen for text-heavy information graphics, official UI evidence, or precise diagrams that should be HTML/SVG/capture.
+- Classify imagegen per scene as `primary`, `support`, or `not_required`.
+- `primary`: generated image carries the scene's core explanation, emotion, reenactment, future scenario, metaphor, or visual hook.
+- `support`: generated image provides mood texture, abstract style frame, thumbnail, transition, or non-factual atmosphere around another primary visual.
+- `not_required`: official UI/docs/interview/data, exact text, or HTML/SVG/capture is clearer than a generated image.
+- Do not use imagegen for official UI evidence or precise text-heavy diagrams that should be HTML/SVG/capture.
 - Dense explainer scenes should not be large empty panels. If `Visual Density` is `rich`, include information rows, tokens, paths, counters, scan fills, or other visible state changes.
 - Do not force a reference video's edit order onto an unrelated topic.
 

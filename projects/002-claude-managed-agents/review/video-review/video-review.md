@@ -1,13 +1,15 @@
 # Video Review
 
-## Verdict
+## Machine Verdict
 PASS
+
+This is not final aesthetic approval. `review/video-review/director-review.md` must be `Verdict: PASS` before final QA/package.
 
 ## Evidence
 
-- Contact sheet: `projects/002-claude-managed-agents/review/video-review/contact-sheets/contact-sheet.png`
-- Scene frames: `projects/002-claude-managed-agents/review/video-review/frames/scene-frames`
-- Suspicious frames: `projects/002-claude-managed-agents/review/video-review/frames/suspicious-frames`
+- Contact sheet: `projects/002-claude-managed-agents/review/video-review/contact-sheet.jpg`
+- Scene frames: `projects/002-claude-managed-agents/review/video-review/scene-frames`
+- Suspicious frames: `projects/002-claude-managed-agents/review/video-review/suspicious-frames`
 
 ## Scene Findings
 
@@ -19,7 +21,7 @@ PASS
 
 - Cues: 133
 - Issues: 0
-- Caption lead: 1.25s
+- Caption lead: 1.45s
 - Caption config issues: 0
 
 ## Motion Variety
@@ -44,4 +46,4 @@ PASS
 ## Editor Notes
 
 - Review the contact sheet and scene frames before upload.
-- Package is allowed only when this verdict is PASS.
+- Package is allowed only when the machine review and director review both pass.

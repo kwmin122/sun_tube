@@ -26,7 +26,8 @@
     "designContext": false,
     "composition": false,
     "render": false,
-    "videoReview": false
+    "videoReview": false,
+    "directorReview": false
   },
   "routes": {
     "workOrders": "not_required",

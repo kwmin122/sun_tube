@@ -102,8 +102,8 @@ projects/{NNN-slug}/
 | 8. Timed Scene Packets | `timed-scene-packets.md` | Exact scene timing, caption behavior, motion beats, and asset timing are mapped to SRT. |
 | 9. Tool Routing + Production | routed assets + composition | Every scene has a primary route before asset, visual, motion, and audio work starts. |
 | 10. Pre-render Verification | snapshots | Captions do not collide, dense frames are readable, and route work is complete before render. |
-| 11. Video Review | `review/video-review/video-review.md` | Rendered frames, captions, route transparency, line quality, asset presence, empty panels, and motion variety pass the editor check. |
-| 12. Final QA | MP4 probe | Final render has valid audio/video streams and duration after video review. |
+| 11. Video Review | `review/video-review/video-review.md` + `director-review.md` | Rendered frames and contact sheet are generated, then the editor/director explicitly approves scene intent, motion purpose, rhythm, captions, assets, and empty-feel. |
+| 12. Final QA | MP4 probe | Final render has valid audio/video streams and duration after machine video review and director review both pass. |
 | 13. Packaging | title/thumbnail/description direction | Upload package direction matches the approved video. |
 
 ## Asset Roles

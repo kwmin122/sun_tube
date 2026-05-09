@@ -1,6 +1,7 @@
 # Upload Checklist
 
 - [ ] Video review passed
+- [ ] Director review passed
 - [ ] Final QA passed
 - [ ] `renders/final.mp4` exists
 - [ ] Title selected

@@ -759,6 +759,8 @@ npm run factory:qa -- projects/003-topic -- --stage final
 npm run factory:package -- projects/003-topic
 ```
 
+`factory:review-video` is evidence extraction plus machine checks. It must create/refresh `review/video-review/director-review.md` as `Verdict: FAIL` by default. Packaging is allowed only after a human editor or `hype-video-reviewer` inspects the frames and changes it to `Verdict: PASS` with critical findings resolved.
+
 ### `compose_project.mjs`
 
 Purpose:

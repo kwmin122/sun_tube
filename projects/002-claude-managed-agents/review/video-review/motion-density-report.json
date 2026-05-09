@@ -16,13 +16,13 @@
       "scene": "02",
       "rich": false,
       "id": "02",
-      "rows": 0,
-      "tokens": 3,
+      "rows": 1,
+      "tokens": 4,
       "paths": 0,
-      "scans": 3,
-      "sheens": 3,
+      "scans": 1,
+      "sheens": 2,
       "ticks": 0,
-      "signature": "tokens+scans+sheens"
+      "signature": "rows+tokens+scans+sheens"
     },
     {
       "scene": "03",
@@ -52,13 +52,13 @@
       "scene": "05",
       "rich": false,
       "id": "05",
-      "rows": 0,
-      "tokens": 3,
+      "rows": 3,
+      "tokens": 4,
       "paths": 0,
       "scans": 3,
       "sheens": 3,
-      "ticks": 0,
-      "signature": "tokens+scans+sheens"
+      "ticks": 1,
+      "signature": "rows+tokens+scans+sheens+ticks"
     },
     {
       "scene": "06",
@@ -66,33 +66,33 @@
       "id": "06",
       "rows": 7,
       "tokens": 0,
-      "paths": 0,
+      "paths": 4,
       "scans": 0,
       "sheens": 2,
       "ticks": 3,
-      "signature": "rows+sheens+ticks"
+      "signature": "rows+paths+sheens+ticks"
     },
     {
       "scene": "07",
-      "rich": false,
+      "rich": true,
       "id": "07",
-      "rows": 1,
-      "tokens": 0,
-      "paths": 0,
-      "scans": 0,
-      "sheens": 0,
+      "rows": 4,
+      "tokens": 4,
+      "paths": 4,
+      "scans": 5,
+      "sheens": 5,
       "ticks": 0,
-      "signature": "rows"
+      "signature": "rows+tokens+paths+scans+sheens"
     },
     {
       "scene": "08",
       "rich": true,
       "id": "08",
-      "rows": 8,
+      "rows": 10,
       "tokens": 16,
       "paths": 0,
-      "scans": 4,
-      "sheens": 4,
+      "scans": 6,
+      "sheens": 6,
       "ticks": 0,
       "signature": "rows+tokens+scans+sheens"
     },
@@ -101,18 +101,18 @@
       "rich": true,
       "id": "09",
       "rows": 3,
-      "tokens": 6,
-      "paths": 0,
+      "tokens": 0,
+      "paths": 2,
       "scans": 3,
       "sheens": 3,
       "ticks": 0,
-      "signature": "rows+tokens+scans+sheens"
+      "signature": "rows+paths+scans+sheens"
     },
     {
       "scene": "10",
       "rich": true,
       "id": "10",
-      "rows": 6,
+      "rows": 3,
       "tokens": 0,
       "paths": 0,
       "scans": 3,
@@ -126,11 +126,11 @@
       "id": "11",
       "rows": 0,
       "tokens": 0,
-      "paths": 0,
-      "scans": 4,
-      "sheens": 4,
+      "paths": 4,
+      "scans": 0,
+      "sheens": 1,
       "ticks": 4,
-      "signature": "scans+sheens+ticks"
+      "signature": "paths+sheens+ticks"
     },
     {
       "scene": "12",
@@ -148,13 +148,13 @@
       "scene": "13",
       "rich": false,
       "id": "13",
-      "rows": 0,
+      "rows": 1,
       "tokens": 4,
-      "paths": 0,
+      "paths": 4,
       "scans": 1,
-      "sheens": 0,
+      "sheens": 1,
       "ticks": 0,
-      "signature": "tokens+scans"
+      "signature": "rows+tokens+paths+scans+sheens"
     }
   ],
   "issues": []

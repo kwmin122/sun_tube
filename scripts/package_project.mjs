@@ -18,8 +18,8 @@ if (!projectArg) {
 }
 
 const { project, projectPath } = await loadProject(projectArg);
-if ((project.currentGate !== "package" || project.artifacts?.render !== true || project.artifacts?.videoReview !== true) && !args.force) {
-  console.error("Package blocked: video review and final QA must pass, and render artifact must be complete. Use --force only as an explicit override.");
+if ((project.currentGate !== "package" || project.artifacts?.render !== true || project.artifacts?.videoReview !== true || project.artifacts?.directorReview !== true) && !args.force) {
+  console.error("Package blocked: machine video review, director review, final QA, and render artifact must pass. Use --force only as an explicit override.");
   process.exit(1);
 }
 const outDir = join(projectPath, "package");
@@ -70,6 +70,7 @@ await writeText(join(outDir, "upload-checklist.md"), [
   "# Upload Checklist",
   "",
   "- [ ] Video review passed",
+  "- [ ] Director review passed",
   "- [ ] Final QA passed",
   "- [ ] `renders/final.mp4` exists",
   "- [ ] Title selected",

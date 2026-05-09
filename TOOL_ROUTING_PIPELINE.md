@@ -108,15 +108,13 @@ Pre-render QA treats `planned`, `inputs_ready`, `todo`, `pending`, and `blocked`
 
 ## Visual Density And Imagegen
 
-For information explainer scenes, prefer HTML/SVG/GSAP over generated images when the viewer needs to read labels, compare steps, or understand a system diagram.
+For information explainer scenes, prefer HTML/SVG/GSAP over generated images when the viewer needs to read labels, compare steps, or understand a system diagram. Do not make that a global ban: imagegen can be a scene's primary visual when the topic is emotional, metaphorical, reenacted, speculative, or thumbnail-driven.
 
-Use imagegen for:
+Classify imagegen per scene:
 
-- mood texture
-- abstract background
-- opening styleframe
-- thumbnail candidates
-- non-factual atmosphere layers
+- `primary`: generated image carries the scene's core explanation, emotion, reenactment, future scenario, metaphor, or visual hook.
+- `support`: generated image provides mood texture, abstract background, opening styleframe, thumbnail candidate, transition, or non-factual atmosphere layer.
+- `not_required`: capture, interview, data, exact text, or HTML/SVG diagram is clearer.
 
 Do not use imagegen for:
 
@@ -128,6 +126,10 @@ Do not use imagegen for:
 If `imagegen` is not used, make that explicit in `project.json.routes.imagegen`, `work-orders/imagegen.md`, and the video review route transparency report. A missing generated image is acceptable only when the route is intentionally `not_required`; otherwise it is a production gap.
 
 If a scene is marked `data-visual-density="rich"`, the composition must include enough visible structure: information rows, route tokens, SVG paths, progress rails, scan fills, count/tick states, or equivalent motion primitives. Large empty glass panels fail pre-render QA.
+
+## Director Review Gate
+
+`factory:review-video` extracts contact sheets, scene frames, suspicious frames, and machine reports. It does not give final creative approval. `review/video-review/director-review.md` must say `Verdict: PASS` and have no unresolved critical findings before final QA and package are allowed.
 
 ## Connector Line Quality
 

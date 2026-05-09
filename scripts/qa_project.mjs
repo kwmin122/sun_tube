@@ -161,6 +161,28 @@ function visualDensityIssues(compositionHtml, assetRows = []) {
   return issues;
 }
 
+function directorVerdict(markdown) {
+  const inline = markdown.match(/^Verdict:\s*(PASS|FAIL)\b/im);
+  if (inline) return inline[1].toUpperCase();
+  const section = markdown.match(/^##\s+Verdict\s*\n+([^\n]+)/im);
+  return section ? section[1].trim().toUpperCase() : "";
+}
+
+function unresolvedCriticalFindings(markdown) {
+  const rows = tableRows(markdown).flatMap((table) => table.rows);
+  const unresolved = [];
+  for (const row of rows) {
+    const severity = clean(row.Severity || row.Priority || row.Level || "");
+    if (!/\b(critical|blocker)\b/i.test(severity)) continue;
+    const state = clean(row.Resolved || row.Status || row.Done || "");
+    if (!/^(yes|true|pass|resolved|done|fixed)$/i.test(state)) unresolved.push(row);
+  }
+  const uncheckedCritical = markdown
+    .split(/\r?\n/)
+    .filter((line) => /-\s+\[\s\]/.test(line) && /\b(critical|blocker)\b/i.test(line));
+  return [...unresolved, ...uncheckedCritical.map((line) => ({ Issue: line }))];
+}
+
 async function readWorkOrders(projectPath) {
   const files = ["video-use", "imagegen", "capture", "hyperframes"];
   const rows = [];
@@ -273,8 +295,15 @@ if (stage === "pre-render") {
 if (stage === "final") {
   const render = join(projectPath, "renders/final.mp4");
   const videoReview = join(projectPath, "review/video-review/video-review.md");
+  const directorReview = join(projectPath, "review/video-review/director-review.md");
+  const directorText = await readText(directorReview, "");
+  const criticalOpen = unresolvedCriticalFindings(directorText);
+  const verdict = directorVerdict(directorText);
   add(checks, project.artifacts?.videoReview === true, "video review complete", "factory:review-video must pass before final QA");
   add(checks, existsSync(videoReview), "video review report exists", rel(videoReview));
+  add(checks, existsSync(directorReview), "director review exists", rel(directorReview));
+  add(checks, verdict === "PASS", "director review verdict PASS", verdict || "missing Verdict: PASS");
+  add(checks, criticalOpen.length === 0, "director critical findings resolved", criticalOpen.length ? `${criticalOpen.length} unresolved critical finding(s)` : "no unresolved critical findings");
   add(checks, existsSync(render), "render exists", rel(render));
   if (existsSync(render)) {
     const probe = run("ffprobe", ["-v", "error", "-show_entries", "format=duration:stream=codec_type,width,height,avg_frame_rate", "-of", "json", render], { timeout: 30_000 });
@@ -283,6 +312,7 @@ if (stage === "final") {
   const result = report("final", checks);
   await writeText(join(projectPath, "review/qa-final.md"), result.markdown);
   if (result.ok) {
+    project.artifacts.directorReview = true;
     project.status = "final_qa";
     project.currentGate = "package";
     await saveProject(projectPath, project);

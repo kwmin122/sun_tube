@@ -92,7 +92,8 @@
         "designContext",
         "composition",
         "render",
-        "videoReview"
+        "videoReview",
+        "directorReview"
       ],
       "properties": {
         "researchPack": { "type": "boolean" },
@@ -106,7 +107,8 @@
         "designContext": { "type": "boolean" },
         "composition": { "type": "boolean" },
         "render": { "type": "boolean" },
-        "videoReview": { "type": "boolean" }
+        "videoReview": { "type": "boolean" },
+        "directorReview": { "type": "boolean" }
       },
       "additionalProperties": false
     },

@@ -85,6 +85,7 @@ copyFileSync(output, downloadsOutput);
 project.artifacts.render = true;
 project.status = "render";
 project.artifacts.videoReview = false;
+project.artifacts.directorReview = false;
 project.currentGate = "video_review";
 await saveProject(projectPath, project);
 console.log(`Rendered: ${rel(output)}`);
