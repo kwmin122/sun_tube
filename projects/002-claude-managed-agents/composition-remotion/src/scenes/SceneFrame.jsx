@@ -1,10 +1,40 @@
 import React from "react";
-import { AbsoluteFill, Img, interpolate, spring, staticFile, useCurrentFrame } from "remotion";
-import { BeforeAfter, FanOutFanIn, FlowPipeline, RubricLoop, SourceZoom } from "../primitives/MotionPrimitives.jsx";
+import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import {
+  Scene01OperatingSystem,
+  Scene02Reframe,
+  Scene03DreamingEvidence,
+  Scene04MemoryContinuity,
+  Scene05OutcomeRubricSetup,
+  Scene06OutcomeRevisionLoop,
+  Scene07LeadAgentDelegation,
+  Scene08FanOutFanIn,
+  Scene09EventTriggerGate,
+  Scene10AutomationQueue,
+  Scene11SystemConvergence,
+  Scene12CaseEvidence,
+  Scene13FinalPayoff,
+  SceneFallback,
+} from "./V2Scenes.jsx";
 
 const accent = "#f2ad6d";
-const teal = "#57d5c5";
 const cream = "#fffaf0";
+
+const sceneMap = {
+  "01": Scene01OperatingSystem,
+  "02": Scene02Reframe,
+  "03": Scene03DreamingEvidence,
+  "04": Scene04MemoryContinuity,
+  "05": Scene05OutcomeRubricSetup,
+  "06": Scene06OutcomeRevisionLoop,
+  "07": Scene07LeadAgentDelegation,
+  "08": Scene08FanOutFanIn,
+  "09": Scene09EventTriggerGate,
+  "10": Scene10AutomationQueue,
+  "11": Scene11SystemConvergence,
+  "12": Scene12CaseEvidence,
+  "13": Scene13FinalPayoff,
+};
 
 function Background({ scene }) {
   return (
@@ -21,46 +51,8 @@ function Header({ scene, progress }) {
   const slide = interpolate(progress, [0, 0.12], [-36, 0], { extrapolateRight: "clamp" });
   return (
     <div style={{ position: "absolute", top: 54, left: 68, right: 68, transform: `translateY(${slide}px)`, opacity: interpolate(progress, [0, 0.1], [0, 1], { extrapolateRight: "clamp" }) }}>
-      <div style={{ color: accent, fontSize: 36, fontWeight: 950, letterSpacing: 0, textTransform: "uppercase" }}>{scene.kicker}</div>
-      <div style={{ marginTop: 10, maxWidth: 1540, color: cream, fontSize: scene.title.length > 34 ? 66 : 76, lineHeight: 1.06, fontWeight: 950, letterSpacing: 0 }}>{scene.title}</div>
-    </div>
-  );
-}
-
-function SceneBody({ scene, progress }) {
-  if (scene.id === "02") return <BeforeAfter scene={scene} progress={progress} />;
-  if (["05", "06"].includes(scene.id)) return <RubricLoop scene={scene} progress={progress} />;
-  if (["07", "08"].includes(scene.id)) return <FanOutFanIn scene={scene} progress={progress} />;
-  if (["09", "10"].includes(scene.id)) return <FlowPipeline scene={scene} progress={progress} />;
-  if (["03", "12"].includes(scene.id)) return <SourceZoom scene={scene} progress={progress} />;
-  return <Synthesis scene={scene} progress={progress} />;
-}
-
-function Synthesis({ scene, progress }) {
-  const items = scene.items || [];
-  const focus = Math.min(items.length - 1, Math.max(0, Math.floor(progress * items.length)));
-  return (
-    <div style={{ position: "absolute", left: 86, right: 86, bottom: 175, top: 300, display: "grid", gridTemplateColumns: `repeat(${Math.min(4, items.length)}, 1fr)`, gap: 28 }}>
-      {items.map((item, index) => {
-        const p = spring({ frame: Math.max(0, progress * 180 - index * 10), fps: 30, config: { damping: 19, stiffness: 115 } });
-        return (
-          <div key={item} style={{
-            borderRadius: 28,
-            border: `1px solid ${index === focus ? "rgba(242,173,109,.72)" : "rgba(255,255,255,.14)"}`,
-            background: index === focus ? "linear-gradient(135deg, rgba(242,173,109,.18), rgba(87,213,197,.08))" : "rgba(255,255,255,.055)",
-            padding: 34,
-            transform: `translateY(${(1 - p) * 40}px) scale(${0.96 + p * 0.04})`,
-            opacity: 0.38 + p * 0.62,
-            boxShadow: index === focus ? "0 0 60px rgba(242,173,109,.18), inset 0 1px 0 rgba(255,255,255,.16)" : "inset 0 1px 0 rgba(255,255,255,.10)"
-          }}>
-            <div style={{ color: index === focus ? accent : "rgba(255,255,255,.44)", fontSize: 24, fontWeight: 900 }}>0{index + 1}</div>
-            <div style={{ color: cream, fontSize: 46, lineHeight: 1.15, fontWeight: 920, marginTop: 18 }}>{item}</div>
-            <div style={{ height: 6, borderRadius: 99, background: "rgba(255,255,255,.09)", marginTop: 34, overflow: "hidden" }}>
-              <div style={{ width: `${Math.min(100, Math.max(0, (progress * items.length - index) * 100))}%`, height: "100%", background: index === focus ? teal : accent }} />
-            </div>
-          </div>
-        );
-      })}
+      <div style={{ color: accent, fontSize: 34, fontWeight: 950, letterSpacing: 0, textTransform: "uppercase" }}>{scene.kicker}</div>
+      <div style={{ marginTop: 10, maxWidth: 1540, color: cream, fontSize: scene.title.length > 34 ? 60 : 72, lineHeight: 1.06, fontWeight: 950, letterSpacing: 0 }}>{scene.title}</div>
     </div>
   );
 }
@@ -68,6 +60,7 @@ function Synthesis({ scene, progress }) {
 export function SceneFrame({ scene, fps }) {
   const frame = useCurrentFrame();
   const progress = Math.min(1, Math.max(0, frame / Math.max(1, scene.duration * fps)));
+  const SceneBody = sceneMap[scene.id] || SceneFallback;
   return (
     <AbsoluteFill>
       <Background scene={scene} />

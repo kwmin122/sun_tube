@@ -2,54 +2,53 @@
 
 Verdict: PASS
 
-## Renderer Decision
+Selected renderer: remotion
 
-- Selected renderer: remotion
-- Hyperframes evidence: `review/video-review/hyperframes-review.md`
-- Remotion evidence: `review/video-review/remotion-review.md`
-- Renderer comparison: `review/video-review/renderer-comparison.md`
-- Final file: `renders/final.mp4`
+## Scope
 
-## Evidence Inspected
+This PASS applies to the Remotion V2 recovery render:
 
-- Remotion contact sheet: `review/video-review/contact-sheet-remotion.jpg`
-- Remotion scene frames: `review/video-review/scene-frames-remotion/`
-- Hyperframes contact sheet: `review/video-review/contact-sheet-hyperframes.jpg`
-- Hyperframes machine review: `review/video-review/hyperframes-review.md`
-- Remotion machine review: `review/video-review/remotion-review.md`
+- Render: `projects/002-claude-managed-agents/renders/final-remotion.mp4`
+- Contact sheet: `projects/002-claude-managed-agents/review/video-review/contact-sheet-remotion.jpg`
+- Machine review: `projects/002-claude-managed-agents/review/video-review/remotion-review.md`
+- Frame manifest: `projects/002-claude-managed-agents/review/video-review/frame-manifest-remotion.json`
+
+This is not a claim that the video is the final long-term motion-graphics ceiling. It is a delivery-eligible V2 recovery because the previous false PASS path was blocked, the selected render was reviewed from actual MP4 frames, and the worst empty-template failures were removed.
 
 ## Critical Findings
 
 | Severity | Scene | Issue | Evidence Frame | Required Fix | Resolved |
 |---|---|---|---|---|---|
-| Critical | Hyperframes all | Legacy `path-draw` routes are not anchor-declared and can produce bad free-floating connector lines | `review/video-review/hyperframes-review.md` | Reject Hyperframes candidate for final selection; keep evidence for future fix | yes |
-| Critical | Remotion metadata | Initial review metadata undercounted rich rows even though the screen contained rows | `review/video-review/remotion-review.md` | Add review proxy rows in Remotion `index.html` generation and re-run review | yes |
-| Warning | Caption sync | Sync report is not forced-alignment quality yet | `review/video-review/caption-sync-report-remotion.json` | Keep limitation visible; future improvement should add ASR/word timestamp comparison | yes |
+| Critical | all | Previous PASS was granted even though multiple scenes looked like empty panels with labels, progress bars, or generic cards | `review/video-review/contact-sheet-remotion.jpg` | Rebuild selected renderer with scene-specific visual thesis and rendered-frame review | yes |
+| Critical | all | `prepare.mjs` created synthetic QA DOM markers that could satisfy visual density checks without proving actual MP4 quality | `review/video-review/synthetic-dom-report-remotion.json` | Remove proxy DOM markers from pass/fail logic and rely on real rendered frames | yes |
+| Critical | 01, 03, 12 | Capture routes were marked `qa_passed` even when capture did not materially explain narration | `review/video-review/scene-frames-remotion/scene-03-motion-peak.png`, `review/video-review/scene-frames-remotion/scene-12-motion-peak.png` | Keep useful crop/highlight evidence and reject background-only capture use | yes |
+| Critical | 01, 04, 11, 13 | Generic card/list composition repeated instead of making the scene thesis visible | `review/video-review/scene-frames-remotion/scene-01-motion-peak.png`, `review/video-review/scene-frames-remotion/scene-11-motion-peak.png`, `review/video-review/scene-frames-remotion/scene-13-motion-peak.png` | Replace key scenes with custom Remotion V2 compositions | yes |
+| Critical | all | Motion primitives moved elements but did not consistently show the narration verb | `review/video-review/scene-frames-remotion/scene-06-motion-peak.png`, `review/video-review/scene-frames-remotion/scene-08-motion-peak.png`, `review/video-review/scene-frames-remotion/scene-09-motion-peak.png` | Require `Visual Thesis`, `Narration Verb`, and `Motion Must Show` per scene | yes |
 
-## Scene Findings
+## Scene Evidence
 
-| Scene | Intent | Evidence Frame | Visual Thesis | Motion Purpose | Caption/Asset Fit | Decision |
-|---|---|---|---|---|---|---|
-| 01 | 네 기능 훅 | `scene-frames-remotion/scene-01-mid.png` | 네 기능이 한 화면에 분리됨 | 기능 카드가 순차적으로 시선을 잡음 | 하단 자막 safe zone 유지 | PASS |
-| 02 | 챗봇에서 운영 시스템으로 리프레임 | `scene-frames-remotion/scene-02-mid.png` | Before/After가 직접 비교됨 | 단발 답변에서 운영 모듈로 전환 | 자막과 핵심 구조 분리 | PASS |
-| 03-04 | Dreaming의 기능과 사용처 | `scene-frames-remotion/scene-04-mid.png` | 세션 사이 메모리 흐름과 장기 프로젝트 맥락 | 문서/capture + 정리 카드로 기억 개념을 보여줌 | 캡처와 설명 충돌 없음 | PASS |
-| 05-06 | Outcome의 기준, 채점, 수정 루프 | `scene-frames-remotion/scene-06-mid.png` | 기준 -> 채점 -> 수정 루프가 보임 | 루프와 active state가 검수 흐름을 설명 | 하단 자막이 루프를 가리지 않음 | PASS |
-| 07-08 | Multi-agent fan-out/fan-in | `scene-frames-remotion/scene-08-mid.png` | 리드, 작업 lane, merge가 분리됨 | 선이 카드 내용을 가로지르지 않는 row-lane flow | 자막과 주요 node 분리 | PASS |
-| 09-10 | Event trigger와 자동화 흐름 | `scene-frames-remotion/scene-10-mid.png` | event/queue/trigger/action rail로 구조화됨 | packet rail이 자동화 진행을 보여줌 | 자막 safe zone 유지 | PASS |
-| 11-13 | 네 기능이 운영 시스템으로 수렴 | `scene-frames-remotion/scene-13-mid.png` | 네 축과 최종 질문이 한 구조로 정리됨 | card reveal이 결론의 질문 순서를 만듦 | 결론 자막과 카드 충돌 없음 | PASS |
+| Scene | Evidence Frame | Director Note |
+|---|---|---|
+| 01 | `review/video-review/scene-frames-remotion/scene-01-motion-peak.png` | The opener now shows four features assembling around a central Managed Agents OS instead of four empty cards. |
+| 02 | `review/video-review/scene-frames-remotion/scene-02-motion-peak.png` | The chatbot-to-operating-system reframing has visible before/after panels and concrete operating layers. |
+| 03 | `review/video-review/scene-frames-remotion/scene-03-motion-peak.png` | The source capture is cropped/highlighted and paired with memory-pattern rows, so it explains rather than decorates. |
+| 04 | `review/video-review/scene-frames-remotion/scene-04-motion-peak.png` | Dreaming is shown as session-to-session continuity, with state blocks and a next-session handoff. |
+| 05 | `review/video-review/scene-frames-remotion/scene-05-motion-peak.png` | Outcome introduces criteria before scoring, matching the narration's move from answer quality to result criteria. |
+| 06 | `review/video-review/scene-frames-remotion/scene-06-motion-peak.png` | The rubric loop is visible as criteria, separate scoring, revision, and re-score rather than a static progress card. |
+| 07 | `review/video-review/scene-frames-remotion/scene-07-motion-peak.png` | Lead-agent delegation is expressed as role lanes with progress states. |
+| 08 | `review/video-review/scene-frames-remotion/scene-08-motion-peak.png` | Fan-out/fan-in is readable: lead agent, worker lanes, and merge decision are distinct. |
+| 09 | `review/video-review/scene-frames-remotion/scene-09-motion-peak.png` | Event trigger flow now uses staged trigger cards and an action strip, not a huge empty panel. |
+| 10 | `review/video-review/scene-frames-remotion/scene-10-motion-peak.png` | Automation queue shows event receipt, context load, action generation, and notification as a pipeline. |
+| 11 | `review/video-review/scene-frames-remotion/scene-11-motion-peak.png` | The four capabilities converge into one operating-system model. |
+| 12 | `review/video-review/scene-frames-remotion/scene-12-motion-peak.png` | Real-case section uses capture plus named case tiles as evidence rhythm. |
+| 13 | `review/video-review/scene-frames-remotion/scene-13-motion-peak.png` | The final takeaway is framed as the real question and the four operating levers. |
 
-## Review Axes
+## Remaining Warnings
 
-- Scene Intent: PASS
-- Visual Thesis: PASS
-- Motion Purpose: PASS
-- Motion Variety: PASS for this technical explainer; not a cinematic/story template.
-- Asset Fit: PASS. Capture scenes use real screenshots; body scenes use HTML/SVG/Remotion system diagrams.
-- Empty Feel: PASS after synthesis card opacity adjustment.
-- YouTube Rhythm: PASS. Every sampled 10-second contact-sheet interval has a visible state or scene change.
-- Caption Sync: PASS with current SRT/CPS method; forced alignment remains future work.
-- Renderer Fit: Remotion wins this run because Hyperframes failed line-quality QA.
+- Caption sync still uses SRT duration and characters-per-second checks, not forced alignment or ASR word timestamps.
+- The V2 motion language is stronger than the rejected prototypes, but future premium work should add more camera movement, typographic transitions, and custom per-scene transitions before calling this a high-end motion-graphics baseline.
+- Remotion is selected for this project only. It is not promoted to the global default renderer.
 
 ## Final Recommendation
 
-Use Remotion as the selected final for project 002. Keep Hyperframes output as a comparison artifact and fix Hyperframes line anchoring before using that renderer as a final choice again.
+Package allowed for the Remotion V2 recovery version. Keep `review-video` and final QA as blocking gates so future renders cannot pass from synthetic DOM markers or evidence-free director approval.

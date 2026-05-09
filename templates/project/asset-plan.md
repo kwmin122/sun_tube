@@ -64,6 +64,8 @@ Status values:
 - `not_required`: official UI/docs/interview/data, exact text, or HTML/SVG/capture is clearer than a generated image.
 - Do not use imagegen for official UI evidence or precise text-heavy diagrams that should be HTML/SVG/capture.
 - Dense explainer scenes should not be large empty panels. If `Visual Density` is `rich`, include information rows, tokens, paths, counters, scan fills, or other visible state changes.
+- A route is not complete until the selected renderer shows it in actual frame evidence. File existence, work-order status, and synthetic DOM markers are not enough.
+- Capture routes must crop/highlight a narrated concept; otherwise reroute the scene to diagram, imagegen support, or another primary route.
 - Do not force a reference video's edit order onto an unrelated topic.
 
 ## Processing Checklist

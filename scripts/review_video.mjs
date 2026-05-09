@@ -94,6 +94,18 @@ function sectionMetrics(html) {
   return metrics;
 }
 
+function syntheticQualityDomAudit(html, renderer) {
+  if (renderer !== "remotion") return { issues: [] };
+  const markerPattern = /<section\b|class=["'][^"']*(?:info-row|flow-token|scan-fill|metric-tick|path-draw)[^"']*["']/;
+  if (!markerPattern.test(html)) return { issues: [] };
+  return {
+    issues: [{
+      issue: "synthetic_quality_dom_present",
+      detail: "Remotion review HTML contains section/visual marker proxies. Real MP4 frames, not prepare.mjs proxy DOM, must be used as visual quality evidence.",
+    }],
+  };
+}
+
 function captionAudit(captions, duration) {
   const issues = [];
   for (const cue of captions) {
@@ -123,7 +135,7 @@ function motionAudit(scenes, assets, metrics) {
   }
   const staticScenes = rows.filter((row) => row.signature === "static").map((row) => row.scene);
   if (staticScenes.length >= 3) issues.push({ scene: staticScenes.join(", "), issue: "too_many_static_scenes", detail: "three or more scenes have no motion primitive markers" });
-  return { rows, issues };
+  return { rows, issues, metadataOnly: true, note: "HTML metrics are metadata-only. Director review must inspect rendered frames before PASS." };
 }
 
 function assetAudit(assets, workRows) {
@@ -269,6 +281,7 @@ for (const scene of scenes) {
   const points = [
     ["start", scene.range.start + 0.4],
     ["mid", (scene.range.start + scene.range.end) / 2],
+    ["motion-peak", scene.range.start + (scene.range.end - scene.range.start) * 0.68],
     ["end", Math.max(scene.range.start, scene.range.end - 0.4)],
   ];
   for (const [label, at] of points) {
@@ -285,6 +298,7 @@ const motionReport = hasCompositionHtml
 const assetReport = assetAudit(assets, workRows);
 const lineReport = hasCompositionHtml ? lineQualityAudit(composition) : { bannedClasses: [], issues: [], limitations: [`Line audit skipped for ${reviewKey}; no ${rel(compositionPath)} found`] };
 const captionConfigReport = hasCompositionHtml ? captionConfigAudit(composition) : { leadSeconds: null, issues: [], limitations: [`Caption config audit skipped for ${reviewKey}; no ${rel(compositionPath)} found`] };
+const syntheticDomReport = hasCompositionHtml ? syntheticQualityDomAudit(composition, reviewKey) : { issues: [] };
 const routeReport = routeTransparency(project, assets, workRows);
 const frameFailures = frameManifest.filter((frame) => !frame.ok);
 const inputIssues = [];
@@ -294,6 +308,7 @@ if (!assets.length) inputIssues.push({ issue: "missing_asset_plan_rows", detail:
 if (!hasCompositionHtml && reviewKey !== "remotion") inputIssues.push({ issue: "missing_composition_html", detail: rel(compositionPath) });
 const blockers = [
   ...inputIssues,
+  ...syntheticDomReport.issues,
   ...lineReport.issues,
   ...captionConfigReport.issues,
   ...(contact.status === 0 ? [] : [{ issue: "contact_sheet_failed", detail: contact.stderr || contact.stdout || "ffmpeg failed" }]),
@@ -316,6 +331,7 @@ await writeJson(join(reviewDir, `caption-config-report${suffix}.json`), captionC
 await writeJson(join(reviewDir, `motion-density-report${suffix}.json`), motionReport);
 await writeJson(join(reviewDir, `asset-presence-report${suffix}.json`), assetReport);
 await writeJson(join(reviewDir, `line-quality-report${suffix}.json`), lineReport);
+await writeJson(join(reviewDir, `synthetic-dom-report${suffix}.json`), syntheticDomReport);
 await writeJson(join(reviewDir, `route-transparency-report${suffix}.json`), routeReport);
 
 const verdict = blockers.length ? "FAIL" : "PASS";
@@ -442,6 +458,7 @@ await writeText(reviewReport, [
   "## Motion Variety",
   "",
   `- Motion issues: ${motionReport.issues.length}`,
+  `- Metadata-only: ${motionReport.metadataOnly === true ? "yes" : "no"}`,
   "- Rich scenes require rows plus path/token/scan/sheen/tick motion primitives.",
   "",
   "## Asset Match",

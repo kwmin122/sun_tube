@@ -51,6 +51,16 @@ Guidance:
 - Do not use large decorative connector paths. Any route path must be anchored to concrete nodes and tied to the narration verb.
 - Do not use Liquid Glass as a global card style. Use it only for selected state, focus lens, floating control, or transition boundary.
 
+## Scene Visual Thesis
+
+No scene should reach render without a visual thesis.
+
+| Scene | Visual Thesis | Viewer Must Understand | Primary Visual Mechanism | Narration Verb | Motion Must Show | Primary Asset | Failure If |
+|---|---|---|---|---|---|---|---|
+| 01 | | | | | | | |
+| 02 | | | | | | | |
+| 03 | | | | | | | |
+
 ## Constraints
 
 - Forbidden styles:

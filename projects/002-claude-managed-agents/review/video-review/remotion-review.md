@@ -32,6 +32,7 @@ This is not final aesthetic approval. `review/video-review/director-review.md` m
 ## Motion Variety
 
 - Motion issues: 0
+- Metadata-only: yes
 - Rich scenes require rows plus path/token/scan/sheen/tick motion primitives.
 
 ## Asset Match

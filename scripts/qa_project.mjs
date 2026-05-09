@@ -60,6 +60,7 @@ function unresolvedStatusRows(rows) {
 
 function unresolvedTimedRows(rows) {
   return rows.filter((row) => {
+    if (!("Status" in row) && !("Caption Behavior" in row) && !("Audio/SFX" in row)) return false;
     const values = [row["Caption Behavior"], row["Audio/SFX"], row.Status].map((value) => String(value || "").trim().toLowerCase());
     return values.some((value) => !value || /\b(todo|pending|planned|inputs_ready|blocked)\b/.test(value));
   });
@@ -200,6 +201,47 @@ function machineVerdict(markdown) {
   return match ? match[1].toUpperCase() : "";
 }
 
+function comparisonVerdict(markdown) {
+  const match = markdown.match(/^Verdict:\s*(PASS|FAIL)\b/im);
+  return match ? match[1].toUpperCase() : "";
+}
+
+function directorEvidenceFrameCount(markdown, selected = "") {
+  const renderer = selected ? `(?:${selected}|final)` : "(?:remotion|hyperframes|final)";
+  const regex = new RegExp(`scene-frames-${renderer}/scene-[0-9]{2}-(?:start|mid|motion-peak|end)\\.png`, "gi");
+  return (markdown.match(regex) || []).length;
+}
+
+async function readJsonIfExists(path, fallback = null) {
+  if (!existsSync(path)) return fallback;
+  try {
+    return JSON.parse(await readText(path));
+  } catch {
+    return fallback;
+  }
+}
+
+async function frameManifestStats(projectPath, selected) {
+  const suffix = selected ? `-${selected}` : "";
+  const manifestPath = join(projectPath, "review/video-review", `frame-manifest${suffix}.json`);
+  const manifest = await readJsonIfExists(manifestPath, { frames: [] });
+  const frames = Array.isArray(manifest.frames) ? manifest.frames : [];
+  const okFrames = frames.filter((frame) => frame.ok !== false);
+  const motionPeaks = okFrames.filter((frame) => frame.label === "motion-peak");
+  return { manifestPath, frames, okFrames, motionPeaks };
+}
+
+async function syntheticDomStats(projectPath, selected) {
+  const suffix = selected ? `-${selected}` : "";
+  const reportPath = join(projectPath, "review/video-review", `synthetic-dom-report${suffix}.json`);
+  const report = await readJsonIfExists(reportPath, { issues: [{ issue: "missing_synthetic_dom_report" }] });
+  return { reportPath, issues: Array.isArray(report.issues) ? report.issues : [] };
+}
+
+function hasSyntheticQualityDom(html) {
+  return /<section\b|class=["'][^"']*(?:info-row|flow-token|scan-fill|metric-tick|path-draw)[^"']*["']/.test(html);
+}
+
 function hyperframesCompositionPath(projectPath) {
   const preferred = join(projectPath, "composition-hyperframes");
   return existsSync(join(preferred, "package.json")) ? preferred : join(projectPath, "composition");
@@ -331,10 +373,19 @@ if (stage === "final") {
   const verdict = directorVerdict(directorText);
   const selected = selectedRenderer(`${directorText}\n${comparisonText}`);
   const remotionBlocked = comparisonHasRemotionBlocked(comparisonText);
+  const comparisonResult = comparisonVerdict(comparisonText);
+  const evidenceCount = directorEvidenceFrameCount(directorText, selected);
+  const frameStats = selected ? await frameManifestStats(projectPath, selected) : { manifestPath: "", frames: [], okFrames: [], motionPeaks: [] };
+  const syntheticStats = selected ? await syntheticDomStats(projectPath, selected) : { reportPath: "", issues: [] };
+  const selectedCompositionHtml = selected === "remotion"
+    ? await readText(join(projectPath, "composition-remotion/index.html"), "")
+    : "";
   add(checks, project.artifacts?.videoReview === true || existsSync(hyperframesReview) || existsSync(videoReview), "video review evidence exists", "factory:review-video must create frame evidence before final QA");
   add(checks, existsSync(videoReview) || existsSync(hyperframesReview), "video review report exists", existsSync(videoReview) ? rel(videoReview) : rel(hyperframesReview));
   add(checks, existsSync(rendererComparison), "renderer comparison exists", rel(rendererComparison));
+  add(checks, comparisonResult === "PASS", "renderer comparison verdict PASS", comparisonResult || "missing Verdict: PASS");
   add(checks, Boolean(selected), "selected renderer stated", selected || "missing Selected renderer");
+  add(checks, selected !== "none", "selected renderer is not none", selected || "missing Selected renderer");
   add(checks, existsSync(hyperframesRender), "hyperframes render exists", rel(hyperframesRender));
   add(checks, existsSync(remotionRender) || remotionBlocked, "remotion render or blocker recorded", existsSync(remotionRender) ? rel(remotionRender) : (remotionBlocked ? "Remotion blocked recorded" : "missing remotion render/blocker"));
   if (existsSync(remotionRender)) add(checks, existsSync(remotionReview), "remotion review exists", rel(remotionReview));
@@ -347,7 +398,14 @@ if (stage === "final") {
   }
   add(checks, existsSync(directorReview), "director review exists", rel(directorReview));
   add(checks, verdict === "PASS", "director review verdict PASS", verdict || "missing Verdict: PASS");
+  add(checks, evidenceCount >= 8, "director review cites rendered evidence frames", `${evidenceCount} frame reference(s)`);
   add(checks, criticalOpen.length === 0, "director critical findings resolved", criticalOpen.length ? `${criticalOpen.length} unresolved critical finding(s)` : "no unresolved critical findings");
+  add(checks, frameStats.okFrames.length >= 40, "selected renderer frame evidence exists", `${frameStats.okFrames.length} extracted frame(s) in ${rel(frameStats.manifestPath)}`);
+  add(checks, frameStats.motionPeaks.length >= 10, "selected renderer motion-peak frames exist", `${frameStats.motionPeaks.length} motion peak frame(s)`);
+  add(checks, syntheticStats.issues.length === 0, "synthetic DOM false-positive report clean", syntheticStats.issues.length ? JSON.stringify(syntheticStats.issues.slice(0, 3)) : rel(syntheticStats.reportPath));
+  if (selected === "remotion") {
+    add(checks, !hasSyntheticQualityDom(selectedCompositionHtml), "remotion review HTML has no synthetic quality DOM", hasSyntheticQualityDom(selectedCompositionHtml) ? "remove prepare.mjs section/class proxy markers" : "metadata-only review HTML");
+  }
   add(checks, existsSync(render), "render exists", rel(render));
   if (existsSync(render)) {
     const probe = run("ffprobe", ["-v", "error", "-show_entries", "format=duration:stream=codec_type,width,height,avg_frame_rate", "-of", "json", render], { timeout: 30_000 });

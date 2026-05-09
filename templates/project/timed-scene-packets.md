@@ -32,19 +32,34 @@ Tool routes come from `../../TOOL_ROUTING_PIPELINE.md`.
 
 ## Scene Details
 
+Each scene must define the following before render:
+
+- Visual thesis:
+- Viewer must understand:
+- Primary visual mechanism:
+- Narration verb:
+- Motion must show:
+- Primary asset:
+- Failure if:
+
 ### Scene 01
 
 - Time range:
 - SRT lines:
 - Narration:
 - On-screen phrase:
+- Visual thesis:
+- Viewer must understand:
+- Primary visual mechanism:
 - Tool route:
 - Renderer targets:
 - Scene recipe:
 - Narration verb:
 - Motion purpose:
+- Motion must show:
 - Caption safe zone:
 - Primary asset:
+- Failure if:
 - Asset timing:
 - Motion timing:
 - Review check:
@@ -58,13 +73,18 @@ Tool routes come from `../../TOOL_ROUTING_PIPELINE.md`.
 - SRT lines:
 - Narration:
 - On-screen phrase:
+- Visual thesis:
+- Viewer must understand:
+- Primary visual mechanism:
 - Tool route:
 - Renderer targets:
 - Scene recipe:
 - Narration verb:
 - Motion purpose:
+- Motion must show:
 - Caption safe zone:
 - Primary asset:
+- Failure if:
 - Asset timing:
 - Motion timing:
 - Review check:

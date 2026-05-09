@@ -8,7 +8,9 @@ Result: PASS
 | video review evidence exists | PASS | factory:review-video must create frame evidence before final QA |
 | video review report exists | PASS | projects/002-claude-managed-agents/review/video-review/video-review.md |
 | renderer comparison exists | PASS | projects/002-claude-managed-agents/review/video-review/renderer-comparison.md |
+| renderer comparison verdict PASS | PASS | PASS |
 | selected renderer stated | PASS | remotion |
+| selected renderer is not none | PASS | remotion |
 | hyperframes render exists | PASS | projects/002-claude-managed-agents/renders/final-hyperframes.mp4 |
 | remotion render or blocker recorded | PASS | projects/002-claude-managed-agents/renders/final-remotion.mp4 |
 | remotion review exists | PASS | projects/002-claude-managed-agents/review/video-review/remotion-review.md |
@@ -16,7 +18,12 @@ Result: PASS
 | selected remotion machine review PASS | PASS | PASS |
 | director review exists | PASS | projects/002-claude-managed-agents/review/video-review/director-review.md |
 | director review verdict PASS | PASS | PASS |
+| director review cites rendered evidence frames | PASS | 21 frame reference(s) |
 | director critical findings resolved | PASS | no unresolved critical findings |
+| selected renderer frame evidence exists | PASS | 52 extracted frame(s) in projects/002-claude-managed-agents/review/video-review/frame-manifest-remotion.json |
+| selected renderer motion-peak frames exist | PASS | 13 motion peak frame(s) |
+| synthetic DOM false-positive report clean | PASS | projects/002-claude-managed-agents/review/video-review/synthetic-dom-report-remotion.json |
+| remotion review HTML has no synthetic quality DOM | PASS | metadata-only review HTML |
 | render exists | PASS | projects/002-claude-managed-agents/renders/final.mp4 |
 | ffprobe | PASS | {
     "programs": [

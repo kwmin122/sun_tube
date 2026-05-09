@@ -162,17 +162,27 @@ async function main() {
   ].join("\n");
   await writeFile(join(GENERATED, "data.js"), moduleText, "utf8");
 
-  const sections = scenes.map((scene) => [
-    `<section id="scene-${scene.id}" data-visual-density="rich" data-scene-recipe="${scene.recipe}" data-motion-purpose="${scene.motionBeat}">`,
-    `<div class="info-row">${scene.title}</div>`,
-    `<div class="info-row">${scene.items[0] || "primary row"}</div>`,
-    `<div class="info-row">${scene.items[1] || "secondary row"}</div>`,
-    `<div class="flow-token">${scene.items[2] || "token"}</div>`,
-    `<div class="scan-fill">${scene.motionBeat}</div>`,
-    `<div class="metric-tick">${scene.route}</div>`,
-    "</section>"
-  ].join("\n")).join("\n");
-  await writeFile(join(ROOT, "index.html"), `<!doctype html><html><body><script>const CAPTION_LEAD_SECONDS = 1.15;</script>${sections}</body></html>\n`, "utf8");
+  const metadata = {
+    renderer: "remotion",
+    qualityEvidence: "metadata_only",
+    note: "This file supports review scripts with timing/caption config only. It must not be used as visual density proof.",
+    scenes: scenes.map((scene) => ({
+      id: scene.id,
+      recipe: scene.recipe,
+      route: scene.route,
+      motionBeat: scene.motionBeat,
+    })),
+  };
+  await writeFile(join(ROOT, "index.html"), [
+    "<!doctype html>",
+    "<html>",
+    "<body>",
+    "<script>const CAPTION_LEAD_SECONDS = 1.15;</script>",
+    `<script type="application/json" id="review-metadata">${JSON.stringify(metadata)}</script>`,
+    "</body>",
+    "</html>",
+    "",
+  ].join("\n"), "utf8");
 }
 
 main().catch((error) => {
