@@ -32,6 +32,8 @@ Check the finished video like an editing director, not just a file validator.
 - Asset presence: routes marked complete in `asset-plan.md` and `work-orders/*.md` appear in the composition or rendered frames.
 - Visual density: rich scenes must avoid empty panels and include readable rows, route lines, tokens, counters, scans, or comparable information.
 - Motion quality: avoid repeated static cards or identical fade/stagger scenes; diagrams should use path draw, pulse, scan, count-up, or sequential reveals where useful.
+- Line quality: block full-width decorative connector SVGs that float across panels, cross labels, or do not anchor to specific cards. Prefer short card-anchored arrows, rows, tokens, or contained micro-lines.
+- Route transparency: state whether `imagegen`, `capture`, `video-use`, and Hyperframes were required or not. Missing imagegen is fine only when the route is explicitly `not_required`.
 - YouTube pacing: flag long dead zones, weak hook frames, caption overlap, and visuals that feel like unfinished slides.
 
 ## Output
@@ -42,8 +44,11 @@ Write under `review/video-review/`:
 - `fix-list.md`
 - `frame-manifest.json`
 - `caption-sync-report.json`
+- `caption-config-report.json`
 - `motion-density-report.json`
 - `asset-presence-report.json`
+- `line-quality-report.json`
+- `route-transparency-report.json`
 - `frames/`
 - `contact-sheets/`
 

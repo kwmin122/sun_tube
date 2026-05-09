@@ -19,6 +19,8 @@ PASS
 
 - Cues: 133
 - Issues: 0
+- Caption lead: 1.25s
+- Caption config issues: 0
 
 ## Motion Variety
 
@@ -28,6 +30,16 @@ PASS
 ## Asset Match
 
 - Asset issues: 0
+
+## Line Quality
+
+- Floating connector issues: 0
+
+## Route Transparency
+
+- Project routes: `{"workOrders":"done","videoUse":"not_required","imagegen":"not_required","capture":"done","hyperframes":"done"}`
+- Work-order route counts: `{"capture":3,"hyperframes":13,"not_required":2}`
+- Asset route counts: `{"capture":3,"hyperframes":13}`
 
 ## Editor Notes
 

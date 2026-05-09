@@ -862,7 +862,7 @@ Purpose:
 
 - extract scene frames and a contact sheet from the rendered MP4
 - compare captions, timed scene packets, asset plan, work orders, and composition markers
-- block final QA if rich scenes look empty, route assets are missing, captions drift badly, or motion variety is too weak
+- block final QA if rich scenes look empty, route assets are missing, captions drift badly, broad decorative connector lines float over panels, or motion variety is too weak
 
 Outputs:
 
@@ -871,8 +871,11 @@ review/video-review/video-review.md
 review/video-review/fix-list.md
 review/video-review/frame-manifest.json
 review/video-review/caption-sync-report.json
+review/video-review/caption-config-report.json
 review/video-review/motion-density-report.json
 review/video-review/asset-presence-report.json
+review/video-review/line-quality-report.json
+review/video-review/route-transparency-report.json
 review/video-review/frames/
 review/video-review/contact-sheets/
 ```

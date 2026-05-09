@@ -174,10 +174,6 @@
       background: linear-gradient(90deg, rgba(244,162,97,0.95), rgba(42,157,143,0.95));
       box-shadow: 0 0 24px rgba(244,162,97,0.34);
     }
-    .path-draw {
-      stroke-dasharray: 1;
-      stroke-dashoffset: 1;
-    }
     .metric-tick {
       display: inline-flex;
       align-items: center;
@@ -491,20 +487,6 @@
       position: relative;
       min-height: 300px;
     }
-    .loop-canvas svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-    }
-    .loop-canvas path {
-      fill: none;
-      stroke: rgba(244,162,97,0.9);
-      stroke-width: 4;
-      stroke-linecap: round;
-      vector-effect: non-scaling-stroke;
-    }
     .loop-node {
       position: absolute;
       width: 210px;
@@ -545,21 +527,6 @@
       min-height: 560px;
       justify-content: flex-start;
     }
-    .route-svg {
-      position: absolute;
-      inset: -18px 0 auto;
-      width: 100%;
-      height: 130px;
-      pointer-events: none;
-      overflow: visible;
-    }
-    .route-svg path {
-      fill: none;
-      stroke: rgba(244,162,97,0.82);
-      stroke-width: 4;
-      stroke-linecap: round;
-      vector-effect: non-scaling-stroke;
-    }
     .card-topline {
       display: flex;
       justify-content: space-between;
@@ -573,21 +540,6 @@
       min-height: 640px;
       justify-content: space-between;
     }
-    .event-route-svg {
-      position: absolute;
-      inset: -16px 0 auto;
-      width: 100%;
-      height: 120px;
-      overflow: visible;
-      pointer-events: none;
-    }
-    .event-route-svg path {
-      fill: none;
-      stroke: rgba(244,162,97,0.86);
-      stroke-width: 4;
-      stroke-linecap: round;
-      vector-effect: non-scaling-stroke;
-    }
     .particle-lane {
       display: flex;
       gap: 12px;
@@ -596,24 +548,6 @@
     .pipeline-board {
       position: relative;
       min-height: 620px;
-      padding-top: 74px;
-    }
-    .pipeline-svg {
-      position: absolute;
-      left: 30px;
-      right: 30px;
-      top: 18px;
-      width: calc(100% - 60px);
-      height: 130px;
-      overflow: visible;
-      pointer-events: none;
-    }
-    .pipeline-svg path {
-      fill: none;
-      stroke: rgba(244,162,97,0.88);
-      stroke-width: 5;
-      stroke-linecap: round;
-      vector-effect: non-scaling-stroke;
     }
     .pipeline-board .card {
       min-height: 480px;
@@ -623,20 +557,6 @@
       position: relative;
       width: 100%;
       height: 600px;
-    }
-    .network-lines {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-    }
-    .network-lines path {
-      fill: none;
-      stroke: rgba(244,162,97,0.82);
-      stroke-width: 3;
-      stroke-linecap: round;
-      vector-effect: non-scaling-stroke;
     }
     .agent-node {
       position: absolute;
@@ -928,10 +848,6 @@
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <h3>핵심 변화</h3>
           <div class="loop-canvas">
-            <svg viewBox="0 0 680 300" aria-hidden="true">
-              <path class="path-draw" pathLength="1" d="M118 96 C250 18 430 18 562 96" />
-              <path class="path-draw" pathLength="1" d="M562 155 C430 276 250 276 118 155" />
-            </svg>
             <div class="loop-node a">기준 작성</div>
             <div class="loop-node b">별도 모델 채점</div>
             <div class="loop-node c">수정 루프</div>
@@ -952,12 +868,6 @@
         <div class="scene-no">07</div>
       </div>
       <div class="network">
-        <svg class="network-lines" viewBox="0 0 1720 600" aria-hidden="true">
-          <path d="M860 288 L226 330" />
-          <path d="M860 288 L656 330" />
-          <path d="M860 288 L1064 330" />
-          <path d="M860 288 L1494 330" />
-        </svg>
         <div class="agent-node lead"><h3>리드 에이전트</h3><p>계획, 분배, 통합</p><div class="signal-list"><span>작업 분해</span><span>결과 병합</span></div></div>
         <div class="agent-node a"><h3>로그 담당</h3><p>오류 원인 분석</p></div>
         <div class="agent-node b"><h3>문서 담당</h3><p>변경점 정리</p></div>
@@ -972,10 +882,6 @@
         <div class="scene-no">08</div>
       </div>
       <div class="parallel-board stage">
-        <svg class="route-svg" viewBox="0 0 1720 130" aria-hidden="true">
-          <path class="path-draw" pathLength="1" d="M70 92 C360 26 560 26 820 92" />
-          <path class="path-draw" pathLength="1" d="M900 92 C1160 26 1360 26 1650 92" />
-        </svg>
         <div class="card glass-panel">
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <div class="card-topline"><h3>빌드 로그</h3><span class="flow-token">Log</span></div>
@@ -1017,10 +923,6 @@
         <div class="scene-no">09</div>
       </div>
       <div class="event-flow rich-flow">
-        <svg class="event-route-svg" viewBox="0 0 1720 120" aria-hidden="true">
-          <path class="path-draw" pathLength="1" d="M220 70 L650 70" />
-          <path class="path-draw" pathLength="1" d="M1020 70 L1500 70" />
-        </svg>
         <div class="event-box glass-panel">
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <small>Event</small><h3>문서 업로드</h3><p>새 파일이나 요청이 들어옵니다.</p>
@@ -1053,9 +955,6 @@
         <div class="scene-no">10</div>
       </div>
       <div class="pipeline-board stage">
-        <svg class="pipeline-svg" viewBox="0 0 1600 130" aria-hidden="true">
-          <path class="path-draw" pathLength="1" d="M80 80 C340 18 520 18 760 80 S1180 142 1520 80" />
-        </svg>
         <div class="grid-3 stage">
           <div class="card glass-panel">
             <div class="liquid-sheen" data-layout-allow-overflow></div>
@@ -1134,7 +1033,7 @@
 
   <script>
     const DURATION = 333.903;
-    const CAPTION_LEAD_SECONDS = 0.9;
+    const CAPTION_LEAD_SECONDS = 1.25;
     const SCENES = [
       ["#scene-01", 0, 13.4],
       ["#scene-02", 13.4, 9.0],
@@ -1165,7 +1064,6 @@
     const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
     gsap.set(".scene", { autoAlpha: 0 });
     gsap.set("#caption", { textContent: "" });
-    gsap.set(".path-draw", { strokeDashoffset: 1 });
 
     SCENES.forEach(([selector, start, duration]) => {
       const end = start + duration;
@@ -1178,7 +1076,6 @@
         start + 0.35
       );
       tl.fromTo(`${selector} .arrow`, { scaleX: 0, autoAlpha: 0 }, { scaleX: 1, autoAlpha: 1, duration: 0.7, stagger: 0.07 }, start + 0.9);
-      tl.fromTo(`${selector} .path-draw, ${selector} .network-lines path`, { strokeDashoffset: 1, autoAlpha: 0 }, { strokeDashoffset: 0, autoAlpha: 1, duration: 1.1, stagger: 0.08 }, start + 0.85);
       tl.fromTo(`${selector} .liquid-sheen`, { xPercent: -130, autoAlpha: 0 }, { xPercent: 260, autoAlpha: 0.58, duration: 1.35, stagger: 0.08 }, start + 0.55);
       tl.fromTo(`${selector} .scan-fill`, { scaleX: 0, autoAlpha: 0 }, { scaleX: 1, autoAlpha: 1, duration: 1.0, stagger: 0.08 }, start + 1.0);
       tl.fromTo(`${selector} .info-row, ${selector} .signal-list span, ${selector} .event-detail span`,

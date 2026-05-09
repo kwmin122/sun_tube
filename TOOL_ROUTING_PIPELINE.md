@@ -125,7 +125,13 @@ Do not use imagegen for:
 - precise system diagrams that should be implemented in HTML/SVG
 - screenshots that should come from capture
 
+If `imagegen` is not used, make that explicit in `project.json.routes.imagegen`, `work-orders/imagegen.md`, and the video review route transparency report. A missing generated image is acceptable only when the route is intentionally `not_required`; otherwise it is a production gap.
+
 If a scene is marked `data-visual-density="rich"`, the composition must include enough visible structure: information rows, route tokens, SVG paths, progress rails, scan fills, count/tick states, or equivalent motion primitives. Large empty glass panels fail pre-render QA.
+
+## Connector Line Quality
+
+Avoid full-width decorative connector paths that float over cards, cross titles, or fail to attach to concrete nodes. Use short card-anchored arrows, row transitions, flow tokens, scan fills, or clipped micro-lines instead. `factory:review-video` fails if it finds broad floating connector classes such as `route-svg`, `event-route-svg`, `pipeline-svg`, or `network-lines`.
 
 ## Non-Goals
 

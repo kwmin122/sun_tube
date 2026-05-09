@@ -145,6 +145,45 @@ function assetAudit(assets, workRows) {
   return { issues };
 }
 
+function lineQualityAudit(html) {
+  const bannedClasses = ["route-svg", "event-route-svg", "pipeline-svg", "network-lines"];
+  const issues = bannedClasses
+    .filter((className) => html.includes(className))
+    .map((className) => ({
+      issue: "floating_connector_line",
+      detail: `${className} creates unanchored decorative connector lines; use card-anchored arrows, rows, tokens, or contained micro-lines instead`,
+    }));
+  return { bannedClasses, issues };
+}
+
+function captionConfigAudit(html) {
+  const match = html.match(/CAPTION_LEAD_SECONDS\s*=\s*([0-9.]+)/);
+  const leadSeconds = match ? Number(match[1]) : null;
+  const issues = [];
+  if (!Number.isFinite(leadSeconds)) {
+    issues.push({ issue: "caption_lead_missing", detail: "composition must declare CAPTION_LEAD_SECONDS" });
+  } else if (leadSeconds < 1.05) {
+    issues.push({ issue: "caption_lead_too_low", detail: `CAPTION_LEAD_SECONDS=${leadSeconds}; use at least 1.05s for this TTS/caption style` });
+  }
+  return { leadSeconds, issues };
+}
+
+function routeTransparency(project, assets, workRows) {
+  const routes = project.routes || {};
+  const routeCounts = {};
+  for (const row of workRows) {
+    const route = clean(row.Route || "unknown");
+    routeCounts[route] = (routeCounts[route] || 0) + 1;
+  }
+  const assetRoutes = {};
+  for (const row of assets) {
+    for (const route of normalizeRoutes(row["Tool Route"])) {
+      assetRoutes[route] = (assetRoutes[route] || 0) + 1;
+    }
+  }
+  return { routes, routeCounts, assetRoutes };
+}
+
 const { project, projectPath } = await loadProject(projectArg);
 const render = join(projectPath, "renders/final.mp4");
 const srtPath = join(projectPath, "voiceover/solo/voiceover-solo-elevenlabs.srt");
@@ -203,6 +242,9 @@ for (const scene of scenes) {
 const captionReport = captionAudit(captions, duration);
 const motionReport = motionAudit(scenes, assets, sectionMetrics(composition));
 const assetReport = assetAudit(assets, workRows);
+const lineReport = lineQualityAudit(composition);
+const captionConfigReport = captionConfigAudit(composition);
+const routeReport = routeTransparency(project, assets, workRows);
 const frameFailures = frameManifest.filter((frame) => !frame.ok);
 const inputIssues = [];
 if (!scenes.length) inputIssues.push({ issue: "missing_timed_scene_rows", detail: rel(timedPath) });
@@ -211,6 +253,8 @@ if (!assets.length) inputIssues.push({ issue: "missing_asset_plan_rows", detail:
 if (!composition.trim()) inputIssues.push({ issue: "missing_composition_html", detail: rel(compositionPath) });
 const blockers = [
   ...inputIssues,
+  ...lineReport.issues,
+  ...captionConfigReport.issues,
   ...(contact.status === 0 ? [] : [{ issue: "contact_sheet_failed", detail: contact.stderr || contact.stdout || "ffmpeg failed" }]),
   ...captionReport.issues.filter((issue) => issue.issue === "caption_duration_mismatch"),
   ...motionReport.issues,
@@ -227,8 +271,11 @@ for (const issue of blockers.slice(0, 12)) {
 
 await writeJson(join(reviewDir, "frame-manifest.json"), { contactSheet: rel(contactSheet), contactSheetOk: contact.status === 0, frames: frameManifest });
 await writeJson(join(reviewDir, "caption-sync-report.json"), captionReport);
+await writeJson(join(reviewDir, "caption-config-report.json"), captionConfigReport);
 await writeJson(join(reviewDir, "motion-density-report.json"), motionReport);
 await writeJson(join(reviewDir, "asset-presence-report.json"), assetReport);
+await writeJson(join(reviewDir, "line-quality-report.json"), lineReport);
+await writeJson(join(reviewDir, "route-transparency-report.json"), routeReport);
 
 const verdict = blockers.length ? "FAIL" : "PASS";
 const sceneFindings = blockers.length
@@ -264,6 +311,8 @@ await writeText(join(reviewDir, "video-review.md"), [
   "",
   `- Cues: ${captionReport.cueCount}`,
   `- Issues: ${captionReport.issues.length}`,
+  `- Caption lead: ${captionConfigReport.leadSeconds ?? "missing"}s`,
+  `- Caption config issues: ${captionConfigReport.issues.length}`,
   "",
   "## Motion Variety",
   "",
@@ -273,6 +322,16 @@ await writeText(join(reviewDir, "video-review.md"), [
   "## Asset Match",
   "",
   `- Asset issues: ${assetReport.issues.length}`,
+  "",
+  "## Line Quality",
+  "",
+  `- Floating connector issues: ${lineReport.issues.length}`,
+  "",
+  "## Route Transparency",
+  "",
+  `- Project routes: \`${JSON.stringify(routeReport.routes)}\``,
+  `- Work-order route counts: \`${JSON.stringify(routeReport.routeCounts)}\``,
+  `- Asset route counts: \`${JSON.stringify(routeReport.assetRoutes)}\``,
   "",
   "## Editor Notes",
   "",

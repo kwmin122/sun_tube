@@ -43,6 +43,7 @@ Use this before pre-render QA:
 - Avoid large empty cards or panels. A panel needs an information role, not just a title.
 - Keep primary labels and moving tokens above the caption safe zone.
 - Use imagegen only for mood/styleframe/background/thumbnail assets. Build text-heavy diagrams in HTML/SVG/GSAP.
+- Do not use full-width decorative connector SVGs that float across the canvas or pass over card titles. Lines must be anchored to concrete nodes, clipped inside their container, or replaced with short arrows/tokens.
 
 ## Motion Primitives
 
