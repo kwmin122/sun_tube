@@ -20,7 +20,8 @@ if (!projectArg) {
 }
 
 const { project, projectPath } = await loadProject(projectArg);
-if ((project.currentGate !== "package" || project.artifacts?.render !== true || project.artifacts?.videoReview !== true || project.artifacts?.directorReview !== true) && !args.force) {
+const packageGateReady = project.currentGate === "package" || project.currentGate === "done";
+if ((!packageGateReady || project.artifacts?.render !== true || project.artifacts?.videoReview !== true || project.artifacts?.directorReview !== true) && !args.force) {
   console.error("Package blocked: machine video review, director review, final QA, and render artifact must pass. Use --force only as an explicit override.");
   process.exit(1);
 }
@@ -71,6 +72,8 @@ await writeText(join(outDir, "description.md"), [
   "## Downloads",
   "",
   copied.length ? copied.map((item) => `- ${item.src} -> ${item.dest}`).join("\n") : "- No render files copied.",
+  "",
+  "These MP4s are local delivery artifacts and are intentionally not committed to git.",
   "",
 ].join("\n"));
 
