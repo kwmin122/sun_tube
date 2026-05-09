@@ -1,4 +1,5 @@
-import { existsSync, readdirSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join } from "node:path";
 import {
   loadProject,
@@ -179,6 +180,23 @@ function selectedRenderer(markdown) {
 
 function comparisonHasRemotionBlocked(markdown) {
   return /remotion\s*\|\s*blocked/i.test(markdown) || /Remotion blocked/i.test(markdown);
+}
+
+function selectedRenderPath(projectPath, selected) {
+  if (selected === "hyperframes") return join(projectPath, "renders/final-hyperframes.mp4");
+  if (selected === "remotion") return join(projectPath, "renders/final-remotion.mp4");
+  return "";
+}
+
+function fileHash(path) {
+  if (!path || !existsSync(path)) return "";
+  return createHash("sha256").update(readFileSync(path)).digest("hex");
+}
+
+function sameFileIdentity(a, b) {
+  const first = fileHash(a);
+  const second = fileHash(b);
+  return Boolean(first && second && first === second);
 }
 
 function unresolvedCriticalFindings(markdown) {
@@ -372,6 +390,7 @@ if (stage === "final") {
   const criticalOpen = unresolvedCriticalFindings(directorText);
   const verdict = directorVerdict(directorText);
   const selected = selectedRenderer(`${directorText}\n${comparisonText}`);
+  const selectedRender = selectedRenderPath(projectPath, selected);
   const remotionBlocked = comparisonHasRemotionBlocked(comparisonText);
   const comparisonResult = comparisonVerdict(comparisonText);
   const evidenceCount = directorEvidenceFrameCount(directorText, selected);
@@ -386,6 +405,7 @@ if (stage === "final") {
   add(checks, comparisonResult === "PASS", "renderer comparison verdict PASS", comparisonResult || "missing Verdict: PASS");
   add(checks, Boolean(selected), "selected renderer stated", selected || "missing Selected renderer");
   add(checks, selected !== "none", "selected renderer is not none", selected || "missing Selected renderer");
+  add(checks, !selectedRender || existsSync(selectedRender), "selected renderer render exists", selectedRender ? rel(selectedRender) : "no selected renderer render path");
   add(checks, existsSync(hyperframesRender), "hyperframes render exists", rel(hyperframesRender));
   add(checks, existsSync(remotionRender) || remotionBlocked, "remotion render or blocker recorded", existsSync(remotionRender) ? rel(remotionRender) : (remotionBlocked ? "Remotion blocked recorded" : "missing remotion render/blocker"));
   if (existsSync(remotionRender)) add(checks, existsSync(remotionReview), "remotion review exists", rel(remotionReview));
@@ -407,6 +427,7 @@ if (stage === "final") {
     add(checks, !hasSyntheticQualityDom(selectedCompositionHtml), "remotion review HTML has no synthetic quality DOM", hasSyntheticQualityDom(selectedCompositionHtml) ? "remove prepare.mjs section/class proxy markers" : "metadata-only review HTML");
   }
   add(checks, existsSync(render), "render exists", rel(render));
+  add(checks, selectedRender && sameFileIdentity(render, selectedRender), "final render matches selected renderer", selectedRender ? `${rel(render)} == ${rel(selectedRender)}` : "missing selected renderer");
   if (existsSync(render)) {
     const probe = run("ffprobe", ["-v", "error", "-show_entries", "format=duration:stream=codec_type,width,height,avg_frame_rate", "-of", "json", render], { timeout: 30_000 });
     add(checks, probe.status === 0, "ffprobe", probe.status === 0 ? probe.stdout.slice(0, 500) : probe.stderr);

@@ -357,9 +357,97 @@
     }
     .memory-source {
       display: grid;
-      grid-template-columns: 0.92fr 1.08fr;
+      grid-template-columns: 0.42fr 1.58fr;
       gap: 28px;
       align-items: stretch;
+    }
+    .source-stamp {
+      position: relative;
+      height: 340px;
+      min-height: 0;
+      align-self: center;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid rgba(247,243,234,0.18);
+      background: rgba(247,243,234,0.07);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.34);
+    }
+    .source-stamp img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 36%;
+      filter: saturate(.78) contrast(1.05) brightness(.66);
+      opacity: .88;
+      display: block;
+    }
+    .source-stamp .label {
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background: rgba(8,9,11,0.84);
+      color: #f7f3ea;
+      font-size: 18px;
+      font-weight: 780;
+    }
+    .source-stamp .source-caption {
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      font-size: 18px;
+    }
+    .memory-sorter {
+      min-height: 560px;
+      padding: 32px;
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+    .memory-sorter h3 {
+      font-size: 42px;
+      line-height: 1.08;
+    }
+    .memory-sorter .sort-column {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 18px;
+    }
+    .memory-chip-grid {
+      display: grid;
+      gap: 14px;
+      align-content: center;
+    }
+    .memory-chip {
+      padding: 16px 18px;
+      border-radius: 8px;
+      background: rgba(247,243,234,0.08);
+      border: 1px solid rgba(247,243,234,0.1);
+      color: rgba(247,243,234,0.9);
+      font-size: 25px;
+      line-height: 1.15;
+      font-weight: 740;
+    }
+    .memory-chip.noise {
+      color: rgba(247,243,234,0.55);
+      border-color: rgba(247,243,234,0.08);
+    }
+    .memory-chip.keep {
+      border-color: rgba(42,157,143,0.42);
+      background: rgba(42,157,143,0.14);
+    }
+    .memory-result {
+      display: grid;
+      gap: 16px;
+      align-content: center;
+    }
+    .memory-result .info-row {
+      grid-template-columns: 92px 1fr;
+    }
+    .memory-result .flow-token {
+      width: max-content;
     }
     .dream-panel {
       display: grid;
@@ -684,6 +772,26 @@
     .loop-chip.b { left: 50%; top: 230px; transform: translateX(-50%); }
     .loop-chip.c { right: 44px; top: 68px; }
     .loop-chip.d { left: 50%; bottom: 42px; transform: translateX(-50%); color: #f4a261; }
+    .loop-routes {
+      position: absolute;
+      inset: 128px 104px 104px;
+      pointer-events: none;
+      border-radius: 999px;
+      border: 3px solid rgba(244,162,97,0.26);
+      box-shadow: inset 0 0 28px rgba(244,162,97,0.08);
+    }
+    .loop-routes:before,
+    .loop-routes:after {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: #2a9d8f;
+      box-shadow: 0 0 24px rgba(42,157,143,0.58);
+    }
+    .loop-routes:before { left: 14%; top: -9px; }
+    .loop-routes:after { right: 14%; bottom: -9px; }
     .agent-map {
       position: relative;
       min-height: 600px;
@@ -813,6 +921,26 @@
       flex-wrap: wrap;
       align-content: start;
     }
+    .event-step-rail {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      align-self: end;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(42,157,143,0.26);
+      background: rgba(42,157,143,0.08);
+    }
+    .event-step-rail span {
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(42,157,143,0.18);
+      color: rgba(247,243,234,0.92);
+      font-size: 22px;
+      font-weight: 800;
+      text-align: center;
+    }
     .workflow-board {
       position: relative;
       min-height: 590px;
@@ -886,6 +1014,24 @@
     .orbit-card.b { right: 92px; top: 32px; }
     .orbit-card.c { left: 92px; bottom: 36px; }
     .orbit-card.d { right: 92px; bottom: 36px; }
+    .convergence-rails {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .convergence-rails span {
+      position: absolute;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(244,162,97,0.86), rgba(42,157,143,0.86));
+      box-shadow: 0 0 22px rgba(42,157,143,0.24);
+      opacity: .62;
+    }
+    .convergence-rails .a { left: 338px; top: 165px; width: 330px; transform: rotate(19deg); }
+    .convergence-rails .b { right: 338px; top: 165px; width: 330px; transform: rotate(-19deg); }
+    .convergence-rails .c { left: 338px; bottom: 180px; width: 330px; transform: rotate(-18deg); }
+    .convergence-rails .d { right: 338px; bottom: 180px; width: 330px; transform: rotate(18deg); }
     .final-map {
       position: relative;
       min-height: 620px;
@@ -894,14 +1040,14 @@
     }
     .final-core {
       position: relative;
-      z-index: 3;
-      width: 760px;
+      z-index: 5;
+      width: 940px;
       padding: 34px 44px;
       border-radius: 8px;
       text-align: center;
     }
     .final-core h2 {
-      font-size: 58px;
+      font-size: 48px;
       line-height: 1.06;
       max-width: none;
     }
@@ -909,20 +1055,6 @@
       justify-content: center;
       margin: 20px 0;
     }
-    .final-pill {
-      position: absolute;
-      z-index: 4;
-      padding: 12px 18px;
-      border-radius: 999px;
-      background: rgba(42,157,143,0.18);
-      border: 1px solid rgba(42,157,143,0.38);
-      font-size: 22px;
-      font-weight: 820;
-    }
-    .final-pill.a { left: 180px; top: 126px; }
-    .final-pill.b { right: 180px; top: 126px; }
-    .final-pill.c { left: 210px; bottom: 122px; }
-    .final-pill.d { right: 210px; bottom: 122px; }
     .parallel-board {
       position: relative;
       grid-template-columns: repeat(4, 1fr);
@@ -1077,10 +1209,10 @@
       text-align: center;
       padding-bottom: 60px;
     }
-    .final-statement h2 {
-      max-width: 1420px;
-      font-size: 86px;
-      line-height: 1.05;
+    .final-statement .final-core h2 {
+      max-width: none;
+      font-size: 48px;
+      line-height: 1.06;
     }
     .final-statement .token-lane {
       justify-content: center;
@@ -1188,18 +1320,40 @@
         <div><div class="eyebrow">1. Dreaming</div><h2>드리밍은 쉬는 시간에 경험을 다시 정리하는 기능입니다.</h2></div>
         <div class="scene-no">03</div>
       </div>
-      <div class="memory-source">
-        <div class="screenshot source-side dream-shot">
+      <div class="memory-source stage">
+        <div class="source-stamp" data-capture-role="support_texture">
           <img src="assets/screenshots/scene-03-capture-3.png" alt="Claude Managed Agents dreaming section capture" />
-          <div class="label">드리밍 발표 근거</div>
-          <div class="source-caption">작업이 멈춘 뒤에도 과거 세션과 메모리를 훑어 더 쓸모 있는 패턴으로 정리합니다.</div>
+          <div class="label">공식 발표 캡처</div>
+          <div class="source-caption">원문은 배경 근거로만 두고, 핵심 설명은 오른쪽 보드에서 한국어로 풀어냅니다.</div>
         </div>
-        <div class="stack">
-          <div class="item">작업 기록 → 패턴 정리 → 다음 세션 메모리</div>
-          <div class="item">반복해서 막힌 지점</div>
-          <div class="item">자주 성공한 작업 방식</div>
-          <div class="item">팀이 선호한 표현과 구조</div>
-          <div class="item">다음 세션에 쓸 만한 메모리</div>
+        <div class="memory-sorter glass-panel" data-visual-thesis="dreaming-sorts-memory">
+          <div class="liquid-sheen" data-layout-allow-overflow></div>
+          <div class="sort-column">
+            <span class="tag">Before</span>
+            <h3>흩어진 작업 흔적</h3>
+            <div class="memory-chip-grid">
+              <div class="memory-chip noise">반복해서 막힌 지점</div>
+              <div class="memory-chip noise">자주 성공한 작업 방식</div>
+              <div class="memory-chip noise">팀이 선호한 표현과 구조</div>
+              <div class="memory-chip noise">지난 세션의 결정과 실패</div>
+            </div>
+          </div>
+          <div class="sort-column">
+            <span class="tag">After</span>
+            <h3>다음 세션에 쓸 메모리</h3>
+            <div class="memory-result">
+              <div class="info-row"><strong>정리</strong><span>노이즈를 걷어내고 반복되는 패턴만 남깁니다.</span></div>
+              <div class="info-row"><strong>압축</strong><span>성공한 워크플로를 다음 요청에 붙일 수 있게 줄입니다.</span></div>
+              <div class="info-row"><strong>연결</strong><span>새 세션이 시작될 때 이전 맥락을 바로 이어줍니다.</span></div>
+              <div class="token-lane">
+                <span class="flow-token">실패 패턴</span>
+                <span class="flow-token">성공 절차</span>
+                <span class="flow-token">팀 선호</span>
+              </div>
+              <div class="memory-chip keep">쓸모 있는 메모리만 다음 세션으로 이동</div>
+            </div>
+          </div>
+          <div class="scan-fill"></div>
         </div>
       </div>
     </section>
@@ -1316,13 +1470,8 @@
         <div class="judge-panel feedback-loop glass-panel">
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <h3>핵심 변화</h3>
-          <svg viewBox="0 0 720 360" aria-hidden="true">
-            <path class="path-draw" d="M122 92 C260 8 460 8 598 92" />
-            <path class="path-draw" d="M598 248 C460 338 260 338 122 248" />
-            <path class="path-draw" d="M122 92 C74 148 74 196 122 248" />
-            <path class="path-draw" d="M598 92 C646 148 646 196 598 248" />
-          </svg>
           <div class="loop-canvas">
+            <div class="loop-routes route-pulse"></div>
             <div class="loop-chip a">기준 작성</div>
             <div class="loop-chip b">별도 모델 채점</div>
             <div class="loop-chip c">수정 루프</div>
@@ -1344,12 +1493,6 @@
         <div class="scene-no">07</div>
       </div>
       <div class="agent-map network">
-        <svg class="agent-link" viewBox="0 0 1720 600" aria-hidden="true">
-          <path class="path-draw" d="M860 172 C560 210 304 258 226 330" />
-          <path class="path-draw" d="M860 172 C710 230 612 270 654 330" />
-          <path class="path-draw" d="M860 172 C1010 230 1108 270 1066 330" />
-          <path class="path-draw" d="M860 172 C1160 210 1416 258 1494 330" />
-        </svg>
         <span class="task-packet p1"></span><span class="task-packet p2"></span><span class="task-packet p3"></span>
         <div class="agent-node lead glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><h3>리드 에이전트</h3><p>계획, 분배, 통합</p><div class="signal-list"><span>작업 분해</span><span>결과 병합</span></div><div class="info-row"><strong>분배</strong><span>역할별로 쪼개고 다시 압축합니다.</span></div><div class="scan-fill"></div></div>
         <div class="agent-node a glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><h3>로그 담당</h3><p>오류 원인 분석</p><span class="flow-token">logs</span><div class="info-row"><strong>입력</strong><span>실패 로그</span></div><div class="scan-fill"></div></div>
@@ -1422,10 +1565,6 @@
         <div class="scene-no">09</div>
       </div>
       <div class="event-router stage">
-        <svg viewBox="0 0 1720 600" aria-hidden="true">
-          <path class="path-draw" d="M290 108 C520 82 640 82 830 108" />
-          <path class="path-draw" d="M890 108 C1120 82 1240 82 1430 108" />
-        </svg>
         <div class="event-stage glass-panel">
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <small>Event</small><h3>문서 업로드</h3><p>새 파일이나 요청이 들어옵니다.</p>
@@ -1446,6 +1585,11 @@
           <div class="event-detail"><span>분석</span><span>검토</span><span>알림</span></div>
           <div class="packet-rail"><span class="event-packet">summary</span><span class="event-packet">notify</span></div>
           <div class="scan-fill"></div>
+        </div>
+        <div class="event-step-rail">
+          <span>이벤트 수신</span>
+          <span>조건 확인</span>
+          <span>후속 작업 생성</span>
         </div>
       </div>
     </section>
@@ -1486,12 +1630,7 @@
         <div class="scene-no">11</div>
       </div>
       <div class="system-core">
-        <svg viewBox="0 0 1720 610" aria-hidden="true">
-          <path class="path-draw" d="M430 140 C640 214 730 230 860 304" />
-          <path class="path-draw" d="M1290 140 C1080 214 990 230 860 304" />
-          <path class="path-draw" d="M430 470 C640 396 730 380 860 304" />
-          <path class="path-draw" d="M1290 470 C1080 396 990 380 860 304" />
-        </svg>
+        <div class="convergence-rails" aria-hidden="true"><span class="a route-pulse"></span><span class="b route-pulse"></span><span class="c route-pulse"></span><span class="d route-pulse"></span></div>
         <div class="core-node glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div>운영 시스템으로 통합</div>
         <div class="orbit-card a"><strong>드리밍</strong><p>시간 축에서 이전 경험을 다음 작업으로 연결합니다.</p><span class="metric-tick">time</span></div>
         <div class="orbit-card b"><strong>아웃컴</strong><p>품질 축에서 결과물이 기준을 통과하게 만듭니다.</p><span class="metric-tick">quality</span></div>
@@ -1522,16 +1661,10 @@
 
     <section id="scene-13" class="clip scene final-statement" data-start="311.4" data-duration="22.5" data-track-index="13">
       <div class="final-map">
-        <svg viewBox="0 0 1720 620" aria-hidden="true">
-          <path class="path-draw" d="M360 144 C620 226 706 260 860 314" />
-          <path class="path-draw" d="M1360 144 C1100 226 1014 260 860 314" />
-          <path class="path-draw" d="M380 488 C640 410 728 378 860 314" />
-          <path class="path-draw" d="M1340 488 C1080 410 992 378 860 314" />
-        </svg>
         <div class="final-core glass-panel">
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <div class="eyebrow">Final Question</div>
-          <h2>경쟁은 <span class="highlight">어떤 모델</span>에서<br />어떤 시스템으로 운영하느냐로 넘어갑니다.</h2>
+          <h2>경쟁은 <span class="highlight">어떤 모델</span>에서<br />어떤 시스템으로<br />운영하느냐로 넘어갑니다.</h2>
           <div class="token-lane final-token-row">
             <span class="flow-token">learn</span>
             <span class="flow-token">judge</span>

@@ -28,11 +28,22 @@ If the motion does not make the verb visible, the scene fails director review.
 - Same `fade + y + stagger` as the dominant animation across scenes.
 - Long decorative connector paths floating across cards or text.
 - `path-draw` without node anchors, purpose, and safe-zone checks.
+- Full-screen source captures with decorative rectangles that do not explain a Korean narration beat.
 - Large empty glass panels.
 - Liquid Glass as a global theme.
 - Repeated card-only layouts for three or more scenes.
 - Sheen or glow that does not change meaning.
 - Dense text panels with no visual thesis.
+
+## Hyperframes Canonical Design Rules
+
+Hyperframes is the preferred final renderer for editorial explainers in this factory. Its strengths are atmosphere, typography, glass-panel composition, and HTML/SVG/GSAP diagrams. Preserve those strengths, but block the common failures:
+
+- Prefer lanes, packets, rails, and state bars over decorative sweeping lines.
+- If a connector is necessary, it must attach to named node anchors and avoid readable text.
+- A source capture should be a source stamp or evidence panel, not the whole explanation unless the viewer can read and understand it quickly.
+- Every rich scene needs a visible Korean explanatory structure: rows, chips, gates, loops, before/after states, or a diagram.
+- Motion must show the narration verb, not just make elements appear.
 
 ## Primitive Contract
 

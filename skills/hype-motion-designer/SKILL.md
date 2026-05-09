@@ -49,9 +49,12 @@ Use this before pre-render QA:
 
 If both `composition-hyperframes/` and `composition-remotion/` exist, both must implement the same scene recipe and narration verb. Do not create renderer-specific meanings.
 
+Use Hyperframes as the canonical design implementation unless `creative-brief.md` explicitly selects another final renderer. Remotion can be a candidate comparison, but a smoother transition is not enough to win if scene clarity, visual thesis, or brand consistency is weaker.
+
 Quality rules:
 
 - Use anchored paths or lane/rail flow; never let route lines cross text or float through cards.
+- If a connector line cannot be anchored cleanly, remove it and express the relationship with row order, token motion, short arrows, or contained rails.
 - Use Liquid Glass only as focus, state, or transition layer, not as a global card style.
 - Prefer scene-local timelines or frame-local control over one global animation blob.
 - Leave metadata or DOM markers that `factory:review-video` can inspect.

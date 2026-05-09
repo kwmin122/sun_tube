@@ -20,6 +20,13 @@
     },
     {
       "scene": "01",
+      "label": "motion-peak",
+      "at": 9.112,
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-01-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "01",
       "label": "end",
       "at": 13,
       "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-01-end.png",
@@ -37,6 +44,13 @@
       "label": "mid",
       "at": 17.9,
       "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-02-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "02",
+      "label": "motion-peak",
+      "at": 19.52,
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-02-motion-peak.png",
       "ok": true
     },
     {
@@ -62,6 +76,13 @@
     },
     {
       "scene": "03",
+      "label": "motion-peak",
+      "at": 41.78,
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-03-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "03",
       "label": "end",
       "at": 50.5,
       "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-03-end.png",
@@ -79,6 +100,13 @@
       "label": "mid",
       "at": 65.15,
       "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-04-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "04",
+      "label": "motion-peak",
+      "at": 70.28,
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-04-motion-peak.png",
       "ok": true
     },
     {
@@ -104,6 +132,13 @@
     },
     {
       "scene": "05",
+      "label": "motion-peak",
+      "at": 104.22,
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-05-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "05",
       "label": "end",
       "at": 115.5,
       "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-05-end.png",
@@ -121,6 +156,13 @@
       "label": "mid",
       "at": 125.9,
       "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-06-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "06",
+      "label": "motion-peak",
+      "at": 129.5,
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-06-motion-peak.png",
       "ok": true
     },
     {
@@ -146,6 +188,13 @@
     },
     {
       "scene": "07",
+      "label": "motion-peak",
+      "at": 163.10000000000002,
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-07-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "07",
       "label": "end",
       "at": 175.5,
       "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-07-end.png",
@@ -163,6 +212,13 @@
       "label": "mid",
       "at": 186.65,
       "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-08-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "08",
+      "label": "motion-peak",
+      "at": 190.52,
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-08-motion-peak.png",
       "ok": true
     },
     {
@@ -188,6 +244,13 @@
     },
     {
       "scene": "09",
+      "label": "motion-peak",
+      "at": 216.44,
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-09-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "09",
       "label": "end",
       "at": 225,
       "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-09-end.png",
@@ -205,6 +268,13 @@
       "label": "mid",
       "at": 236.7,
       "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-10-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "10",
+      "label": "motion-peak",
+      "at": 240.768,
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-10-motion-peak.png",
       "ok": true
     },
     {
@@ -230,6 +300,13 @@
     },
     {
       "scene": "11",
+      "label": "motion-peak",
+      "at": 266.292,
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-11-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "11",
       "label": "end",
       "at": 274.5,
       "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-11-end.png",
@@ -251,6 +328,13 @@
     },
     {
       "scene": "12",
+      "label": "motion-peak",
+      "at": 299.71999999999997,
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-12-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "12",
       "label": "end",
       "at": 311,
       "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-12-end.png",
@@ -268,6 +352,13 @@
       "label": "mid",
       "at": 322.65,
       "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-13-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "13",
+      "label": "motion-peak",
+      "at": 326.7,
+      "output": "projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-13-motion-peak.png",
       "ok": true
     },
     {

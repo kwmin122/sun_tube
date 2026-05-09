@@ -2,7 +2,21 @@
 
 This repo can build a Hyperframes version and a Remotion comparison version from the same production contract.
 
-Remotion is a candidate renderer, not the new default. Hyperframes remains the default unless repeated renderer comparisons prove otherwise.
+Hyperframes is the canonical design renderer for the current editorial explainer style: dark grid, glass panels, strong Korean typography, HTML/CSS/SVG/GSAP motion, and YouTube information pacing. Remotion is a candidate renderer and timing lab, not the new default.
+
+## Renderer Roles
+
+| Role | Meaning | Package Eligibility |
+|---|---|---|
+| `canonical_design` | Default renderer for the project's final visual language. | eligible |
+| `candidate` | Alternative renderer for comparison. | eligible only if selected by director review |
+| `timing_lab` | Used to test timing, transitions, captions, or frame-based ideas. | not eligible by default |
+| `blocked` | Render failed or quality gate failed. | not eligible |
+
+Current default:
+
+- Hyperframes: `canonical_design`
+- Remotion: `candidate` / `timing_lab`
 
 ## Common Inputs
 
@@ -76,3 +90,5 @@ renders/final.mp4
 ```
 
 `review/video-review/renderer-comparison.md` must state why the selected renderer won.
+
+Renderer selection is a creative decision, not a technical default. Hyperframes should win by default for editorial explainers unless its actual rendered frames fail line quality, visual density, caption safety, or scene thesis checks. Remotion should win only when the frame-reviewed result is clearly better for the specific video.

@@ -4,6 +4,12 @@ This document defines when `hype_tuber` uses Hyperframes, `video-use`, image gen
 
 The default final video is still a TTS-driven Hyperframes motion composition. `video-use` is used when a scene needs raw/source video handling before that footage becomes an asset.
 
+Renderer selection is a creative decision, not a technical default.
+
+- Use Hyperframes when the target style is an editorial explainer, technical diagram, Korean narration, dark grid, glass panel, or YouTube information video.
+- Use Remotion when frame-perfect sequence timing, React-driven captions, or a comparison render is explicitly needed.
+- Remotion may be a candidate or timing lab, but it is not the default final aesthetic unless rendered-frame review selects it.
+
 ## Pipeline Diagram
 
 ```text
@@ -38,6 +44,29 @@ topic / user material
 | imagegen | Generated style frames, metaphor visuals, backgrounds, thumbnails, non-factual illustrations. | `assets/generated/` or `assets/processed/` |
 | Manual/browser capture | Official docs, GitHub README, web pages, UI screenshots, platform captures. | `assets/screenshots/`, `assets/evidence/` |
 | scripts/ffmpeg | Audio mix, ffprobe checks, format conversion, simple extraction, normalization. | `voiceover/`, `assets/processed/`, `renders/` |
+
+## Capture Utility Contract
+
+A capture route is `qa_passed` only when all are true:
+
+- The capture is from the intended page or source.
+- The visible crop is relevant to the exact narration beat.
+- The important region occupies enough screen area to read or recognize.
+- Highlight/zoom points to a meaningful source detail, not a decorative rectangle.
+- The scene overlays Korean interpretation, labels, or comparison structure.
+
+If a capture is technically correct but visually unhelpful, downgrade it:
+
+```text
+primary_evidence -> support_texture -> not_required -> reroute_to_diagram
+```
+
+Capture route must be downgraded to `support_texture` or rerouted to Hyperframes diagram when:
+
+- the page is mostly English text and the viewer cannot quickly understand it;
+- the highlighted box does not identify a specific claim or UI affordance;
+- the capture is used as background texture;
+- the narration can be explained better by a diagram, flow, or typed evidence card.
 
 ## When To Use `video-use`
 

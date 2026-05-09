@@ -4,7 +4,7 @@ Renderer: hyperframes
 Render: `projects/002-claude-managed-agents/renders/final-hyperframes.mp4`
 
 ## Machine Verdict
-FAIL
+PASS
 
 This is not final aesthetic approval. `review/video-review/director-review.md` must be `Verdict: PASS` before final QA/package.
 
@@ -18,7 +18,7 @@ This is not final aesthetic approval. `review/video-review/director-review.md` m
 
 | Scene | Issue | Detail |
 |---|---|---|
-| - | unanchored_path_draw | path-draw must declare data-anchor-from and data-anchor-to so route lines are tied to scene elements |
+| - | none | - |
 
 ## Caption Sync
 
@@ -32,6 +32,7 @@ This is not final aesthetic approval. `review/video-review/director-review.md` m
 ## Motion Variety
 
 - Motion issues: 0
+- Metadata-only: yes
 - Rich scenes require rows plus path/token/scan/sheen/tick motion primitives.
 
 ## Asset Match
@@ -40,7 +41,7 @@ This is not final aesthetic approval. `review/video-review/director-review.md` m
 
 ## Line Quality
 
-- Floating connector issues: 1
+- Floating connector issues: 0
 
 
 ## Route Transparency

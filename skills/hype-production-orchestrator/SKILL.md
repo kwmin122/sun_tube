@@ -28,6 +28,12 @@ Run only the roles needed for that gate.
 
 During production, ensure every scene has a route: `hyperframes`, `video-use`, `imagegen`, `capture`, `script/ffmpeg`, or `manual`.
 
+Renderer policy:
+
+- Treat Hyperframes as the default canonical design renderer for the final delivery unless the brief explicitly selects another renderer.
+- Treat Remotion as a candidate/timing-lab renderer until a frame-reviewed comparison selects it.
+- Do not let renderer candidates reinterpret the script, scene recipe, or visual thesis.
+
 ## Outputs
 
 - Updated `status.md`
@@ -43,6 +49,7 @@ During production, ensure every scene has a route: `hyperframes`, `video-use`, `
 - Do not route every project through `video-use`; use it only for raw/source video analysis or processing.
 - Do not render before snapshot/pre-render QA.
 - Do not run final QA before `factory:review-video` passes.
+- Do not copy a renderer candidate to `renders/final.mp4` unless `renderer-comparison.md` names that same renderer as selected.
 - Do not package before final QA.
 - Do not treat a solved recurring failure as finished until the prevention path is recorded. Use `review/video-review/issue-log.md` during production and run `/ce-compound` after the fix is verified when recurrence risk exists.
 

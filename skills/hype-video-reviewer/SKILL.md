@@ -101,4 +101,6 @@ When both Hyperframes and Remotion candidates exist:
 - select exactly one renderer for `renders/final.mp4`
 - record any blocked renderer honestly
 
+Selection rule: default to Hyperframes when it has clearer scene identity, stronger design consistency, and no line/capture blockers. Select Remotion only when the rendered frames are visibly better, not merely smoother.
+
 Never give PASS just because a render exists. PASS requires evidence frames and no unresolved critical findings.

@@ -31,6 +31,11 @@ Create or update `design-context.md` with:
 
 When a project targets both Hyperframes and Remotion, define the visual logic once at the scene level. Do not let each renderer invent a different scene interpretation.
 
+Default renderer stance:
+
+- Hyperframes is the canonical design renderer unless the creative brief says otherwise.
+- Remotion may be used as a candidate renderer for frame-accurate timing, but it must preserve the same visual thesis and scene recipe.
+
 Classify imagegen per scene:
 
 - `primary`: generated image carries the scene's explanation, emotion, or metaphor
@@ -38,6 +43,10 @@ Classify imagegen per scene:
 - `not_required`: capture, interview, data, or HTML/SVG/Remotion diagram is clearer
 
 The design context should name the scene recipe, primary route, motion grammar, and review risk before implementation starts.
+
+## Capture Utility
+
+Use capture only when it explains the scene. A useful capture needs a readable crop, a visible highlight, and a clear sentence-level reason. If the viewer cannot tell what the capture proves, downgrade it to `support` texture or reroute the scene to HTML/SVG/imagegen.
 
 ## Rules
 

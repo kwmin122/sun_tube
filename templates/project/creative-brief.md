@@ -19,6 +19,8 @@ Owner: `hype-showrunner` and `hype-creative-director`
 - Imagegen role: primary | support | not_required
 - Evidence role: primary | support | not_required
 - Renderer targets: hyperframes | remotion | both
+- Preferred final renderer: hyperframes | remotion
+- Renderer candidate policy:
 - Review rubric:
 
 ## Why This Video Should Exist
