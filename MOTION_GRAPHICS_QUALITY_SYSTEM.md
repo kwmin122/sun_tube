@@ -31,7 +31,7 @@ For any scene with three or more cards, nodes, modules, cases, or workflow steps
 
 - show one active explanation unit at a time
 - keep future units hidden until the narration reaches them
-- dim previous units unless they are needed for comparison
+- keep revealed units visible as context, but make the current unit sharper/brighter
 - use `data-progressive-disclosure="one-at-a-time"` on the group
 - use `data-focus-item` on each independent unit
 

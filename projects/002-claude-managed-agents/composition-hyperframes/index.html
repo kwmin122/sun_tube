@@ -742,19 +742,14 @@
       border-radius: 999px;
       border: 3px solid rgba(244,162,97,0.26);
       box-shadow: inset 0 0 28px rgba(244,162,97,0.08);
+      transform-origin: center center;
     }
-    .loop-routes:before,
-    .loop-routes:after {
-      content: "";
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      border-radius: 999px;
-      background: #2a9d8f;
-      box-shadow: 0 0 24px rgba(42,157,143,0.58);
+    .loop-routes.route-pulse {
+      background: transparent;
+      box-shadow:
+        inset 0 0 28px rgba(244,162,97,0.08),
+        0 0 18px rgba(244,162,97,0.16);
     }
-    .loop-routes:before { left: 14%; top: -9px; }
-    .loop-routes:after { right: 14%; bottom: -9px; }
     .agent-map {
       position: relative;
       min-height: 600px;
@@ -783,17 +778,6 @@
       line-height: 1.12;
     }
     .agent-node .info-row strong { font-size: 17px; }
-    .task-packet {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      border-radius: 999px;
-      background: #2a9d8f;
-      box-shadow: 0 0 26px rgba(42,157,143,0.72);
-    }
-    .task-packet.p1 { left: 49%; top: 220px; }
-    .task-packet.p2 { left: 42%; top: 258px; }
-    .task-packet.p3 { left: 56%; top: 258px; }
     .merge-bar {
       position: absolute;
       left: 34%;
@@ -1208,8 +1192,8 @@
       filter: blur(10px);
     }
     [data-progressive-disclosure] [data-focus-item].is-past {
-      opacity: 0.1;
-      filter: blur(2px);
+      opacity: 0.42;
+      filter: blur(0.8px);
     }
     [data-progressive-disclosure] [data-focus-item].is-active {
       opacity: 1;
@@ -1465,7 +1449,6 @@
         <div class="scene-no">07</div>
       </div>
       <div class="agent-map network" data-progressive-disclosure="one-at-a-time">
-        <span class="task-packet p1"></span><span class="task-packet p2"></span><span class="task-packet p3"></span>
         <div class="agent-node lead glass-panel" data-focus-item><div class="liquid-sheen" data-layout-allow-overflow></div><h3>리드 에이전트</h3><p>계획, 분배, 통합</p><div class="signal-list"><span>작업 분해</span><span>결과 병합</span></div><div class="info-row"><strong>분배</strong><span>역할별로 쪼개고 다시 압축합니다.</span></div><div class="scan-fill"></div></div>
         <div class="agent-node a glass-panel" data-focus-item><div class="liquid-sheen" data-layout-allow-overflow></div><h3>로그 담당</h3><p>오류 원인 분석</p><span class="flow-token">logs</span><div class="info-row"><strong>입력</strong><span>실패 로그</span></div><div class="scan-fill"></div></div>
         <div class="agent-node b glass-panel" data-focus-item><div class="liquid-sheen" data-layout-allow-overflow></div><h3>문서 담당</h3><p>변경점 정리</p><span class="flow-token">docs</span><div class="info-row"><strong>출력</strong><span>요약 문서</span></div><div class="scan-fill"></div></div>
@@ -1704,10 +1687,10 @@
           const at = Math.min(start + duration - 1.2, base + index * step);
           if (index > 0) {
             tl.to(items[index - 1], {
-              autoAlpha: 0.1,
+              autoAlpha: 0.42,
               y: 0,
               scale: 0.985,
-              filter: "blur(2px)",
+              filter: "blur(0.8px)",
               duration: 0.35,
               onStart: () => items[index - 1].classList.add("is-past"),
             }, at - 0.08);
@@ -1780,17 +1763,21 @@
       tl.to(`${selector} .path-draw`, { strokeDashoffset: 0, autoAlpha: 1, duration: 1.15, stagger: 0.08 }, start + 0.78);
       tl.fromTo(`${selector} .liquid-sheen`, { xPercent: -130, autoAlpha: 0 }, { xPercent: 260, autoAlpha: 0.58, duration: 1.35, stagger: 0.08 }, start + 0.55);
       tl.fromTo(`${selector} .scan-fill`, { scaleX: 0, autoAlpha: 0 }, { scaleX: 1, autoAlpha: 1, duration: 1.0, stagger: 0.08 }, start + 1.0);
+      tl.fromTo(`${selector} .loop-routes`,
+        { rotation: 0, autoAlpha: 0.55 },
+        { rotation: 360, autoAlpha: 0.9, transformOrigin: "50% 50%", ease: "none", duration: Math.max(2.8, duration - 3.2) },
+        start + 1.35
+      );
       tl.fromTo(`${selector} .info-row, ${selector} .signal-list span, ${selector} .event-detail span, ${selector} .status-ladder span, ${selector} .rubric-check, ${selector} .doc-line`,
         { x: -18, autoAlpha: 0 },
         { x: 0, autoAlpha: 1, duration: 0.55, stagger: 0.055 },
         start + 1.05
       );
-      tl.fromTo(`${selector} .flow-token, ${selector} .metric-tick, ${selector} .event-packet, ${selector} .task-packet`,
+      tl.fromTo(`${selector} .flow-token, ${selector} .metric-tick, ${selector} .event-packet`,
         { scale: 0.86, x: -22, autoAlpha: 0 },
         { scale: 1, x: 0, autoAlpha: 1, duration: 0.55, stagger: 0.06 },
         start + 1.22
       );
-      tl.fromTo(`${selector} .task-packet`, { y: -36 }, { y: 54, duration: 1.2, yoyo: true, repeat: 1, stagger: 0.1 }, start + 1.55);
       tl.fromTo(`${selector} .event-packet`, { x: -34 }, { x: 34, duration: 1.05, yoyo: true, repeat: 1, stagger: 0.08 }, start + 1.45);
       tl.fromTo(`${selector} .score-fill`, { scaleX: 0, transformOrigin: "left center" }, { scaleX: 1, duration: 1.0 }, start + 1.15);
       if (end < DURATION - 0.4) {

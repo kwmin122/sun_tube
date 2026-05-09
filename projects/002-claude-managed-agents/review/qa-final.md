@@ -19,7 +19,7 @@ Result: PASS
 | selected hyperframes machine review PASS | PASS | PASS |
 | director review exists | PASS | projects/002-claude-managed-agents/review/video-review/director-review.md |
 | director review verdict PASS | PASS | PASS |
-| director review cites rendered evidence frames | PASS | 14 frame reference(s) |
+| director review cites rendered evidence frames | PASS | 15 frame reference(s) |
 | director critical findings resolved | PASS | no unresolved critical findings |
 | selected renderer frame evidence exists | PASS | 52 extracted frame(s) in projects/002-claude-managed-agents/review/video-review/frame-manifest-hyperframes.json |
 | selected renderer motion-peak frames exist | PASS | 13 motion peak frame(s) |

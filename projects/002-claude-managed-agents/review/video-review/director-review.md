@@ -18,6 +18,7 @@ Verdict: PASS
 | Critical | all | Caption UI must stay text-only from ElevenLabs SRT, with no progress bar | `projects/002-claude-managed-agents/review/video-review/caption-config-report-hyperframes.json` | Block caption progress UI in review-video and document SRT-only text captions | yes |
 | Critical | capture | Capture route must be half-side or larger primary evidence, not a decorative source stamp | `projects/002-claude-managed-agents/review/video-review/capture-utility-report-hyperframes.json` | Require `primary_evidence`, useful crop, and `data-capture-size` for capture routes | yes |
 | Critical | all | Too many independent cards/nodes were visible before narration reached them | `projects/002-claude-managed-agents/review/video-review/progressive-disclosure-report-hyperframes.json` | Add one-at-a-time focus groups and block complex scenes without progressive disclosure markers | yes |
+| Critical | 06-07 | Decorative cyan dots and filled loop capsule distracted from the explanation | `projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-06-motion-peak.png` | Remove orphan task dots, keep the loop as a rotating thin rail, and preserve revealed items as context | yes |
 
 ## Renderer Decision
 

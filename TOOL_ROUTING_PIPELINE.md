@@ -166,7 +166,7 @@ For any scene with three or more independent explanation units:
 - mark the group with `data-progressive-disclosure="one-at-a-time"`
 - mark each unit with `data-focus-item`
 - keep future units hidden until the narration reaches them
-- dim past units unless comparison requires full visibility
+- keep revealed units visible as context, while the current unit is brighter and sharper
 - use final all-visible boards only for explicit summary/payoff scenes
 
 `factory:review-video` fails complex scenes that have many cards/nodes/modules but no progressive disclosure markers.

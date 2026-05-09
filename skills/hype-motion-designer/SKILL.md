@@ -47,7 +47,7 @@ Use this before pre-render QA:
 - Classify imagegen per scene as `primary`, `support`, or `not_required`. Use `primary` when a generated image carries the explanation/emotion/metaphor; use `support` for mood/styleframe/background/thumbnail; use `not_required` when capture, interview, data, or HTML/SVG explains the scene better.
 - If a capture is selected as a route, it must be large enough to function as primary evidence, generally one half-side or larger. Tiny official-source stamps should be removed or rerouted to a diagram.
 - Do not use full-width decorative connector SVGs that float across the canvas or pass over card titles. Lines must be anchored to concrete nodes, clipped inside their container, or replaced with short arrows/tokens.
-- Do not show all independent explanation elements at once. Future items should be hidden until the narration reaches them; previous items can dim if the viewer needs context.
+- Do not show all independent explanation elements at once. Future items should be hidden until the narration reaches them; once an item appears, keep it visible as context while the current item is sharper/brighter.
 
 ## Renderer Comparison
 
