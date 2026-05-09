@@ -17,7 +17,7 @@ Selected renderer: hyperframes
 
 | Renderer | Status | Machine Verdict | Key Evidence | Decision |
 |---|---|---|---|---|
-| hyperframes | rendered V2 | PASS | 52 extracted frames, 13 motion-peak frames, no floating connector issues, weak Scene 03 capture route removed | selected |
+| hyperframes | rendered V2 | PASS | 52 extracted frames, 13 motion-peak frames, no floating connector issues, weak Scene 03 capture route removed, progressive disclosure issues 0 | selected |
 | remotion | rendered V2 | PASS | smoother frame-based transitions, but weaker project design identity and less preferred final look | candidate only |
 
 ## Why Hyperframes Wins
@@ -26,6 +26,7 @@ Selected renderer: hyperframes
 - Full-width decorative connector paths were removed from the problem scenes; `line-quality-report-hyperframes.json` reports `pathDrawCount: 0` and no issues.
 - Scene 03 no longer uses a source capture. The Korean before/after memory board carries the actual concept, so the tiny capture-stamp failure cannot recur in that scene.
 - Scene 08, Scene 09, and Scene 13 now avoid the earlier broad crossing-line failure and use contained boards, lanes, tokens, and final messaging.
+- Complex boards now reveal one focus unit at a time; `progressive-disclosure-report-hyperframes.json` reports no issues.
 - Remotion remains useful as a candidate renderer and timing lab, but it is not promoted to the global default from this comparison.
 
 ## Non-Blocking Limitations

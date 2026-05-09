@@ -31,6 +31,7 @@ Build the Hyperframes composition.
 - Keep captions readable and protected.
 - Keep captions text-only from ElevenLabs SRT by default; do not add caption progress bars unless the user explicitly asks.
 - Use motion to explain the scene purpose.
+- Reveal one explanation unit at a time. If a scene has three or more independent cards, nodes, modules, cases, or workflow steps, wrap the group with `data-progressive-disclosure="one-at-a-time"` and mark each unit with `data-focus-item`.
 - Import processed clips from `asset-plan.md`; do not use Hyperframes as the raw-video trim/transcript/subtitle preparation tool.
 - Treat `work-orders/*.md` as the executable task truth for route completion.
 - Do not mark a Hyperframes route complete while work-order rows are still `todo`, `pending`, `planned`, `inputs_ready`, or `blocked`.
@@ -46,6 +47,7 @@ Use this before pre-render QA:
 - Classify imagegen per scene as `primary`, `support`, or `not_required`. Use `primary` when a generated image carries the explanation/emotion/metaphor; use `support` for mood/styleframe/background/thumbnail; use `not_required` when capture, interview, data, or HTML/SVG explains the scene better.
 - If a capture is selected as a route, it must be large enough to function as primary evidence, generally one half-side or larger. Tiny official-source stamps should be removed or rerouted to a diagram.
 - Do not use full-width decorative connector SVGs that float across the canvas or pass over card titles. Lines must be anchored to concrete nodes, clipped inside their container, or replaced with short arrows/tokens.
+- Do not show all independent explanation elements at once. Future items should be hidden until the narration reaches them; previous items can dim if the viewer needs context.
 
 ## Renderer Comparison
 
@@ -59,6 +61,7 @@ Quality rules:
 - If a connector line cannot be anchored cleanly, remove it and express the relationship with row order, token motion, short arrows, or contained rails.
 - Use Liquid Glass only as focus, state, or transition layer, not as a global card style.
 - Prefer scene-local timelines or frame-local control over one global animation blob.
+- Use progressive disclosure for complex scenes: one active card/node/module, then the next. Broad `fade + y + stagger` across all cards is allowed only for final summary moments.
 - Leave metadata or DOM markers that `factory:review-video` can inspect.
 
 ## Motion Primitives

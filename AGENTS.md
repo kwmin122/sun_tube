@@ -80,6 +80,7 @@ Current TTS standard:
 - Output: `mp3_44100_128`
 - Sync: ElevenLabs SRT, forced_alignment preferred
 - Captions: text-only bottom safe-zone captions from SRT cue start/end; do not add caption progress bars unless the user explicitly asks.
+- Motion reveal: do not reveal independent explanation elements in parallel. Complex scenes should show one active card/node/module at a time, with future items hidden and past items dimmed unless the scene is an explicit summary.
 - Original voice: `voiceover/solo/voiceover-solo-elevenlabs.mp3`
 - Subtitle: `voiceover/solo/voiceover-solo-elevenlabs.srt`
 - Final mix: `voiceover/solo/voiceover-solo-final-mix.m4a`

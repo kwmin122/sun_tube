@@ -36,15 +36,16 @@
 
 Use this table before Hyperframes implementation. It prevents large empty panels and makes imagegen decisions explicit.
 
-| Scene | Scene Recipe | Primary Visual Route | Visual Density | Motion Layer | Imagegen Role | Renderer Targets | Notes |
-|---|---|---|---|---|---|---|---|
-| 01 | | capture | standard | source highlight, card reveal | not_required | hyperframes | |
-| 02 | | hyperframes | rich | path draw, route pulse, row reveal | support | both | |
-| 03 | | hyperframes | rich | diagram build, row reveal | not_required | hyperframes | |
+| Scene | Scene Recipe | Primary Visual Route | Visual Density | Reveal Mode | Motion Layer | Imagegen Role | Renderer Targets | Notes |
+|---|---|---|---|---|---|---|---|---|
+| 01 | | capture | standard | one-at-a-time | source highlight, card reveal | not_required | hyperframes | |
+| 02 | | hyperframes | rich | one-at-a-time | path draw, route pulse, row reveal | support | both | |
+| 03 | | hyperframes | rich | one-at-a-time | diagram build, row reveal | not_required | hyperframes | |
 
 Guidance:
 
 - `rich` scenes need visible information rows and at least one motion primitive such as path draw, route pulse, count-up, scan fill, or liquid sheen.
+- Complex scenes with three or more independent cards, nodes, modules, cases, or steps must use `one-at-a-time` reveal. Do not show the whole board before the narration reaches it.
 - Imagegen can be `primary`, `support`, or `not_required` by scene. Use `primary` only when the generated image carries the explanation, emotion, metaphor, reenactment, future scenario, or visual hook.
 - Use capture, interview, data, or HTML/SVG for factual evidence, exact UI, exact text, and text-heavy diagrams.
 - A capture route must be large enough to explain the narration, usually one half-side or larger. If it would be a tiny source stamp, mark it `support` or reroute to HTML/SVG/imagegen.

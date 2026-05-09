@@ -23,9 +23,24 @@ Examples:
 
 If the motion does not make the verb visible, the scene fails director review.
 
+## Progressive Disclosure Rule
+
+Never reveal independent explanation elements in parallel.
+
+For any scene with three or more cards, nodes, modules, cases, or workflow steps:
+
+- show one active explanation unit at a time
+- keep future units hidden until the narration reaches them
+- dim previous units unless they are needed for comparison
+- use `data-progressive-disclosure="one-at-a-time"` on the group
+- use `data-focus-item` on each independent unit
+
+The reference rhythm is: one idea appears, the narration explains it, then the next idea appears. A board where all cards are visible from the start fails director review unless the scene is explicitly a final summary.
+
 ## Banned Patterns
 
 - Same `fade + y + stagger` as the dominant animation across scenes.
+- Revealing three or more independent cards/nodes/modules at once.
 - Long decorative connector paths floating across cards or text.
 - `path-draw` without node anchors, purpose, and safe-zone checks.
 - Source captures that are tiny stamps, background texture, or decorative rectangles instead of readable primary evidence.
@@ -84,6 +99,7 @@ Machine review should flag:
 
 - static rich scene longer than 2.5 seconds
 - repeated layout signature across three or more scenes
+- complex card/node groups without progressive disclosure markers
 - unanchored or decorative path
 - caption safe-zone overlap
 - primary visual route missing from rendered frames

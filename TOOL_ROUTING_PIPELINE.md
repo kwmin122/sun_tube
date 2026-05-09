@@ -157,6 +157,20 @@ If `imagegen` is not used, make that explicit in `project.json.routes.imagegen`,
 
 If a scene is marked `data-visual-density="rich"`, the composition must include enough visible structure: information rows, route tokens, SVG paths, progress rails, scan fills, count/tick states, or equivalent motion primitives. Large empty glass panels fail pre-render QA.
 
+## Progressive Disclosure
+
+Reference videos are treated as rhythm references: one idea appears, gets explained, and then the next idea appears. Do not show every card, node, or module at once just because the board has room.
+
+For any scene with three or more independent explanation units:
+
+- mark the group with `data-progressive-disclosure="one-at-a-time"`
+- mark each unit with `data-focus-item`
+- keep future units hidden until the narration reaches them
+- dim past units unless comparison requires full visibility
+- use final all-visible boards only for explicit summary/payoff scenes
+
+`factory:review-video` fails complex scenes that have many cards/nodes/modules but no progressive disclosure markers.
+
 ## Director Review Gate
 
 `factory:review-video` extracts contact sheets, scene frames, suspicious frames, and machine reports. It does not give final creative approval. `review/video-review/director-review.md` must say `Verdict: PASS` and have no unresolved critical findings before final QA and package are allowed.

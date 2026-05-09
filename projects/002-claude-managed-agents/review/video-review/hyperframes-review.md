@@ -44,6 +44,12 @@ This is not final aesthetic approval. `review/video-review/director-review.md` m
 - Capture utility issues: 0
 
 
+## Progressive Disclosure
+
+- Progressive disclosure issues: 0
+
+- Note: Complex scenes must reveal one explanation unit at a time; future elements stay hidden or past elements dim until narration reaches them.
+
 ## Line Quality
 
 - Floating connector issues: 0

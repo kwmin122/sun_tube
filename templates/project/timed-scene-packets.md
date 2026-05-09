@@ -24,11 +24,11 @@ Tool routes come from `../../TOOL_ROUTING_PIPELINE.md`.
 
 ## Timing Table
 
-| Scene | Time Range | SRT Lines | Tool Route | Renderer Targets | Scene Recipe | Narration Verb | Motion Purpose | Caption Behavior | Primary Asset | Motion Beat | Review Check | Audio/SFX | Snapshot Time | Status |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 01 | | | hyperframes | hyperframes | | | | bottom safe-zone caption, 0.9s lead | | | | | | planned |
-| 02 | | | capture + hyperframes | both | | | | bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar | | | | | | planned |
-| 03 | | | video-use | hyperframes | | | | bottom safe-zone caption, 0.9s lead | | | | | | planned |
+| Scene | Time Range | SRT Lines | Tool Route | Renderer Targets | Scene Recipe | Narration Verb | Motion Purpose | Reveal Mode | Caption Behavior | Primary Asset | Motion Beat | Review Check | Audio/SFX | Snapshot Time | Status |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 01 | | | hyperframes | hyperframes | | | | one-at-a-time | bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar | | | | | | planned |
+| 02 | | | capture + hyperframes | both | | | | one-at-a-time | bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar | | | | | | planned |
+| 03 | | | video-use | hyperframes | | | | one-at-a-time | bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar | | | | | | planned |
 
 ## Scene Details
 
@@ -39,6 +39,7 @@ Each scene must define the following before render:
 - Primary visual mechanism:
 - Narration verb:
 - Motion must show:
+- Reveal mode:
 - Primary asset:
 - Failure if:
 
@@ -57,6 +58,7 @@ Each scene must define the following before render:
 - Narration verb:
 - Motion purpose:
 - Motion must show:
+- Reveal mode:
 - Caption safe zone:
 - Primary asset:
 - Failure if:
@@ -82,6 +84,7 @@ Each scene must define the following before render:
 - Narration verb:
 - Motion purpose:
 - Motion must show:
+- Reveal mode:
 - Caption safe zone:
 - Primary asset:
 - Failure if:

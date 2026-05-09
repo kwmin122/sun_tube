@@ -1202,6 +1202,20 @@
     .highlight { color: #f4a261; }
     .cyan { color: #2a9d8f; }
     .yellow { color: #e9c46a; }
+    [data-progressive-disclosure] [data-focus-item] {
+      opacity: 0;
+      transform: translateY(24px) scale(0.985);
+      filter: blur(10px);
+    }
+    [data-progressive-disclosure] [data-focus-item].is-past {
+      opacity: 0.1;
+      filter: blur(2px);
+    }
+    [data-progressive-disclosure] [data-focus-item].is-active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
     #caption {
       left: 210px;
       right: 210px;
@@ -1239,11 +1253,11 @@
           <div class="label">공식 발표 캡처</div>
           <div class="source-caption">발표의 핵심은 모델 하나가 아니라, 에이전트를 운영하는 시스템 기능 네 가지입니다.</div>
         </div>
-        <div class="feature-card-stack">
-          <div class="feature-card glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>01</strong><h3>드리밍</h3><p>비활성 시간에 경험과 메모리를 다시 정리합니다.</p><span class="metric-tick">memory</span><div class="scan-fill"></div></div>
-          <div class="feature-card glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>02</strong><h3>아웃컴</h3><p>좋은 결과의 기준을 주고 결과물을 평가합니다.</p><span class="metric-tick">rubric</span><div class="scan-fill"></div></div>
-          <div class="feature-card glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>03</strong><h3>멀티에이전트</h3><p>리드가 일을 쪼개고 전문 에이전트가 병렬 처리합니다.</p><span class="metric-tick">parallel</span><div class="scan-fill"></div></div>
-          <div class="feature-card glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><strong>04</strong><h3>이벤트</h3><p>조건이 발생하면 에이전트 작업이 자동으로 시작됩니다.</p><span class="metric-tick">trigger</span><div class="scan-fill"></div></div>
+        <div class="feature-card-stack" data-progressive-disclosure="one-at-a-time">
+          <div class="feature-card glass-panel" data-focus-item><div class="liquid-sheen" data-layout-allow-overflow></div><strong>01</strong><h3>드리밍</h3><p>비활성 시간에 경험과 메모리를 다시 정리합니다.</p><span class="metric-tick">memory</span><div class="scan-fill"></div></div>
+          <div class="feature-card glass-panel" data-focus-item><div class="liquid-sheen" data-layout-allow-overflow></div><strong>02</strong><h3>아웃컴</h3><p>좋은 결과의 기준을 주고 결과물을 평가합니다.</p><span class="metric-tick">rubric</span><div class="scan-fill"></div></div>
+          <div class="feature-card glass-panel" data-focus-item><div class="liquid-sheen" data-layout-allow-overflow></div><strong>03</strong><h3>멀티에이전트</h3><p>리드가 일을 쪼개고 전문 에이전트가 병렬 처리합니다.</p><span class="metric-tick">parallel</span><div class="scan-fill"></div></div>
+          <div class="feature-card glass-panel" data-focus-item><div class="liquid-sheen" data-layout-allow-overflow></div><strong>04</strong><h3>이벤트</h3><p>조건이 발생하면 에이전트 작업이 자동으로 시작됩니다.</p><span class="metric-tick">trigger</span><div class="scan-fill"></div></div>
         </div>
       </div>
     </section>
@@ -1267,11 +1281,11 @@
         <div class="ops-stack glass-panel">
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <span class="tag">Now: Operating System</span>
-          <div class="ops-grid">
-            <div class="ops-module"><strong>기억</strong><span>세션 사이 맥락을 다시 정렬</span><span class="flow-token">learn</span></div>
-            <div class="ops-module"><strong>기준</strong><span>결과가 좋은지 별도 판정</span><span class="flow-token">judge</span></div>
-            <div class="ops-module"><strong>분업</strong><span>작업을 나눠 병렬 처리</span><span class="flow-token">orchestrate</span></div>
-            <div class="ops-module"><strong>트리거</strong><span>조건이 맞으면 자동 시작</span><span class="flow-token">trigger</span></div>
+          <div class="ops-grid" data-progressive-disclosure="one-at-a-time">
+            <div class="ops-module" data-focus-item><strong>기억</strong><span>세션 사이 맥락을 다시 정렬</span><span class="flow-token">learn</span></div>
+            <div class="ops-module" data-focus-item><strong>기준</strong><span>결과가 좋은지 별도 판정</span><span class="flow-token">judge</span></div>
+            <div class="ops-module" data-focus-item><strong>분업</strong><span>작업을 나눠 병렬 처리</span><span class="flow-token">orchestrate</span></div>
+            <div class="ops-module" data-focus-item><strong>트리거</strong><span>조건이 맞으면 자동 시작</span><span class="flow-token">trigger</span></div>
           </div>
           <div class="info-row"><strong>핵심</strong><span>모델 성능이 아니라 운영 구조가 바뀌는 업데이트입니다.</span></div>
         </div>
@@ -1284,9 +1298,9 @@
         <div class="scene-no">03</div>
       </div>
       <div class="memory-source stage">
-        <div class="memory-sorter glass-panel" data-visual-thesis="dreaming-sorts-memory">
+        <div class="memory-sorter glass-panel" data-visual-thesis="dreaming-sorts-memory" data-progressive-disclosure="one-at-a-time">
           <div class="liquid-sheen" data-layout-allow-overflow></div>
-          <div class="sort-column">
+          <div class="sort-column" data-focus-item>
             <span class="tag">Before</span>
             <h3>흩어진 작업 흔적</h3>
             <div class="memory-chip-grid">
@@ -1296,7 +1310,7 @@
               <div class="memory-chip noise">지난 세션의 결정과 실패</div>
             </div>
           </div>
-          <div class="sort-column">
+          <div class="sort-column" data-focus-item>
             <span class="tag">After</span>
             <h3>다음 세션에 쓸 메모리</h3>
             <div class="memory-result">
@@ -1337,20 +1351,20 @@
           </div>
           <div class="scan-fill"></div>
         </div>
-        <div class="context-stack">
-          <div class="context-card glass-panel">
+        <div class="context-stack" data-progressive-disclosure="one-at-a-time">
+          <div class="context-card glass-panel" data-focus-item>
             <div class="liquid-sheen" data-layout-allow-overflow></div>
             <div class="card-topline"><span class="big-number">01</span><span class="metric-tick">컨텍스트 유지</span></div>
             <h3>장기 프로젝트</h3>
             <p>어제의 판단과 오늘의 요청이 이어질 때 컨텍스트 손실을 줄입니다.</p>
           </div>
-          <div class="context-card glass-panel">
+          <div class="context-card glass-panel" data-focus-item>
             <div class="liquid-sheen" data-layout-allow-overflow></div>
             <div class="card-topline"><span class="big-number">02</span><span class="metric-tick">재발 감소</span></div>
             <h3>반복 업무</h3>
             <p>매번 같은 실수를 다시 설명하지 않고, 좋은 절차를 다음 세션에 재사용합니다.</p>
           </div>
-          <div class="context-card glass-panel">
+          <div class="context-card glass-panel" data-focus-item>
             <div class="liquid-sheen" data-layout-allow-overflow></div>
             <div class="card-topline"><span class="big-number">03</span><span class="metric-tick">팀 규칙화</span></div>
             <h3>팀 단위 규칙</h3>
@@ -1365,8 +1379,8 @@
         <div><div class="eyebrow">2. Outcome</div><h2>아웃컴은 에이전트에게 좋은 결과의 기준을 주는 기능입니다.</h2></div>
         <div class="scene-no">05</div>
       </div>
-      <div class="outcome-workbench stage">
-        <div class="workbench-card glass-panel">
+      <div class="outcome-workbench stage" data-progressive-disclosure="one-at-a-time">
+        <div class="workbench-card glass-panel" data-focus-item>
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <span class="tag">Worker</span>
           <h3>결과물 작성</h3>
@@ -1376,7 +1390,7 @@
           <div class="info-row"><strong>초안</strong><span>에이전트가 문서, 코드, 답변을 먼저 만듭니다.</span></div>
           <div class="scan-fill"></div>
         </div>
-        <div class="workbench-card glass-panel">
+        <div class="workbench-card glass-panel" data-focus-item>
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <span class="tag">Rubric</span>
           <h3>좋은 결과의 기준</h3>
@@ -1389,7 +1403,7 @@
           <div class="info-row"><strong>기준</strong><span>“좋아 보임”이 아니라 채점 가능한 문장으로 바꿉니다.</span></div>
           <div class="scan-fill"></div>
         </div>
-        <div class="workbench-card glass-panel">
+        <div class="workbench-card glass-panel" data-focus-item>
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <span class="tag">Judge</span>
           <h3>별도 모델 채점</h3>
@@ -1409,8 +1423,8 @@
         <div><div class="eyebrow">When To Use Outcome</div><h2>정답보다 기준이 중요한 작업에서 강합니다.</h2></div>
         <div class="scene-no">06</div>
       </div>
-      <div class="rubric rubric-loop stage">
-        <div class="score-box glass-panel">
+      <div class="rubric rubric-loop stage" data-progressive-disclosure="one-at-a-time">
+        <div class="score-box glass-panel" data-focus-item>
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <h3>좋은 사용처</h3>
           <div class="list">
@@ -1425,7 +1439,7 @@
             <div class="info-row"><strong>반복</strong><span>미달이면 같은 작업자가 아니라 수정 루프로 돌아갑니다.</span></div>
           </div>
         </div>
-        <div class="judge-panel feedback-loop glass-panel">
+        <div class="judge-panel feedback-loop glass-panel" data-focus-item>
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <h3>핵심 변화</h3>
           <div class="loop-canvas">
@@ -1450,13 +1464,13 @@
         <div><div class="eyebrow">3. Multi-Agent</div><h2>멀티에이전트 오케스트레이션은 일을 쪼개서 병렬로 맡기는 구조입니다.</h2></div>
         <div class="scene-no">07</div>
       </div>
-      <div class="agent-map network">
+      <div class="agent-map network" data-progressive-disclosure="one-at-a-time">
         <span class="task-packet p1"></span><span class="task-packet p2"></span><span class="task-packet p3"></span>
-        <div class="agent-node lead glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><h3>리드 에이전트</h3><p>계획, 분배, 통합</p><div class="signal-list"><span>작업 분해</span><span>결과 병합</span></div><div class="info-row"><strong>분배</strong><span>역할별로 쪼개고 다시 압축합니다.</span></div><div class="scan-fill"></div></div>
-        <div class="agent-node a glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><h3>로그 담당</h3><p>오류 원인 분석</p><span class="flow-token">logs</span><div class="info-row"><strong>입력</strong><span>실패 로그</span></div><div class="scan-fill"></div></div>
-        <div class="agent-node b glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><h3>문서 담당</h3><p>변경점 정리</p><span class="flow-token">docs</span><div class="info-row"><strong>출력</strong><span>요약 문서</span></div><div class="scan-fill"></div></div>
-        <div class="agent-node c glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><h3>메트릭 담당</h3><p>수치와 추세 확인</p><span class="flow-token">metrics</span><div class="scan-fill"></div></div>
-        <div class="agent-node d glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div><h3>지원 담당</h3><p>고객 맥락 정리</p><span class="flow-token">support</span><div class="scan-fill"></div></div>
+        <div class="agent-node lead glass-panel" data-focus-item><div class="liquid-sheen" data-layout-allow-overflow></div><h3>리드 에이전트</h3><p>계획, 분배, 통합</p><div class="signal-list"><span>작업 분해</span><span>결과 병합</span></div><div class="info-row"><strong>분배</strong><span>역할별로 쪼개고 다시 압축합니다.</span></div><div class="scan-fill"></div></div>
+        <div class="agent-node a glass-panel" data-focus-item><div class="liquid-sheen" data-layout-allow-overflow></div><h3>로그 담당</h3><p>오류 원인 분석</p><span class="flow-token">logs</span><div class="info-row"><strong>입력</strong><span>실패 로그</span></div><div class="scan-fill"></div></div>
+        <div class="agent-node b glass-panel" data-focus-item><div class="liquid-sheen" data-layout-allow-overflow></div><h3>문서 담당</h3><p>변경점 정리</p><span class="flow-token">docs</span><div class="info-row"><strong>출력</strong><span>요약 문서</span></div><div class="scan-fill"></div></div>
+        <div class="agent-node c glass-panel" data-focus-item><div class="liquid-sheen" data-layout-allow-overflow></div><h3>메트릭 담당</h3><p>수치와 추세 확인</p><span class="flow-token">metrics</span><div class="scan-fill"></div></div>
+        <div class="agent-node d glass-panel" data-focus-item><div class="liquid-sheen" data-layout-allow-overflow></div><h3>지원 담당</h3><p>고객 맥락 정리</p><span class="flow-token">support</span><div class="scan-fill"></div></div>
       </div>
     </section>
 
@@ -1465,8 +1479,8 @@
         <div><div class="eyebrow">Parallel Work</div><h2>복잡한 작업일수록 한 명이 끝까지 붙잡는 방식이 느려집니다.</h2></div>
         <div class="scene-no">08</div>
       </div>
-      <div class="fanout-board stage">
-        <div class="hub-card glass-panel">
+      <div class="fanout-board stage" data-progressive-disclosure="one-at-a-time">
+        <div class="hub-card glass-panel" data-focus-item>
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <span class="tag">Lead</span>
           <h3>질문 분해</h3>
@@ -1474,7 +1488,7 @@
           <div class="info-row"><strong>fan-out</strong><span>큰 문제를 작은 작업 묶음으로 쪼갭니다.</span></div>
           <div class="scan-fill"></div>
         </div>
-        <div class="workstream glass-panel">
+        <div class="workstream glass-panel" data-focus-item>
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <div class="card-topline"><h3>빌드 로그</h3><span class="flow-token">Log</span></div>
           <div class="token-lane"><span class="flow-token">shard 01</span><span class="flow-token">error</span><span class="flow-token">trace</span></div>
@@ -1482,7 +1496,7 @@
           <div class="info-row"><strong>분담</strong><span>수백 개 로그를 나눠 읽고 실패 패턴을 합칩니다.</span></div>
           <div class="scan-fill"></div>
         </div>
-        <div class="workstream glass-panel">
+        <div class="workstream glass-panel" data-focus-item>
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <div class="card-topline"><h3>문서 변경</h3><span class="flow-token">Docs</span></div>
           <div class="token-lane"><span class="flow-token">note</span><span class="flow-token">guide</span><span class="flow-token">diff</span></div>
@@ -1490,7 +1504,7 @@
           <div class="info-row"><strong>정리</strong><span>문서 담당은 릴리즈 노트와 사용자 안내를 따로 완성합니다.</span></div>
           <div class="scan-fill"></div>
         </div>
-        <div class="workstream glass-panel">
+        <div class="workstream glass-panel" data-focus-item>
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <div class="card-topline"><h3>코드 경로</h3><span class="flow-token">Code</span></div>
           <div class="token-lane"><span class="flow-token">file</span><span class="flow-token">test</span><span class="flow-token">range</span></div>
@@ -1498,7 +1512,7 @@
           <div class="info-row"><strong>구현</strong><span>구현 담당은 실제 코드 위치와 수정 범위를 좁힙니다.</span></div>
           <div class="scan-fill"></div>
         </div>
-        <div class="workstream glass-panel">
+        <div class="workstream glass-panel" data-focus-item>
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <div class="card-topline"><h3>통합 판단</h3><span class="flow-token">Merge</span></div>
           <div class="token-lane"><span class="flow-token">dedupe</span><span class="flow-token">conflict</span><span class="flow-token">next</span></div>
@@ -1506,7 +1520,7 @@
           <div class="info-row"><strong>병합</strong><span>리드가 결과를 합쳐 다음 액션을 결정합니다.</span></div>
           <div class="scan-fill"></div>
         </div>
-        <div class="merge-card glass-panel">
+        <div class="merge-card glass-panel" data-focus-item>
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <span class="tag">Merge</span>
           <h3>한 문장 결론</h3>
@@ -1522,22 +1536,22 @@
         <div><div class="eyebrow">4. Event Triggers</div><h2>이벤트 트리거는 에이전트를 호출하지 않아도 일이 시작되게 합니다.</h2></div>
         <div class="scene-no">09</div>
       </div>
-      <div class="event-router stage">
-        <div class="event-stage glass-panel">
+      <div class="event-router stage" data-progressive-disclosure="one-at-a-time">
+        <div class="event-stage glass-panel" data-focus-item>
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <small>Event</small><h3>문서 업로드</h3><p>새 파일이나 요청이 들어옵니다.</p>
           <div class="event-detail"><span>계약서</span><span>리포트</span><span>지원 티켓</span></div>
           <div class="packet-rail"><span class="event-packet">file.created</span><span class="event-packet">request.inbox</span></div>
           <div class="scan-fill"></div>
         </div>
-        <div class="event-stage glass-panel">
+        <div class="event-stage glass-panel" data-focus-item>
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <small>Trigger</small><h3>조건 감지</h3><p>시스템이 자동으로 담당 에이전트를 깨웁니다.</p>
           <div class="event-detail"><span>파일 생성</span><span>상태 변경</span><span>웹훅 수신</span></div>
           <div class="packet-rail"><span class="event-packet">match</span><span class="event-packet">wake</span></div>
           <div class="scan-fill"></div>
         </div>
-        <div class="event-stage glass-panel">
+        <div class="event-stage glass-panel" data-focus-item>
           <div class="liquid-sheen" data-layout-allow-overflow></div>
           <small>Action</small><h3>후속 작업</h3><p>분석, 요약, 검토, 알림이 이어집니다.</p>
           <div class="event-detail"><span>분석</span><span>검토</span><span>알림</span></div>
@@ -1557,22 +1571,22 @@
         <div><div class="eyebrow">Automation Surface</div><h2>이벤트는 에이전트를 제품 안의 자동 워크플로로 바꿉니다.</h2></div>
         <div class="scene-no">10</div>
       </div>
-      <div class="workflow-board stage">
-          <div class="workflow-card glass-panel">
+      <div class="workflow-board stage" data-progressive-disclosure="one-at-a-time">
+          <div class="workflow-card glass-panel" data-focus-item>
             <div class="liquid-sheen" data-layout-allow-overflow></div>
             <span class="tag">문서</span><h3>업로드 후 검토</h3><p>계약서나 리포트가 들어오면 검토 흐름을 시작합니다.</p>
             <div class="status-ladder"><span>요약</span><span>검토 항목 표시</span><span>담당자 알림</span></div>
             <div class="info-row"><strong>상태</strong><span class="metric-tick">자동 시작</span></div>
             <div class="scan-fill"></div>
           </div>
-          <div class="workflow-card glass-panel">
+          <div class="workflow-card glass-panel" data-focus-item>
             <div class="liquid-sheen" data-layout-allow-overflow></div>
             <span class="tag">운영</span><h3>로그 후 알림</h3><p>장애 신호가 오면 분석하고 슬랙으로 요약합니다.</p>
             <div class="status-ladder"><span>로그 수집</span><span>원인 후보</span><span>대응 초안</span></div>
             <div class="info-row"><strong>상태</strong><span class="metric-tick">대응 초안</span></div>
             <div class="scan-fill"></div>
           </div>
-          <div class="workflow-card glass-panel">
+          <div class="workflow-card glass-panel" data-focus-item>
             <div class="liquid-sheen" data-layout-allow-overflow></div>
             <span class="tag">콘텐츠</span><h3>렌더 후 QA</h3><p>새 영상이 나오면 스냅샷과 자막 상태를 확인합니다.</p>
             <div class="status-ladder"><span>프레임 샘플</span><span>자막 위치</span><span>오디오 스트림</span></div>
@@ -1587,13 +1601,13 @@
         <div><div class="eyebrow">System Shift</div><h2>네 기능은 서로 다른 축에서 에이전트를 바꿉니다.</h2></div>
         <div class="scene-no">11</div>
       </div>
-      <div class="system-core">
+      <div class="system-core" data-progressive-disclosure="one-at-a-time">
         <div class="convergence-rails" aria-hidden="true"><span class="a route-pulse"></span><span class="b route-pulse"></span><span class="c route-pulse"></span><span class="d route-pulse"></span></div>
-        <div class="core-node glass-panel"><div class="liquid-sheen" data-layout-allow-overflow></div>운영 시스템으로 통합</div>
-        <div class="orbit-card a"><strong>드리밍</strong><p>시간 축에서 이전 경험을 다음 작업으로 연결합니다.</p><span class="metric-tick">time</span></div>
-        <div class="orbit-card b"><strong>아웃컴</strong><p>품질 축에서 결과물이 기준을 통과하게 만듭니다.</p><span class="metric-tick">quality</span></div>
-        <div class="orbit-card c"><strong>멀티에이전트</strong><p>복잡도 축에서 일을 분산하고 통합합니다.</p><span class="metric-tick">complexity</span></div>
-        <div class="orbit-card d"><strong>이벤트</strong><p>자동화 축에서 조건이 맞으면 작업을 시작합니다.</p><span class="metric-tick">automation</span></div>
+        <div class="core-node glass-panel" data-focus-item><div class="liquid-sheen" data-layout-allow-overflow></div>운영 시스템으로 통합</div>
+        <div class="orbit-card a" data-focus-item><strong>드리밍</strong><p>시간 축에서 이전 경험을 다음 작업으로 연결합니다.</p><span class="metric-tick">time</span></div>
+        <div class="orbit-card b" data-focus-item><strong>아웃컴</strong><p>품질 축에서 결과물이 기준을 통과하게 만듭니다.</p><span class="metric-tick">quality</span></div>
+        <div class="orbit-card c" data-focus-item><strong>멀티에이전트</strong><p>복잡도 축에서 일을 분산하고 통합합니다.</p><span class="metric-tick">complexity</span></div>
+        <div class="orbit-card d" data-focus-item><strong>이벤트</strong><p>자동화 축에서 조건이 맞으면 작업을 시작합니다.</p><span class="metric-tick">automation</span></div>
       </div>
     </section>
 
@@ -1608,11 +1622,11 @@
           <div class="label">사례 섹션 캡처</div>
           <div class="source-caption">사례들은 네 기능이 각각 따로가 아니라 운영 시스템으로 묶이는 방향을 보여줍니다.</div>
         </div>
-        <div class="case-grid">
-          <div class="case-card"><span class="tag">Harvey</span><h3>장기 법률 작업</h3><p>반복 맥락을 정리해야 가치가 커집니다.</p><div class="signal-list"><span>과거 세션</span><span>사례 맥락</span></div></div>
-          <div class="case-card"><span class="tag">Netflix</span><h3>빌드 로그 분석</h3><p>수많은 로그를 병렬로 나눠 봅니다.</p><div class="signal-list"><span>로그 분산</span><span>원인 통합</span></div></div>
-          <div class="case-card"><span class="tag">Spiral</span><h3>요청 라우팅</h3><p>가벼운 모델과 강한 모델을 역할별로 배치합니다.</p><div class="signal-list"><span>저비용 분류</span><span>고품질 작성</span></div></div>
-          <div class="case-card"><span class="tag">Wisedocs</span><h3>문서 검수</h3><p>기준이 분명한 작업에서 아웃컴이 어울립니다.</p><div class="signal-list"><span>기준 평가</span><span>검수 속도</span></div></div>
+        <div class="case-grid" data-progressive-disclosure="one-at-a-time">
+          <div class="case-card" data-focus-item><span class="tag">Harvey</span><h3>장기 법률 작업</h3><p>반복 맥락을 정리해야 가치가 커집니다.</p><div class="signal-list"><span>과거 세션</span><span>사례 맥락</span></div></div>
+          <div class="case-card" data-focus-item><span class="tag">Netflix</span><h3>빌드 로그 분석</h3><p>수많은 로그를 병렬로 나눠 봅니다.</p><div class="signal-list"><span>로그 분산</span><span>원인 통합</span></div></div>
+          <div class="case-card" data-focus-item><span class="tag">Spiral</span><h3>요청 라우팅</h3><p>가벼운 모델과 강한 모델을 역할별로 배치합니다.</p><div class="signal-list"><span>저비용 분류</span><span>고품질 작성</span></div></div>
+          <div class="case-card" data-focus-item><span class="tag">Wisedocs</span><h3>문서 검수</h3><p>기준이 분명한 작업에서 아웃컴이 어울립니다.</p><div class="signal-list"><span>기준 평가</span><span>검수 속도</span></div></div>
         </div>
       </div>
     </section>
@@ -1664,6 +1678,60 @@
       return JSON.parse(request.responseText);
     }
 
+    function scoped(selector, targets) {
+      return targets.map((target) => `${selector} ${target}`).join(", ");
+    }
+
+    function progressiveFocus(selector, start, duration) {
+      const scene = document.querySelector(selector);
+      if (!scene) return;
+      scene.querySelectorAll("[data-progressive-disclosure]").forEach((group) => {
+        const items = Array.from(group.querySelectorAll("[data-focus-item]"));
+        if (!items.length) return;
+
+        const usable = Math.max(1, duration - 2.2);
+        const step = Math.max(1.15, Math.min(4.8, usable / items.length));
+        const base = start + 0.85;
+
+        tl.set(items, {
+          autoAlpha: 0,
+          y: 24,
+          scale: 0.985,
+          filter: "blur(10px)",
+        }, start);
+
+        items.forEach((item, index) => {
+          const at = Math.min(start + duration - 1.2, base + index * step);
+          if (index > 0) {
+            tl.to(items[index - 1], {
+              autoAlpha: 0.1,
+              y: 0,
+              scale: 0.985,
+              filter: "blur(2px)",
+              duration: 0.35,
+              onStart: () => items[index - 1].classList.add("is-past"),
+            }, at - 0.08);
+          }
+          tl.to(item, {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            duration: 0.72,
+            onStart: () => {
+              item.classList.add("is-active");
+              item.classList.remove("is-past");
+            },
+          }, at);
+          tl.fromTo(item.querySelectorAll(".scan-fill"),
+            { scaleX: 0, autoAlpha: 0 },
+            { scaleX: 1, autoAlpha: 1, duration: 0.7, stagger: 0.04 },
+            at + 0.18
+          );
+        });
+      });
+    }
+
     window.__hyperframes = window.__hyperframes || {};
     window.__hyperframes.duration = DURATION;
     window.__timelines = window.__timelines || {};
@@ -1681,11 +1749,33 @@
       tl.set(selector, { autoAlpha: 1 }, start);
       tl.fromTo(selector, { clipPath: "inset(0% 0% 4% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.65 }, start);
       tl.fromTo(`${selector} .scene-head`, { y: 24, autoAlpha: 0, filter: "blur(10px)" }, { y: 0, autoAlpha: 1, filter: "blur(0px)", duration: 0.7 }, start + 0.12);
-      tl.fromTo(`${selector} .card, ${selector} .node, ${selector} .item, ${selector} .event-box, ${selector} .event-stage, ${selector} .axis, ${selector} .case-card, ${selector} .screenshot, ${selector} .agent-node, ${selector} .ops-module, ${selector} .workbench-card, ${selector} .workstream, ${selector} .hub-card, ${selector} .merge-card, ${selector} .workflow-card, ${selector} .orbit-card, ${selector} .core-node, ${selector} .final-core, ${selector} .final-pill, ${selector} .glass-panel`,
+      tl.fromTo(scoped(selector, [
+        ".card:not([data-focus-item])",
+        ".node:not([data-focus-item])",
+        ".item:not([data-focus-item])",
+        ".event-box:not([data-focus-item])",
+        ".event-stage:not([data-focus-item])",
+        ".axis:not([data-focus-item])",
+        ".case-card:not([data-focus-item])",
+        ".screenshot:not([data-focus-item])",
+        ".agent-node:not([data-focus-item])",
+        ".ops-module:not([data-focus-item])",
+        ".workbench-card:not([data-focus-item])",
+        ".workstream:not([data-focus-item])",
+        ".hub-card:not([data-focus-item])",
+        ".merge-card:not([data-focus-item])",
+        ".workflow-card:not([data-focus-item])",
+        ".orbit-card:not([data-focus-item])",
+        ".core-node:not([data-focus-item])",
+        ".final-core:not([data-focus-item])",
+        ".final-pill:not([data-focus-item])",
+        ".glass-panel:not([data-focus-item])",
+      ]),
         { y: 38, autoAlpha: 0, filter: "blur(12px)" },
         { y: 0, autoAlpha: 1, filter: "blur(0px)", duration: 0.85, stagger: 0.08 },
         start + 0.35
       );
+      progressiveFocus(selector, start, duration);
       tl.fromTo(`${selector} .arrow`, { scaleX: 0, autoAlpha: 0 }, { scaleX: 1, autoAlpha: 1, duration: 0.7, stagger: 0.07 }, start + 0.9);
       tl.to(`${selector} .path-draw`, { strokeDashoffset: 0, autoAlpha: 1, duration: 1.15, stagger: 0.08 }, start + 0.78);
       tl.fromTo(`${selector} .liquid-sheen`, { xPercent: -130, autoAlpha: 0 }, { xPercent: 260, autoAlpha: 0.58, duration: 1.35, stagger: 0.08 }, start + 0.55);

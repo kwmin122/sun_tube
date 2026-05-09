@@ -150,6 +150,40 @@ function motionAudit(scenes, assets, metrics) {
   return { rows, issues, metadataOnly: true, note: "HTML metrics are metadata-only. Director review must inspect rendered frames before PASS." };
 }
 
+function progressiveDisclosureAudit(html) {
+  const issues = [];
+  const bodies = sectionBodies(html || "");
+  const complexTokens = new Set(["feature-card", "case-card", "workflow-card", "orbit-card", "ops-module", "workbench-card", "workstream", "agent-node", "event-stage", "context-card"]);
+  for (const [scene, body] of bodies) {
+    const complexItems = [...body.matchAll(/class=["']([^"']+)["']/g)]
+      .filter((match) => match[1].split(/\s+/).some((className) => complexTokens.has(className)))
+      .length;
+    if (complexItems < 3) continue;
+
+    const groups = (body.match(/\bdata-progressive-disclosure=/g) || []).length;
+    const focusItems = (body.match(/\bdata-focus-item\b/g) || []).length;
+    if (!groups) {
+      issues.push({
+        scene,
+        issue: "parallel_reveal_risk",
+        detail: `${complexItems} independent visual items but no data-progressive-disclosure marker`,
+      });
+      continue;
+    }
+    if (focusItems < complexItems) {
+      issues.push({
+        scene,
+        issue: "progressive_focus_incomplete",
+        detail: `${focusItems}/${complexItems} independent visual items marked data-focus-item`,
+      });
+    }
+  }
+  return {
+    issues,
+    note: "Complex scenes must reveal one explanation unit at a time; future elements stay hidden or past elements dim until narration reaches them.",
+  };
+}
+
 function assetAudit(assets, workRows) {
   const issues = [];
   const workKeys = new Set(workRows.map((row) => `${clean(row.Scene).padStart(2, "0")}::${clean(row.Route)}`));
@@ -352,6 +386,7 @@ const assetReport = assetAudit(assets, workRows);
 const lineReport = hasCompositionHtml ? lineQualityAudit(composition) : { bannedClasses: [], issues: [], limitations: [`Line audit skipped for ${reviewKey}; no ${rel(compositionPath)} found`] };
 const captionConfigReport = hasCompositionHtml ? captionConfigAudit(composition) : { leadSeconds: null, issues: [], limitations: [`Caption config audit skipped for ${reviewKey}; no ${rel(compositionPath)} found`] };
 const captureUtilityReport = hasCompositionHtml ? captureUtilityAudit(assets, composition) : { issues: [], limitations: [`Capture utility audit skipped for ${reviewKey}; no ${rel(compositionPath)} found`] };
+const progressiveDisclosureReport = hasCompositionHtml ? progressiveDisclosureAudit(composition) : { issues: [], limitations: [`Progressive disclosure audit skipped for ${reviewKey}; no ${rel(compositionPath)} found`] };
 const syntheticDomReport = hasCompositionHtml ? syntheticQualityDomAudit(composition, reviewKey) : { issues: [] };
 const routeReport = routeTransparency(project, assets, workRows);
 const frameFailures = frameManifest.filter((frame) => !frame.ok);
@@ -370,6 +405,7 @@ const blockers = [
   ...motionReport.issues,
   ...assetReport.issues,
   ...captureUtilityReport.issues,
+  ...progressiveDisclosureReport.issues,
   ...frameFailures.map((frame) => ({ scene: frame.scene, issue: "frame_extract_failed", detail: frame.label })),
 ];
 
@@ -386,6 +422,7 @@ await writeJson(join(reviewDir, `caption-config-report${suffix}.json`), captionC
 await writeJson(join(reviewDir, `motion-density-report${suffix}.json`), motionReport);
 await writeJson(join(reviewDir, `asset-presence-report${suffix}.json`), assetReport);
 await writeJson(join(reviewDir, `capture-utility-report${suffix}.json`), captureUtilityReport);
+await writeJson(join(reviewDir, `progressive-disclosure-report${suffix}.json`), progressiveDisclosureReport);
 await writeJson(join(reviewDir, `line-quality-report${suffix}.json`), lineReport);
 await writeJson(join(reviewDir, `synthetic-dom-report${suffix}.json`), syntheticDomReport);
 await writeJson(join(reviewDir, `route-transparency-report${suffix}.json`), routeReport);
@@ -525,6 +562,12 @@ await writeText(reviewReport, [
   "",
   `- Capture utility issues: ${captureUtilityReport.issues.length}`,
   captureUtilityReport.limitations?.length ? `- Limitation: ${captureUtilityReport.limitations.join("; ")}` : "",
+  "",
+  "## Progressive Disclosure",
+  "",
+  `- Progressive disclosure issues: ${progressiveDisclosureReport.issues.length}`,
+  progressiveDisclosureReport.limitations?.length ? `- Limitation: ${progressiveDisclosureReport.limitations.join("; ")}` : "",
+  progressiveDisclosureReport.note ? `- Note: ${progressiveDisclosureReport.note}` : "",
   "",
   "## Line Quality",
   "",

@@ -17,13 +17,14 @@ Verdict: PASS
 | Critical | 03 | Tiny official source capture was too small to explain the Dreaming section | `projects/002-claude-managed-agents/review/video-review/scene-frames-hyperframes/scene-03-motion-peak.png` | Remove capture route and make the memory board the primary visual | yes |
 | Critical | all | Caption UI must stay text-only from ElevenLabs SRT, with no progress bar | `projects/002-claude-managed-agents/review/video-review/caption-config-report-hyperframes.json` | Block caption progress UI in review-video and document SRT-only text captions | yes |
 | Critical | capture | Capture route must be half-side or larger primary evidence, not a decorative source stamp | `projects/002-claude-managed-agents/review/video-review/capture-utility-report-hyperframes.json` | Require `primary_evidence`, useful crop, and `data-capture-size` for capture routes | yes |
+| Critical | all | Too many independent cards/nodes were visible before narration reached them | `projects/002-claude-managed-agents/review/video-review/progressive-disclosure-report-hyperframes.json` | Add one-at-a-time focus groups and block complex scenes without progressive disclosure markers | yes |
 
 ## Renderer Decision
 
 - Selected renderer: hyperframes
 - Hyperframes evidence: `projects/002-claude-managed-agents/review/video-review/hyperframes-review.md`
 - Remotion evidence or blocker: `projects/002-claude-managed-agents/review/video-review/remotion-review.md`
-- Why selected: Hyperframes keeps the stronger visual identity for this project, and the previous line/capture issues are now blocked by QA.
+- Why selected: Hyperframes keeps the stronger visual identity for this project, and the previous line/capture/progressive-reveal issues are now blocked by QA.
 
 ## Scene Notes
 
