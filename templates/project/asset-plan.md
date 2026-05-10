@@ -64,6 +64,7 @@ Status values:
 - `not_required`: official UI/docs/interview/data, exact text, or HTML/SVG/capture is clearer than a generated image.
 - Do not use imagegen for official UI evidence or precise text-heavy diagrams that should be HTML/SVG/capture.
 - Dense explainer scenes should not be large empty panels. If `Visual Density` is `rich`, include information rows, tokens, paths, counters, scan fills, or other visible state changes.
+- A `Motion Layer` label is not a motion design. Before implementation, confirm the scene has a motion blueprint in `design-context.md`: primary screen object, supporting objects, initial/active/end states, beat ladder, hold/exit rule, and snapshot evidence.
 - A route is not complete until the selected renderer shows it in actual frame evidence. File existence, work-order status, and synthetic DOM markers are not enough.
 - Capture routes must crop/highlight a narrated concept and occupy at least one half-side of the composition when used as primary evidence; otherwise reroute the scene to diagram, imagegen support, or another primary route.
 - Capture role values: `primary_evidence`, `support_texture`, `not_required`, `reroute_to_diagram`.

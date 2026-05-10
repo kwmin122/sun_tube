@@ -63,6 +63,33 @@ No scene should reach render without a visual thesis.
 | 02 | | | | | | | |
 | 03 | | | | | | | |
 
+## Scene Motion Blueprint
+
+No scene should reach composition with only `Visual Concept` or `Motion Notes`. Define the concrete screen objects and state changes first.
+
+| Scene | Primary Screen Object | Supporting Objects | Initial State | Active State | End State | Motion Beat Ladder | Hold / Carryover Rule | Snapshot Evidence |
+|---|---|---|---|---|---|---|---|---|
+| 01 | | | | | | | | |
+| 02 | | | | | | | | |
+| 03 | | | | | | | | |
+
+Guidance:
+
+- `Primary Screen Object` is what the viewer's eye should follow.
+- `Motion Beat Ladder` should be ordered, for example `title -> object appears -> state changes -> result locks`.
+- `Hold / Carryover Rule` prevents everything from disappearing between beats and helps the viewer retain context.
+- A scene fails direction if the motion beat can be replaced by `fade in cards` without losing meaning.
+
+## Motion Implementation Contract
+
+Use this before writing HTML/CSS/SVG/GSAP or Remotion code.
+
+| Scene | Required DOM / Data Markers | Required Primitive | Timing Driver | Safe Zone Rule | QA Must See |
+|---|---|---|---|---|---|
+| 01 | `data-scene="01"` | | SRT cue / scene local time | bottom captions only, no progress bar | |
+| 02 | `data-scene="02"` | | SRT cue / scene local time | bottom captions only, no progress bar | |
+| 03 | `data-scene="03"` | | SRT cue / scene local time | bottom captions only, no progress bar | |
+
 ## Constraints
 
 - Forbidden styles:

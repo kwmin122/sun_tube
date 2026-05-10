@@ -55,6 +55,16 @@ Write spoken Korean lines here. Use one idea per line.
 | 05 | 0:44-0:54 | demo/application | Application | Icon labels | icon pop + short labels | |
 | 06 | 0:54-1:00 | takeaway | CTA | One-line copy | fade out | |
 
+## Motion Blueprint Summary
+
+This table is a compact contract for the renderer. It should agree with `design-context.md`.
+
+| # | Primary Screen Object | State Change | Motion Beat Ladder | Hold / Exit Rule | Snapshot Evidence |
+|---|---|---|---|---|---|
+| 01 | | | | | |
+| 02 | | | | | |
+| 03 | | | | | |
+
 ## Detailed Scene Plan
 
 ### Scene 01
@@ -64,6 +74,13 @@ Write spoken Korean lines here. Use one idea per line.
 - Narration:
 - On-screen phrase:
 - Layout:
+- Primary screen object:
+- Supporting objects:
+- Initial state:
+- Active state:
+- End state:
+- Motion beat ladder:
+- Hold / exit rule:
 - Primary motion:
 - Secondary motion:
 - Caption: bottom safe-zone text-only from ElevenLabs SRT, no progress bar
@@ -77,6 +94,13 @@ Write spoken Korean lines here. Use one idea per line.
 - Narration:
 - On-screen phrase:
 - Layout:
+- Primary screen object:
+- Supporting objects:
+- Initial state:
+- Active state:
+- End state:
+- Motion beat ladder:
+- Hold / exit rule:
 - Primary motion:
 - Secondary motion:
 - Caption: bottom safe-zone text-only from ElevenLabs SRT, no progress bar

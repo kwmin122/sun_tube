@@ -37,6 +37,30 @@ For any scene with three or more cards, nodes, modules, cases, or workflow steps
 
 The reference rhythm is: one idea appears, the narration explains it, then the next idea appears. A board where all cards are visible from the start fails director review unless the scene is explicitly a final summary.
 
+## Motion Blueprint Gate
+
+Root cause of shallow screen and motion design:
+
+- planning stopped at labels like `Visual Concept`, `Motion Notes`, or `Motion Layer`
+- those labels did not define the actual screen objects, state changes, timing beats, or evidence frames
+- implementers filled the gap with reusable cards, generic fades, decorative dots, and broad connector lines
+- QA could see that elements existed, but could not prove that the scene explained the narration
+
+No scene should enter composition until `design-context.md` or the project plan defines a motion blueprint with:
+
+- `Primary Screen Object`: the main object the viewer should watch
+- `Supporting Objects`: secondary rows, chips, rails, tokens, labels, or panels
+- `Initial State`: what is visible before the narration point starts
+- `Active State`: what changes while the current line is being explained
+- `End State`: what remains after the idea is done
+- `Motion Beat Ladder`: ordered beats, usually 3-6 steps, tied to narration clauses
+- `Hold/Carryover Rule`: what stays on screen as context instead of disappearing
+- `Exit Rule`: what leaves, dims, collapses, or becomes background
+- `Implementation Contract`: required DOM/data markers or component props for QA
+- `Snapshot Evidence`: the frame that must prove the scene is understandable
+
+`Motion Layer: route pulse` is not a blueprint. It becomes implementation-ready only when it says which route pulses, from what object to what object, when it starts, what changes, and what a review frame must show.
+
 ## Banned Patterns
 
 - Same `fade + y + stagger` as the dominant animation across scenes.

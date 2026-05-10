@@ -62,6 +62,7 @@ Status values:
 - Do not add official source capture labels unless the captured page explains the narration and occupies at least one half-side.
 - Classify imagegen as `support` only for thumbnail or atmosphere; it is not required for body scenes.
 - Dense explainer scenes should not be large empty panels. Use rows, packets, state badges, active nodes, or before/after contrast.
+- A `Motion Layer` label is not enough for implementation. Each Hyperframes scene must follow the motion blueprint in `design-context.md`: primary screen object, supporting objects, initial/active/end states, beat ladder, hold/exit rule, and snapshot evidence.
 - A route is not complete until the selected renderer shows it in actual frame evidence.
 - Captions are text-only from ElevenLabs SRT with no progress bar.
 
