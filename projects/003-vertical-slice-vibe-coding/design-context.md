@@ -54,10 +54,10 @@ No scene should reach render without a visual thesis.
 
 | Scene | Visual Thesis | Viewer Must Understand | Primary Visual Mechanism | Narration Verb | Motion Must Show | Primary Asset | Failure If |
 |---|---|---|---|---|---|---|---|
-| 01 | Layered structure is the familiar baseline. | The video is not saying old structures are simply wrong. | horizontal layer stack | divide | UI/API/Service/DB appear as roles | Hyperframes diagram | starts by attacking layers |
+| 01 | Layered structure is the familiar baseline. | The video is not saying old structures are simply wrong. | horizontal layer stack | divide | Controller/Service/Repository/Entity/DTO appear as roles | Hyperframes diagram | starts by attacking layers |
 | 02 | Existing structures have real benefits. | Role separation helps humans and large teams. | benefit cards anchored to layers | clarify | benefits appear one at a time | Hyperframes diagram | no balanced setup |
 | 03 | AI loses context when one feature is scattered. | A single feature can span many folders. | scattered file map | jump | context path jumps across folders | Hyperframes diagram | static file list only |
-| 04 | Vertical slice groups one feature's flow. | UI, API, validation, storage, and tests can sit near the feature. | module grouping into slice | group | related modules move into one boundary | Hyperframes diagram | definition only |
+| 04 | Vertical slice groups one feature's flow. | Controller, service, repository, entity, DTO, and tests can sit near the feature. | module grouping into slice | group | related modules move into one boundary | Hyperframes diagram | definition only |
 | 05 | A feature slice is easier for AI to inspect. | AI can follow the feature's input/process/output in one area. | focus lens scanning modules | inspect | lens moves through slice internals | Hyperframes diagram | cards only |
 | 06 | The benefit is operational. | Short context, nearby files, narrow edits. | three benefit lanes | shorten/narrow | lanes activate sequentially | Hyperframes diagram | checklist all visible from start |
 | 07 | Prompting should name the slice boundary. | Ask AI to work inside one feature slice. | prompt card with scope fence | limit | prompt locks inside boundary | Hyperframes diagram | prompt unreadable |

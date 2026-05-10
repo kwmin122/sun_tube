@@ -26,7 +26,7 @@ This is a material-development file. It is not a citation audit, rights review, 
 
 | Type | Candidate | Link / File | Why It Is Useful | Scene Potential |
 |---|---|---|---|---|
-| concept | Vertical slice architecture | internal concept | 기능 하나를 UI/API/data/test까지 끝내는 방식 | layer stack vs slice cut diagram |
+| concept | Vertical slice architecture | internal concept | 기능 하나의 controller/service/repository/entity/test 흐름을 가까이 두는 방식 | layer stack vs slice cut diagram |
 | workflow | AI coding iteration loop | internal concept | prompt -> code -> run -> inspect -> fix 루프와 잘 맞음 | one slice loop animation |
 | failure pattern | horizontal layer build | internal concept | 많은 파일이 생기지만 사용자 가치는 검증 안 됨 | "다 있음 / 되는 건 없음" comparison |
 | demo | login flow / upload flow / checkout flow | internal concept | 실제 예시로 설명 가능 | feature lane from button to database |
@@ -37,7 +37,7 @@ This is a material-development file. It is not a citation audit, rights review, 
 - Hook image or line: "예전 구조가 틀린 건 아닙니다. 다만 AI가 참고하기엔 흩어져 있습니다."
 - Strong comparison: layer folders vs feature slice folders
 - Useful contradiction: 사람에게는 역할이 분명하지만 AI에게는 기능 맥락이 흩어진다
-- Demo moment: 회원가입 관련 화면, API, 검증, 저장, 테스트가 한 슬라이스 안에 가까이 있는 구조
+- Demo moment: 회원가입 관련 컨트롤러, 서비스, 레포지토리, 엔티티, 테스트가 한 슬라이스 안에 가까이 있는 구조
 - Interview or quote candidate: not required
 - B-roll or metaphor candidate: 케이크 층을 가로로 쌓는 대신 한 조각을 끝까지 자르는 비유
 - Data or timeline candidate: one slice loop: prompt -> implement -> run -> inspect -> fix -> lock

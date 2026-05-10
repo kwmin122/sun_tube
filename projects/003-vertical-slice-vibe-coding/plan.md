@@ -44,10 +44,10 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 ```text
 예전에는 앱을 보통 레이어로 나눴습니다.
 
-유아이는 유아이 폴더.
-에이피아이는 에이피아이 폴더.
+컨트롤러는 컨트롤러 폴더.
 서비스는 서비스 폴더.
-디비는 디비 폴더.
+레포지토리는 레포지토리 폴더.
+엔티티와 디티오는 또 따로 둡니다.
 
 이 구조가 틀렸다는 말은 아닙니다.
 
@@ -64,10 +64,10 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 에이아이에게 회원가입을 고치라고 했는데,
 관련 코드가 여러 레이어에 흩어져 있다고 해보세요.
 
-화면은 페이지 폴더에 있고,
-에이피아이는 라우트 폴더에 있고,
-검증 로직은 유틸 폴더에 있고,
-디비 스키마는 또 다른 곳에 있습니다.
+요청을 받는 컨트롤러가 있고,
+비즈니스 로직은 서비스에 있고,
+데이터 접근은 레포지토리에 있고,
+엔티티와 디티오는 또 다른 곳에 있습니다.
 
 그러면 에이아이는 한 기능을 이해하려고,
 계속 폴더를 왔다 갔다 해야 합니다.
@@ -83,11 +83,11 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 사용자 기능 기준으로 코드를 묶는 방식입니다.
 
 예를 들어 회원가입 슬라이스라면,
-회원가입 화면,
-입력 검증,
-에이피아이,
-저장 로직,
-성공 화면,
+회원가입 컨트롤러,
+서비스 로직,
+레포지토리,
+엔티티와 디티오,
+검증 규칙,
 테스트까지,
 한 기능의 흐름을 가까운 곳에 둡니다.
 
@@ -132,10 +132,10 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 이렇게 말하는 대신,
 회원가입 슬라이스 안에서만 수정해줘.
 
-화면,
-에이피아이,
-검증,
-저장,
+컨트롤러,
+서비스,
+레포지토리,
+엔티티,
 테스트를 같이 보고,
 이 기능 흐름만 끝내줘.
 
@@ -170,7 +170,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 
 | # | Time | Pattern Role | Core Message | Visual Concept | Motion Notes | Assets |
 |---|---|---|---|---|---|---|
-| 01 | 0:00-0:15 | setup | 기존에는 레이어로 나누는 구조가 흔했다 | UI/API/Service/DB layer stack | layer labels appear one by one | none |
+| 01 | 0:00-0:15 | setup | 기존에는 레이어로 나누는 구조가 흔했다 | Controller/Service/Repository/Entity/DTO layer stack | layer labels appear one by one | none |
 | 02 | 0:15-0:35 | balance | 기존 구조도 장점이 있다 | role clarity board | benefit cards reveal | none |
 | 03 | 0:35-1:00 | problem | AI는 한 기능을 이해하려고 여러 폴더를 오가야 한다 | scattered related files | context path jumps | none |
 | 04 | 1:00-1:25 | definition | 버티컬 슬라이스는 기능 흐름 기준으로 묶는다 | feature slice folder | slice groups related modules | none |
@@ -187,7 +187,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 - Time: 0:00-0:15
 - Pattern role: setup
 - Narration: 예전에는 앱을 보통 레이어로 나눴습니다.
-- On-screen phrase: 기존 구조: UI / API / Service / DB
+- On-screen phrase: 기존 구조: Controller / Service / Repository / Entity
 - Layout: four horizontal architecture layers
 - Primary motion: layer labels appear one by one
 - Secondary motion: subtle role badges attach to each layer
@@ -227,7 +227,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 - Pattern role: definition
 - Narration: 버티컬 슬라이스는 기술 레이어가 아니라 기능 흐름 기준으로 묶는 방식입니다.
 - On-screen phrase: feature slice
-- Layout: one feature folder containing UI, API, validation, storage, test
+- Layout: one feature slice containing controller, service, repository, entity, DTO, test
 - Primary motion: related modules group into one vertical slice
 - Secondary motion: slice boundary locks
 - Caption: bottom safe-zone text-only from ElevenLabs SRT, no progress bar
@@ -241,7 +241,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 - Narration: 그러면 AI가 한 기능의 맥락을 한 번에 따라갈 수 있습니다.
 - On-screen phrase: AI가 참고하기 쉬운 구조
 - Layout: focused module cluster with one active lens
-- Primary motion: lens scans UI -> API -> validation -> DB -> test inside the slice
+- Primary motion: lens scans controller -> service -> repository -> entity -> test inside the slice
 - Secondary motion: outside modules stay dimmed
 - Caption: bottom safe-zone text-only from ElevenLabs SRT, no progress bar
 - SFX: scan ticks

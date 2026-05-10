@@ -15,10 +15,10 @@ Purpose: define what each scene must do, what material direction it needs, and w
 
 | Scene | Estimated Duration | Scene Role | Scene Content Type | Scene Recipe | Primary Visual Route | Secondary Visual Route | Motion Grammar | Imagegen Role | Scene Purpose | Material Direction | Expected Visual | Review Risk | Writer Guidance |
 |---|---:|---|---|---|---|---|---|---|---|---|---|---|---|
-| 01 | 0:00-0:15 | setup | explain | product/before-after-demo | hyperframes | | technical-grid | not_required | 기존 레이어 구조를 먼저 인정한다 | UI/API/Service/DB 레이어 | 레이어 라벨이 하나씩 등장 | 기존 구조를 까는 느낌이 나면 안 됨 | "틀린 게 아니다"로 시작 |
+| 01 | 0:00-0:15 | setup | explain | product/before-after-demo | hyperframes | | technical-grid | not_required | 기존 레이어 구조를 먼저 인정한다 | Controller/Service/Repository/Entity/DTO 레이어 | 레이어 라벨이 하나씩 등장 | 기존 구조를 까는 느낌이 나면 안 됨 | "틀린 게 아니다"로 시작 |
 | 02 | 0:15-0:35 | balance | explain | product/before-after-demo | hyperframes | | technical-grid | not_required | 기존 구조의 장점을 짚는다 | 역할 분리, 규칙, 큰 팀 | 장점 카드가 레이어에 붙음 | 장점 설명이 길어지면 지루함 | 짧게 인정하고 다음 문제로 이동 |
 | 03 | 0:35-1:00 | problem | explain | explain/mechanism-state-machine | hyperframes | | technical-grid | not_required | AI가 기능 맥락을 찾기 위해 여러 폴더를 오가는 문제를 보여준다 | scattered related files | 한 기능 관련 파일들이 흩어져 있고 path가 점프 | 너무 복잡한 파일트리 금지 | 기능 하나의 맥락이 흩어진다고 말하기 |
-| 04 | 1:00-1:25 | definition | explain | explain/mechanism-state-machine | hyperframes | | technical-grid | not_required | 버티컬 슬라이스를 기능 기준 묶음으로 정의한다 | feature slice folder | UI/API/validation/storage/test가 한 슬라이스로 묶임 | 레이어 구조를 완전히 부정하면 안 됨 | 기술 레이어가 아니라 기능 흐름 기준 |
+| 04 | 1:00-1:25 | definition | explain | explain/mechanism-state-machine | hyperframes | | technical-grid | not_required | 버티컬 슬라이스를 기능 기준 묶음으로 정의한다 | feature slice folder | controller/service/repository/entity/test가 한 슬라이스로 묶임 | 레이어 구조를 완전히 부정하면 안 됨 | 기술 레이어가 아니라 기능 흐름 기준 |
 | 05 | 1:25-1:55 | ai-fit | explain | explain/fan-out-fan-in | hyperframes | | technical-grid | not_required | AI가 한 기능 맥락을 따라가기 쉬운 이유를 설명한다 | module cluster map | focus lens가 한 슬라이스 내부 모듈을 순서대로 훑음 | AI 찬양처럼 보이면 안 됨 | "참고하기 쉽다"를 중심으로 |
 | 06 | 1:55-2:18 | benefits | explain | product/before-after-demo | hyperframes | | product-demo | not_required | 세 가지 이점을 구조적으로 보여준다 | short context, close files, narrow edits | 세 benefit lane이 순차 점등 | 체크리스트만 되면 약함 | 각 장점을 실제 AI 수정 상황과 연결 |
 | 07 | 2:18-2:43 | prompt-rule | tutorial | explain/mechanism-state-machine | hyperframes | | kinetic-type | not_required | AI에게 슬라이스 단위로 맡기는 프롬프트 규칙을 제시한다 | prompt card, scope fence | "이 슬라이스 안에서만" prompt가 잠김 | 문구가 길면 자막과 충돌 | 복붙 가능한 요청 문장으로 |
@@ -30,7 +30,7 @@ Purpose: define what each scene must do, what material direction it needs, and w
 ### Scene 01
 
 - Purpose: 기존 레이어 구조가 흔했고 나름의 이유가 있다는 전제를 만든다.
-- Viewer should understand: UI/API/Service/DB로 나누는 구조 자체가 틀린 것은 아니다.
+- Viewer should understand: 컨트롤러/서비스/레포지토리/엔티티처럼 역할별로 나누는 구조 자체가 틀린 것은 아니다.
 - Pattern role: setup
 - Scene content type: explain
 - Scene recipe: product/before-after-demo
@@ -40,7 +40,7 @@ Purpose: define what each scene must do, what material direction it needs, and w
 - Motion grammar: technical-grid
 - Imagegen role: not_required
 - Material direction: layer stack
-- Visual idea: `UI`, `API`, `Service`, `DB` 레이어가 하나씩 안정적으로 쌓인다.
+- Visual idea: `Controller`, `Service`, `Repository`, `Entity`, `DTO` 레이어가 하나씩 안정적으로 쌓인다.
 - Narration verb: 나누다, 분리하다
 - Motion purpose: 기존 구조를 먼저 명확히 보여준다.
 - Review risk: 기존 구조를 비난하는 인상 금지.
@@ -80,7 +80,7 @@ Purpose: define what each scene must do, what material direction it needs, and w
 - Motion grammar: technical-grid
 - Imagegen role: not_required
 - Material direction: scattered files for one feature
-- Visual idea: `signup` 기능 라벨에서 page, route, util, schema 파일로 path가 점프한다.
+- Visual idea: `signup` 기능 라벨에서 controller, service, repository, entity, DTO 파일로 path가 점프한다.
 - Narration verb: 오가다, 놓치다, 흩어지다
 - Motion purpose: 기능 맥락이 흩어지는 감각을 보여준다.
 - Review risk: 파일트리가 너무 복잡하면 안 보임.
@@ -90,7 +90,7 @@ Purpose: define what each scene must do, what material direction it needs, and w
 ### Scene 04
 
 - Purpose: 버티컬 슬라이스를 기능 기준 묶음으로 정의한다.
-- Viewer should understand: 한 기능의 화면, API, 검증, 저장, 테스트를 가까이 둔다.
+- Viewer should understand: 한 기능의 컨트롤러, 서비스, 레포지토리, 엔티티, 테스트를 가까이 둔다.
 - Pattern role: definition
 - Scene content type: explain
 - Scene recipe: explain/mechanism-state-machine
@@ -120,7 +120,7 @@ Purpose: define what each scene must do, what material direction it needs, and w
 - Motion grammar: technical-grid
 - Imagegen role: not_required
 - Material direction: focused module cluster
-- Visual idea: focus lens가 slice 내부의 UI -> API -> validation -> DB -> test를 순서대로 훑는다.
+- Visual idea: focus lens가 slice 내부의 controller -> service -> repository -> entity -> test를 순서대로 훑는다.
 - Narration verb: 참고하다, 따라가다, 이해하다
 - Motion purpose: AI가 한 기능 맥락을 한 번에 읽는 느낌을 만든다.
 - Review risk: 단순 카드 나열 금지.
@@ -170,7 +170,7 @@ Purpose: define what each scene must do, what material direction it needs, and w
 ### Scene 08
 
 - Purpose: 버티컬 슬라이스를 과하게 적용하지 않도록 균형점을 준다.
-- Viewer should understand: 공통 인증, 디자인 시스템, DB 설정 같은 공유 레이어는 남긴다.
+- Viewer should understand: 공통 인증, 디자인 시스템, 데이터베이스 설정 같은 공유 레이어는 남긴다.
 - Pattern role: caveat
 - Scene content type: explain
 - Scene recipe: explain/mechanism-state-machine
