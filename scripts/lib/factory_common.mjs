@@ -62,6 +62,7 @@ export const REQUIRED_MARKDOWN = [
   "draft-scene-packets.md",
   "plan.md",
   "timed-scene-packets.md",
+  "scene-contracts.md",
   "status.md",
   "asset-plan.md",
   "design-context.md",
@@ -77,6 +78,7 @@ export const ARTIFACT_FILES = {
   tts: "voiceover/solo/voiceover-solo-elevenlabs.mp3",
   audioMix: "voiceover/solo/voiceover-solo-final-mix.m4a",
   timedScenePackets: "timed-scene-packets.md",
+  sceneContracts: "scene-contracts.md",
   assetPlan: "asset-plan.md",
   designContext: "design-context.md",
   composition: "composition",
@@ -131,18 +133,18 @@ export const ROLE_BY_GATE = {
   timing: {
     roles: ["hype-scene-planner"],
     read: ["project.json", "plan.md", "voiceover/solo/voiceover-solo-elevenlabs.srt", "draft-scene-packets.md"],
-    write: ["timed-scene-packets.md", "project.json", "status.md"],
-    note: "SRT 기준으로 초 단위 제작 지시서를 만든다.",
+    write: ["timed-scene-packets.md", "scene-contracts.md", "project.json", "status.md"],
+    note: "SRT 기준으로 초 단위 제작 지시서를 만들고, 구현자가 따라야 할 scene-contracts.md를 확정한다.",
   },
   assets: {
     roles: ["hype-asset-producer", "hype-visual-director"],
-    read: ["project.json", "timed-scene-packets.md", "asset-plan.md", "design-context.md", "TOOL_ROUTING_PIPELINE.md"],
+    read: ["project.json", "timed-scene-packets.md", "scene-contracts.md", "asset-plan.md", "design-context.md", "TOOL_ROUTING_PIPELINE.md"],
     write: ["work-orders/*.md", "asset-plan.md", "design-context.md", "project.json"],
     note: "Tool Route 기준으로 work order를 만들고 필요한 외부 작업을 분기한다.",
   },
   motion: {
     roles: ["hype-motion-designer"],
-    read: ["project.json", "timed-scene-packets.md", "asset-plan.md", "design-context.md", "voiceover/solo/voiceover-solo-final-mix.m4a"],
+    read: ["project.json", "timed-scene-packets.md", "scene-contracts.md", "asset-plan.md", "design-context.md", "voiceover/solo/voiceover-solo-final-mix.m4a"],
     write: ["composition/src/*.json", "composition/"],
     note: "Hyperframes 조립용 데이터와 모션 구현을 준비한다.",
   },
@@ -397,6 +399,7 @@ export function inferGate(project) {
   if (!project.approved?.plan) return "review";
   if (!project.artifacts?.tts || !project.artifacts?.audioMix) return "tts";
   if (!project.artifacts?.timedScenePackets) return "timing";
+  if (!project.artifacts?.sceneContracts) return "timing";
   if (
     !project.artifacts?.assetPlan ||
     !project.artifacts?.designContext ||

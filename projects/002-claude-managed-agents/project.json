@@ -22,6 +22,7 @@
     "tts": true,
     "audioMix": true,
     "timedScenePackets": true,
+    "sceneContracts": false,
     "assetPlan": true,
     "designContext": true,
     "composition": true,

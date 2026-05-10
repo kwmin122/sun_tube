@@ -20,6 +20,8 @@ topic / user material
 -> plan.md user approval
 -> ElevenLabs TTS/SRT/final mix
 -> timed-scene-packets.md
+-> scene-contracts.md
+-> factory:validate-scene-contract
 -> scene tool routing
    |-- raw video / interview / talk / demo clip -> video-use -> processed clip
    |-- HTML motion / diagram / kinetic type ------> Hyperframes
@@ -102,9 +104,11 @@ Every production scene should carry one primary route and optional support route
 
 ## Handoff Rule
 
-`timed-scene-packets.md` chooses the route per scene. `asset-plan.md` turns that route into concrete file work. `design-context.md` controls how the routed assets are visually integrated. Hyperframes receives only approved or processed assets, not unresolved raw material.
+`timed-scene-packets.md` chooses the route per scene. `scene-contracts.md` defines what the implementation is allowed to build. `asset-plan.md` turns that route into concrete file work. `design-context.md` controls how the routed assets are visually integrated. Hyperframes receives only approved or processed assets, not unresolved raw material.
 
 A routed asset is not complete just because the file exists. It is complete only when the work order is complete, the `asset-plan.md` row is `implemented` or `qa_passed`, and the final composition references the processed file or implements the scene contract. Capture routes must use real page captures with stable local paths under `composition/assets/screenshots/`; blank verification pages or unused screenshots must stay blocked until replaced or removed from the route.
+
+Implementation may not start from route labels alone. Run `factory:validate-scene-contract` first. If the scene contract does not define the primary screen object, allowed visual elements, forbidden fillers, motion beats, required state change, implementation markers, and evidence frame, return to planning instead of filling the scene with generic cards, decorative paths, dots, glass panels, or generic fallback components.
 
 ## Truth Layers
 
@@ -113,6 +117,7 @@ Use these layers in this order:
 | Layer | Responsibility |
 |---|---|
 | `project.json` | Large canonical project state and route state. |
+| `scene-contracts.md` | Scene-level implementation contract: allowed visual elements, forbidden fillers, motion beats, markers, and evidence frame. |
 | `asset-plan.md` | Scene-level asset, visual, imagegen, and implementation-readiness state. |
 | `work-orders/*.md` | Route-level executable task state. |
 | `composition/index.html` and composition data | Actual implemented result. |

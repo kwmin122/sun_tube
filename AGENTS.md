@@ -12,7 +12,7 @@ Default workflow:
 4. Creative roles create `creative-brief.md`, `draft-scene-packets.md`, and an approval-ready `plan.md`.
 5. User reviews and approves the script and scene contract.
 6. TTS is generated after approval.
-7. Agent creates `timed-scene-packets.md` from ElevenLabs SRT, assigns a tool route per scene, then runs asset, visual, motion, and audio work by scene.
+7. Agent creates `timed-scene-packets.md` from ElevenLabs SRT, then creates and validates `scene-contracts.md` before assigning routes and running asset, visual, motion, and audio work by scene.
 8. Agent assembles the Hyperframes composition, runs snapshot/pre-render QA, renders, runs video review, runs final QA, then prepares packaging.
 
 Do not treat the production phase as editing a supplied talking-head video unless the user explicitly asks for that.
@@ -33,6 +33,8 @@ For role-based topic-to-render orchestration, use the local `hype-*` role skills
 For tool routing, read `TOOL_ROUTING_PIPELINE.md`. Hyperframes is the default final composition/render path. Use `video-use` only when a scene needs raw/source video analysis, trimming, transcript, clip processing, or burned subtitles before importing the processed result into Hyperframes.
 
 Renderer comparison uses one shared scene contract and separate `composition-hyperframes/` and `composition-remotion/` folders. Do not split interpretation by renderer-specific agents.
+
+`scene-contracts.md` is the implementation authority. If it does not define primary screen object, allowed visual elements, forbidden fillers, motion beats, required state change, implementation markers, and evidence frame, do not fill the scene with generic cards, fades, dots, lines, glass panels, or fallback components. Return the scene to planning and run `npm run factory:validate-scene-contract -- <project-path>` before implementation.
 
 `factory:review-video` produces frame evidence and machine reports only. Final PASS requires `director-review.md` with evidence and, when comparing renderers, `renderer-comparison.md`.
 
@@ -94,6 +96,7 @@ Each project under `projects/{NNN-slug}/` should keep:
 - `draft-scene-packets.md`: pre-script scene purpose, role, material direction, and visual intent.
 - `plan.md`: approved script, scene table, visual direction, and motion notes.
 - `timed-scene-packets.md`: post-TTS/SRT scene timing, captions, motion beats, and production instructions.
+- `scene-contracts.md`: per-scene implementation contract that blocks generic filler and defines required markers/evidence.
 - `status.md`: checklist and current production state.
 - `source-notes.md`: optional compatibility notes for older source-focused projects; not an MVP gate.
 - `design-context.md`: visual system, assets, references, caption safe zone, and uncertainty.

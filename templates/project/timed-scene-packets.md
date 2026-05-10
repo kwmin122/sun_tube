@@ -43,6 +43,12 @@ Each scene must define the following before render:
 - Primary asset:
 - Failure if:
 
+Then create `scene-contracts.md` and validate it before implementation:
+
+```bash
+npm run factory:validate-scene-contract -- <project-path>
+```
+
 ### Scene 01
 
 - Time range:

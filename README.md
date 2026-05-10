@@ -13,10 +13,11 @@ Hyperframes 기반 모션 애니메이션 유튜브 제작 작업실입니다.
 5. 사용자가 검수한다.
 6. 승인 후 ElevenLabs TTS를 만든다.
 7. ElevenLabs forced-alignment SRT 타이밍에 맞춰 `timed-scene-packets.md`를 만든다. 자막은 기본적으로 SRT cue 기반 text-only이며 진행바를 넣지 않는다.
-8. `TOOL_ROUTING_PIPELINE.md` 기준으로 씬별 도구 경로를 정한다.
-9. 자료/비주얼/모션/오디오를 씬별로 병렬 제작한다.
-10. Hyperframes 조립 후 `snapshot`, pre-render QA, `render`, video review, final QA를 거친다.
-11. 제목, 썸네일, 설명문, 고정댓글 방향을 패키징한다.
+8. `scene-contracts.md`를 만들고 `factory:validate-scene-contract`로 구현 계약을 검증한다.
+9. `TOOL_ROUTING_PIPELINE.md` 기준으로 씬별 도구 경로를 정한다.
+10. 자료/비주얼/모션/오디오를 씬별로 병렬 제작한다.
+11. Hyperframes 조립 후 `snapshot`, pre-render QA, `render`, video review, final QA를 거친다.
+12. 제목, 썸네일, 설명문, 고정댓글 방향을 패키징한다.
 
 ## Folder Map
 
@@ -44,6 +45,7 @@ hype_tuber/
 |       |-- draft-scene-packets.md
 |       |-- plan.md
 |       |-- timed-scene-packets.md
+|       |-- scene-contracts.md
 |       |-- status.md
 |       |-- source-notes.md
 |       |-- design-context.md
@@ -81,6 +83,7 @@ After TTS is approved:
 npm run factory:tts -- <project-path>
 npm run factory:mix -- <project-path>
 npm run factory:timing -- <project-path>
+npm run factory:validate-scene-contract -- <project-path>
 npm run factory:route -- <project-path>
 npm run factory:compose -- <project-path>
 npm run factory:qa -- <project-path> -- --stage pre-render
@@ -128,7 +131,7 @@ Do not write the final script before `draft-scene-packets.md` exists.
 
 Do not start TTS before `plan.md` has user-approved narration and scene contract.
 
-Do not start exact motion timing before `timed-scene-packets.md` exists. The timed packet is the contract for where each visual, motion, caption, and audio beat belongs.
+Do not start exact motion timing before `timed-scene-packets.md` exists. Do not start implementation before `scene-contracts.md` exists and `factory:validate-scene-contract` passes. The scene contract is the implementation authority for primary screen object, allowed elements, forbidden fillers, motion beats, markers, and evidence frame.
 
 For motion design and animation, apply the local design-guide skill first:
 
@@ -140,6 +143,6 @@ Use `CONTENT_FACTORY_PIPELINE.md` as the master workflow for topic-to-render pro
 
 Use `TOOL_ROUTING_PIPELINE.md` to decide whether each scene should use Hyperframes, `video-use`, imagegen, capture, scripts/ffmpeg, or manual assets. Hyperframes remains the default final composition/render path. Use `video-use` when source video needs analysis, transcript, trimming, subtitles, crop, or processed clip export.
 
-New projects should keep `research-pack.md` for material development, `creative-brief.md` for the angle/structure decision, `draft-scene-packets.md` and `timed-scene-packets.md` for scene contracts, `design-context.md` for visual direction, and `asset-plan.md` for screenshots, B-roll, interview candidates, demos, data, generated visuals, and processed assets.
+New projects should keep `research-pack.md` for material development, `creative-brief.md` for the angle/structure decision, `draft-scene-packets.md` and `timed-scene-packets.md` for scene planning and timing, `scene-contracts.md` for implementation contracts, `design-context.md` for visual direction, and `asset-plan.md` for screenshots, B-roll, interview candidates, demos, data, generated visuals, and processed assets.
 
 `source-notes.md` is optional compatibility context, not an MVP gate. Use `INTERVIEW_ASSET_PIPELINE.md` only when a video needs public interviews, talks, podcasts, or quote clips.

@@ -13,6 +13,7 @@ Use after Hyperframes render and before final QA/package.
 - `renders/final.mp4`
 - `voiceover/solo/voiceover-solo-elevenlabs.srt`
 - `timed-scene-packets.md`
+- `scene-contracts.md`
 - `asset-plan.md`
 - `work-orders/*.md`
 - `composition/index.html`
@@ -31,6 +32,9 @@ Check the finished video like an editing director, not just a file validator.
 
 - Captions: SRT exists, timing is plausible, captions do not linger too short/long, and final caption duration matches the MP4.
 - Scene contract: each scene visually supports the purpose in `timed-scene-packets.md`.
+- Scene contract compliance: rendered frames should match the primary screen object, allowed elements, motion beats, state change, and evidence requirement in `scene-contracts.md`.
+- Forbidden fillers: flag any visual that appears to fill empty space but is not allowed by the scene contract.
+- Generic fallback: fail scenes that use generic card/grid/stat/fallback compositions when the contract requires a custom primary object.
 - Asset presence: routes marked complete in `asset-plan.md` and `work-orders/*.md` appear in the composition or rendered frames.
 - Capture fit: a capture route must be primary evidence, use a useful crop, and take at least one half-side of the frame. Small source stamps are treated as weak support, not a completed capture route.
 - Visual density: rich scenes must avoid empty panels and include readable rows, route lines, tokens, counters, scans, or comparable information.

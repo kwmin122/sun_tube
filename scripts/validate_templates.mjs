@@ -51,6 +51,11 @@ const assetHasRoute = tableRows(asset).some((table) => table.headers.includes("T
 if (!timedHasRoute) errors.push("timed-scene-packets.md must have a Tool Route column");
 if (!assetHasRoute) errors.push("asset-plan.md must have a Tool Route column");
 
+const sceneContract = run("node", ["scripts/validate_scene_contract.mjs", "templates/project", "--template"], { cwd: ROOT });
+if (sceneContract.status !== 0) {
+  errors.push(`scene-contracts template invalid: ${(sceneContract.stderr || sceneContract.stdout || "").trim()}`);
+}
+
 for (const [key, value] of Object.entries(template.routes || {})) {
   if (typeof value !== "string") errors.push(`routes.${key} must be a string enum, not ${typeof value}`);
   if (!ROUTE_VALUES.includes(value)) errors.push(`routes.${key} invalid route state: ${value}`);

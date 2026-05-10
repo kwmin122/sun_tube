@@ -30,6 +30,8 @@ topic
 -> user approval
 -> ElevenLabs TTS + SRT
 -> timed-scene-packets.md
+-> scene-contracts.md
+-> factory:validate-scene-contract
 -> scene tool routing
 -> asset-plan.md / design-context.md updates
 -> asset / visual / motion / audio work by scene
@@ -50,6 +52,7 @@ Every project should keep:
 - `draft-scene-packets.md`: pre-script scene purpose, role, material direction, visual intent
 - `plan.md`: script, scene table, selected content pattern, motion plan
 - `timed-scene-packets.md`: post-TTS/SRT scene timing, caption behavior, motion beats, production instructions
+- `scene-contracts.md`: per-scene implementation contract; defines primary screen object, allowed elements, forbidden fillers, motion beats, markers, and evidence frame
 - `TOOL_ROUTING_PIPELINE.md`: workspace-level rulebook for when scenes use Hyperframes, `video-use`, imagegen, capture, or scripts
 - `status.md`: production checklist and current gate
 - `source-notes.md`: optional compatibility notes for older source-focused projects; not an MVP gate
@@ -68,6 +71,7 @@ projects/{NNN-slug}/
 |-- draft-scene-packets.md
 |-- plan.md
 |-- timed-scene-packets.md
+|-- scene-contracts.md
 |-- status.md
 |-- source-notes.md
 |-- design-context.md
@@ -100,6 +104,7 @@ projects/{NNN-slug}/
 | 6. User Approval | approved plan | Script and scene contract are accepted. |
 | 7. TTS Sync | MP3 + SRT | ElevenLabs audio and timing files exist. |
 | 8. Timed Scene Packets | `timed-scene-packets.md` | Exact scene timing, text-only caption behavior, motion beats, and asset timing are mapped to ElevenLabs SRT. |
+| 8b. Scene Contracts | `scene-contracts.md` + `factory:validate-scene-contract` | Every scene has primary screen object, allowed elements, forbidden fillers, motion beats, required state change, implementation markers, and evidence frame before implementation. |
 | 9. Tool Routing + Production | routed assets + composition | Every scene has a primary route before asset, visual, motion, and audio work starts. Complex scenes use one-at-a-time progressive disclosure instead of showing every element at once. |
 | 10. Pre-render Verification | snapshots | Captions do not collide, dense frames are readable, and route work is complete before render. |
 | 11. Video Review | `review/video-review/video-review.md` + `director-review.md` | Rendered frames and contact sheet are generated, then the editor/director explicitly approves scene intent, motion purpose, rhythm, captions, assets, and empty-feel. |
@@ -290,7 +295,7 @@ Diagrams:
 
 ## Scene Contract
 
-Each scene in `plan.md` should answer:
+Each scene starts with a draft contract in `plan.md`, then becomes an implementation contract in `scene-contracts.md`.
 
 - What is the viewer supposed to understand now?
 - Which pattern role does this scene serve?
@@ -298,6 +303,11 @@ Each scene in `plan.md` should answer:
 - What should move, and why?
 - Where is the caption safe zone?
 - Which frame will be snapshotted for verification?
+- Which visual elements are allowed?
+- Which filler elements are forbidden?
+- Which implementation markers must exist?
+
+If those answers are missing, do not fill the scene with generic cards, fades, dots, connector lines, glass panels, or generic fallback components.
 
 ## Verification Checklist
 
@@ -305,6 +315,7 @@ Each scene in `plan.md` should answer:
 - [ ] `research-pack.md` supports the chosen angle and scene ideas.
 - [ ] `draft-scene-packets.md` existed before the approval script.
 - [ ] `timed-scene-packets.md` was created from ElevenLabs SRT.
+- [ ] `scene-contracts.md` was created and `factory:validate-scene-contract` passed.
 - [ ] No interview or b-roll is used as decoration only.
 - [ ] The final bottom caption does not collide with source subtitles.
 - [ ] Screenshots are readable.

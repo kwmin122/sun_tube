@@ -17,6 +17,7 @@
 - [ ] ElevenLabs TTS generated
 - [ ] ElevenLabs SRT generated
 - [ ] `timed-scene-packets.md` created
+- [ ] `scene-contracts.md` created and validated
 - [ ] Scene tool routes assigned from `TOOL_ROUTING_PIPELINE.md`
 - [ ] Final audio mix generated
 - [ ] `video-use` processing complete if raw/interview/demo video is routed
@@ -46,6 +47,7 @@ These keys are completion flags in `project.json.artifacts`, not file-existence 
 - `tts`
 - `audioMix`
 - `timedScenePackets`
+- `sceneContracts`
 - `assetPlan`
 - `designContext`
 - `composition`

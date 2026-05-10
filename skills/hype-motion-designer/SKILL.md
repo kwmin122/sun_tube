@@ -10,6 +10,7 @@ Build the Hyperframes composition.
 ## Inputs
 
 - `timed-scene-packets.md`
+- `scene-contracts.md`
 - `design-context.md`
 - `asset-plan.md`
 - `plan.md`
@@ -31,7 +32,9 @@ Build the Hyperframes composition.
 - Keep captions readable and protected.
 - Keep captions text-only from ElevenLabs SRT by default; do not add caption progress bars unless the user explicitly asks.
 - Use motion to explain the scene purpose.
-- Require a motion blueprint before implementation. If `design-context.md` or `plan.md` does not define primary screen object, supporting objects, initial/active/end states, beat ladder, hold/exit rule, and snapshot evidence for a scene, stop and return the scene to planning instead of inventing a generic card layout.
+- Require `scene-contracts.md` before implementation. If the scene contract is missing or incomplete, stop and return the scene to planning instead of inventing a generic card layout.
+- Only use visual elements listed in `Allowed Visual Elements`. Do not add elements listed in `Forbidden Fillers`.
+- Honor `Generic Component Ban`; do not use generic Synthesis/CardGrid/StatPanel/FallbackScene-style components unless explicitly allowed in the scene contract.
 - Reveal one explanation unit at a time. If a scene has three or more independent cards, nodes, modules, cases, or workflow steps, wrap the group with `data-progressive-disclosure="one-at-a-time"` and mark each unit with `data-focus-item`.
 - Import processed clips from `asset-plan.md`; do not use Hyperframes as the raw-video trim/transcript/subtitle preparation tool.
 - Treat `work-orders/*.md` as the executable task truth for route completion.
@@ -41,6 +44,7 @@ Build the Hyperframes composition.
 
 Before writing a scene timeline, confirm:
 
+- `npm run factory:validate-scene-contract -- <project-path>` passes.
 - Primary screen object: the one thing the viewer follows.
 - Supporting objects: rows, chips, rails, tokens, captions, badges, or panels that support the primary object.
 - Initial state: what is on screen before the line begins.
@@ -48,7 +52,7 @@ Before writing a scene timeline, confirm:
 - End state: what remains after the beat.
 - Motion beat ladder: the ordered 3-6 steps tied to narration clauses.
 - Hold / exit rule: what stays as context, what dims, what exits.
-- Implementation contract: required `data-*` markers, anchors, or component props.
+- Implementation contract: required `data-*` markers, anchors, or component props from `scene-contracts.md`.
 - Snapshot evidence: the frame that should prove the idea works.
 
 If the only instruction is `card reveal`, `path draw`, `liquid glass`, or `motion layer`, the scene is under-specified.

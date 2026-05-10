@@ -17,6 +17,7 @@
 - [x] ElevenLabs TTS generated
 - [x] ElevenLabs SRT generated
 - [x] `timed-scene-packets.md` created
+- [ ] `scene-contracts.md` created and validated
 - [x] Scene tool routes assigned from `TOOL_ROUTING_PIPELINE.md`
 - [x] Final audio mix generated
 - [x] `video-use` processing complete if raw/interview/demo video is routed

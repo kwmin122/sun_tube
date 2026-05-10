@@ -11,6 +11,7 @@ Own visual and render QA.
 
 - Hyperframes composition
 - `timed-scene-packets.md`
+- `scene-contracts.md`
 - `plan.md`
 - snapshots
 - rendered MP4, for final QA
@@ -27,6 +28,9 @@ Check:
 - scene timing vs timed packets
 - missing assets
 - obvious visual hierarchy failures
+- `factory:validate-scene-contract -- <project-path> -- --check-implementation` passes
+- required scene contract markers exist in the implementation
+- forbidden fillers and generic fallback components are not used
 
 Do this before render.
 

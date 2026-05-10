@@ -317,8 +317,10 @@ if (stage === "pre-render") {
   const statusMismatches = assetWorkOrderMismatches(assetRows, workRows);
   const unfinishedHyperframesRows = unresolvedWorkOrderRows(workRows.filter((row) => row.route === "hyperframes"));
   const densityIssues = visualDensityIssues(compositionHtml, assetRows);
+  const contractCheck = run("node", ["scripts/validate_scene_contract.mjs", rel(projectPath), "--check-implementation"], { timeout: 60_000 });
   add(checks, unfinishedAssetRows.length === 0, "asset-plan rows complete", unfinishedAssetRows.length ? detailRows(unfinishedAssetRows) : "all rows done/implemented/qa_passed/not_required");
   add(checks, unfinishedTimedRows.length === 0, "timed-scene-packets rows resolved", unfinishedTimedRows.length ? detailRows(unfinishedTimedRows) : "caption/audio/status resolved");
+  add(checks, contractCheck.status === 0, "scene contract implementation validated", contractCheck.status === 0 ? "scene-contracts.md fields and implementation markers valid" : (contractCheck.stderr || contractCheck.stdout || "").slice(0, 800));
   add(checks, unfinishedWorkRows.length === 0, "work-orders rows complete", unfinishedWorkRows.length ? detailRows(unfinishedWorkRows) : "all work-orders implemented/qa_passed/not_required");
   add(checks, missingWorkInputs.length === 0, "work-orders required inputs present", missingWorkInputs.length ? detailRows(missingWorkInputs) : "route inputs present or not required");
   add(checks, statusMismatches.length === 0, "asset-plan/work-orders status aligned", statusMismatches.length ? detailRows(statusMismatches) : "completed asset rows have completed route work");
