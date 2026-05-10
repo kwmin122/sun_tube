@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "003",
+  "slug": "vertical-slice-vibe-coding",
+  "title": "버티컬 슬라이스 아키텍처를 사용해야하는 이유 (바이브코딩시)",
+  "status": "review",
+  "currentGate": "review",
+  "createdAt": "2026-05-10T00:51:31.526Z",
+  "updatedAt": "2026-05-10T00:51:31.526Z",
+  "approved": {
+    "creativeBrief": true,
+    "plan": false,
+    "tts": false,
+    "timedScenePackets": false,
+    "render": false
+  },
+  "artifacts": {
+    "researchPack": true,
+    "creativeBrief": true,
+    "draftScenePackets": true,
+    "plan": true,
+    "tts": false,
+    "audioMix": false,
+    "timedScenePackets": false,
+    "assetPlan": true,
+    "designContext": true,
+    "composition": false,
+    "render": false,
+    "videoReview": false,
+    "directorReview": false
+  },
+  "routes": {
+    "workOrders": "not_required",
+    "videoUse": "not_required",
+    "imagegen": "not_required",
+    "capture": "not_required",
+    "hyperframes": "planned"
+  }
+}

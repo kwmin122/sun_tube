@@ -7,6 +7,7 @@ Project index for concurrent video work.
 | 000 | reference-style-study | done | reference captured | `references/ez-mov/` and prior frame analysis are used as quality references. |
 | 001 | k-harness-ouroboros | done | rendered | Final MP4: `projects/001-k-harness-ouroboros/renders/k-harness-ouroboros-final.mp4`. |
 | 002 | claude-managed-agents | review | user approval | Topic: Claude Managed Agents dreaming, outcomes, and multiagent orchestration. Development artifacts drafted, TTS not started. |
+| 003 | vertical-slice-vibe-coding | review | review | Topic: 버티컬 슬라이스 아키텍처를 사용해야하는 이유 (바이브코딩시) |
 
 ## Status Values
 
@@ -28,4 +29,4 @@ Project index for concurrent video work.
 
 ## Next Project ID
 
-Use `003-{short-slug}` for the next real video project.
+Use `004-{short-slug}` for the next real video project.
