@@ -18,9 +18,9 @@ This is a material-development file. It is not a citation audit, rights review, 
 
 | Lead | Why It Might Work | Viewer Tension | Possible Payoff |
 |---|---|---|---|
-| 1. 바이브코딩이 망하는 이유는 코드 양이 아니라 검증 단위다 | 사용자가 이미 겪는 실패를 바로 건드린다 | AI가 많이 만들었는데 어디서 깨졌는지 모름 | 버티컬 슬라이스가 왜 필요한지 한 문장으로 각인 |
-| 2. 레이어별로 만들면 모든 게 동시에 미완성된다 | 아키텍처 선택을 화면 구조로 설명하기 쉽다 | DB, API, UI가 다 있는데 실제 기능은 안 됨 | "한 기능을 끝까지"라는 행동 지침 |
-| 3. AI에게 큰 앱을 맡기지 말고 작은 사용자 흐름을 맡겨라 | 바이브코딩 실전 팁으로 바로 적용 가능 | 프롬프트는 큰데 결과는 산만함 | 다음 프로젝트에서 바로 쓸 체크리스트 |
+| 1. 기존 레이어 구조는 사람에게 좋았지만 AI에게는 맥락이 흩어진다 | 기존 구조를 무작정 까지 않고 균형 있게 시작할 수 있다 | 왜 익숙한 구조가 바이브코딩에서 답답한지 궁금함 | 버티컬 슬라이스를 AI 친화적 구조로 이해 |
+| 2. 한 기능 관련 모듈을 가까이 두면 AI가 참고하기 쉽다 | 사용자가 말한 "AI가 모듈끼리 참고하기 좋은 구조"와 맞다 | AI가 한쪽만 고치는 문제 | feature slice as context boundary |
+| 3. 공통은 공유하고 기능은 세로로 묶어라 | 실전 적용 규칙이 명확하다 | 모든 걸 feature 폴더에 넣어도 되는지 헷갈림 | 균형 잡힌 적용 원칙 |
 
 ## Material Leads
 
@@ -34,10 +34,10 @@ This is a material-development file. It is not a citation audit, rights review, 
 
 ## Scene Sparks
 
-- Hook image or line: "바이브코딩할 때 제일 위험한 건, 코드를 너무 많이 받는 겁니다."
-- Strong comparison: horizontal layer build vs vertical user-flow slice
-- Useful contradiction: 파일은 많은데 실행 가능한 기능은 없다
-- Demo moment: "회원가입 버튼 하나"가 UI, API, DB, 에러 처리, 테스트까지 통과하는 흐름
+- Hook image or line: "예전 구조가 틀린 건 아닙니다. 다만 AI가 참고하기엔 흩어져 있습니다."
+- Strong comparison: layer folders vs feature slice folders
+- Useful contradiction: 사람에게는 역할이 분명하지만 AI에게는 기능 맥락이 흩어진다
+- Demo moment: 회원가입 관련 화면, API, 검증, 저장, 테스트가 한 슬라이스 안에 가까이 있는 구조
 - Interview or quote candidate: not required
 - B-roll or metaphor candidate: 케이크 층을 가로로 쌓는 대신 한 조각을 끝까지 자르는 비유
 - Data or timeline candidate: one slice loop: prompt -> implement -> run -> inspect -> fix -> lock

@@ -4,17 +4,17 @@ Owner: `hype-showrunner` and `hype-creative-director`
 
 ## Decision Summary
 
-- Chosen angle: 바이브코딩에서는 큰 앱을 한 번에 만들지 말고, 사용자 흐름 하나를 끝까지 자르는 버티컬 슬라이스로 진행해야 한다.
-- Viewer promise: 이 영상을 보고 나면 AI에게 어떤 단위로 일을 맡겨야 덜 망하는지 안다.
+- Chosen angle: 기존 레이어 구조의 장점은 인정하되, 바이브코딩에서는 AI가 기능 맥락을 한 번에 참고하기 쉬운 버티컬 슬라이스가 더 실용적이다.
+- Viewer promise: 이 영상을 보고 나면 AI에게 왜 기능 슬라이스 단위로 일을 맡겨야 하는지 안다.
 - Target viewer: AI 코딩 도구로 제품을 만드는 개발자, 1인 빌더, 팀 리드
 - Length decision: 3min
 - Format: 1920x1080 horizontal
 - Tone: direct, practical, technical but easy
-- Primary content pattern: problem -> reframe -> method -> before/after -> action rule
+- Primary content pattern: old structure -> limitation with AI -> reframe -> method -> action rule
 - Secondary pattern, if any: tutorial checklist
 - Primary content type: explain
 - Secondary content types: tutorial, product
-- Primary visual strategy: Hyperframes diagram-driven explainer with one active idea per scene
+- Primary visual strategy: Hyperframes diagram-driven explainer comparing layer folders and feature slices with one active idea per scene
 - Motion grammar: technical-grid + product-demo
 - Imagegen role: not_required for body, support for thumbnail only
 - Evidence role: not_required
@@ -29,19 +29,20 @@ Owner: `hype-showrunner` and `hype-creative-director`
 
 ## Why This Video Should Exist
 
-- Viewer problem or curiosity: AI가 만든 코드가 많아질수록 오히려 어디서 망가졌는지 모르는 상황이 자주 생긴다.
+- Viewer problem or curiosity: 레이어 구조가 익숙한데, AI에게는 관련 파일이 흩어져 보여 맥락을 놓치기 쉽다.
 - Why now: 바이브코딩은 속도가 빠르기 때문에 작업 단위가 잘못되면 실패도 빠르게 커진다.
-- What should the viewer remember: AI에게 앱 전체가 아니라 검증 가능한 사용자 흐름 하나를 맡겨라.
+- What should the viewer remember: 공통은 공유하고, 기능은 세로로 묶고, AI에게는 슬라이스 단위로 맡겨라.
 
 ## Structure
 
 ```text
 open
--> layer-first failure
+-> existing layer structure
+-> why it worked for humans
+-> why AI loses feature context
 -> vertical slice definition
--> why it fits AI coding
--> concrete workflow
--> before/after
+-> why it fits vibe coding
+-> prompt rule
 -> close
 ```
 
