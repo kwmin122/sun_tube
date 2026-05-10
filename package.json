@@ -12,6 +12,7 @@
     "factory:new": "node scripts/new_project.mjs",
     "factory:status": "node scripts/status.mjs",
     "factory:next": "node scripts/next.mjs",
+    "factory:approve-plan": "node scripts/approve_plan.mjs",
     "factory:tts": "node scripts/tts_elevenlabs.mjs",
     "factory:mix": "node scripts/mix_voiceover_audio.mjs",
     "factory:timing": "node scripts/timing_from_srt.mjs",

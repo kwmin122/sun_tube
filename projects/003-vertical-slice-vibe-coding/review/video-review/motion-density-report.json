@@ -1,0 +1,115 @@
+{
+  "rows": [
+    {
+      "scene": "01",
+      "rich": false,
+      "id": "01",
+      "rows": 0,
+      "tokens": 0,
+      "paths": 0,
+      "scans": 0,
+      "sheens": 0,
+      "ticks": 0,
+      "signature": "static"
+    },
+    {
+      "scene": "02",
+      "rich": false,
+      "id": "02",
+      "rows": 0,
+      "tokens": 0,
+      "paths": 0,
+      "scans": 0,
+      "sheens": 0,
+      "ticks": 0,
+      "signature": "static"
+    },
+    {
+      "scene": "03",
+      "rich": true,
+      "id": "03",
+      "rows": 5,
+      "tokens": 5,
+      "paths": 0,
+      "scans": 0,
+      "sheens": 0,
+      "ticks": 0,
+      "signature": "rows+tokens"
+    },
+    {
+      "scene": "04",
+      "rich": true,
+      "id": "04",
+      "rows": 6,
+      "tokens": 6,
+      "paths": 0,
+      "scans": 0,
+      "sheens": 0,
+      "ticks": 0,
+      "signature": "rows+tokens"
+    },
+    {
+      "scene": "05",
+      "rich": true,
+      "id": "05",
+      "rows": 6,
+      "tokens": 0,
+      "paths": 1,
+      "scans": 6,
+      "sheens": 0,
+      "ticks": 0,
+      "signature": "rows+paths+scans"
+    },
+    {
+      "scene": "06",
+      "rich": false,
+      "id": "06",
+      "rows": 0,
+      "tokens": 0,
+      "paths": 0,
+      "scans": 0,
+      "sheens": 0,
+      "ticks": 6,
+      "signature": "ticks"
+    },
+    {
+      "scene": "07",
+      "rich": false,
+      "id": "07",
+      "rows": 3,
+      "tokens": 0,
+      "paths": 0,
+      "scans": 0,
+      "sheens": 0,
+      "ticks": 0,
+      "signature": "rows"
+    },
+    {
+      "scene": "08",
+      "rich": true,
+      "id": "08",
+      "rows": 9,
+      "tokens": 3,
+      "paths": 0,
+      "scans": 0,
+      "sheens": 0,
+      "ticks": 0,
+      "signature": "rows+tokens"
+    },
+    {
+      "scene": "09",
+      "rich": false,
+      "id": "09",
+      "rows": 3,
+      "tokens": 0,
+      "paths": 0,
+      "scans": 0,
+      "sheens": 0,
+      "ticks": 0,
+      "signature": "rows"
+    }
+  ],
+  "issues": [],
+  "metadataOnly": true,
+  "note": "HTML metrics are metadata-only. Director review must inspect rendered frames before PASS."
+}

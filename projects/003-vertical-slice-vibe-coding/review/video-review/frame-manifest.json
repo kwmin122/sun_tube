@@ -1,0 +1,260 @@
+{
+  "renderer": "final",
+  "render": "projects/003-vertical-slice-vibe-coding/renders/final.mp4",
+  "contactSheet": "projects/003-vertical-slice-vibe-coding/review/video-review/contact-sheet.jpg",
+  "contactSheetOk": true,
+  "frames": [
+    {
+      "scene": "01",
+      "label": "start",
+      "at": 0.4,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-01-start.png",
+      "ok": true
+    },
+    {
+      "scene": "01",
+      "label": "mid",
+      "at": 7.5,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-01-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "01",
+      "label": "motion-peak",
+      "at": 10.200000000000001,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-01-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "01",
+      "label": "end",
+      "at": 14.6,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-01-end.png",
+      "ok": true
+    },
+    {
+      "scene": "02",
+      "label": "start",
+      "at": 15.4,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-02-start.png",
+      "ok": true
+    },
+    {
+      "scene": "02",
+      "label": "mid",
+      "at": 25,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-02-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "02",
+      "label": "motion-peak",
+      "at": 28.6,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-02-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "02",
+      "label": "end",
+      "at": 34.6,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-02-end.png",
+      "ok": true
+    },
+    {
+      "scene": "03",
+      "label": "start",
+      "at": 35.4,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-03-start.png",
+      "ok": true
+    },
+    {
+      "scene": "03",
+      "label": "mid",
+      "at": 47.5,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-03-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "03",
+      "label": "motion-peak",
+      "at": 52,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-03-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "03",
+      "label": "end",
+      "at": 59.6,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-03-end.png",
+      "ok": true
+    },
+    {
+      "scene": "04",
+      "label": "start",
+      "at": 60.4,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-04-start.png",
+      "ok": true
+    },
+    {
+      "scene": "04",
+      "label": "mid",
+      "at": 72.5,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-04-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "04",
+      "label": "motion-peak",
+      "at": 77,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-04-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "04",
+      "label": "end",
+      "at": 84.6,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-04-end.png",
+      "ok": true
+    },
+    {
+      "scene": "05",
+      "label": "start",
+      "at": 85.4,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-05-start.png",
+      "ok": true
+    },
+    {
+      "scene": "05",
+      "label": "mid",
+      "at": 100,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-05-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "05",
+      "label": "motion-peak",
+      "at": 105.4,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-05-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "05",
+      "label": "end",
+      "at": 114.6,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-05-end.png",
+      "ok": true
+    },
+    {
+      "scene": "06",
+      "label": "start",
+      "at": 115.4,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-06-start.png",
+      "ok": true
+    },
+    {
+      "scene": "06",
+      "label": "mid",
+      "at": 126.5,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-06-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "06",
+      "label": "motion-peak",
+      "at": 130.64,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-06-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "06",
+      "label": "end",
+      "at": 137.6,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-06-end.png",
+      "ok": true
+    },
+    {
+      "scene": "07",
+      "label": "start",
+      "at": 138.4,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-07-start.png",
+      "ok": true
+    },
+    {
+      "scene": "07",
+      "label": "mid",
+      "at": 150.5,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-07-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "07",
+      "label": "motion-peak",
+      "at": 155,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-07-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "07",
+      "label": "end",
+      "at": 162.6,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-07-end.png",
+      "ok": true
+    },
+    {
+      "scene": "08",
+      "label": "start",
+      "at": 163.4,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-08-start.png",
+      "ok": true
+    },
+    {
+      "scene": "08",
+      "label": "mid",
+      "at": 174,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-08-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "08",
+      "label": "motion-peak",
+      "at": 177.96,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-08-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "08",
+      "label": "end",
+      "at": 184.6,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-08-end.png",
+      "ok": true
+    },
+    {
+      "scene": "09",
+      "label": "start",
+      "at": 185.4,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-09-start.png",
+      "ok": true
+    },
+    {
+      "scene": "09",
+      "label": "mid",
+      "at": 192.5,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-09-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "09",
+      "label": "motion-peak",
+      "at": 195.2,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-09-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "09",
+      "label": "end",
+      "at": 199.6,
+      "output": "projects/003-vertical-slice-vibe-coding/review/video-review/scene-frames/scene-09-end.png",
+      "ok": true
+    }
+  ]
+}

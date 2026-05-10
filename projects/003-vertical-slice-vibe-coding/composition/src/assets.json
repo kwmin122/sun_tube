@@ -1,0 +1,74 @@
+[
+  {
+    "scene": "01",
+    "route": "hyperframes",
+    "type": "HTML/SVG",
+    "candidate": "composition",
+    "processing": "implement in Hyperframes",
+    "status": "inputs_ready"
+  },
+  {
+    "scene": "02",
+    "route": "hyperframes",
+    "type": "HTML/SVG",
+    "candidate": "composition",
+    "processing": "implement in Hyperframes",
+    "status": "inputs_ready"
+  },
+  {
+    "scene": "03",
+    "route": "hyperframes",
+    "type": "HTML/SVG",
+    "candidate": "composition",
+    "processing": "implement in Hyperframes",
+    "status": "inputs_ready"
+  },
+  {
+    "scene": "04",
+    "route": "hyperframes",
+    "type": "HTML/SVG",
+    "candidate": "composition",
+    "processing": "implement in Hyperframes",
+    "status": "inputs_ready"
+  },
+  {
+    "scene": "05",
+    "route": "hyperframes",
+    "type": "HTML/SVG",
+    "candidate": "composition",
+    "processing": "implement in Hyperframes",
+    "status": "inputs_ready"
+  },
+  {
+    "scene": "06",
+    "route": "hyperframes",
+    "type": "HTML/SVG",
+    "candidate": "composition",
+    "processing": "implement in Hyperframes",
+    "status": "inputs_ready"
+  },
+  {
+    "scene": "07",
+    "route": "hyperframes",
+    "type": "HTML/SVG",
+    "candidate": "composition",
+    "processing": "implement in Hyperframes",
+    "status": "inputs_ready"
+  },
+  {
+    "scene": "08",
+    "route": "hyperframes",
+    "type": "HTML/SVG",
+    "candidate": "composition",
+    "processing": "implement in Hyperframes",
+    "status": "inputs_ready"
+  },
+  {
+    "scene": "09",
+    "route": "hyperframes",
+    "type": "HTML/SVG",
+    "candidate": "composition",
+    "processing": "implement in Hyperframes",
+    "status": "inputs_ready"
+  }
+]

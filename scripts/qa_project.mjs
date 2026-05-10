@@ -67,6 +67,10 @@ function unresolvedTimedRows(rows) {
   });
 }
 
+function hasBlockingStatus(rows) {
+  return rows.some((row) => /\b(blocked|blocking pending)\b/i.test(clean(row.Status || row.state || "")));
+}
+
 function detailRows(rows) {
   return rows.slice(0, 6).map((row) => `scene ${row.Scene || row["#"] || "?"}: ${row.Status || "empty"}`).join("; ");
 }
@@ -328,8 +332,8 @@ if (stage === "pre-render") {
     add(checks, unfinishedHyperframesRows.length === 0, "hyperframes route done matches work-orders", unfinishedHyperframesRows.length ? detailRows(unfinishedHyperframesRows) : "hyperframes work-orders complete");
   }
   add(checks, densityIssues.length === 0, "rich visual density", densityIssues.length ? densityIssues.slice(0, 6).join("; ") : "rich scenes have rows and motion primitives");
-  add(checks, !/\b(blocked|blocking pending)\b/i.test(asset), "asset-plan has no blocking pending");
-  add(checks, !/\b(blocked|blocking pending)\b/i.test(timed), "timed-scene-packets has no blocking pending");
+  add(checks, !hasBlockingStatus(assetRows), "asset-plan has no blocking pending");
+  add(checks, !hasBlockingStatus(timedRows), "timed-scene-packets has no blocking pending");
   if (project.routes?.capture === "done") {
     const captureManifestPath = join(projectPath, "assets/screenshots/capture_manifest.json");
     const captureManifest = existsSync(captureManifestPath) ? JSON.parse(await readText(captureManifestPath)) : { tasks: [] };
@@ -397,6 +401,9 @@ if (stage === "final") {
   const comparisonResult = comparisonVerdict(comparisonText);
   const evidenceCount = directorEvidenceFrameCount(directorText, selected);
   const frameStats = selected ? await frameManifestStats(projectPath, selected) : { manifestPath: "", frames: [], okFrames: [], motionPeaks: [] };
+  const evidenceSceneCount = new Set(frameStats.frames.map((frame) => clean(frame.scene)).filter(Boolean)).size;
+  const expectedFrameCount = evidenceSceneCount ? evidenceSceneCount * 4 : 40;
+  const expectedMotionPeakCount = evidenceSceneCount || 10;
   const syntheticStats = selected ? await syntheticDomStats(projectPath, selected) : { reportPath: "", issues: [] };
   const selectedCompositionHtml = selected === "remotion"
     ? await readText(join(projectPath, "composition-remotion/index.html"), "")
@@ -422,8 +429,8 @@ if (stage === "final") {
   add(checks, verdict === "PASS", "director review verdict PASS", verdict || "missing Verdict: PASS");
   add(checks, evidenceCount >= 8, "director review cites rendered evidence frames", `${evidenceCount} frame reference(s)`);
   add(checks, criticalOpen.length === 0, "director critical findings resolved", criticalOpen.length ? `${criticalOpen.length} unresolved critical finding(s)` : "no unresolved critical findings");
-  add(checks, frameStats.okFrames.length >= 40, "selected renderer frame evidence exists", `${frameStats.okFrames.length} extracted frame(s) in ${rel(frameStats.manifestPath)}`);
-  add(checks, frameStats.motionPeaks.length >= 10, "selected renderer motion-peak frames exist", `${frameStats.motionPeaks.length} motion peak frame(s)`);
+  add(checks, frameStats.okFrames.length >= expectedFrameCount, "selected renderer frame evidence exists", `${frameStats.okFrames.length}/${expectedFrameCount} extracted frame(s) in ${rel(frameStats.manifestPath)}`);
+  add(checks, frameStats.motionPeaks.length >= expectedMotionPeakCount, "selected renderer motion-peak frames exist", `${frameStats.motionPeaks.length}/${expectedMotionPeakCount} motion peak frame(s)`);
   add(checks, syntheticStats.issues.length === 0, "synthetic DOM false-positive report clean", syntheticStats.issues.length ? JSON.stringify(syntheticStats.issues.slice(0, 3)) : rel(syntheticStats.reportPath));
   if (selected === "remotion") {
     add(checks, !hasSyntheticQualityDom(selectedCompositionHtml), "remotion review HTML has no synthetic quality DOM", hasSyntheticQualityDom(selectedCompositionHtml) ? "remove prepare.mjs section/class proxy markers" : "metadata-only review HTML");

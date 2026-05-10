@@ -5,490 +5,731 @@
     <meta name="viewport" content="width=1920, height=1080" />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <style>
-      * {
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
+      * { box-sizing: border-box; }
+      html, body {
         margin: 0;
         width: 1920px;
         height: 1080px;
         overflow: hidden;
-        background: #071018;
+        background: #060907;
         font-family: Pretendard, SUIT, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
       }
-
       :root {
-        --bg: #071018;
-        --panel: rgba(19, 30, 49, 0.76);
-        --panel-strong: rgba(25, 38, 63, 0.92);
-        --border: rgba(140, 211, 255, 0.18);
-        --text: #f3f7fb;
-        --muted: #8b98a8;
-        --cyan: #68e1f5;
-        --yellow: #ffd935;
-        --green: #66f095;
-        --purple: #b46cff;
-        --danger: #ff4e8a;
+        --bg: #060907;
+        --ink: #f7f3ea;
+        --muted: rgba(247, 243, 234, 0.62);
+        --faint: rgba(247, 243, 234, 0.16);
+        --line: rgba(247, 243, 234, 0.18);
+        --panel: rgba(247, 243, 234, 0.075);
+        --panel-strong: rgba(247, 243, 234, 0.12);
+        --orange: #f4a261;
+        --teal: #2dd4bf;
+        --green: #9bd66f;
+        --red: #f87171;
       }
-
       #root {
         position: relative;
         width: 1920px;
         height: 1080px;
+        color: var(--ink);
         overflow: hidden;
-        color: var(--text);
         background:
-          radial-gradient(circle at 18% 72%, rgba(104, 225, 245, 0.18), transparent 22%),
-          radial-gradient(circle at 74% 24%, rgba(180, 108, 255, 0.16), transparent 24%),
-          linear-gradient(135deg, #071018 0%, #0a111d 52%, #101827 100%);
+          radial-gradient(circle at 80% 8%, rgba(244, 162, 97, 0.12), transparent 28%),
+          radial-gradient(circle at 10% 92%, rgba(45, 212, 191, 0.12), transparent 30%),
+          linear-gradient(135deg, #050806 0%, #090b09 52%, #0d100d 100%);
       }
-
-      .clip {
-        position: absolute;
-      }
-
-      .background {
-        inset: 0;
-      }
-
-      .grain {
+      .grid {
         position: absolute;
         inset: 0;
-        opacity: 0.22;
         background-image:
-          linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-        background-size: 64px 64px;
-        mask-image: radial-gradient(circle at center, black, transparent 78%);
+          linear-gradient(rgba(247, 243, 234, 0.055) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(247, 243, 234, 0.045) 1px, transparent 1px);
+        background-size: 86px 86px;
+        opacity: 0.55;
       }
-
-      .star {
+      .scene {
         position: absolute;
-        width: 4px;
-        height: 4px;
-        border-radius: 999px;
-        background: rgba(243, 247, 251, 0.88);
-        box-shadow: 0 0 16px rgba(104, 225, 245, 0.5);
+        inset: 0;
+        padding: 54px 64px 170px;
+        opacity: 0;
+        visibility: hidden;
       }
-
-      .star.s1 { left: 140px; top: 155px; opacity: 0.55; }
-      .star.s2 { left: 380px; top: 760px; opacity: 0.4; }
-      .star.s3 { left: 615px; top: 268px; opacity: 0.65; background: var(--cyan); }
-      .star.s4 { left: 880px; top: 840px; opacity: 0.45; }
-      .star.s5 { left: 1180px; top: 180px; opacity: 0.52; background: var(--purple); }
-      .star.s6 { left: 1520px; top: 640px; opacity: 0.5; background: var(--yellow); }
-      .star.s7 { left: 1740px; top: 310px; opacity: 0.42; }
-      .star.s8 { left: 1660px; top: 900px; opacity: 0.38; background: var(--green); }
-
-      .stage {
-        position: absolute;
-        width: 2500px;
-        height: 1220px;
-        left: 0;
-        top: 0;
-        transform-origin: center center;
-      }
-
       .eyebrow {
-        font-size: 22px;
-        line-height: 1.2;
-        color: var(--cyan);
+        color: var(--orange);
+        font-size: 27px;
+        line-height: 1;
+        font-weight: 900;
         letter-spacing: 0;
-        font-weight: 800;
         text-transform: uppercase;
       }
-
-      .hero-title {
-        left: 330px;
-        top: 275px;
-        width: 1260px;
-        font-size: 92px;
+      .headline {
+        margin-top: 14px;
+        width: 1320px;
+        font-size: 70px;
         line-height: 1.08;
-        font-weight: 900;
+        font-weight: 950;
         letter-spacing: 0;
-        text-align: center;
-        text-shadow: 0 16px 54px rgba(0, 0, 0, 0.42);
       }
-
-      .hero-title .accent,
-      .headline .accent,
-      .metric .accent {
-        color: var(--cyan);
-        text-shadow: 0 0 28px rgba(104, 225, 245, 0.48);
+      .scene-no {
+        position: absolute;
+        top: 95px;
+        right: 72px;
+        color: rgba(247, 243, 234, 0.48);
+        font-size: 34px;
+        font-weight: 950;
       }
-
-      .subline {
-        left: 570px;
-        top: 520px;
-        width: 780px;
-        text-align: center;
-        font-size: 30px;
-        line-height: 1.4;
-        color: rgba(243, 247, 251, 0.72);
-        font-weight: 650;
-      }
-
-      .compare {
-        left: 260px;
-        top: 332px;
-        width: 1400px;
-        height: 360px;
-      }
-
-      .compare-line {
-        left: 690px;
-        top: 14px;
-        width: 2px;
-        height: 330px;
-        background: linear-gradient(transparent, rgba(104, 225, 245, 0.35), transparent);
-      }
-
-      .mini-card {
-        width: 132px;
-        height: 90px;
-        border-radius: 14px;
-        border: 1px solid var(--border);
-        background: var(--panel);
-        box-shadow: 0 0 40px rgba(104, 225, 245, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      .caption {
+        position: absolute;
+        left: 190px;
+        right: 190px;
+        bottom: 28px;
+        min-height: 88px;
         display: grid;
         place-items: center;
-        font-size: 22px;
-        font-weight: 800;
-        color: var(--muted);
-      }
-
-      .mini-card.active {
-        color: var(--text);
-        border-color: rgba(104, 225, 245, 0.56);
-        box-shadow: 0 0 34px rgba(104, 225, 245, 0.28);
-      }
-
-      .diagram-label {
-        top: -48px;
-        width: 560px;
-        text-align: center;
-        font-size: 21px;
-        color: rgba(243, 247, 251, 0.56);
-        font-weight: 800;
-      }
-
-      .diagram-label.left { left: 30px; }
-      .diagram-label.right { left: 815px; color: rgba(104, 225, 245, 0.78); }
-
-      .grid-title {
-        left: 545px;
-        top: 140px;
-        width: 830px;
-        text-align: center;
+        padding: 18px 34px;
+        border: 1px solid rgba(247, 243, 234, 0.18);
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.78);
+        color: #fffaf0;
         font-size: 42px;
+        line-height: 1.18;
+        font-weight: 900;
+        text-align: center;
+        letter-spacing: 0;
+        text-wrap: balance;
+        z-index: 20;
+      }
+      .board {
+        position: absolute;
+        left: 72px;
+        right: 72px;
+        top: 282px;
+        bottom: 154px;
+      }
+      .band, .module, .file-card, .folder-zone, .slice-box, .benefit-chip, .lane, .prompt-line, .feature-slice, .base, .final-rule {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 18px 54px rgba(0, 0, 0, 0.2);
+      }
+      .band {
+        position: relative;
+        height: 88px;
+        margin-bottom: 18px;
+        border-radius: 8px;
+        padding: 24px 34px;
+        font-size: 35px;
+        line-height: 1;
         font-weight: 900;
       }
-
-      .cards {
-        left: 310px;
-        top: 280px;
-        width: 1300px;
-        height: 500px;
+      .role-badge, .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 36px;
+        padding: 0 18px;
+        border-radius: 999px;
+        border: 1px solid rgba(244, 162, 97, 0.45);
+        color: var(--orange);
+        background: rgba(244, 162, 97, 0.11);
+        font-size: 20px;
+        font-weight: 900;
+      }
+      .role-badge {
+        position: absolute;
+        right: 28px;
+        top: 26px;
+      }
+      .layer-stack {
+        position: absolute;
+        left: 170px;
+        top: 40px;
+        width: 720px;
+      }
+      .benefit-board {
+        position: absolute;
+        left: 940px;
+        top: 70px;
+        width: 660px;
+      }
+      .benefit-chip {
+        height: 112px;
+        margin-bottom: 18px;
+        border-radius: 8px;
+        padding: 26px 30px;
+        font-size: 34px;
+        font-weight: 950;
+      }
+      .benefit-chip small {
+        display: block;
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 22px;
+        font-weight: 800;
+      }
+      .split-map {
+        position: absolute;
+        inset: 24px 24px 10px;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         gap: 18px;
       }
-
-      .feature-card {
+      .folder-zone {
         position: relative;
-        border-radius: 22px;
-        border: 1px solid rgba(140, 211, 255, 0.16);
-        background: linear-gradient(135deg, rgba(25, 38, 63, 0.94), rgba(14, 23, 40, 0.92));
-        padding: 42px 46px;
-        box-shadow: 0 20px 70px rgba(0, 0, 0, 0.28);
+        min-height: 420px;
+        border-radius: 8px;
+        padding: 24px;
       }
-
-      .feature-card .num {
-        color: var(--cyan);
-        font-size: 42px;
-        font-weight: 900;
-        margin-bottom: 28px;
-      }
-
-      .feature-card .title {
-        font-size: 34px;
-        font-weight: 900;
-        margin-bottom: 16px;
-      }
-
-      .feature-card .desc {
-        font-size: 22px;
-        color: var(--muted);
-        font-weight: 650;
-      }
-
-      .metric {
-        left: 210px;
-        top: 300px;
-        width: 650px;
-      }
-
-      .metric .label {
-        color: var(--cyan);
-        font-size: 22px;
-        font-weight: 800;
-        margin-bottom: 28px;
-      }
-
-      .metric .number {
-        font-size: 150px;
-        line-height: 0.9;
-        color: var(--cyan);
+      .folder-title {
+        color: var(--orange);
+        font-size: 25px;
         font-weight: 950;
-        text-shadow: 0 0 50px rgba(104, 225, 245, 0.4);
+        margin-bottom: 22px;
       }
-
-      .chart {
-        left: 1040px;
-        top: 560px;
-        width: 560px;
-        height: 230px;
+      .file-card {
+        height: 64px;
+        margin-bottom: 14px;
+        border-radius: 7px;
         display: flex;
-        align-items: flex-end;
-        gap: 28px;
-        padding: 0 20px 18px;
-        border-bottom: 2px solid rgba(140, 211, 255, 0.12);
+        align-items: center;
+        padding: 0 18px;
+        font-size: 21px;
+        font-weight: 850;
+        color: rgba(247, 243, 234, 0.74);
       }
-
-      .bar {
-        width: 76px;
-        border-radius: 14px 14px 4px 4px;
-        background: linear-gradient(180deg, var(--purple), var(--cyan));
-        box-shadow: 0 0 32px rgba(104, 225, 245, 0.18);
-        transform-origin: bottom;
+      .file-card.active, .module.active, .prompt-line.good {
+        border-color: rgba(45, 212, 191, 0.65);
+        background: rgba(45, 212, 191, 0.13);
+        color: var(--ink);
       }
-
-      .bar.b1 { height: 62px; }
-      .bar.b2 { height: 92px; }
-      .bar.b3 { height: 130px; }
-      .bar.b4 { height: 176px; }
-      .bar.b5 { height: 108px; }
-
-      .process {
-        left: 250px;
-        top: 250px;
-        width: 1420px;
+      .ai-lens {
+        position: absolute;
+        width: 128px;
+        height: 128px;
+        border-radius: 999px;
+        border: 2px solid rgba(45, 212, 191, 0.85);
+        box-shadow: 0 0 36px rgba(45, 212, 191, 0.38), inset 0 0 32px rgba(45, 212, 191, 0.16);
+        left: 164px;
+        top: 214px;
+        pointer-events: none;
+      }
+      .context-trail {
+        position: absolute;
+        left: 88px;
+        right: 88px;
+        bottom: 36px;
+        height: 42px;
+        border-radius: 999px;
+        background: rgba(247, 243, 234, 0.08);
+        overflow: hidden;
+      }
+      .context-trail .route-pulse {
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(90deg, var(--orange), var(--teal));
+      }
+      .warning {
+        position: absolute;
+        right: 92px;
+        bottom: 92px;
+        padding: 18px 24px;
+        border: 1px solid rgba(248, 113, 113, 0.6);
+        border-radius: 8px;
+        color: #fecaca;
+        background: rgba(127, 29, 29, 0.28);
+        font-size: 25px;
+        font-weight: 950;
+      }
+      .slice-box {
+        position: absolute;
+        left: 560px;
+        top: 70px;
+        width: 800px;
+        height: 470px;
+        border-radius: 10px;
+        padding: 34px;
+      }
+      .slice-title {
+        font-size: 38px;
+        font-weight: 950;
+        color: var(--teal);
+        margin-bottom: 22px;
+      }
+      .slice-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+      .module {
+        position: relative;
+        min-height: 72px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        padding: 0 22px;
+        font-size: 24px;
+        font-weight: 900;
+      }
+      .boundary-lock {
+        position: absolute;
+        right: 34px;
+        bottom: 30px;
+        color: var(--green);
+        font-size: 28px;
+        font-weight: 950;
+      }
+      .old-ghost {
+        position: absolute;
+        left: 120px;
+        top: 120px;
+        width: 390px;
+        opacity: 0.28;
+      }
+      .route-rail {
+        position: absolute;
+        left: 560px;
+        top: 555px;
+        width: 800px;
+        height: 7px;
+        border-radius: 999px;
+        background: rgba(247, 243, 234, 0.11);
+        overflow: hidden;
+      }
+      .route-rail .path-draw {
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(90deg, var(--teal), var(--orange));
+      }
+      .focus-lens {
+        position: absolute;
+        width: 178px;
+        height: 178px;
+        border-radius: 999px;
+        border: 2px solid rgba(45, 212, 191, 0.9);
+        background: radial-gradient(circle, rgba(45, 212, 191, 0.18), transparent 58%);
+        box-shadow: 0 0 60px rgba(45, 212, 191, 0.28);
+        left: 474px;
+        top: 234px;
+        pointer-events: none;
+      }
+      .lane-wrap {
+        position: absolute;
+        left: 120px;
+        right: 120px;
+        top: 58px;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 24px;
       }
-
-      .process-card {
-        min-height: 360px;
-        border-radius: 24px;
-        background: var(--panel-strong);
-        border: 1px solid var(--border);
-        padding: 54px 44px;
-        box-shadow: 0 28px 90px rgba(0, 0, 0, 0.28);
+      .lane {
+        min-height: 430px;
+        border-radius: 8px;
+        padding: 30px;
       }
-
-      .process-card .tag {
-        color: var(--cyan);
-        font-size: 24px;
-        font-weight: 900;
-        margin-bottom: 45px;
+      .lane h3 {
+        margin: 0 0 30px;
+        color: var(--orange);
+        font-size: 32px;
       }
-
-      .process-card .main {
-        font-size: 42px;
-        line-height: 1.2;
-        font-weight: 900;
+      .before-after {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
       }
-
-      .headline {
-        left: 360px;
-        top: 430px;
-        width: 1200px;
-        text-align: center;
-        font-size: 68px;
-        line-height: 1.18;
-        font-weight: 900;
+      .metric-tick {
+        min-height: 92px;
+        border-radius: 7px;
+        padding: 18px;
+        background: rgba(247, 243, 234, 0.08);
+        font-size: 25px;
+        font-weight: 950;
       }
-
-      .caption {
-        left: 360px;
-        bottom: 82px;
-        width: 1200px;
-        padding: 28px 46px;
-        border-radius: 18px;
-        background: rgba(0, 0, 0, 0.72);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        text-align: center;
-        font-size: 42px;
-        line-height: 1.2;
-        font-weight: 800;
-        box-shadow: 0 22px 80px rgba(0, 0, 0, 0.44);
+      .metric-tick.after {
+        background: rgba(45, 212, 191, 0.14);
+        color: #d7fff6;
       }
-
-      .safe-frame {
+      .prompt-editor {
         position: absolute;
-        inset: 54px;
-        border: 1px solid rgba(140, 211, 255, 0.04);
-        border-radius: 28px;
+        left: 210px;
+        right: 210px;
+        top: 64px;
       }
+      .prompt-line {
+        min-height: 92px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        padding: 22px 28px;
+        font-size: 31px;
+        line-height: 1.34;
+        font-weight: 900;
+      }
+      .prompt-line.bad {
+        color: rgba(247, 243, 234, 0.54);
+        border-color: rgba(248, 113, 113, 0.32);
+      }
+      .scope-fence {
+        position: relative;
+        border: 2px solid rgba(45, 212, 191, 0.62);
+        border-radius: 12px;
+        padding: 22px;
+      }
+      .check-row {
+        display: flex;
+        gap: 12px;
+        margin-top: 18px;
+      }
+      .check-item {
+        flex: 1;
+        height: 54px;
+        border-radius: 8px;
+        background: rgba(45, 212, 191, 0.11);
+        display: grid;
+        place-items: center;
+        color: #d7fff6;
+        font-size: 21px;
+        font-weight: 900;
+      }
+      .architecture {
+        position: absolute;
+        left: 150px;
+        right: 150px;
+        top: 75px;
+        bottom: 40px;
+      }
+      .base {
+        position: absolute;
+        left: 70px;
+        right: 70px;
+        bottom: 28px;
+        height: 102px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        color: var(--orange);
+        font-size: 28px;
+        font-weight: 950;
+      }
+      .feature-slice {
+        position: absolute;
+        bottom: 154px;
+        width: 330px;
+        height: 350px;
+        border-radius: 8px;
+        padding: 24px;
+      }
+      .feature-slice h3 {
+        margin: 0 0 22px;
+        color: var(--teal);
+        font-size: 31px;
+      }
+      .info-row {
+        height: 48px;
+        margin-bottom: 12px;
+        border-radius: 7px;
+        background: rgba(247, 243, 234, 0.08);
+        display: flex;
+        align-items: center;
+        padding: 0 15px;
+        font-size: 20px;
+        font-weight: 850;
+      }
+      .common-lock {
+        position: absolute;
+        right: 95px;
+        bottom: 58px;
+        color: var(--green);
+        font-size: 25px;
+        font-weight: 950;
+      }
+      .final-rule {
+        position: absolute;
+        left: 260px;
+        right: 260px;
+        top: 320px;
+        min-height: 220px;
+        border-radius: 10px;
+        padding: 42px;
+        font-size: 58px;
+        line-height: 1.24;
+        font-weight: 950;
+        text-align: center;
+      }
+      .ai-cursor {
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        background: var(--teal);
+        box-shadow: 0 0 34px rgba(45, 212, 191, 0.7);
+      }
+      .selected {
+        border-color: rgba(45, 212, 191, 0.75) !important;
+        box-shadow: 0 0 48px rgba(45, 212, 191, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+      }
+      .dim { opacity: 0.3; }
+      .accent { color: var(--orange); }
     </style>
   </head>
   <body>
-    <div
-      id="root"
-      data-composition-id="main"
-      data-start="0"
-      data-duration="18"
-      data-width="1920"
-      data-height="1080"
-    >
-      <div id="background" class="clip background" data-start="0" data-duration="18" data-track-index="0">
-        <div class="grain"></div>
-        <span class="star s1"></span>
-        <span class="star s2"></span>
-        <span class="star s3"></span>
-        <span class="star s4"></span>
-        <span class="star s5"></span>
-        <span class="star s6"></span>
-        <span class="star s7"></span>
-        <span class="star s8"></span>
-        <div class="safe-frame"></div>
-      </div>
+    <div id="root" class="clip" data-composition-id="main" data-start="0" data-duration="200" data-width="1920" data-height="1080" data-track-index="0">
+      <div class="grid"></div>
+      <audio id="voiceover" src="assets/audio/voiceover-solo-final-mix.m4a" data-start="0" data-duration="198.1" data-track-index="90"></audio>
 
-      <div id="stage" class="clip stage" data-start="0" data-duration="18" data-track-index="1">
-        <div id="heroTitle" class="clip hero-title" data-start="0" data-duration="4.5" data-track-index="2">
-          AI한테 시키면<br />
-          <span class="accent">알아서 끝까지</span> 해주는 시대
-        </div>
-        <div id="heroSub" class="clip subline" data-start="0.8" data-duration="3.5" data-track-index="3">
-          Agentic AI는 답변이 아니라 작업 흐름을 완성합니다
-        </div>
-
-        <div id="compare" class="clip compare" data-start="4.1" data-duration="4.2" data-track-index="4">
-          <div id="compare-label-generative" class="clip diagram-label left" data-start="4.1" data-duration="4.2" data-track-index="5">GENERATIVE AI</div>
-          <div id="compare-label-agentic" class="clip diagram-label right" data-start="4.1" data-duration="4.2" data-track-index="6">AGENTIC AI</div>
-          <div id="compare-divider" class="clip compare-line" data-start="4.1" data-duration="4.2" data-track-index="7"></div>
-          <div id="compare-old-question" class="clip mini-card old1" data-start="4.2" data-duration="4" data-track-index="8" style="left: 100px; top: 130px">질문</div>
-          <div id="compare-old-answer" class="clip mini-card old2" data-start="4.3" data-duration="3.9" data-track-index="9" style="left: 290px; top: 130px">답변</div>
-          <div id="compare-old-end" class="clip mini-card old3" data-start="4.4" data-duration="3.8" data-track-index="10" style="left: 480px; top: 130px">끝</div>
-          <div id="compare-new-plan" class="clip mini-card active new1" data-start="4.2" data-duration="4" data-track-index="11" style="left: 980px; top: 28px">계획</div>
-          <div id="compare-new-execute" class="clip mini-card active new2" data-start="4.5" data-duration="3.7" data-track-index="12" style="left: 1180px; top: 128px">실행</div>
-          <div id="compare-new-verify" class="clip mini-card active new3" data-start="4.8" data-duration="3.4" data-track-index="13" style="left: 980px; top: 230px">검증</div>
-          <div id="compare-new-revise" class="clip mini-card active new4" data-start="5.1" data-duration="3.1" data-track-index="14" style="left: 780px; top: 128px">수정</div>
-        </div>
-
-        <div id="gridTitle" class="clip grid-title" data-start="8.1" data-duration="4.5" data-track-index="30">
-          에이전틱 AI의 네 가지 핵심
-        </div>
-        <div id="cards" class="clip cards" data-start="8.3" data-duration="4.4" data-track-index="31">
-          <div class="feature-card c1">
-            <div class="num">01</div>
-            <div class="title">목표 분해</div>
-            <div class="desc">큰 요청을 실행 가능한 단계로 나눕니다</div>
-          </div>
-          <div class="feature-card c2">
-            <div class="num">02</div>
-            <div class="title">도구 사용</div>
-            <div class="desc">검색, 코드, 파일 작업을 직접 호출합니다</div>
-          </div>
-          <div class="feature-card c3">
-            <div class="num">03</div>
-            <div class="title">자기 검증</div>
-            <div class="desc">결과가 맞는지 다시 확인합니다</div>
-          </div>
-          <div class="feature-card c4">
-            <div class="num">04</div>
-            <div class="title">장기 기억</div>
-            <div class="desc">이전 맥락을 다음 작업에 반영합니다</div>
+      <section id="scene-01" class="scene" data-scene="01" data-progressive-disclosure="one-at-a-time">
+        <div class="eyebrow">1. 기존 방식</div>
+        <div class="headline">예전에는 코드를 <span class="accent">기술 레이어</span>로 나눴습니다.</div>
+        <div class="scene-no">01</div>
+        <div class="board">
+          <div class="layer-stack">
+            <div class="band layer" data-layer-name="Controller">Controller <span class="role-badge" data-role-badge>요청 받기</span></div>
+            <div class="band layer" data-layer-name="Service">Service <span class="role-badge" data-role-badge>로직 처리</span></div>
+            <div class="band layer" data-layer-name="Repository">Repository <span class="role-badge" data-role-badge>데이터 접근</span></div>
+            <div class="band layer" data-layer-name="Entity">Entity <span class="role-badge" data-role-badge>도메인 상태</span></div>
+            <div class="band layer" data-layer-name="DTO">DTO <span class="role-badge" data-role-badge>입출력 형태</span></div>
           </div>
         </div>
+      </section>
 
-        <div id="metric" class="clip metric" data-start="12.4" data-duration="3" data-track-index="32">
-          <div class="label">GARTNER / 시장 전망</div>
-          <div class="number"><span id="count">0</span><span class="accent">%</span></div>
-        </div>
-        <div id="chart" class="clip chart" data-start="12.7" data-duration="3.2" data-track-index="33">
-          <div class="bar b1"></div>
-          <div class="bar b2"></div>
-          <div class="bar b3"></div>
-          <div class="bar b4"></div>
-          <div class="bar b5"></div>
-        </div>
-
-        <div id="process" class="clip process" data-start="15.1" data-duration="2.9" data-track-index="34">
-          <div class="process-card p1">
-            <div class="tag">01</div>
-            <div class="main">고객 응대<br /><span class="accent">30초</span></div>
+      <section id="scene-02" class="scene" data-scene="02">
+        <div class="eyebrow">2. 기존 구조의 장점</div>
+        <div class="headline">이 구조는 사람과 큰 팀에게 <span class="accent">분명한 장점</span>이 있습니다.</div>
+        <div class="scene-no">02</div>
+        <div class="board">
+          <div class="layer-stack dim" data-layer-anchor>
+            <div class="band">Controller</div><div class="band">Service</div><div class="band">Repository</div><div class="band">Entity / DTO</div>
           </div>
-          <div class="process-card p2">
-            <div class="tag">02</div>
-            <div class="main">코드 작성<br /><span class="accent">12분</span></div>
-          </div>
-          <div class="process-card p3">
-            <div class="tag">03</div>
-            <div class="main">사용 조사<br /><span class="accent">20분</span></div>
+          <div class="benefit-board">
+            <div class="benefit-chip" data-benefit data-focus-item>역할이 분명함<small>어느 레이어가 무엇을 하는지 예측하기 쉽습니다.</small></div>
+            <div class="benefit-chip" data-benefit data-focus-item>규칙을 잡기 쉬움<small>팀 컨벤션과 리뷰 기준을 만들기 좋습니다.</small></div>
+            <div class="benefit-chip" data-benefit data-focus-item>큰 팀에 안정적<small>사람이 전체 설계를 오래 들고 갈 때 유리합니다.</small></div>
           </div>
         </div>
+      </section>
 
-        <div id="finalLine" class="clip headline" data-start="16.2" data-duration="1.8" data-track-index="35">
-          이제 AI는 답하는 도구가 아니라,<br />
-          <span class="accent">일하는 시스템</span>입니다.
+      <section id="scene-03" class="scene" data-scene="03" data-visual-density="rich">
+        <div class="eyebrow">3. 바이브코딩의 문제</div>
+        <div class="headline">한 기능을 고치려면 에이아이가 <span class="accent">폴더를 계속 오갑니다.</span></div>
+        <div class="scene-no">03</div>
+        <div class="board">
+          <div class="split-map">
+            <div class="folder-zone" data-folder-zone><div class="folder-title">controllers/</div><div class="file-card info-row flow-token" data-file-card>signup.controller.ts</div><div class="file-card">user.controller.ts</div></div>
+            <div class="folder-zone" data-folder-zone><div class="folder-title">services/</div><div class="file-card info-row flow-token" data-file-card>signup.service.ts</div><div class="file-card">mail.service.ts</div></div>
+            <div class="folder-zone" data-folder-zone><div class="folder-title">repositories/</div><div class="file-card info-row flow-token" data-file-card>user.repository.ts</div><div class="file-card">audit.repository.ts</div></div>
+            <div class="folder-zone" data-folder-zone><div class="folder-title">entities/</div><div class="file-card info-row flow-token" data-file-card>User.entity.ts</div><div class="file-card">Session.entity.ts</div></div>
+            <div class="folder-zone" data-folder-zone><div class="folder-title">tests/</div><div class="file-card info-row flow-token" data-file-card>signup.spec.ts</div><div class="file-card">auth.fixture.ts</div></div>
+          </div>
+          <div class="ai-lens" data-ai-lens></div>
+          <div class="context-trail" data-context-trail><div class="route-pulse"></div></div>
+          <div class="warning">DTO / 테스트 누락 위험</div>
         </div>
-      </div>
+      </section>
 
-      <div id="caption" class="clip caption" data-start="0" data-duration="18" data-track-index="20">
-        AI한테 일을 시키는 방식이 바뀌고 있습니다.
-      </div>
+      <section id="scene-04" class="scene" data-scene="04" data-visual-density="rich">
+        <div class="eyebrow">4. 버티컬 슬라이스</div>
+        <div class="headline">기술 레이어가 아니라 <span class="accent">사용자 기능</span> 기준으로 묶습니다.</div>
+        <div class="scene-no">04</div>
+        <div class="board">
+          <div class="old-ghost">
+            <div class="band">controllers</div><div class="band">services</div><div class="band">repositories</div><div class="band">entities</div>
+          </div>
+          <div class="slice-box" data-slice-boundary>
+            <div class="slice-title">features/signup/</div>
+            <div class="slice-grid">
+              <div class="module info-row flow-token" data-slice-file>signup.controller.ts</div>
+              <div class="module info-row flow-token" data-slice-file>signup.service.ts</div>
+              <div class="module info-row flow-token" data-slice-file>user.repository.ts</div>
+              <div class="module info-row flow-token" data-slice-file>signup.dto.ts</div>
+              <div class="module info-row flow-token" data-slice-file>User.entity.ts</div>
+              <div class="module info-row flow-token" data-slice-file>signup.spec.ts</div>
+            </div>
+            <div class="boundary-lock reveal-mask" data-boundary-lock>기능 경계 잠금</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene-05" class="scene" data-scene="05" data-visual-density="rich">
+        <div class="eyebrow">5. 에이아이에게 좋은 이유</div>
+        <div class="headline">한 폴더 안에서 입력, 처리, 저장, 검증을 <span class="accent">순서대로 읽습니다.</span></div>
+        <div class="scene-no">05</div>
+        <div class="board">
+          <div class="slice-box">
+            <div class="slice-title">signup slice 읽는 순서</div>
+            <div class="slice-grid">
+              <div class="module info-row scan-fill" data-slice-module>요청: controller</div>
+              <div class="module info-row scan-fill" data-slice-module>검증: dto</div>
+              <div class="module info-row scan-fill" data-slice-module>처리: service</div>
+              <div class="module info-row scan-fill" data-slice-module>저장: repository</div>
+              <div class="module info-row scan-fill" data-slice-module>상태: entity</div>
+              <div class="module info-row scan-fill" data-slice-module>확인: test</div>
+            </div>
+          </div>
+          <div class="route-rail" data-route-rail><div class="path-draw"></div></div>
+          <div class="focus-lens" data-focus-lens></div>
+        </div>
+      </section>
+
+      <section id="scene-06" class="scene" data-scene="06">
+        <div class="eyebrow">6. 실제 이점</div>
+        <div class="headline">좋은 구조는 구호가 아니라 <span class="accent">작업 범위</span>를 줄입니다.</div>
+        <div class="scene-no">06</div>
+        <div class="board">
+          <div class="lane-wrap">
+            <div class="lane" data-benefit-lane><h3>컨텍스트</h3><div class="before-after" data-before-after><div class="metric-tick">긴 앱 전체</div><div class="metric-tick after" data-metric-change>짧은 slice</div></div></div>
+            <div class="lane" data-benefit-lane><h3>파일 거리</h3><div class="before-after" data-before-after><div class="metric-tick">여러 폴더</div><div class="metric-tick after" data-metric-change>한 기능 근처</div></div></div>
+            <div class="lane" data-benefit-lane><h3>수정 반경</h3><div class="before-after" data-before-after><div class="metric-tick">전체 확산</div><div class="metric-tick after" data-metric-change>슬라이스 제한</div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene-07" class="scene" data-scene="07">
+        <div class="eyebrow">7. 프롬프트도 바뀝니다</div>
+        <div class="headline">에이아이에게는 <span class="accent">슬라이스 단위</span>로 맡기세요.</div>
+        <div class="scene-no">07</div>
+        <div class="board">
+          <div class="prompt-editor">
+            <div class="prompt-line bad" data-prompt-line>앱 전체를 정리해줘.</div>
+            <div class="scope-fence" data-scope-fence>
+              <div class="prompt-line good" data-prompt-line>회원가입 슬라이스 안에서만 수정해줘. 컨트롤러, 서비스, 레포지토리, 엔티티와 디티오, 테스트를 같이 보고 이 기능 흐름만 끝내줘.</div>
+              <div class="check-row">
+                <div class="check-item" data-check-item>signup/만 변경</div>
+                <div class="check-item" data-check-item>관련 파일 같이 확인</div>
+                <div class="check-item" data-check-item>기능 흐름 완료</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene-08" class="scene" data-scene="08" data-visual-density="rich">
+        <div class="eyebrow">8. 단, 공통은 남깁니다</div>
+        <div class="headline">공통은 공유하고, <span class="accent">기능만 세로</span>로 세웁니다.</div>
+        <div class="scene-no">08</div>
+        <div class="board">
+          <div class="architecture">
+            <div class="feature-slice" data-feature-slice style="left: 110px;"><h3>signup</h3><div class="info-row">controller</div><div class="info-row">service</div><div class="info-row">repository</div><div class="flow-token">test</div></div>
+            <div class="feature-slice" data-feature-slice style="left: 510px;"><h3>upload</h3><div class="info-row">controller</div><div class="info-row">service</div><div class="info-row">storage</div><div class="flow-token">test</div></div>
+            <div class="feature-slice" data-feature-slice style="left: 910px;"><h3>payment</h3><div class="info-row">controller</div><div class="info-row">service</div><div class="info-row">repository</div><div class="flow-token">test</div></div>
+            <div class="base" data-shared-base><span>auth</span><span>design-system</span><span>db-config</span></div>
+            <div class="common-lock" data-common-lock>shared core 유지</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene-09" class="scene" data-scene="09">
+        <div class="eyebrow">9. 결론</div>
+        <div class="headline">바이브코딩 구조의 기준은 <span class="accent">에이아이가 맥락을 잃지 않는가</span>입니다.</div>
+        <div class="scene-no">09</div>
+        <div class="board">
+          <div class="architecture dim" data-architecture-lock>
+            <div class="feature-slice selected" style="left: 510px;"><h3>signup</h3><div class="info-row">요청</div><div class="info-row">처리</div><div class="info-row">저장</div></div>
+            <div class="base">공통은 공유</div>
+          </div>
+          <div class="ai-cursor" data-ai-task-cursor style="left: 930px; top: 455px;"></div>
+          <div class="final-rule" data-final-rule>공통은 공유하고,<br />기능은 세로로 묶고,<br /><span class="accent">에이아이에게는 슬라이스 단위로 맡기세요.</span></div>
+        </div>
+      </section>
+
+      <div id="caption" class="caption clip" data-start="0" data-duration="200" data-track-index="80"></div>
     </div>
 
     <script>
       window.__timelines = window.__timelines || {};
 
-      const tl = gsap.timeline({ paused: true });
-      const count = { value: 0 };
+      const DURATION = 200;
+      const CAPTION_LEAD_SECONDS = 0.16;
+      const captions = [];
+      fetch("src/captions.json")
+        .then((res) => res.ok ? res.json() : [])
+        .then((items) => captions.splice(0, captions.length, ...items))
+        .catch(() => {});
 
-      tl.from("#heroTitle", { opacity: 0, y: 42, scale: 0.96, filter: "blur(8px)", duration: 0.7, ease: "power3.out" }, 0)
-        .from("#heroSub", { opacity: 0, y: 24, duration: 0.55, ease: "power3.out" }, 0.55)
-        .to("#caption", { textContent: "AI한테 시키면 알아서 끝까지 해주는 시대입니다.", duration: 0.01 }, 0)
-        .to("#heroTitle .accent", { scale: 1.045, transformOrigin: "center center", yoyo: true, repeat: 1, duration: 0.22 }, 1.35)
-        .to("#stage", { x: -70, y: -20, scale: 1.035, duration: 2.3, ease: "sine.inOut" }, 1.1)
-        .to(["#heroTitle", "#heroSub"], { opacity: 0.12, filter: "blur(2px)", duration: 0.5 }, 3.55)
+      function captionAt(time) {
+        const adjustedTime = time + CAPTION_LEAD_SECONDS;
+        return captions.find((cue) => adjustedTime >= cue.start && adjustedTime < cue.end)?.text || "";
+      }
 
-        .from("#compare", { opacity: 0, y: 36, duration: 0.55, ease: "power3.out" }, 4.05)
-        .from(".old1, .old2, .old3", { opacity: 0, y: 22, stagger: 0.12, duration: 0.42, ease: "power3.out" }, 4.25)
-        .from(".new1, .new2, .new3, .new4", { opacity: 0, scale: 0.86, stagger: 0.16, duration: 0.42, ease: "back.out(1.7)" }, 4.75)
-        .to("#caption", { textContent: "기존 AI는 답하고 끝났지만, 에이전틱 AI는 단계별로 실행합니다.", duration: 0.01 }, 4.25)
-        .to("#stage", { x: -210, y: -35, scale: 1.04, duration: 2.4, ease: "sine.inOut" }, 5.1)
-        .to("#compare", { opacity: 0.12, filter: "blur(2px)", duration: 0.45 }, 7.65)
+      function setCaption() {
+        document.getElementById("caption").textContent = captionAt(tl.time());
+      }
 
-        .from("#gridTitle", { opacity: 0, y: 28, duration: 0.45, ease: "power3.out" }, 8.0)
-        .from(".feature-card", { opacity: 0, y: 34, scale: 0.96, stagger: 0.14, duration: 0.48, ease: "power3.out" }, 8.35)
-        .to("#caption", { textContent: "핵심은 목표 분해, 도구 사용, 자기 검증, 장기 기억입니다.", duration: 0.01 }, 8.25)
-        .to("#stage", { x: -20, y: -90, scale: 1.0, duration: 2.6, ease: "sine.inOut" }, 8.8)
-        .to(["#gridTitle", "#cards"], { opacity: 0.1, filter: "blur(2px)", duration: 0.45 }, 12.1)
+      const tl = gsap.timeline({ paused: true, onUpdate: setCaption });
+      gsap.set(".scene", { autoAlpha: 0 });
+      gsap.set(".scene *", { transformOrigin: "center center" });
+      gsap.set(".layer, .role-badge, [data-benefit], [data-file-card], .folder-zone, .ai-lens, .warning, [data-slice-file], [data-boundary-lock], [data-slice-module], [data-benefit-lane], [data-prompt-line], [data-scope-fence], [data-check-item], [data-feature-slice], [data-shared-base], [data-common-lock], [data-final-rule], [data-ai-task-cursor]", { autoAlpha: 0 });
 
-        .from("#metric", { opacity: 0, x: -55, duration: 0.55, ease: "power3.out" }, 12.35)
-        .to(count, {
-          value: 15,
-          duration: 1.1,
-          ease: "power2.out",
-          onUpdate: function () {
-            document.getElementById("count").textContent = String(Math.round(count.value));
-          }
-        }, 12.55)
-        .from(".bar", { scaleY: 0, stagger: 0.12, duration: 0.55, ease: "power3.out" }, 12.85)
-        .to("#caption", { textContent: "숫자와 그래프는 주장의 무게를 바로 보여줍니다.", duration: 0.01 }, 12.45)
-        .to("#stage", { x: -120, y: -80, scale: 1.025, duration: 2.1, ease: "sine.inOut" }, 13.0)
-        .to(["#metric", "#chart"], { opacity: 0.12, filter: "blur(2px)", duration: 0.45 }, 15.15)
+      function scene(id, start, end) {
+        tl.set(".scene", { autoAlpha: 0 }, start);
+        tl.set(`#scene-${id}`, { autoAlpha: 1 }, start);
+        tl.set(`#scene-${id}`, { autoAlpha: 0 }, end);
+      }
 
-        .from(".process-card", { opacity: 0, y: 42, scale: 0.96, stagger: 0.16, duration: 0.45, ease: "power3.out" }, 15.25)
-        .to("#caption", { textContent: "좋은 모션은 말의 순서대로 화면을 설계하는 것입니다.", duration: 0.01 }, 15.35)
-        .to("#process", { opacity: 0, y: -26, duration: 0.45 }, 16.2)
-        .from("#finalLine", { opacity: 0, y: 36, scale: 0.98, duration: 0.55, ease: "power3.out" }, 16.35)
-        .to("#caption", { textContent: "이제 AI는 답하는 도구가 아니라, 일하는 시스템입니다.", duration: 0.01 }, 16.35)
-        .to("#finalLine .accent", { scale: 1.045, transformOrigin: "center center", yoyo: true, repeat: 1, duration: 0.2 }, 17.2);
+      scene("01", 0, 15);
+      tl.from("#scene-01 .headline", { y: 24, autoAlpha: 0, duration: 0.55, ease: "power3.out" }, 0.2)
+        .to("#scene-01 .layer", { autoAlpha: 1, y: 0, stagger: 1.1, duration: 0.45, ease: "power3.out" }, 1.1)
+        .to("#scene-01 .role-badge", { autoAlpha: 1, scale: 1, stagger: 0.7, duration: 0.3, ease: "back.out(1.6)" }, 6.7);
+
+      scene("02", 15, 35);
+      tl.from("#scene-02 .headline", { y: 24, autoAlpha: 0, duration: 0.45 }, 15.1)
+        .to("#scene-02 [data-benefit]", { autoAlpha: 1, x: 0, stagger: 4.2, duration: 0.55, ease: "power3.out" }, 17.0)
+        .to("#scene-02 [data-benefit]", { scale: 0.98, opacity: 0.55, stagger: 4.2, duration: 0.35 }, 21.2);
+
+      scene("03", 35, 60);
+      tl.from("#scene-03 .headline", { y: 24, autoAlpha: 0, duration: 0.45 }, 35.1)
+        .to("#scene-03 .folder-zone", { autoAlpha: 1, stagger: 0.25, duration: 0.35 }, 37.0)
+        .to("#scene-03 [data-file-card]", { autoAlpha: 1, stagger: 1.0, duration: 0.3 }, 39.2)
+        .to("#scene-03 [data-file-card]", { className: "file-card active", stagger: 1.0, duration: 0.01 }, 39.2)
+        .to("#scene-03 [data-ai-lens]", { autoAlpha: 1, duration: 0.2 }, 40.0)
+        .to("#scene-03 [data-ai-lens]", { x: 340, duration: 1.2, ease: "power2.inOut" }, 42.0)
+        .to("#scene-03 [data-ai-lens]", { x: 680, duration: 1.2, ease: "power2.inOut" }, 45.0)
+        .to("#scene-03 [data-ai-lens]", { x: 1020, duration: 1.2, ease: "power2.inOut" }, 48.0)
+        .to("#scene-03 [data-ai-lens]", { x: 1360, duration: 1.2, ease: "power2.inOut" }, 51.0)
+        .to("#scene-03 .route-pulse", { width: "92%", duration: 12, ease: "none" }, 40.0)
+        .to("#scene-03 .warning", { autoAlpha: 1, y: -8, duration: 0.35 }, 54.5);
+
+      scene("04", 60, 85);
+      tl.from("#scene-04 .headline", { y: 24, autoAlpha: 0, duration: 0.45 }, 60.1)
+        .to("#scene-04 [data-slice-boundary]", { autoAlpha: 1, scale: 1, duration: 0.5 }, 63.2)
+        .to("#scene-04 [data-slice-file]", { autoAlpha: 1, y: 0, stagger: 1.15, duration: 0.35 }, 65.0)
+        .to("#scene-04 [data-boundary-lock]", { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 77.5);
+
+      scene("05", 85, 115);
+      tl.from("#scene-05 .headline", { y: 24, autoAlpha: 0, duration: 0.45 }, 85.1)
+        .to("#scene-05 .slice-box", { autoAlpha: 1, duration: 0.3 }, 87.0)
+        .to("#scene-05 [data-slice-module]", { autoAlpha: 1, stagger: 0.35, duration: 0.25 }, 88.0)
+        .to("#scene-05 [data-focus-lens]", { autoAlpha: 1, duration: 0.25 }, 89.0)
+        .to("#scene-05 [data-route-rail] .path-draw", { width: "100%", duration: 16, ease: "none" }, 91.0)
+        .to("#scene-05 [data-focus-lens]", { x: 390, duration: 2.4, ease: "power1.inOut" }, 93.0)
+        .to("#scene-05 [data-focus-lens]", { x: 0, y: 130, duration: 2.4, ease: "power1.inOut" }, 97.0)
+        .to("#scene-05 [data-focus-lens]", { x: 390, y: 130, duration: 2.4, ease: "power1.inOut" }, 101.0)
+        .to("#scene-05 [data-focus-lens]", { x: 0, y: 260, duration: 2.4, ease: "power1.inOut" }, 105.0)
+        .to("#scene-05 [data-focus-lens]", { x: 390, y: 260, duration: 2.4, ease: "power1.inOut" }, 109.0);
+
+      scene("06", 115, 138);
+      tl.from("#scene-06 .headline", { y: 24, autoAlpha: 0, duration: 0.45 }, 115.1)
+        .to("#scene-06 [data-benefit-lane]", { autoAlpha: 1, y: 0, stagger: 4.5, duration: 0.45 }, 118.0)
+        .from("#scene-06 .metric-tick", { y: 18, autoAlpha: 0, stagger: 0.55, duration: 0.3 }, 120.0);
+
+      scene("07", 138, 163);
+      tl.from("#scene-07 .headline", { y: 24, autoAlpha: 0, duration: 0.45 }, 138.1)
+        .to("#scene-07 .prompt-line.bad", { autoAlpha: 1, duration: 0.35 }, 141.0)
+        .to("#scene-07 .prompt-line.bad", { autoAlpha: 0.25, scale: 0.98, duration: 0.45 }, 145.0)
+        .to("#scene-07 [data-scope-fence]", { autoAlpha: 1, duration: 0.45 }, 147.0)
+        .to("#scene-07 .prompt-line.good", { autoAlpha: 1, duration: 0.5 }, 148.0)
+        .to("#scene-07 [data-check-item]", { autoAlpha: 1, stagger: 0.5, duration: 0.25 }, 154.0);
+
+      scene("08", 163, 185);
+      tl.from("#scene-08 .headline", { y: 24, autoAlpha: 0, duration: 0.45 }, 163.1)
+        .to("#scene-08 [data-shared-base]", { autoAlpha: 1, y: 0, duration: 0.45 }, 166.0)
+        .to("#scene-08 [data-common-lock]", { autoAlpha: 1, duration: 0.3 }, 168.0)
+        .to("#scene-08 [data-feature-slice]", { autoAlpha: 1, y: 0, stagger: 1.2, duration: 0.55, ease: "power3.out" }, 170.0);
+
+      scene("09", 185, DURATION);
+      tl.from("#scene-09 .headline", { y: 24, autoAlpha: 0, duration: 0.45 }, 185.1)
+        .to("#scene-09 [data-architecture-lock]", { autoAlpha: 1, duration: 0.45 }, 187.0)
+        .to("#scene-09 [data-ai-task-cursor]", { autoAlpha: 1, scale: 1.2, duration: 0.35 }, 190.0)
+        .to("#scene-09 [data-final-rule]", { autoAlpha: 1, y: -8, duration: 0.55, ease: "power3.out" }, 192.0)
+        .to("#scene-09 [data-final-rule]", { scale: 1.025, yoyo: true, repeat: 1, duration: 0.25 }, 197.0)
+        .to({}, { duration: 0.1 }, DURATION);
 
       window.__timelines["main"] = tl;
     </script>

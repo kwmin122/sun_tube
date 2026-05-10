@@ -12,7 +12,13 @@ import {
 } from "./lib/factory_common.mjs";
 
 function sceneRowsFromPlan(markdown) {
-  const rows = tableRows(markdown).flatMap((table) => table.rows);
+  const summaryTable = tableRows(markdown).find((table) =>
+    table.headers.includes("#") &&
+    table.headers.includes("Time") &&
+    table.headers.includes("Pattern Role") &&
+    table.headers.includes("Core Message")
+  );
+  const rows = summaryTable?.rows || [];
   const sceneRows = rows.filter((row) => row["#"] || row.Scene || row.scene);
   if (sceneRows.length) return sceneRows;
   return Array.from({ length: 6 }, (_, index) => ({ "#": String(index + 1).padStart(2, "0"), "Pattern Role": "", "Core Message": "" }));

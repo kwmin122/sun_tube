@@ -23,7 +23,7 @@ Purpose: define what each scene must do, what material direction it needs, and w
 | 06 | 1:55-2:18 | benefits | explain | product/before-after-demo | hyperframes | | product-demo | not_required | 세 가지 이점을 구조적으로 보여준다 | short context, close files, narrow edits | 세 benefit lane이 순차 점등 | 체크리스트만 되면 약함 | 각 장점을 실제 AI 수정 상황과 연결 |
 | 07 | 2:18-2:43 | prompt-rule | tutorial | explain/mechanism-state-machine | hyperframes | | kinetic-type | not_required | AI에게 슬라이스 단위로 맡기는 프롬프트 규칙을 제시한다 | prompt card, scope fence | "이 슬라이스 안에서만" prompt가 잠김 | 문구가 길면 자막과 충돌 | 복붙 가능한 요청 문장으로 |
 | 08 | 2:43-3:05 | caveat | explain | explain/mechanism-state-machine | hyperframes | | technical-grid | not_required | 공통 레이어는 남기고 기능만 세로로 묶는 균형을 설명한다 | shared core + feature slices | shared base는 고정, feature slices가 위로 올라옴 | 모든 걸 feature 폴더에 넣으라는 오해 | 공통은 공유, 기능은 세로 |
-| 09 | 3:05-3:20 | payoff | explain | visual-essay/imagegen-cinematic-sequence | hyperframes | imagegen support optional | kinetic-type | support | 최종 문장을 각인한다 | final architecture lock | 공통 베이스와 세로 기능 슬라이스가 안정적으로 잠김 | 일반론처럼 끝나면 약함 | 반복 가능한 한 문장 |
+| 09 | 3:05-3:20 | payoff | explain | explain/mechanism-state-machine | hyperframes | | kinetic-type | not_required | 최종 문장을 각인한다 | final architecture lock | 공통 베이스와 세로 기능 슬라이스가 안정적으로 잠김 | 일반론처럼 끝나면 약함 | 반복 가능한 한 문장 |
 
 ## Scene Details
 
@@ -193,13 +193,13 @@ Purpose: define what each scene must do, what material direction it needs, and w
 - Viewer should understand: AI에게는 슬라이스 단위로 일을 맡기는 것이 핵심이다.
 - Pattern role: payoff
 - Scene content type: explain
-- Scene recipe: visual-essay/imagegen-cinematic-sequence
+- Scene recipe: explain/mechanism-state-machine
 - Likely tool route: hyperframes
 - Primary visual route: hyperframes
-- Secondary visual route: imagegen optional for thumbnail only
+- Secondary visual route: none
 - Motion grammar: kinetic-type
-- Imagegen role: support
-- Material direction: final phrase
+- Imagegen role: not_required
+- Material direction: final phrase; thumbnail imagegen is allowed only outside the body video.
 - Visual idea: 공통 베이스와 세로 기능 슬라이스가 하나의 안정된 구조로 잠긴다.
 - Narration verb: 공유하다, 묶다, 맡기다
 - Motion purpose: 기억할 문장을 남긴다.

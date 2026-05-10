@@ -10,6 +10,11 @@ Purpose: prevent generic filler implementation. The renderer may only build the 
 - Do not fill empty space with cards, decorative paths, dots, chips, glass panels, or generic progress bars unless explicitly listed.
 - Captions are bottom safe-zone text-only from ElevenLabs SRT. No caption progress bar.
 - Evidence frames must show the primary screen object without needing the narration to explain it.
+- This project does not use body source captures. If a future scene uses capture as a primary route, the capture must occupy at least half of one side of the frame and must be cropped/highlighted to the narrated point.
+- Reveal only one explanatory unit per motion beat. Previous units may stay dim as context; future units must stay hidden or inactive.
+- Introduced context should stay stable after its first reveal unless the scene has an explicit Exit Rule.
+- Motion must be tied to the narration verb. Decorative motion without a contract beat is a failure.
+- QA must use rendered frames and implementation markers, not synthetic DOM created only for validation.
 
 ## Scene 01
 

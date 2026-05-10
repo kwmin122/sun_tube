@@ -1,0 +1,101 @@
+[
+  {
+    "id": "01",
+    "timeRange": "0:00.0-0:15.0",
+    "srtLines": "1, 2, 3, 4, 5, 6, 7",
+    "toolRoute": "hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "none",
+    "motionBeat": "layer labels appear one by one",
+    "audioSfx": "pending",
+    "snapshotTime": "0:07.5"
+  },
+  {
+    "id": "02",
+    "timeRange": "0:15.0-0:35.0",
+    "srtLines": "7, 8, 9, 10, 11, 12, 13, 14, 15, 16",
+    "toolRoute": "hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "none",
+    "motionBeat": "benefit cards reveal",
+    "audioSfx": "pending",
+    "snapshotTime": "0:25.0"
+  },
+  {
+    "id": "03",
+    "timeRange": "0:35.0-1:00.0",
+    "srtLines": "16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26",
+    "toolRoute": "hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "none",
+    "motionBeat": "context path jumps",
+    "audioSfx": "pending",
+    "snapshotTime": "0:47.5"
+  },
+  {
+    "id": "04",
+    "timeRange": "1:00.0-1:25.0",
+    "srtLines": "26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39",
+    "toolRoute": "hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "none",
+    "motionBeat": "slice groups related modules",
+    "audioSfx": "pending",
+    "snapshotTime": "1:12.5"
+  },
+  {
+    "id": "05",
+    "timeRange": "1:25.0-1:55.0",
+    "srtLines": "39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52",
+    "toolRoute": "hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "none",
+    "motionBeat": "focus lens over one slice",
+    "audioSfx": "pending",
+    "snapshotTime": "1:40.0"
+  },
+  {
+    "id": "06",
+    "timeRange": "1:55.0-2:18.0",
+    "srtLines": "52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62",
+    "toolRoute": "hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "none",
+    "motionBeat": "one benefit at a time",
+    "audioSfx": "pending",
+    "snapshotTime": "2:06.5"
+  },
+  {
+    "id": "07",
+    "timeRange": "2:18.0-2:43.0",
+    "srtLines": "62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73",
+    "toolRoute": "hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "none",
+    "motionBeat": "type-in + scope lock",
+    "audioSfx": "pending",
+    "snapshotTime": "2:30.5"
+  },
+  {
+    "id": "08",
+    "timeRange": "2:43.0-3:05.0",
+    "srtLines": "73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83",
+    "toolRoute": "hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "none",
+    "motionBeat": "shared base stays, slices rise",
+    "audioSfx": "pending",
+    "snapshotTime": "2:54.0"
+  },
+  {
+    "id": "09",
+    "timeRange": "3:05.0-3:20.0",
+    "srtLines": "83, 84, 85, 86, 87, 88, 89",
+    "toolRoute": "hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "thumbnail imagegen optional outside body",
+    "motionBeat": "kinetic phrase, final check",
+    "audioSfx": "pending",
+    "snapshotTime": "3:12.5"
+  }
+]

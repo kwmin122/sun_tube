@@ -21,7 +21,22 @@
 - **Source notes**: `source-notes.md` optional compatibility notes
 - **Design context**: `design-context.md`
 - **Asset plan**: `asset-plan.md`
-- **Approval state**: draft
+- **Approval state**: approved by `factory:approve-plan`
+
+## Current Production Gate
+
+- `project.json.approved.plan` passed the approval gate.
+- ElevenLabs TTS may run only after this approval gate has passed.
+- If this script or `scene-contracts.md` feels too shallow, return to planning. Do not compensate in implementation with extra cards, dots, lines, glass panels, or generic fades.
+
+## Latest Visual Rules
+
+- Body scenes use Hyperframes diagrams only. No body source capture unless the capture is the primary explanation object and takes at least half of one side of the frame.
+- Captions are text-only from ElevenLabs forced-alignment SRT. No caption progress bar.
+- Show one explanation unit at a time. Do not reveal every layer/card/lane at once.
+- Once an element is introduced, keep it as stable context unless the scene contract explicitly exits it.
+- No random dots, decorative connector lines, broad glass panels, static gradient capsules, or generic card-grid filler.
+- Motion must prove the narration verb: split, jump, gather, scan, shrink, lock, select.
 
 ## Research Pack Summary
 
@@ -96,7 +111,8 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 왜냐하면 한 폴더 안에서,
 이 기능이 무엇을 받고,
 무엇을 처리하고,
-무엇을 보여주는지,
+무엇을 저장하고,
+어떻게 검증되는지,
 맥락을 한 번에 따라갈 수 있기 때문입니다.
 
 바이브코딩에서 중요한 건,
@@ -135,7 +151,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 컨트롤러,
 서비스,
 레포지토리,
-엔티티,
+엔티티와 디티오,
 테스트를 같이 보고,
 이 기능 흐름만 끝내줘.
 
@@ -178,7 +194,7 @@ Write spoken Korean lines here. Use one idea per line. Use TTS-friendly Korean p
 | 06 | 1:55-2:18 | benefits | 컨텍스트 짧음, 관련 파일 가까움, 수정 범위 좁음 | three benefit lanes | one benefit at a time | none |
 | 07 | 2:18-2:43 | prompt rule | AI에게 슬라이스 단위로 맡긴다 | prompt card + scope fence | type-in + scope lock | none |
 | 08 | 2:43-3:05 | caveat | 공통 레이어는 남기고 기능만 세로로 묶는다 | shared core + feature slices | shared base stays, slices rise | none |
-| 09 | 3:05-3:20 | payoff | 공통은 공유하고 기능은 세로로 묶는다 | final architecture lock | kinetic phrase, final check | thumbnail imagegen optional |
+| 09 | 3:05-3:20 | payoff | 공통은 공유하고 기능은 세로로 묶는다 | final architecture lock | kinetic phrase, final check | thumbnail imagegen optional outside body |
 
 ## Motion Blueprint Summary
 

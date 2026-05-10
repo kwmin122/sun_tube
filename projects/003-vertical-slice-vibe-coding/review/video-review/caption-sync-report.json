@@ -1,0 +1,6 @@
+{
+  "cueCount": 89,
+  "issues": [],
+  "method": "elevenlabs-forced-alignment-srt-duration-and-cps",
+  "limitation": "uses ElevenLabs forced-alignment SRT cue timings; does not yet compare against ASR word timestamps"
+}

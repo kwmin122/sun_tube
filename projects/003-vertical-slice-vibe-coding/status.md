@@ -10,10 +10,10 @@
 - [x] `asset-plan.md` created
 - [x] Content pattern selected
 - [x] Material research complete
-- [ ] Evidence/screenshots/interview asset pass complete
+- [x] Evidence/screenshots/interview asset pass complete or not required
 - [x] Script drafted
 - [x] Scene table drafted
-- [ ] User approved script and scene table
+- [x] User approved script and scene table
 - [ ] ElevenLabs TTS generated
 - [ ] ElevenLabs SRT generated
 - [ ] `timed-scene-packets.md` created
@@ -57,11 +57,12 @@ These keys are completion flags in `project.json.artifacts`, not file-existence 
 
 ## Current Gate
 
-`review`
+`tts`
 
 ## Open Questions
 
-- User may still adjust length/tone before TTS.
+- Script and `scene-contracts.md` approved by `factory:approve-plan`.
+- Body capture/imagegen is currently not required; this project should use Hyperframes diagrams.
 
 ## Commands
 
