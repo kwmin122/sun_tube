@@ -25,7 +25,7 @@ This is not final aesthetic approval. `review/video-review/director-review.md` m
 - Cues: 133
 - Issues: 0
 - Method: elevenlabs-forced-alignment-srt-duration-and-cps
-- Caption lead: 1.45s
+- Caption lead: 0s
 - Caption config issues: 0
 - Limitation: uses ElevenLabs forced-alignment SRT cue timings; does not yet compare against ASR word timestamps
 

@@ -270,8 +270,8 @@ function captionConfigAudit(html) {
   }
   if (!Number.isFinite(leadSeconds)) {
     issues.push({ issue: "caption_lead_missing", detail: "composition must declare CAPTION_LEAD_SECONDS" });
-  } else if (leadSeconds < 1.05) {
-    issues.push({ issue: "caption_lead_too_low", detail: `CAPTION_LEAD_SECONDS=${leadSeconds}; use at least 1.05s for this TTS/caption style` });
+  } else if (leadSeconds < 0 || leadSeconds > 0.35) {
+    issues.push({ issue: "caption_lead_out_of_range", detail: `CAPTION_LEAD_SECONDS=${leadSeconds}; forced-alignment captions should stay close to SRT cue timing, usually 0-0.35s` });
   }
   return { leadSeconds, issues };
 }

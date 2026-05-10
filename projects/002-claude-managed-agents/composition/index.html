@@ -1544,7 +1544,7 @@
 
   <script>
     const DURATION = 333.903;
-    const CAPTION_LEAD_SECONDS = 1.45;
+    const CAPTION_LEAD_SECONDS = 0;
     const SCENES = [
       ["#scene-01", 0, 13.4],
       ["#scene-02", 13.4, 9.0],
@@ -1629,10 +1629,16 @@
         { start: 311.4, text: "이제 경쟁은 어떤 모델을 쓰느냐에서 어떤 시스템으로 운영하느냐로 넘어갑니다." }
       ];
     }
-    captions.forEach((cue) => {
-      tl.set("#caption", { textContent: cue.text }, Math.max(0, cue.start - CAPTION_LEAD_SECONDS));
+    captions.forEach((cue, index) => {
+      const showAt = Math.max(0, cue.start - CAPTION_LEAD_SECONDS);
+      const nextStart = captions[index + 1]?.start ?? DURATION;
+      const hideAt = Math.min(DURATION, Math.max(cue.end ?? nextStart, showAt + 0.2));
+      tl.set("#caption", { textContent: cue.text }, showAt);
+      if (hideAt < nextStart - 0.03) {
+        tl.set("#caption", { textContent: "" }, hideAt);
+      }
     });
-    tl.set("#caption", { textContent: "" }, DURATION - 0.12);
+    tl.set("#caption", { textContent: "" }, DURATION - 0.05);
 
     window.__timelines["main"] = tl;
   </script>
