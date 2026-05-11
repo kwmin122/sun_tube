@@ -7,6 +7,10 @@ renders/*.mp4
 renders/*.webm
 projects/*/composition/node_modules/
 projects/*/composition/snapshots/*
+projects/*/composition/assets/audio/*.mp3
+projects/*/composition/assets/audio/*.m4a
+projects/*/composition/assets/audio/*.wav
+projects/*/composition/assets/audio/*.aac
 projects/*/composition-hyperframes/node_modules/
 projects/*/composition-hyperframes/snapshots/*
 projects/*/composition-remotion/node_modules/

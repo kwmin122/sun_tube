@@ -9,6 +9,7 @@
     "factory:smoke": "node scripts/factory_smoke.mjs",
     "factory:validate-templates": "node scripts/validate_templates.mjs",
     "factory:validate-scene-contract": "node scripts/validate_scene_contract.mjs",
+    "factory:validate-visual-routing": "node scripts/validate_visual_routing.mjs",
     "factory:new": "node scripts/new_project.mjs",
     "factory:status": "node scripts/status.mjs",
     "factory:next": "node scripts/next.mjs",

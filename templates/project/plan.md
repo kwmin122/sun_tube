@@ -123,9 +123,12 @@ This table is a compact contract for the renderer. It should agree with `design-
 - Language: `ko`
 - Output format: `mp3_44100_128`
 - Original voice: `voiceover/solo/voiceover-solo-elevenlabs.mp3`
-- Subtitle: `voiceover/solo/voiceover-solo-elevenlabs.srt`
+- Timing subtitle: `voiceover/solo/voiceover-solo-elevenlabs.srt`
+- Display text: `voiceover/solo/voiceover.txt`
+- Spoken TTS text: `voiceover/solo/voiceover_elevenlabs_sam.txt`
+- Display subtitle: `assets/audio/voiceover-display.srt`
 - Final mix: `voiceover/solo/voiceover-solo-final-mix.m4a`
-- Sync: ElevenLabs SRT, forced_alignment preferred; captions are text-only with no progress bar
+- Sync: send `voiceover_elevenlabs_sam.txt` to ElevenLabs, create timing from ElevenLabs forced alignment, then replace only the SRT cue text with `voiceover.txt`. Display and spoken files must have the same line count. Captions are text-only with no progress bar.
 
 ## Render Checks
 

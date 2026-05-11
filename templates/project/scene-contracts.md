@@ -26,6 +26,12 @@ npm run factory:validate-scene-contract -- <project-path>
 - Narration Clause:
 - Primary Screen Object:
 - Viewer Must Understand:
+- Primary Visual Source:
+- Capture Role:
+- Capture Mode:
+- Imagegen Role:
+- Video-use Role:
+- HTML Motion Role:
 - Allowed Visual Elements:
 - Forbidden Fillers:
 - Motion Beats:
@@ -43,6 +49,12 @@ npm run factory:validate-scene-contract -- <project-path>
 - Narration Clause:
 - Primary Screen Object:
 - Viewer Must Understand:
+- Primary Visual Source:
+- Capture Role:
+- Capture Mode:
+- Imagegen Role:
+- Video-use Role:
+- HTML Motion Role:
 - Allowed Visual Elements:
 - Forbidden Fillers:
 - Motion Beats:
@@ -60,6 +72,12 @@ npm run factory:validate-scene-contract -- <project-path>
 - Narration Clause:
 - Primary Screen Object:
 - Viewer Must Understand:
+- Primary Visual Source:
+- Capture Role:
+- Capture Mode:
+- Imagegen Role:
+- Video-use Role:
+- HTML Motion Role:
 - Allowed Visual Elements:
 - Forbidden Fillers:
 - Motion Beats:

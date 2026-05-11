@@ -212,18 +212,18 @@ function captureUtilityAudit(assets, html) {
     if (!routes.includes("capture")) continue;
 
     const role = clean(row["Capture Role"]).toLowerCase();
-    const usefulCrop = clean(row["Useful Crop"]).toLowerCase();
-    const viewerReads = clean(row["Viewer Reads What"]);
+    const captureMode = clean(row["Capture Mode"]).toLowerCase();
+    const viewerUses = clean(row["Viewer Uses Capture How"] || row["Viewer Reads What"]);
     const body = bodies.get(scene) || "";
 
     if (role !== "primary_evidence") {
       issues.push({ scene, issue: "capture_not_primary_evidence", detail: `Capture Role=${row["Capture Role"] || "empty"}; reroute weak captures to hyperframes` });
     }
-    if (usefulCrop !== "yes") {
-      issues.push({ scene, issue: "capture_not_useful_crop", detail: `Useful Crop=${row["Useful Crop"] || "empty"}` });
+    if (!["split_half", "full_side", "half", "large", "full"].includes(captureMode)) {
+      issues.push({ scene, issue: "capture_mode_too_small", detail: `Capture Mode=${row["Capture Mode"] || "empty"}` });
     }
-    if (/\b(weak|source context only|background|texture|decorative)\b/i.test(viewerReads)) {
-      issues.push({ scene, issue: "capture_visual_purpose_weak", detail: viewerReads });
+    if (!viewerUses || /\b(weak|source context only|background|texture|decorative)\b/i.test(viewerUses)) {
+      issues.push({ scene, issue: "capture_visual_purpose_weak", detail: viewerUses || "empty capture purpose" });
     }
     if (!body) {
       issues.push({ scene, issue: "capture_scene_missing_html", detail: "capture route has no matching rendered scene section" });
@@ -232,8 +232,8 @@ function captureUtilityAudit(assets, html) {
     if (/source-stamp|data-capture-role=["']support_texture["']/.test(body)) {
       issues.push({ scene, issue: "capture_too_small", detail: "capture route cannot be a small source stamp or support texture" });
     }
-    if (!/data-capture-size=["'](?:half|large|full)["']/.test(body)) {
-      issues.push({ scene, issue: "capture_size_marker_missing", detail: "capture route must mark data-capture-size=\"half\", \"large\", or \"full\"" });
+    if (!/data-capture-size=["'](?:half|large|full|full-side|split-half)["']/.test(body)) {
+      issues.push({ scene, issue: "capture_size_marker_missing", detail: "capture route must mark data-capture-size=\"half\", \"large\", \"full\", \"full-side\", or \"split-half\"" });
     }
   }
   return { issues };
@@ -315,7 +315,10 @@ const reviewKey = renderKeyFromName(renderFile);
 const comparisonMode = Boolean(args.render);
 const suffix = comparisonMode ? `-${reviewKey}` : "";
 const render = join(projectPath, "renders", renderFile);
-const srtPath = join(projectPath, "voiceover/solo/voiceover-solo-elevenlabs.srt");
+const displaySrtPath = join(projectPath, "assets/audio/voiceover-display.srt");
+const soloDisplaySrtPath = join(projectPath, "voiceover/solo/voiceover-display.srt");
+const legacySrtPath = join(projectPath, "voiceover/solo/voiceover-solo-elevenlabs.srt");
+const srtPath = existsSync(displaySrtPath) ? displaySrtPath : (existsSync(soloDisplaySrtPath) ? soloDisplaySrtPath : legacySrtPath);
 const timedPath = join(projectPath, "timed-scene-packets.md");
 const assetPath = join(projectPath, "asset-plan.md");
 const compositionPath = rendererCompositionHtml(projectPath, reviewKey);
@@ -378,7 +381,7 @@ for (const scene of scenes) {
   }
 }
 
-const captionReport = { ...captionAudit(captions, duration), method: "elevenlabs-forced-alignment-srt-duration-and-cps", limitation: "uses ElevenLabs forced-alignment SRT cue timings; does not yet compare against ASR word timestamps" };
+const captionReport = { ...captionAudit(captions, duration), method: "elevenlabs-forced-alignment-timing-with-display-srt", source: rel(srtPath), limitation: "uses ElevenLabs forced-alignment cue timings with display subtitle text; does not yet compare against ASR word timestamps" };
 const motionReport = hasCompositionHtml
   ? motionAudit(scenes, assets, sectionMetrics(composition))
   : { rows: [], issues: [], limitations: [`HTML audit skipped for ${reviewKey}; no ${rel(compositionPath)} found`] };

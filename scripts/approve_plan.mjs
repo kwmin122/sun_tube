@@ -106,6 +106,11 @@ if (contractCheck.status !== 0) {
   errors.push("scene contract validation failed");
   if (contractCheck.stderr) errors.push(contractCheck.stderr.trim().slice(0, 1000));
 }
+const routingCheck = run("node", ["scripts/validate_visual_routing.mjs", rel(projectPath)], { timeout: 120_000 });
+if (routingCheck.status !== 0) {
+  errors.push("visual routing validation failed");
+  if (routingCheck.stderr) errors.push(routingCheck.stderr.trim().slice(0, 1000));
+}
 
 for (const issue of validateProjectShape(project)) errors.push(`project.json: ${issue}`);
 

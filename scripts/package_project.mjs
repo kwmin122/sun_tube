@@ -21,8 +21,14 @@ if (!projectArg) {
 
 const { project, projectPath } = await loadProject(projectArg);
 const packageGateReady = project.currentGate === "package" || project.currentGate === "done";
+const directorReview = await readText(join(projectPath, "review/video-review/director-review.md"), "");
+const directorPassed = /^Verdict:\s*PASS\b/im.test(directorReview) || /^##\s+Verdict\s*\n+PASS\b/im.test(directorReview);
 if ((!packageGateReady || project.artifacts?.render !== true || project.artifacts?.videoReview !== true || project.artifacts?.directorReview !== true) && !args.force) {
   console.error("Package blocked: machine video review, director review, final QA, and render artifact must pass. Use --force only as an explicit override.");
+  process.exit(1);
+}
+if (!directorPassed && !args.force) {
+  console.error("Package blocked: director-review.md must contain Verdict: PASS. Use --force only as an explicit override.");
   process.exit(1);
 }
 const outDir = join(projectPath, "package");

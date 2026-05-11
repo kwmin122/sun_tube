@@ -13,11 +13,11 @@ Purpose: define what each scene must do, what material direction it needs, and w
 
 ## Scene Table
 
-| Scene | Estimated Duration | Scene Role | Scene Content Type | Scene Recipe | Primary Visual Route | Secondary Visual Route | Motion Grammar | Imagegen Role | Scene Purpose | Material Direction | Expected Visual | Review Risk | Writer Guidance |
-|---|---:|---|---|---|---|---|---|---|---|---|---|---|---|
-| 01 | | hook | visual-essay | | hyperframes | imagegen | kinetic-type | support | | | | | |
-| 02 | | mechanism | explain | | hyperframes | capture | technical-grid | not_required | | | | | |
-| 03 | | mechanism | explain | | hyperframes | | technical-grid | not_required | | | | | |
+| Scene | Estimated Duration | Scene Role | Scene Content Type | Scene Recipe | Primary Visual Route | Secondary Visual Route | Capture Role | Capture Mode | Imagegen Role | Video-use Role | HTML Motion Role | Motion Grammar | Scene Purpose | Material Direction | Expected Visual | Review Risk | Writer Guidance |
+|---|---:|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 01 | | hook | visual-essay | | hyperframes | imagegen | not_required | not_required | support | not_required | primary | kinetic-type | | | | | |
+| 02 | | mechanism | explain | | hyperframes | capture | support | split_half | not_required | not_required | primary | technical-grid | | | | | |
+| 03 | | mechanism | explain | | hyperframes | | not_required | not_required | not_required | not_required | primary | technical-grid | | | | | |
 
 ## Scene Details
 
@@ -31,8 +31,14 @@ Purpose: define what each scene must do, what material direction it needs, and w
 - Likely tool route:
 - Primary visual route:
 - Secondary visual route:
+- Capture role:
+- Capture mode:
 - Motion grammar:
 - Imagegen role:
+- Video-use role:
+- HTML motion role:
+- Why this route:
+- Why not the other routes:
 - Material direction:
 - Visual idea:
 - Narration verb:
@@ -51,8 +57,14 @@ Purpose: define what each scene must do, what material direction it needs, and w
 - Likely tool route:
 - Primary visual route:
 - Secondary visual route:
+- Capture role:
+- Capture mode:
 - Motion grammar:
 - Imagegen role:
+- Video-use role:
+- HTML motion role:
+- Why this route:
+- Why not the other routes:
 - Material direction:
 - Visual idea:
 - Narration verb:

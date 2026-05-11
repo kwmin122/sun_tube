@@ -1,0 +1,91 @@
+{
+  "rows": [
+    {
+      "scene": "01",
+      "rich": true,
+      "id": "01",
+      "rows": 5,
+      "tokens": 2,
+      "paths": 0,
+      "scans": 3,
+      "sheens": 0,
+      "ticks": 2,
+      "signature": "rows+tokens+scans+ticks"
+    },
+    {
+      "scene": "02",
+      "rich": true,
+      "id": "02",
+      "rows": 3,
+      "tokens": 1,
+      "paths": 0,
+      "scans": 1,
+      "sheens": 0,
+      "ticks": 1,
+      "signature": "rows+tokens+scans+ticks"
+    },
+    {
+      "scene": "03",
+      "rich": true,
+      "id": "03",
+      "rows": 4,
+      "tokens": 2,
+      "paths": 0,
+      "scans": 2,
+      "sheens": 0,
+      "ticks": 1,
+      "signature": "rows+tokens+scans+ticks"
+    },
+    {
+      "scene": "04",
+      "rich": true,
+      "id": "04",
+      "rows": 3,
+      "tokens": 1,
+      "paths": 0,
+      "scans": 1,
+      "sheens": 0,
+      "ticks": 1,
+      "signature": "rows+tokens+scans+ticks"
+    },
+    {
+      "scene": "05",
+      "rich": true,
+      "id": "05",
+      "rows": 9,
+      "tokens": 3,
+      "paths": 0,
+      "scans": 3,
+      "sheens": 0,
+      "ticks": 3,
+      "signature": "rows+tokens+scans+ticks"
+    },
+    {
+      "scene": "06",
+      "rich": true,
+      "id": "06",
+      "rows": 3,
+      "tokens": 1,
+      "paths": 0,
+      "scans": 1,
+      "sheens": 0,
+      "ticks": 1,
+      "signature": "rows+tokens+scans+ticks"
+    },
+    {
+      "scene": "07",
+      "rich": false,
+      "id": "07",
+      "rows": 0,
+      "tokens": 1,
+      "paths": 0,
+      "scans": 1,
+      "sheens": 0,
+      "ticks": 1,
+      "signature": "tokens+scans+ticks"
+    }
+  ],
+  "issues": [],
+  "metadataOnly": true,
+  "note": "HTML metrics are metadata-only. Director review must inspect rendered frames before PASS."
+}

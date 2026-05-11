@@ -5,6 +5,7 @@ import {
   ensureDir,
   extractVoiceoverScript,
   loadProject,
+  parseSrt,
   parseArgs,
   readElevenLabsKeyFromEnv,
   readText,
@@ -41,11 +42,42 @@ function normalizeCuesToDuration(cues, targetDuration) {
   }));
 }
 
+function nonSpaceCharCount(text) {
+  return [...String(text || "")].filter((char) => !/\s/.test(char)).length;
+}
+
 function alignmentToSrt(alignment, fallbackText, targetDuration = null) {
   const chars = alignment?.chars || [];
   const starts = alignment?.char_start_times_seconds || [];
   const ends = alignment?.char_end_times_seconds || [];
   if (!chars.length || !starts.length || !ends.length) return roughSrt(fallbackText, targetDuration);
+
+  const lines = scriptLines(fallbackText);
+  const speechCharIndexes = [];
+  for (let i = 0; i < chars.length; i += 1) {
+    if (!/\s/.test(chars[i] || "")) speechCharIndexes.push(i);
+  }
+
+  if (lines.length && speechCharIndexes.length) {
+    const cues = [];
+    let speechCursor = 0;
+    for (const line of lines) {
+      const units = nonSpaceCharCount(line);
+      if (!units) continue;
+      const startSpeech = speechCursor;
+      const endSpeech = Math.min(speechCursor + units - 1, speechCharIndexes.length - 1);
+      const startIndex = speechCharIndexes[startSpeech];
+      const endIndex = speechCharIndexes[endSpeech];
+      if (startIndex === undefined || endIndex === undefined) break;
+      cues.push({
+        start: starts[startIndex] || 0,
+        end: Math.max(ends[endIndex] || starts[startIndex] || 0, (starts[startIndex] || 0) + 0.4),
+        text: line,
+      });
+      speechCursor += units;
+    }
+    if (cues.length === lines.length) return cuesToSrt(normalizeCuesToDuration(cues, targetDuration));
+  }
 
   const cues = [];
   let text = "";
@@ -88,6 +120,45 @@ function cuesToSrt(cues) {
     .join("\n");
 }
 
+function scriptLines(text) {
+  return String(text || "")
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+function ensureMatchingLineCounts(displayText, spokenText) {
+  const displayLines = scriptLines(displayText);
+  const spokenLines = scriptLines(spokenText);
+  if (displayLines.length !== spokenLines.length) {
+    console.error("TTS blocked: display and spoken scripts must have the same line count.");
+    console.error(`Display lines: ${displayLines.length}`);
+    console.error(`Spoken lines: ${spokenLines.length}`);
+    console.error("Fix voiceover/solo/voiceover.txt and voiceover/solo/voiceover_elevenlabs_sam.txt so each display cue maps to one spoken cue.");
+    process.exit(1);
+  }
+}
+
+function displaySrtFromTiming(timingSrt, displayText) {
+  const cues = parseSrt(timingSrt);
+  const displayLines = scriptLines(displayText);
+  const exactLineMatch = displayLines.length === cues.length;
+  if (!exactLineMatch) {
+    throw new Error(`Display SRT blocked: timing cues (${cues.length}) and display lines (${displayLines.length}) differ.`);
+  }
+  const displayCues = cues.map((cue, index) => ({
+    start: cue.start,
+    end: cue.end,
+    text: displayLines[index],
+  }));
+  return {
+    srt: cuesToSrt(displayCues),
+    exactLineMatch,
+    cueCount: cues.length,
+    displayLineCount: displayLines.length,
+  };
+}
+
 const args = parseArgs();
 const projectArg = args._[0];
 if (!projectArg) {
@@ -102,16 +173,60 @@ if (project.approved?.plan !== true) {
 }
 
 const planPath = join(projectPath, "plan.md");
-const script = extractVoiceoverScript(await readText(planPath));
-if (!script) {
+const planScript = extractVoiceoverScript(await readText(planPath));
+if (!planScript) {
   console.error(`TTS blocked: no voiceover script found in ${rel(planPath)}`);
   process.exit(1);
 }
 
 const outDir = join(projectPath, "voiceover/solo");
+const displayTextPath = join(outDir, "voiceover.txt");
+const spokenTextPath = join(outDir, "voiceover_elevenlabs_sam.txt");
 const audioPath = join(outDir, "voiceover-solo-elevenlabs.mp3");
 const srtPath = join(outDir, "voiceover-solo-elevenlabs.srt");
+const displaySrtPath = join(outDir, "voiceover-display.srt");
+const assetDisplaySrtPath = join(projectPath, "assets/audio/voiceover-display.srt");
 const manifestPath = join(outDir, "elevenlabs_manifest.json");
+const existingDisplayScript = (await readText(displayTextPath, "")).trim();
+const existingSpokenScript = (await readText(spokenTextPath, "")).trim();
+const displayScript = existingDisplayScript || planScript;
+const spokenScript = existingSpokenScript || displayScript;
+ensureMatchingLineCounts(displayScript, spokenScript);
+
+async function writeVoiceoverTextFiles() {
+  await writeText(displayTextPath, `${displayScript.trim()}\n`);
+  await writeText(spokenTextPath, `${spokenScript.trim()}\n`);
+}
+
+async function writeDisplaySrtFromElevenLabsSrt() {
+  const timingSrt = await readText(srtPath);
+  const display = displaySrtFromTiming(timingSrt, displayScript);
+  await writeText(displaySrtPath, display.srt);
+  await writeText(assetDisplaySrtPath, display.srt);
+  return display;
+}
+
+async function updateManifestWithDisplaySrt(display) {
+  let manifest = {};
+  if (existsSync(manifestPath)) {
+    try {
+      manifest = JSON.parse(await readText(manifestPath));
+    } catch {
+      manifest = {};
+    }
+  }
+  await writeJson(manifestPath, {
+    ...manifest,
+    displayText: rel(displayTextPath),
+    spokenText: rel(spokenTextPath),
+    displaySrt: rel(assetDisplaySrtPath),
+    syncMethod: "elevenlabs_forced_alignment_timing_with_display_text",
+    displayCueCount: display.cueCount,
+    displayLineCount: display.displayLineCount,
+    displayExactLineMatch: display.exactLineMatch,
+    updatedAt: new Date().toISOString(),
+  });
+}
 
 if (args["repair-srt"]) {
   if (!existsSync(audioPath)) {
@@ -119,14 +234,32 @@ if (args["repair-srt"]) {
     process.exit(1);
   }
   const duration = audioDurationSeconds(audioPath);
-  await writeText(srtPath, roughSrt(script, duration));
+  await writeVoiceoverTextFiles();
+  await writeText(srtPath, roughSrt(spokenScript, duration));
+  const display = await writeDisplaySrtFromElevenLabsSrt();
+  await updateManifestWithDisplaySrt(display);
   project.artifacts.tts = existsSync(audioPath) && existsSync(srtPath);
   project.status = "tts";
   project.currentGate = "timing";
   await saveProject(projectPath, project);
   console.log(`Repaired: ${rel(srtPath)}`);
+  console.log(`Repaired: ${rel(assetDisplaySrtPath)} (${display.cueCount} cues, display lines: ${display.displayLineCount})`);
   console.log(`Duration: ${duration?.toFixed(3) || "unknown"}s`);
   process.exit(0);
+}
+
+if (args["repair-display-srt"]) {
+  if (!existsSync(srtPath)) {
+    console.error(`Display SRT repair blocked: missing ${rel(srtPath)}`);
+    process.exit(1);
+  }
+  await writeVoiceoverTextFiles();
+  const display = await writeDisplaySrtFromElevenLabsSrt();
+  await updateManifestWithDisplaySrt(display);
+  console.log(`Repaired: ${rel(displaySrtPath)}`);
+  console.log(`Repaired: ${rel(assetDisplaySrtPath)}`);
+  console.log(`Cues: ${display.cueCount}; display lines: ${display.displayLineCount}; exact line match: ${display.exactLineMatch ? "yes" : "no"}`);
+  process.exit(display.exactLineMatch ? 0 : 2);
 }
 
 if (args["dry-run"]) {
@@ -135,7 +268,10 @@ if (args["dry-run"]) {
   console.log(`Model: ${MODEL}`);
   console.log(`Output: ${rel(audioPath)}`);
   console.log(`SRT: ${rel(srtPath)}`);
-  console.log(`Script chars: ${script.length}`);
+  console.log(`Display text: ${rel(displayTextPath)}`);
+  console.log(`Spoken text: ${rel(spokenTextPath)}`);
+  console.log(`Display SRT: ${rel(assetDisplaySrtPath)}`);
+  console.log(`Spoken script chars: ${spokenScript.length}`);
   process.exit(0);
 }
 
@@ -146,6 +282,7 @@ if (!key) {
 }
 
 await ensureDir(outDir);
+await writeVoiceoverTextFiles();
 const url = `https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}/with-timestamps?output_format=${OUTPUT_FORMAT}`;
 const response = await fetch(url, {
   method: "POST",
@@ -155,7 +292,7 @@ const response = await fetch(url, {
     accept: "application/json",
   },
   body: JSON.stringify({
-    text: script,
+    text: spokenScript,
     model_id: MODEL,
     voice_settings: {
       stability: 0.48,
@@ -181,7 +318,8 @@ await writeBinary(audioPath, Buffer.from(data.audio_base64, "base64"));
 const alignment = data.normalized_alignment || data.alignment;
 const alignmentReady = Boolean(alignment?.chars?.length && alignment?.char_start_times_seconds?.length && alignment?.char_end_times_seconds?.length);
 const duration = audioDurationSeconds(audioPath);
-await writeText(srtPath, alignmentToSrt(alignment, script, duration));
+await writeText(srtPath, alignmentToSrt(alignment, spokenScript, duration));
+const display = await writeDisplaySrtFromElevenLabsSrt();
 await writeJson(manifestPath, {
   provider: "ElevenLabs",
   voice: "Sam Hottman",
@@ -191,6 +329,13 @@ await writeJson(manifestPath, {
   outputFormat: OUTPUT_FORMAT,
   audio: rel(audioPath),
   srt: rel(srtPath),
+  displayText: rel(displayTextPath),
+  spokenText: rel(spokenTextPath),
+  displaySrt: rel(assetDisplaySrtPath),
+  syncMethod: "elevenlabs_forced_alignment_timing_with_display_text",
+  displayCueCount: display.cueCount,
+  displayLineCount: display.displayLineCount,
+  displayExactLineMatch: display.exactLineMatch,
   alignment: alignmentReady,
   durationSeconds: duration,
   generatedAt: new Date().toISOString(),
@@ -203,3 +348,4 @@ await saveProject(projectPath, project);
 
 console.log(`Generated: ${rel(audioPath)}`);
 console.log(`Generated: ${rel(srtPath)}`);
+console.log(`Generated: ${rel(assetDisplaySrtPath)}`);

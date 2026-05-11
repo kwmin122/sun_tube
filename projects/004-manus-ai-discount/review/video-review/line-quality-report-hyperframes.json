@@ -1,0 +1,10 @@
+{
+  "bannedClasses": [
+    "route-svg",
+    "event-route-svg",
+    "pipeline-svg",
+    "network-lines"
+  ],
+  "pathDrawCount": 0,
+  "issues": []
+}

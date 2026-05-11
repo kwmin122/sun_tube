@@ -293,7 +293,10 @@ for (const issue of validateProjectShape(project)) add(checks, false, "project.j
 if (!validateProjectShape(project).length) add(checks, true, "project.json schema");
 
 if (stage === "pre-render") {
-  const srt = join(projectPath, "voiceover/solo/voiceover-solo-elevenlabs.srt");
+  const displaySrt = join(projectPath, "assets/audio/voiceover-display.srt");
+  const soloDisplaySrt = join(projectPath, "voiceover/solo/voiceover-display.srt");
+  const legacySrt = join(projectPath, "voiceover/solo/voiceover-solo-elevenlabs.srt");
+  const srt = existsSync(displaySrt) ? displaySrt : (existsSync(soloDisplaySrt) ? soloDisplaySrt : legacySrt);
   const mix = join(projectPath, "voiceover/solo/voiceover-solo-final-mix.m4a");
   const timed = await readText(join(projectPath, "timed-scene-packets.md"));
   const asset = await readText(join(projectPath, "asset-plan.md"));
@@ -307,7 +310,7 @@ if (stage === "pre-render") {
 
   add(checks, project.approved?.plan === true, "plan approved", "project.json.approved.plan must be true");
   add(checks, project.approved?.timedScenePackets === true || Boolean(args["waive-timed-approval"]), "timed scene packets approved", "use --waive-timed-approval only for explicit test runs");
-  add(checks, existsSync(srt), "SRT exists", rel(srt));
+  add(checks, existsSync(srt), "display SRT exists", rel(srt));
   add(checks, project.artifacts?.audioMix === true, "audioMix artifact complete");
   add(checks, existsSync(mix), "final mix exists", rel(mix));
   add(checks, ["done", "not_required"].includes(project.routes?.workOrders), "route work orders done", project.routes?.workOrders);
@@ -444,11 +447,14 @@ if (stage === "final") {
   const result = report("final", checks);
   await writeText(join(projectPath, "review/qa-final.md"), result.markdown);
   if (result.ok) {
+    const wasDone = project.status === "done" || project.currentGate === "done";
     project.artifacts.render = true;
     project.artifacts.videoReview = true;
     project.artifacts.directorReview = true;
-    project.status = "final_qa";
-    project.currentGate = "package";
+    if (!wasDone) {
+      project.status = "final_qa";
+      project.currentGate = "package";
+    }
     await saveProject(projectPath, project);
   }
   console.log(`Wrote: ${rel(join(projectPath, "review/qa-final.md"))}`);

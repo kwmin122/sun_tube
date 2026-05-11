@@ -1,0 +1,79 @@
+[
+  {
+    "id": "01",
+    "timeRange": "0:00-0:29.6",
+    "srtLines": "1-13",
+    "toolRoute": "hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "none",
+    "motionBeat": "title -> annual price -> monthly equivalent -> urgency lock",
+    "audioSfx": "light hit",
+    "snapshotTime": "0:20"
+  },
+  {
+    "id": "02",
+    "timeRange": "0:29.6-0:36.1",
+    "srtLines": "14-16",
+    "toolRoute": "capture + hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "Manus pricing help capture",
+    "motionBeat": "capture settle -> community-report badge -> method bridge",
+    "audioSfx": "soft tick",
+    "snapshotTime": "0:33"
+  },
+  {
+    "id": "03",
+    "timeRange": "0:36.1-0:51.6",
+    "srtLines": "17-24",
+    "toolRoute": "hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "Android flow diagram",
+    "motionBeat": "phone -> app -> play store -> annual -> amount gate",
+    "audioSfx": "step pop",
+    "snapshotTime": "0:45"
+  },
+  {
+    "id": "04",
+    "timeRange": "0:51.6-1:10.1",
+    "srtLines": "25-32",
+    "toolRoute": "hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "user report text",
+    "motionBeat": "points -> actual charge -> period check -> warning",
+    "audioSfx": "warning ping",
+    "snapshotTime": "1:02"
+  },
+  {
+    "id": "05",
+    "timeRange": "1:10.1-1:24.1",
+    "srtLines": "33-40",
+    "toolRoute": "hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "none",
+    "motionBeat": "trigger -> crawl -> data -> image/video -> loop",
+    "audioSfx": "subtle pulse",
+    "snapshotTime": "1:18"
+  },
+  {
+    "id": "06",
+    "timeRange": "1:24.1-1:36.3",
+    "srtLines": "41-46",
+    "toolRoute": "capture + hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "Google Play help capture",
+    "motionBeat": "capture settle -> renewal -> manage -> account checks",
+    "audioSfx": "caution tick",
+    "snapshotTime": "1:30"
+  },
+  {
+    "id": "07",
+    "timeRange": "1:36.3-1:47.5",
+    "srtLines": "47-52",
+    "toolRoute": "hyperframes",
+    "captionBehavior": "bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar",
+    "primaryAsset": "none",
+    "motionBeat": "amount -> period -> subscription checks",
+    "audioSfx": "close hit",
+    "snapshotTime": "1:42"
+  }
+]

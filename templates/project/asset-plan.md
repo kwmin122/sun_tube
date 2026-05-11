@@ -44,11 +44,11 @@ Status values:
 - `qa_passed`: pre-render QA has confirmed the row and matching work order.
 - `blocked`: input, implementation, or QA problem must be resolved first.
 
-| Scene | Time | Pattern Role | Scene Recipe | Tool Route | Capture Role | Useful Crop | Viewer Reads What | Reroute If Weak | Primary Visual | Support Visual | Visual Density | Motion Layer | Imagegen Role | Evidence Needed | Narration Beat | Asset Type | Link / File / Candidate | Speaker / Role | Timestamp | Processing Needed | Implementation Status | Status |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 01 | | claim/proof/context | | capture | primary_evidence | yes | exact source detail | diagram if unreadable | proof screenshot | HTML highlight | standard | screenshot highlight | not_required | yes | | proof screenshot | | | | crop, highlight | planned | planned |
-| 02 | | diagram/demo/data | | hyperframes | not_required | no | diagram explains the idea | not_required | diagram | texture/styleframe | rich | path draw, row reveal | support | no | | diagram | | | | HTML/SVG build | planned | planned |
-| 03 | | quote/context | | video-use | not_required | no | interview quote | not_required | interview clip | lower third | standard | clip trim, subtitle | not_required | no | | interview clip | | | | trim, subtitle, crop | planned | planned |
+| Scene | Time | Pattern Role | Scene Recipe | Tool Route | Capture Role | Capture Mode | Viewer Uses Capture How | Reroute If Weak | Primary Visual | Support Visual | Visual Density | Motion Layer | Imagegen Role | Video-use Role | HTML Motion Role | Evidence Needed | Narration Beat | Asset Type | Link / File / Candidate | Speaker / Role | Timestamp | Processing Needed | Implementation Status | Status |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 01 | | claim/proof/context | | capture | primary_evidence | split_half | narration explains the visible source | diagram if unreadable | proof screenshot | HTML overlay optional | standard | screenshot settle | not_required | not_required | support | yes | | proof screenshot | | | | capture full side or split half | planned | planned |
+| 02 | | diagram/demo/data | | hyperframes | not_required | not_required | no capture needed | not_required | diagram | texture/styleframe | rich | path draw, row reveal | support | not_required | primary | no | | diagram | | | | HTML/SVG build | planned | planned |
+| 03 | | quote/context | | video-use | not_required | not_required | no capture needed | not_required | interview clip | lower third | standard | clip trim, subtitle | not_required | primary | support | no | | interview clip | | | | trim, subtitle, crop | planned | planned |
 
 ## Material Rules
 
@@ -66,7 +66,9 @@ Status values:
 - Dense explainer scenes should not be large empty panels. If `Visual Density` is `rich`, include information rows, tokens, paths, counters, scan fills, or other visible state changes.
 - A `Motion Layer` label is not a motion design. Before implementation, confirm the scene has a motion blueprint in `design-context.md`: primary screen object, supporting objects, initial/active/end states, beat ladder, hold/exit rule, and snapshot evidence.
 - A route is not complete until the selected renderer shows it in actual frame evidence. File existence, work-order status, and synthetic DOM markers are not enough.
-- Capture routes must crop/highlight a narrated concept and occupy at least one half-side of the composition when used as primary evidence; otherwise reroute the scene to diagram, imagegen support, or another primary route.
+- Capture routes must occupy at least one half-side of the composition when used as primary evidence; otherwise reroute the scene to diagram, imagegen support, or another primary route.
+- Zoom, highlight, and Korean translation labels are optional, not mandatory. Use them only when narration and subtitles are not enough to make the capture useful.
+- For capture-led scenes, write the script after the scene direction so the narration can explicitly explain what the viewer is seeing.
 - Capture role values: `primary_evidence`, `support_texture`, `not_required`, `reroute_to_diagram`.
 - If a capture is technically correct but visually unhelpful, downgrade it: `primary_evidence -> support_texture -> not_required -> reroute_to_diagram`.
 - Small source stamps are not a valid completed capture route.

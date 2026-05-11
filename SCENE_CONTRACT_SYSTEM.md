@@ -23,6 +23,7 @@ The fix is to make the scene contract the implementation authority.
 timed-scene-packets.md
 -> scene-contracts.md
 -> factory:validate-scene-contract
+-> factory:validate-visual-routing
 -> implementation
 -> factory:review-video
 -> director-review
@@ -39,6 +40,12 @@ Every scene must define:
 - Narration Clause
 - Primary Screen Object
 - Viewer Must Understand
+- Primary Visual Source
+- Capture Role
+- Capture Mode
+- Imagegen Role
+- Video-use Role
+- HTML Motion Role
 - Allowed Visual Elements
 - Forbidden Fillers
 - Motion Beats
@@ -64,6 +71,8 @@ Pre-render QA must fail when:
 - `scene-contracts.md` is missing
 - required contract fields are empty
 - the contract does not define implementation markers
+- the contract does not define primary visual source and route roles
+- primary capture lacks a half-side-or-larger capture mode
 - the implementation lacks required `data-*` markers
 - generic fallback components appear without explicit permission
 - forbidden filler classes appear in the implementation
@@ -73,6 +82,7 @@ Pre-render QA must fail when:
 
 ```bash
 npm run factory:validate-scene-contract -- <project-path>
+npm run factory:validate-visual-routing -- <project-path>
 npm run factory:validate-scene-contract -- <project-path> -- --check-implementation
 ```
 

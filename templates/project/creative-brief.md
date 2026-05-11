@@ -16,8 +16,14 @@ Owner: `hype-showrunner` and `hype-creative-director`
 - Secondary content types:
 - Primary visual strategy:
 - Motion grammar: technical-grid | liquid-glass | documentary-evidence | kinetic-type | cinematic-story | product-demo | data-driven | reaction-split
+- Capture role: primary | support | not_required
+- Capture mode: full_side | split_half | zoom_optional | highlight_optional | not_required
 - Imagegen role: primary | support | not_required
+- Video-use role: primary | support | not_required
+- HTML motion role: primary | support | not_required
 - Evidence role: primary | support | not_required
+- Why these visual routes:
+- Why not the other routes:
 - Renderer targets: hyperframes | remotion | both
 - Preferred final renderer: hyperframes | remotion
 - Renderer candidate policy:

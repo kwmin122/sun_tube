@@ -1,0 +1,204 @@
+{
+  "renderer": "hyperframes",
+  "render": "projects/004-manus-ai-discount/renders/final-hyperframes.mp4",
+  "contactSheet": "projects/004-manus-ai-discount/review/video-review/contact-sheet-hyperframes.jpg",
+  "contactSheetOk": true,
+  "frames": [
+    {
+      "scene": "01",
+      "label": "start",
+      "at": 0.4,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-01-start.png",
+      "ok": true
+    },
+    {
+      "scene": "01",
+      "label": "mid",
+      "at": 14.8,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-01-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "01",
+      "label": "motion-peak",
+      "at": 20.128000000000004,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-01-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "01",
+      "label": "end",
+      "at": 29.200000000000003,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-01-end.png",
+      "ok": true
+    },
+    {
+      "scene": "02",
+      "label": "start",
+      "at": 30,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-02-start.png",
+      "ok": true
+    },
+    {
+      "scene": "02",
+      "label": "mid",
+      "at": 32.85,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-02-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "02",
+      "label": "motion-peak",
+      "at": 34.02,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-02-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "02",
+      "label": "end",
+      "at": 35.7,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-02-end.png",
+      "ok": true
+    },
+    {
+      "scene": "03",
+      "label": "start",
+      "at": 36.5,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-03-start.png",
+      "ok": true
+    },
+    {
+      "scene": "03",
+      "label": "mid",
+      "at": 43.85,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-03-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "03",
+      "label": "motion-peak",
+      "at": 46.64,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-03-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "03",
+      "label": "end",
+      "at": 51.2,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-03-end.png",
+      "ok": true
+    },
+    {
+      "scene": "04",
+      "label": "start",
+      "at": 52,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-04-start.png",
+      "ok": true
+    },
+    {
+      "scene": "04",
+      "label": "mid",
+      "at": 60.849999999999994,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-04-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "04",
+      "label": "motion-peak",
+      "at": 64.17999999999999,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-04-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "04",
+      "label": "end",
+      "at": 69.69999999999999,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-04-end.png",
+      "ok": true
+    },
+    {
+      "scene": "05",
+      "label": "start",
+      "at": 70.5,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-05-start.png",
+      "ok": true
+    },
+    {
+      "scene": "05",
+      "label": "mid",
+      "at": 77.1,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-05-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "05",
+      "label": "motion-peak",
+      "at": 79.61999999999999,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-05-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "05",
+      "label": "end",
+      "at": 83.69999999999999,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-05-end.png",
+      "ok": true
+    },
+    {
+      "scene": "06",
+      "label": "start",
+      "at": 84.5,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-06-start.png",
+      "ok": true
+    },
+    {
+      "scene": "06",
+      "label": "mid",
+      "at": 90.19999999999999,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-06-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "06",
+      "label": "motion-peak",
+      "at": 92.396,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-06-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "06",
+      "label": "end",
+      "at": 95.89999999999999,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-06-end.png",
+      "ok": true
+    },
+    {
+      "scene": "07",
+      "label": "start",
+      "at": 96.7,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-07-start.png",
+      "ok": true
+    },
+    {
+      "scene": "07",
+      "label": "mid",
+      "at": 101.9,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-07-mid.png",
+      "ok": true
+    },
+    {
+      "scene": "07",
+      "label": "motion-peak",
+      "at": 103.916,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-07-motion-peak.png",
+      "ok": true
+    },
+    {
+      "scene": "07",
+      "label": "end",
+      "at": 107.1,
+      "output": "projects/004-manus-ai-discount/review/video-review/scene-frames-hyperframes/scene-07-end.png",
+      "ok": true
+    }
+  ]
+}

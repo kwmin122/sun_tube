@@ -1,0 +1,7 @@
+{
+  "cueCount": 52,
+  "issues": [],
+  "method": "elevenlabs-forced-alignment-timing-with-display-srt",
+  "source": "projects/004-manus-ai-discount/assets/audio/voiceover-display.srt",
+  "limitation": "uses ElevenLabs forced-alignment cue timings with display subtitle text; does not yet compare against ASR word timestamps"
+}

@@ -26,12 +26,15 @@ topic
 -> research-pack.md
 -> creative-brief.md
 -> draft-scene-packets.md
+-> visual source routing
+-> scene-contracts.md
 -> script + scene contract in plan.md
 -> user approval
 -> ElevenLabs TTS + SRT
 -> timed-scene-packets.md
 -> scene-contracts.md
 -> factory:validate-scene-contract
+-> factory:validate-visual-routing
 -> scene tool routing
 -> asset-plan.md / design-context.md updates
 -> asset / visual / motion / audio work by scene
@@ -100,11 +103,12 @@ projects/{NNN-slug}/
 | 2. Material Research | `research-pack.md` | Angle leads, links, interview/image candidates, and scene sparks are useful enough for creative decisions. |
 | 3. Creative Brief | `creative-brief.md` | One angle, length band, structure, and tone are selected. |
 | 4. Draft Scene Packets | `draft-scene-packets.md` | Scene purpose and material direction exist before script writing. |
-| 5. Script Contract | `plan.md` draft | One idea per line and scene table are ready for user approval. |
+| 4b. Visual Source Routing | `draft-scene-packets.md` + `scene-contracts.md` | Every scene has capture/imagegen/video-use/HTML roles before the writer writes the line. |
+| 5. Script Contract | `plan.md` draft | One idea per line and scene table are ready for user approval. Capture-led lines explain what the viewer is seeing. |
 | 6. User Approval | approved plan | Script and scene contract are accepted. |
-| 7. TTS Sync | MP3 + SRT | ElevenLabs audio and timing files exist. |
+| 7. TTS Sync | MP3 + SRT | `voiceover_elevenlabs_sam.txt` is sent to ElevenLabs, ElevenLabs forced alignment creates the timing SRT, and `assets/audio/voiceover-display.srt` reuses only those times while showing `voiceover.txt` text. Display/spoken line counts must match. |
 | 8. Timed Scene Packets | `timed-scene-packets.md` | Exact scene timing, text-only caption behavior, motion beats, and asset timing are mapped to ElevenLabs SRT. |
-| 8b. Scene Contracts | `scene-contracts.md` + `factory:validate-scene-contract` | Every scene has primary screen object, allowed elements, forbidden fillers, motion beats, required state change, implementation markers, and evidence frame before implementation. |
+| 8b. Scene Contracts | `scene-contracts.md` + `factory:validate-scene-contract` + `factory:validate-visual-routing` | Every scene has primary screen object, primary visual source, capture/imagegen/video-use/HTML roles, allowed elements, forbidden fillers, motion beats, required state change, implementation markers, and evidence frame before implementation. |
 | 9. Tool Routing + Production | routed assets + composition | Every scene has a primary route before asset, visual, motion, and audio work starts. Complex scenes use one-at-a-time progressive disclosure instead of showing every element at once. |
 | 10. Pre-render Verification | snapshots | Captions do not collide, dense frames are readable, and route work is complete before render. |
 | 11. Video Review | `review/video-review/video-review.md` + `director-review.md` | Rendered frames and contact sheet are generated, then the editor/director explicitly approves scene intent, motion purpose, rhythm, captions, assets, and empty-feel. |
@@ -148,6 +152,10 @@ Every scene should pick a primary route:
 | `manual` | The user already supplied a ready asset. |
 
 `video-use` prepares source footage. Hyperframes remains the default place where final captions, diagrams, TTS timing, and the complete render are assembled.
+
+## State Ownership
+
+`project.json` is the canonical state file. Parallel scene, asset, capture, imagegen, audio, or renderer work may write owned artifacts and manifests, but must not save competing `project.json` snapshots. The orchestrator/main process merges artifact and route status back into `project.json` sequentially after parallel work finishes.
 
 ## Pattern Library
 

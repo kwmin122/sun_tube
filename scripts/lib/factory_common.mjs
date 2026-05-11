@@ -127,12 +127,12 @@ export const ROLE_BY_GATE = {
   tts: {
     roles: ["hype-audio-producer"],
     read: ["project.json", "plan.md"],
-    write: ["voiceover/solo/voiceover-solo-elevenlabs.mp3", "voiceover/solo/voiceover-solo-elevenlabs.srt", "voiceover/solo/voiceover-solo-final-mix.m4a"],
-    note: "승인된 plan만 ElevenLabs TTS와 믹스로 넘긴다.",
+    write: ["voiceover/solo/voiceover.txt", "voiceover/solo/voiceover_elevenlabs_sam.txt", "voiceover/solo/voiceover-solo-elevenlabs.mp3", "voiceover/solo/voiceover-solo-elevenlabs.srt", "voiceover/solo/voiceover-display.srt", "assets/audio/voiceover-display.srt", "voiceover/solo/voiceover-solo-final-mix.m4a"],
+    note: "승인된 plan만 ElevenLabs TTS와 믹스로 넘긴다. 발음용 텍스트와 화면 자막 텍스트는 줄 수를 맞추고, 화면 자막은 forced-alignment timing만 재사용한다.",
   },
   timing: {
     roles: ["hype-scene-planner"],
-    read: ["project.json", "plan.md", "voiceover/solo/voiceover-solo-elevenlabs.srt", "draft-scene-packets.md"],
+    read: ["project.json", "plan.md", "assets/audio/voiceover-display.srt", "voiceover/solo/voiceover-solo-elevenlabs.srt", "draft-scene-packets.md"],
     write: ["timed-scene-packets.md", "scene-contracts.md", "project.json", "status.md"],
     note: "SRT 기준으로 초 단위 제작 지시서를 만들고, 구현자가 따라야 할 scene-contracts.md를 확정한다.",
   },
@@ -162,7 +162,7 @@ export const ROLE_BY_GATE = {
   },
   video_review: {
     roles: ["hype-video-reviewer"],
-    read: ["project.json", "renders/final.mp4", "voiceover/solo/voiceover-solo-elevenlabs.srt", "timed-scene-packets.md", "asset-plan.md", "work-orders/*.md", "composition/"],
+    read: ["project.json", "renders/final.mp4", "assets/audio/voiceover-display.srt", "timed-scene-packets.md", "asset-plan.md", "work-orders/*.md", "composition/"],
     write: ["review/video-review/video-review.md", "review/video-review/scene-frame-notes.md", "review/video-review/director-review.md", "review/video-review/*.json", "review/video-review/fix-list.md"],
     note: "렌더된 MP4에서 프레임 증거를 만들고, 디렉터가 director-review.md에 PASS/FAIL 판단을 남긴다.",
   },

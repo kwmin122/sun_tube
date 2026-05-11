@@ -27,19 +27,28 @@ const composition = join(projectPath, "composition");
 const src = join(composition, "src");
 await ensureDir(src);
 
-const srtPath = join(projectPath, "voiceover/solo/voiceover-solo-elevenlabs.srt");
+const displaySrtPath = join(projectPath, "assets/audio/voiceover-display.srt");
+const soloDisplaySrtPath = join(projectPath, "voiceover/solo/voiceover-display.srt");
+const legacySrtPath = join(projectPath, "voiceover/solo/voiceover-solo-elevenlabs.srt");
+const srtPath = existsSync(displaySrtPath) ? displaySrtPath : (existsSync(soloDisplaySrtPath) ? soloDisplaySrtPath : legacySrtPath);
 const mixPath = join(projectPath, "voiceover/solo/voiceover-solo-final-mix.m4a");
 const timed = await readText(join(projectPath, "timed-scene-packets.md"));
 const assetPlan = await readText(join(projectPath, "asset-plan.md"));
 const designContext = await readText(join(projectPath, "design-context.md"));
 const captions = existsSync(srtPath) ? parseSrt(await readText(srtPath)) : [];
 const compositionAudio = join(composition, "assets/audio/voiceover-solo-final-mix.m4a");
+const compositionDisplaySrt = join(composition, "assets/audio/voiceover-display.srt");
 const captureManifestPath = join(projectPath, "assets/screenshots/capture_manifest.json");
 const captures = [];
 
 if (existsSync(mixPath)) {
   await ensureDir(join(composition, "assets/audio"));
   await copyFile(mixPath, compositionAudio);
+}
+
+if (existsSync(srtPath)) {
+  await ensureDir(join(composition, "assets/audio"));
+  await copyFile(srtPath, compositionDisplaySrt);
 }
 
 if (existsSync(captureManifestPath)) {
@@ -87,6 +96,7 @@ await writeJson(join(src, "project-data.json"), {
   status: project.status,
   currentGate: project.currentGate,
   audio: existsSync(compositionAudio) ? "assets/audio/voiceover-solo-final-mix.m4a" : "",
+  captions: existsSync(compositionDisplaySrt) ? "assets/audio/voiceover-display.srt" : "",
   generatedAt: new Date().toISOString(),
 });
 await writeJson(join(src, "scenes.json"), scenes);

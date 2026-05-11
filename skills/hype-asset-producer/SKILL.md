@@ -22,6 +22,9 @@ For each scene, specify:
 
 - asset type
 - tool route: `hyperframes`, `video-use`, `imagegen`, `capture`, `script/ffmpeg`, or `manual`
+- capture role and capture mode when a screenshot/page is used
+- imagegen role: `primary`, `support`, or `not_required`
+- video-use role and HTML motion role
 - link, file, or candidate
 - processing needed
 - storage path
@@ -46,6 +49,10 @@ Read `TOOL_ROUTING_PIPELINE.md`.
 Use `video-use` when the asset starts as raw/reference/interview/talk/demo video and needs analysis, transcript, trimming, subtitles, crop, or export. Put the processed result in the relevant `assets/**/processed/` folder or reference the `video-use` `edit/` output path in `asset-plan.md`.
 
 Use Hyperframes for final motion scenes, diagrams, kinetic type, caption timing, and composition assembly. Do not send static screenshots or generated images through `video-use` unless they are inside a source video clip.
+
+Use capture aggressively when a real screen, page, news item, app store page, product page, docs page, or community post helps the viewer understand the topic. If capture is primary, make it a large readable part of the scene. Zoom/highlight/Korean labels are optional, not required.
+
+Use imagegen when the scene needs metaphor, emotion, reenactment, future scenario, opening mood, transition, or thumbnail candidates. Do not use imagegen to fake official UI, screenshots, or exact text-heavy evidence.
 
 ## Do Not
 

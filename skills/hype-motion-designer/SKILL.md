@@ -31,6 +31,7 @@ Build the Hyperframes composition.
 - Use SRT timing as the timing source.
 - Keep captions readable and protected.
 - Keep captions text-only from ElevenLabs SRT by default; do not add caption progress bars unless the user explicitly asks.
+- Follow the scene's selected visual source. A capture-led scene must show the capture large enough to read; an imagegen-led scene must make the generated image the primary visual object; a Hyperframes-led scene must make the state change visible.
 - Use motion to explain the scene purpose.
 - Require `scene-contracts.md` before implementation. If the scene contract is missing or incomplete, stop and return the scene to planning instead of inventing a generic card layout.
 - Only use visual elements listed in `Allowed Visual Elements`. Do not add elements listed in `Forbidden Fillers`.

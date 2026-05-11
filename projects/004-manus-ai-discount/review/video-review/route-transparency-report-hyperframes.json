@@ -1,0 +1,18 @@
+{
+  "routes": {
+    "workOrders": "done",
+    "videoUse": "not_required",
+    "imagegen": "not_required",
+    "capture": "done",
+    "hyperframes": "done"
+  },
+  "routeCounts": {
+    "capture": 2,
+    "hyperframes": 7,
+    "not_required": 2
+  },
+  "assetRoutes": {
+    "hyperframes": 7,
+    "capture": 2
+  }
+}

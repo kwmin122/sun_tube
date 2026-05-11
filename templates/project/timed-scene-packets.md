@@ -24,11 +24,11 @@ Tool routes come from `../../TOOL_ROUTING_PIPELINE.md`.
 
 ## Timing Table
 
-| Scene | Time Range | SRT Lines | Tool Route | Renderer Targets | Scene Recipe | Narration Verb | Motion Purpose | Reveal Mode | Caption Behavior | Primary Asset | Motion Beat | Review Check | Audio/SFX | Snapshot Time | Status |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 01 | | | hyperframes | hyperframes | | | | one-at-a-time | bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar | | | | | | planned |
-| 02 | | | capture + hyperframes | both | | | | one-at-a-time | bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar | | | | | | planned |
-| 03 | | | video-use | hyperframes | | | | one-at-a-time | bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar | | | | | | planned |
+| Scene | Time Range | SRT Lines | Tool Route | Renderer Targets | Scene Recipe | Primary Visual Source | Capture Role | Capture Mode | Imagegen Role | Narration Verb | Motion Purpose | Reveal Mode | Caption Behavior | Primary Asset | Motion Beat | Review Check | Audio/SFX | Snapshot Time | Status |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 01 | | | hyperframes | hyperframes | | hyperframes | not_required | not_required | support | | | one-at-a-time | bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar | | | | | | planned |
+| 02 | | | capture + hyperframes | both | | capture | support | split_half | not_required | | | one-at-a-time | bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar | | | | | | planned |
+| 03 | | | video-use | hyperframes | | video-use | not_required | not_required | not_required | | | one-at-a-time | bottom safe-zone text-only caption from ElevenLabs SRT, no progress bar | | | | | | planned |
 
 ## Scene Details
 

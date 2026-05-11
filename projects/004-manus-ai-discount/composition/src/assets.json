@@ -1,0 +1,58 @@
+[
+  {
+    "scene": "01",
+    "route": "hyperframes",
+    "type": "HTML motion",
+    "candidate": "-",
+    "processing": "build price flip scene",
+    "status": "implemented"
+  },
+  {
+    "scene": "02",
+    "route": "capture + hyperframes",
+    "type": "screenshot",
+    "candidate": "https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus",
+    "processing": "capture full side or split half",
+    "status": "implemented"
+  },
+  {
+    "scene": "03",
+    "route": "hyperframes",
+    "type": "HTML motion",
+    "candidate": "-",
+    "processing": "build phone flow",
+    "status": "implemented"
+  },
+  {
+    "scene": "04",
+    "route": "hyperframes",
+    "type": "HTML motion",
+    "candidate": "-",
+    "processing": "build verification gate",
+    "status": "implemented"
+  },
+  {
+    "scene": "05",
+    "route": "hyperframes",
+    "type": "HTML motion",
+    "candidate": "-",
+    "processing": "build use-case lanes",
+    "status": "implemented"
+  },
+  {
+    "scene": "06",
+    "route": "capture + hyperframes",
+    "type": "screenshot",
+    "candidate": "https://support.google.com/googleplay/answer/7018481",
+    "processing": "capture full side or split half",
+    "status": "implemented"
+  },
+  {
+    "scene": "07",
+    "route": "hyperframes",
+    "type": "HTML motion",
+    "candidate": "-",
+    "processing": "build final checklist",
+    "status": "implemented"
+  }
+]

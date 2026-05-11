@@ -28,6 +28,15 @@ Run only the roles needed for that gate.
 
 During production, ensure every scene has a route: `hyperframes`, `video-use`, `imagegen`, `capture`, `script/ffmpeg`, or `manual`.
 
+Route selection happens before the writer room. Do not let the writer produce generic lines first and ask the motion designer to decorate them later.
+
+State ownership:
+
+- `project.json` is canonical state and must be updated by the orchestrator/main process only.
+- Parallel workers may write their owned artifacts, work-orders, manifests, and review files, but they must not save competing `project.json` snapshots.
+- After parallel work finishes, merge route/artifact status into `project.json` sequentially.
+- If two commands need to update `project.json`, run them in order or re-read the latest file immediately before saving.
+
 Renderer policy:
 
 - Treat Hyperframes as the default canonical design renderer for the final delivery unless the brief explicitly selects another renderer.
@@ -44,6 +53,7 @@ Renderer policy:
 ## Gates
 
 - Do not start script writing before `draft-scene-packets.md`.
+- Do not approve a plan unless `factory:validate-scene-contract` and `factory:validate-visual-routing` pass.
 - Do not start TTS before user approval.
 - Do not create `timed-scene-packets.md` before ElevenLabs SRT exists.
 - Do not route every project through `video-use`; use it only for raw/source video analysis or processing.

@@ -16,6 +16,12 @@ const REQUIRED_FIELDS = [
   "Narration Clause",
   "Primary Screen Object",
   "Viewer Must Understand",
+  "Primary Visual Source",
+  "Capture Role",
+  "Capture Mode",
+  "Imagegen Role",
+  "Video-use Role",
+  "HTML Motion Role",
   "Allowed Visual Elements",
   "Forbidden Fillers",
   "Motion Beats",
@@ -196,6 +202,12 @@ function validateContracts({ contracts, expectedScenes, templateMode = false }) 
     const markers = markerStrings(fields["Implementation Markers"]);
     if (!markers.some((marker) => marker.startsWith("data-scene"))) {
       errors.push(`Scene ${id}: Implementation Markers must include data-scene`);
+    }
+    if (fields["Capture Role"].toLowerCase().includes("primary") && !/\b(full_side|split_half|half|large|full)\b/i.test(fields["Capture Mode"])) {
+      errors.push(`Scene ${id}: primary capture must use full_side, split_half, half, large, or full Capture Mode`);
+    }
+    if (!/\b(primary|support|not_required)\b/i.test(fields["Imagegen Role"])) {
+      errors.push(`Scene ${id}: Imagegen Role must be primary, support, or not_required`);
     }
     if (!/\b(stop|return|planning|기획|멈추|되돌)/i.test(fields["Fallback Policy"])) {
       warnings.push(`Scene ${id}: Fallback Policy should explicitly stop and return to planning`);

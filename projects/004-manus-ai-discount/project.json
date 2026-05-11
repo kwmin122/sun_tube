@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "004",
+  "slug": "manus-ai-discount",
+  "title": "마누스 AI 할인 대란",
+  "status": "done",
+  "currentGate": "done",
+  "createdAt": "2026-05-11T01:52:04.805Z",
+  "updatedAt": "2026-05-11T03:15:22.984Z",
+  "approved": {
+    "creativeBrief": true,
+    "plan": true,
+    "tts": true,
+    "timedScenePackets": true,
+    "render": true
+  },
+  "artifacts": {
+    "researchPack": true,
+    "creativeBrief": true,
+    "draftScenePackets": true,
+    "plan": true,
+    "tts": true,
+    "audioMix": true,
+    "timedScenePackets": true,
+    "sceneContracts": true,
+    "assetPlan": true,
+    "designContext": true,
+    "composition": true,
+    "render": true,
+    "videoReview": true,
+    "directorReview": true
+  },
+  "routes": {
+    "workOrders": "done",
+    "videoUse": "not_required",
+    "imagegen": "not_required",
+    "capture": "done",
+    "hyperframes": "done"
+  }
+}

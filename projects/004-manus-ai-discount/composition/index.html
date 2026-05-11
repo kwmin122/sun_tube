@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="src/captions.js"></script>
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #070806;
+        font-family: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+      }
+      :root {
+        --bg: #070806;
+        --ink: #f7f3ea;
+        --muted: rgba(247, 243, 234, 0.68);
+        --soft: rgba(247, 243, 234, 0.1);
+        --panel: rgba(22, 24, 21, 0.78);
+        --panel-strong: rgba(37, 39, 34, 0.9);
+        --line: rgba(247, 243, 234, 0.15);
+        --orange: #f4a261;
+        --cyan: #32c5b5;
+        --green: #7ddf8b;
+        --red: #ff6d6d;
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 26% 76%, rgba(50, 197, 181, 0.16), transparent 26%),
+          radial-gradient(circle at 74% 18%, rgba(244, 162, 97, 0.14), transparent 23%),
+          linear-gradient(120deg, #060705 0%, #11120f 48%, #090a08 100%);
+      }
+      #root::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        background-size: 80px 80px;
+        opacity: 0.48;
+      }
+      #root::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.45), transparent 28%, transparent 72%, rgba(0, 0, 0, 0.42));
+        pointer-events: none;
+      }
+      .clip { position: absolute; }
+      .scene {
+        position: absolute;
+        inset: 0;
+        padding: 56px 68px 190px;
+        opacity: 0;
+        visibility: hidden;
+      }
+      .scene-no {
+        position: absolute;
+        right: 70px;
+        top: 114px;
+        font-size: 40px;
+        font-weight: 900;
+        color: rgba(247, 243, 234, 0.48);
+      }
+      .eyebrow {
+        position: absolute;
+        left: 72px;
+        top: 50px;
+        font-size: 32px;
+        line-height: 1;
+        font-weight: 900;
+        color: var(--orange);
+      }
+      .headline {
+        position: absolute;
+        left: 68px;
+        top: 94px;
+        width: 1450px;
+        font-size: 72px;
+        line-height: 1.08;
+        font-weight: 950;
+        letter-spacing: 0;
+      }
+      .accent { color: var(--orange); }
+      .board {
+        position: absolute;
+        left: 68px;
+        right: 68px;
+        top: 290px;
+        bottom: 176px;
+      }
+      .glass {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.025)),
+          rgba(22, 24, 21, 0.78);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.12),
+          0 24px 70px rgba(0, 0, 0, 0.28);
+      }
+      .label {
+        display: inline-flex;
+        align-items: center;
+        min-height: 38px;
+        padding: 0 16px;
+        border-radius: 8px;
+        background: rgba(244, 162, 97, 0.12);
+        border: 1px solid rgba(244, 162, 97, 0.32);
+        color: var(--orange);
+        font-size: 20px;
+        font-weight: 900;
+      }
+      .info-row {
+        min-height: 62px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 28px;
+        border: 1px solid rgba(247, 243, 234, 0.09);
+        border-radius: 7px;
+        background: rgba(247, 243, 234, 0.085);
+        padding: 16px 22px;
+        font-size: 28px;
+        font-weight: 850;
+      }
+      .metric-tick {
+        border-radius: 7px;
+        background: rgba(50, 197, 181, 0.16);
+        border: 1px solid rgba(50, 197, 181, 0.32);
+        color: #dff9f5;
+      }
+      .flow-token {
+        border: 1px solid rgba(50, 197, 181, 0.38);
+        background: rgba(50, 197, 181, 0.16);
+        color: #dbfbf7;
+      }
+      .scan-fill {
+        position: relative;
+        overflow: hidden;
+      }
+      .scan-fill::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        transform: translateX(-102%);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+      }
+      .value-card {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 560px;
+        height: 318px;
+        padding: 36px;
+      }
+      .price-card {
+        position: absolute;
+        left: 610px;
+        top: 0;
+        width: 715px;
+        height: 318px;
+        padding: 34px 40px;
+      }
+      .price-main {
+        font-size: 96px;
+        line-height: 1;
+        font-weight: 950;
+        color: var(--orange);
+      }
+      .price-sub {
+        margin-top: 18px;
+        font-size: 34px;
+        font-weight: 900;
+      }
+      .urgent-card {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 352px;
+        height: 198px;
+        padding: 30px 34px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+      }
+      .urgent-card .info-row {
+        min-height: 136px;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .split {
+        display: grid;
+        grid-template-columns: 1.04fr 0.96fr;
+        gap: 34px;
+      }
+      .source-pane {
+        position: relative;
+        overflow: hidden;
+        background: #f4f2ec;
+      }
+      .source-pane img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+      }
+      .source-pane.manus img {
+        object-position: center 17%;
+        transform: scale(1.55);
+        transform-origin: 0% 31%;
+      }
+      .source-pane.google img {
+        object-position: center top;
+        transform: scale(1.12);
+        transform-origin: 0% 18%;
+      }
+      .side-panel {
+        padding: 34px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+      .side-panel h3 {
+        margin: 0 0 4px;
+        font-size: 42px;
+        line-height: 1.1;
+      }
+      .report-price {
+        font-size: 66px;
+        line-height: 1;
+        font-weight: 950;
+        color: var(--cyan);
+      }
+      .phone-stage {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 0.58fr 1.42fr;
+        gap: 38px;
+      }
+      .phone {
+        height: 100%;
+        border-radius: 36px;
+        border: 2px solid rgba(247, 243, 234, 0.24);
+        background: linear-gradient(180deg, #151713, #0a0b09);
+        padding: 34px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .phone-screen {
+        flex: 1;
+        border-radius: 26px;
+        background: linear-gradient(180deg, rgba(244, 162, 97, 0.12), rgba(50, 197, 181, 0.12));
+        border: 1px solid rgba(247, 243, 234, 0.12);
+        display: grid;
+        place-items: center;
+        font-size: 48px;
+        font-weight: 950;
+      }
+      .step-list {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        justify-content: center;
+      }
+      .step-row {
+        display: grid;
+        grid-template-columns: 86px 1fr 280px;
+        align-items: center;
+        gap: 18px;
+        min-height: 92px;
+        padding: 18px 20px;
+      }
+      .step-num {
+        font-size: 34px;
+        font-weight: 950;
+        color: var(--orange);
+      }
+      .gate-stage {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .gate {
+        padding: 34px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .gate h3 {
+        margin: 0;
+        font-size: 44px;
+      }
+      .gate .big {
+        margin-top: auto;
+        font-size: 54px;
+        line-height: 1.1;
+        font-weight: 950;
+      }
+      .warning-strip {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 22px 30px;
+        font-size: 34px;
+        font-weight: 900;
+        border: 1px solid rgba(244, 162, 97, 0.42);
+        background: rgba(244, 162, 97, 0.12);
+      }
+      .lane-wrap {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .lane {
+        padding: 34px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .lane h3 {
+        margin: 0 0 10px;
+        font-size: 42px;
+      }
+      .lane .info-row {
+        font-size: 30px;
+      }
+      .check-stage {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 28px;
+      }
+      .final-check {
+        padding: 44px 36px;
+        display: flex;
+        flex-direction: column;
+        gap: 26px;
+      }
+      .final-check .number {
+        font-size: 74px;
+        line-height: 1;
+        font-weight: 950;
+        color: var(--orange);
+      }
+      .final-check h3 {
+        margin: 0;
+        font-size: 50px;
+      }
+      .final-check p {
+        margin: 0;
+        font-size: 28px;
+        line-height: 1.35;
+        color: var(--muted);
+        font-weight: 750;
+      }
+      .caption {
+        position: absolute;
+        left: 250px;
+        right: 250px;
+        bottom: 26px;
+        min-height: 92px;
+        padding: 18px 34px;
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.82);
+        border: 1px solid rgba(247, 243, 234, 0.16);
+        color: #fffaf1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 42px;
+        line-height: 1.18;
+        font-weight: 950;
+        letter-spacing: 0;
+        z-index: 20;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="root" class="clip" data-composition-id="main" data-width="1920" data-height="1080" data-start="0" data-duration="107.508" data-track-index="0">
+      <audio id="narration" data-start="0" data-duration="107.508" data-track-index="90" src="assets/audio/voiceover-solo-final-mix.m4a"></audio>
+
+      <section id="scene-01" class="clip scene" data-scene="01" data-contract-scene="01" data-primary-object="price-flip" data-visual-density="rich" data-progressive-disclosure="one-at-a-time" data-start="0" data-duration="29.6" data-track-index="1">
+        <div class="eyebrow">MANUS PRICE ALERT</div>
+        <div class="headline">마누스에서 <span class="accent">마쫀쿠 대란</span>이 떴습니다.</div>
+        <div class="scene-no">01</div>
+        <div class="board">
+          <div class="value-card glass scan-fill">
+            <div class="label">커뮤니티 제보</div>
+            <div class="info-row flow-token" style="margin-top: 28px;">안드로이드 연간 결제</div>
+            <div class="info-row metric-tick" style="margin-top: 16px;">한국시간 오월 십일 오전 아홉 시</div>
+          </div>
+          <div class="price-card glass scan-fill">
+            <div class="label">핵심 숫자</div>
+            <div class="price-main">연 삼만이천 원대</div>
+            <div class="price-sub">월 삼천 원도 안 되는 가격감</div>
+          </div>
+          <div class="urgent-card glass">
+            <div class="info-row metric-tick"><span>원래 월 육만 원대라고 알려진 플랜</span><strong>기준가</strong></div>
+            <div class="info-row flow-token"><span>구십육 퍼센트 할인처럼 보임</span><strong>제보</strong></div>
+            <div class="info-row scan-fill"><span>써볼 생각이 있었다면</span><strong>지금 확인</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene-02" class="clip scene" data-scene="02" data-contract-scene="02" data-primary-object="official-price-capture" data-visual-density="rich" data-progressive-disclosure="one-at-a-time" data-start="29.6" data-duration="6.5" data-track-index="2">
+        <div class="eyebrow">OFFICIAL VS REPORT</div>
+        <div class="headline">이건 <span class="accent">공식 할인 공지</span>가 아니라 제보 기준입니다.</div>
+        <div class="scene-no">02</div>
+        <div class="board split">
+          <div class="source-pane manus glass" data-capture-size="split-half">
+            <img src="assets/screenshots/scene-02-capture-1.png" alt="Manus official pricing help page" />
+          </div>
+          <div class="side-panel glass">
+            <h3>화면을 이렇게 나눠 봅니다.</h3>
+            <div class="info-row metric-tick">공식 도움말에는 일반 가격 맥락이 있습니다.</div>
+            <div class="info-row flow-token">삼만이천 원대는 커뮤니티 결제 제보입니다.</div>
+            <div class="info-row scan-fill">그래서 결제 전 실제 청구 금액을 봐야 합니다.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene-03" class="clip scene" data-scene="03" data-contract-scene="03" data-primary-object="android-upgrade-flow" data-visual-density="rich" data-progressive-disclosure="one-at-a-time" data-start="36.1" data-duration="15.5" data-track-index="3">
+        <div class="eyebrow">HOW TO CHECK</div>
+        <div class="headline">확인 순서는 <span class="accent">안드로이드 앱</span>에서 시작합니다.</div>
+        <div class="scene-no">03</div>
+        <div class="board phone-stage">
+          <div class="phone glass">
+            <div class="label">Android</div>
+            <div class="phone-screen scan-fill">Manus</div>
+          </div>
+          <div class="step-list">
+            <div class="step-row glass info-row flow-token"><div class="step-num">01</div><div>마누스 앱 열기</div><strong>앱</strong></div>
+            <div class="step-row glass info-row scan-fill"><div class="step-num">02</div><div>구글 플레이 결제로 업그레이드 진입</div><strong>결제</strong></div>
+            <div class="step-row glass info-row metric-tick"><div class="step-num">03</div><div>연간 결제 옵션 켜기</div><strong>연간</strong></div>
+            <div class="step-row glass info-row flow-token"><div class="step-num">04</div><div>삼만이천 원대로 뜨는지 확인</div><strong>금액</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene-04" class="clip scene" data-scene="04" data-contract-scene="04" data-primary-object="upgrade-period-gate" data-visual-density="rich" data-progressive-disclosure="one-at-a-time" data-start="51.6" data-duration="18.5" data-track-index="4">
+        <div class="eyebrow">EXTRA UPGRADE</div>
+        <div class="headline">추가 업그레이드는 <span class="accent">기간</span>까지 다시 봐야 합니다.</div>
+        <div class="scene-no">04</div>
+        <div class="board">
+          <div class="gate-stage">
+            <div class="gate glass scan-fill info-row"><div class="label">제보 기준</div><h3>프로 업그레이드 뒤</h3><div class="big">추가 업그레이드 진입</div></div>
+            <div class="gate glass flow-token info-row"><div class="label">선택</div><h3>이만 포인트</h3><div class="big">가격만 보지 않기</div></div>
+            <div class="gate glass metric-tick info-row"><div class="label">확인</div><h3>실제 청구 금액</h3><div class="big">기간 표시까지 확인</div></div>
+          </div>
+          <div class="warning-strip">이 부분은 제보가 갈립니다. 결제 버튼 전 금액과 기간을 꼭 보세요.</div>
+        </div>
+      </section>
+
+      <section id="scene-05" class="clip scene" data-scene="05" data-contract-scene="05" data-primary-object="use-case-lanes" data-visual-density="rich" data-progressive-disclosure="one-at-a-time" data-start="70.1" data-duration="14" data-track-index="5">
+        <div class="eyebrow">WHERE TO USE</div>
+        <div class="headline">싸게 샀다면 <span class="accent">반복 작업</span>에 써먹어야 합니다.</div>
+        <div class="scene-no">05</div>
+        <div class="board lane-wrap">
+          <div class="lane glass scan-fill"><h3>자동화</h3><div class="info-row flow-token">웹훅</div><div class="info-row metric-tick">슬랙 트리거</div><div class="info-row">정기 실행</div></div>
+          <div class="lane glass scan-fill"><h3>자료 수집</h3><div class="info-row flow-token">크롤링</div><div class="info-row metric-tick">정기 데이터 수집</div><div class="info-row">리포트 초안</div></div>
+          <div class="lane glass scan-fill"><h3>콘텐츠</h3><div class="info-row flow-token">이미지 생성</div><div class="info-row metric-tick">비디오 생성</div><div class="info-row">반복 제작</div></div>
+        </div>
+      </section>
+
+      <section id="scene-06" class="clip scene" data-scene="06" data-contract-scene="06" data-primary-object="google-play-subscription-capture" data-visual-density="rich" data-progressive-disclosure="one-at-a-time" data-start="84.1" data-duration="12.2" data-track-index="6">
+        <div class="eyebrow">AUTO RENEWAL</div>
+        <div class="headline">마지막은 <span class="accent">구글 플레이 구독 관리</span>입니다.</div>
+        <div class="scene-no">06</div>
+        <div class="board split">
+          <div class="source-pane google glass" data-capture-size="split-half">
+            <img src="assets/screenshots/scene-06-capture-2.png" alt="Google Play subscription management help page" />
+          </div>
+          <div class="side-panel glass">
+            <h3>자동결제 확인 순서</h3>
+            <div class="info-row metric-tick">구글 플레이 열기</div>
+            <div class="info-row flow-token">결제 및 정기 결제</div>
+            <div class="info-row scan-fill">구독 관리에서 마누스 확인</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene-07" class="clip scene" data-scene="07" data-contract-scene="07" data-primary-object="final-action-checks" data-progressive-disclosure="one-at-a-time" data-start="96.3" data-duration="11.2" data-track-index="7">
+        <div class="eyebrow">FINAL CHECK</div>
+        <div class="headline">오늘 확인할 건 <span class="accent">세 가지</span>입니다.</div>
+        <div class="scene-no">07</div>
+        <div class="board check-stage">
+          <div class="final-check glass scan-fill"><div class="number">01</div><h3>금액</h3><p>실제 청구 금액이 삼만이천 원대인지 확인합니다.</p></div>
+          <div class="final-check glass flow-token"><div class="number">02</div><h3>기간</h3><p>연간인지, 추가 기간이 어떻게 표시되는지 봅니다.</p></div>
+          <div class="final-check glass metric-tick"><div class="number">03</div><h3>자동결제</h3><p>구글 플레이 구독 관리에서 갱신 상태를 확인합니다.</p></div>
+        </div>
+      </section>
+
+      <div id="caption" class="clip caption" data-start="0" data-duration="107.508" data-track-index="80"></div>
+    </main>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const DURATION = 107.508;
+      const CAPTION_LEAD_SECONDS = 0.12;
+      const captions = window.CAPTIONS || [];
+      function captionAt(time) {
+        const adjustedTime = time + CAPTION_LEAD_SECONDS;
+        return captions.find((cue) => adjustedTime >= cue.start && adjustedTime < cue.end)?.text || "";
+      }
+      function setCaptionAt(time) {
+        document.getElementById("caption").textContent = captionAt(time);
+      }
+      function revealRows(selector, start, gap = 0.38) {
+        gsap.utils.toArray(selector).forEach((el, index) => {
+          tl.to(el, { autoAlpha: 1, y: 0, scale: 1, duration: 0.32, ease: "power3.out" }, start + index * gap);
+        });
+      }
+      function scene(id, start, end) {
+        tl.set(".scene", { autoAlpha: 0 }, start);
+        tl.set(`#scene-${id}`, { autoAlpha: 1 }, start);
+        tl.set(`#scene-${id}`, { autoAlpha: 0 }, end);
+      }
+
+      const tl = gsap.timeline({ paused: true });
+      gsap.set(".scene", { autoAlpha: 0 });
+      gsap.set(".headline, .eyebrow, .scene-no, .value-card, .price-card, .urgent-card, .source-pane, .side-panel, .phone, .step-row, .gate, .warning-strip, .lane, .final-check", {
+        autoAlpha: 0,
+        y: 18,
+        scale: 0.985,
+      });
+      gsap.set(".scan-fill::after", { x: 0 });
+
+      scene("01", 0, 29.6);
+      tl.to("#scene-01 .eyebrow, #scene-01 .scene-no", { autoAlpha: 1, y: 0, duration: 0.25 }, 0.1)
+        .to("#scene-01 .headline", { autoAlpha: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.3)
+        .to("#scene-01 .value-card", { autoAlpha: 1, y: 0, scale: 1, duration: 0.45 }, 3.8)
+        .to("#scene-01 .price-card", { autoAlpha: 1, y: 0, scale: 1, duration: 0.45 }, 7.8)
+        .from("#scene-01 .price-main", { scale: 0.78, duration: 0.38, ease: "back.out(2)" }, 20.7)
+        .to("#scene-01 .urgent-card", { autoAlpha: 1, y: 0, scale: 1, duration: 0.45 }, 22.6);
+      revealRows("#scene-01 .info-row", 8.6, 1.8);
+
+      scene("02", 29.6, 36.1);
+      tl.to("#scene-02 .eyebrow, #scene-02 .scene-no", { autoAlpha: 1, y: 0, duration: 0.2 }, 29.7)
+        .to("#scene-02 .headline", { autoAlpha: 1, y: 0, duration: 0.35 }, 29.9)
+        .to("#scene-02 .source-pane", { autoAlpha: 1, y: 0, scale: 1, duration: 0.45 }, 30.5)
+        .to("#scene-02 .side-panel", { autoAlpha: 1, y: 0, scale: 1, duration: 0.35 }, 31.3);
+      revealRows("#scene-02 .info-row", 31.7, 0.8);
+
+      scene("03", 36.1, 51.6);
+      tl.to("#scene-03 .eyebrow, #scene-03 .scene-no", { autoAlpha: 1, y: 0, duration: 0.2 }, 36.2)
+        .to("#scene-03 .headline", { autoAlpha: 1, y: 0, duration: 0.35 }, 36.5)
+        .to("#scene-03 .phone", { autoAlpha: 1, y: 0, scale: 1, duration: 0.45 }, 37.6);
+      revealRows("#scene-03 .step-row", 38.9, 2.0);
+
+      scene("04", 51.6, 70.1);
+      tl.to("#scene-04 .eyebrow, #scene-04 .scene-no", { autoAlpha: 1, y: 0, duration: 0.2 }, 51.7)
+        .to("#scene-04 .headline", { autoAlpha: 1, y: 0, duration: 0.35 }, 52.1);
+      revealRows("#scene-04 .gate", 53.5, 3.0);
+      tl.to("#scene-04 .warning-strip", { autoAlpha: 1, y: 0, scale: 1, duration: 0.4 }, 64.0);
+
+      scene("05", 70.1, 84.1);
+      tl.to("#scene-05 .eyebrow, #scene-05 .scene-no", { autoAlpha: 1, y: 0, duration: 0.2 }, 70.2)
+        .to("#scene-05 .headline", { autoAlpha: 1, y: 0, duration: 0.35 }, 70.6);
+      revealRows("#scene-05 .lane", 72.2, 2.0);
+      revealRows("#scene-05 .info-row", 74.1, 0.55);
+
+      scene("06", 84.1, 96.3);
+      tl.to("#scene-06 .eyebrow, #scene-06 .scene-no", { autoAlpha: 1, y: 0, duration: 0.2 }, 84.2)
+        .to("#scene-06 .headline", { autoAlpha: 1, y: 0, duration: 0.35 }, 84.5)
+        .to("#scene-06 .source-pane", { autoAlpha: 1, y: 0, scale: 1, duration: 0.45 }, 86.2)
+        .to("#scene-06 .side-panel", { autoAlpha: 1, y: 0, scale: 1, duration: 0.35 }, 87.4);
+      revealRows("#scene-06 .info-row", 88.1, 1.0);
+
+      scene("07", 96.3, DURATION);
+      tl.to("#scene-07 .eyebrow, #scene-07 .scene-no", { autoAlpha: 1, y: 0, duration: 0.2 }, 96.4)
+        .to("#scene-07 .headline", { autoAlpha: 1, y: 0, duration: 0.35 }, 96.8);
+      revealRows("#scene-07 .final-check", 98.0, 1.6);
+
+      for (let time = 0; time <= DURATION; time += 0.2) {
+        tl.call(() => setCaptionAt(time), [], time);
+      }
+      tl.call(() => setCaptionAt(DURATION), [], DURATION);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

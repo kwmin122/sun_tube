@@ -27,6 +27,12 @@ Include:
 - scene purpose
 - material direction
 - expected visual
+- primary visual route
+- capture role and capture mode
+- imagegen role
+- video-use role
+- HTML motion role
+- why this route is stronger than the other routes
 - writer guidance
 
 Do not invent exact seconds.
@@ -57,6 +63,8 @@ Include:
 - exact time range
 - SRT line mapping
 - tool route from `TOOL_ROUTING_PIPELINE.md`
+- primary visual source
+- capture/imagegen/video-use/HTML motion role
 - caption behavior
 - asset timing
 - motion beats
@@ -66,5 +74,6 @@ Include:
 ## Do Not
 
 - Write final narration.
+- Leave visual source routing for after the script.
 - Start production before user approval and SRT.
 - Perform source or rights review.

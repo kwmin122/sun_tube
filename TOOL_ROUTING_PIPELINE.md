@@ -22,6 +22,7 @@ topic / user material
 -> timed-scene-packets.md
 -> scene-contracts.md
 -> factory:validate-scene-contract
+-> factory:validate-visual-routing
 -> scene tool routing
    |-- raw video / interview / talk / demo clip -> video-use -> processed clip
    |-- HTML motion / diagram / kinetic type ------> Hyperframes
@@ -54,8 +55,8 @@ A capture route is `qa_passed` only when all are true:
 - The capture is from the intended page or source.
 - The visible crop is relevant to the exact narration beat.
 - The important region occupies at least one half-side of the composition, or is otherwise large enough to read/recognize as the primary evidence.
-- Highlight/zoom points to a meaningful source detail, not a decorative rectangle.
-- The scene overlays Korean interpretation, labels, or comparison structure.
+- The narration and captions explicitly explain what the viewer should notice in the capture.
+- Highlight, zoom, and Korean interpretation labels are optional tools. Use them only when narration/subtitles alone are not enough.
 
 If a capture is technically correct but visually unhelpful, downgrade it:
 
@@ -66,10 +67,11 @@ primary_evidence -> support_texture -> not_required -> reroute_to_diagram
 Capture route must be downgraded to `support_texture` or rerouted to Hyperframes diagram when:
 
 - the page is mostly English text and the viewer cannot quickly understand it;
-- the highlighted box does not identify a specific claim or UI affordance;
 - the capture is a small source stamp instead of half-side or larger primary evidence;
 - the capture is used as background texture;
 - the narration can be explained better by a diagram, flow, or typed evidence card.
+
+Capture-led scripts should be written after scene routing, not before it. A capture-led line can say what the viewer is seeing, for example: "지금 보이는 결제 화면에서 중요한 건 조건입니다."
 
 ## When To Use `video-use`
 
@@ -108,7 +110,7 @@ Every production scene should carry one primary route and optional support route
 
 A routed asset is not complete just because the file exists. It is complete only when the work order is complete, the `asset-plan.md` row is `implemented` or `qa_passed`, and the final composition references the processed file or implements the scene contract. Capture routes must use real page captures with stable local paths under `composition/assets/screenshots/`; blank verification pages or unused screenshots must stay blocked until replaced or removed from the route.
 
-Implementation may not start from route labels alone. Run `factory:validate-scene-contract` first. If the scene contract does not define the primary screen object, allowed visual elements, forbidden fillers, motion beats, required state change, implementation markers, and evidence frame, return to planning instead of filling the scene with generic cards, decorative paths, dots, glass panels, or generic fallback components.
+Implementation may not start from route labels alone. Run `factory:validate-scene-contract` and `factory:validate-visual-routing` first. If the scene contract does not define the primary screen object, primary visual source, capture/imagegen/video-use/HTML role, allowed visual elements, forbidden fillers, motion beats, required state change, implementation markers, and evidence frame, return to planning instead of filling the scene with generic cards, decorative paths, dots, glass panels, or generic fallback components.
 
 ## Truth Layers
 

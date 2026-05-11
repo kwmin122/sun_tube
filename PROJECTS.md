@@ -8,6 +8,7 @@ Project index for concurrent video work.
 | 001 | k-harness-ouroboros | done | rendered | Final MP4: `projects/001-k-harness-ouroboros/renders/k-harness-ouroboros-final.mp4`. |
 | 002 | claude-managed-agents | review | user approval | Topic: Claude Managed Agents dreaming, outcomes, and multiagent orchestration. Development artifacts drafted, TTS not started. |
 | 003 | vertical-slice-vibe-coding | review | review | Topic: 버티컬 슬라이스 아키텍처를 사용해야하는 이유 (바이브코딩시) |
+| 004 | manus-ai-discount | idea | topic_intake | Topic: 마누스 AI 할인 대란 |
 
 ## Status Values
 
@@ -29,4 +30,4 @@ Project index for concurrent video work.
 
 ## Next Project ID
 
-Use `004-{short-slug}` for the next real video project.
+Use `005-{short-slug}` for the next real video project.

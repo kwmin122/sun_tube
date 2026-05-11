@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-05-11T02:10:55.285Z",
+  "tasks": [
+    {
+      "scene": "02",
+      "input": "https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus",
+      "output": "projects/004-manus-ai-discount/assets/screenshots/scene-02-capture-1.png",
+      "evidence": "projects/004-manus-ai-discount/assets/evidence/scene-02-capture-1.png",
+      "ok": true,
+      "stderr": ""
+    },
+    {
+      "scene": "06",
+      "input": "https://support.google.com/googleplay/answer/7018481",
+      "output": "projects/004-manus-ai-discount/assets/screenshots/scene-06-capture-2.png",
+      "evidence": "projects/004-manus-ai-discount/assets/evidence/scene-06-capture-2.png",
+      "ok": true,
+      "stderr": ""
+    }
+  ]
+}
